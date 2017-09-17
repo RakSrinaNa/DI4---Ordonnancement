@@ -18,7 +18,7 @@ main.o: $(HEAD)
 clall: clean
 
 clean:
-	rm *.o && rm */*.o
+	rm *.o ; rm */*.o ; rm $(EXEC)
 
 test:
 	echo “Tests OK”
