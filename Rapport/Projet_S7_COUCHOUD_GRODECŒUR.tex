@@ -1,0 +1,154 @@
+\documentclass{EPUProjetPeiP}
+\usepackage{tcolorbox}
+\newtcbox{\hl}[1][yellow]{on line, arc=7pt,colback=#1!10!white,colframe=#1!50!black,
+  before upper={\rule[-3pt]{0pt}{10pt}},boxrule=1pt, boxsep=0pt,left=6pt,
+  right=6pt,top=2pt,bottom=2pt}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[justification=centering]{caption}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\everymath{\displaystyle}
+\lstset{
+  language=XML,
+  morekeywords={element,category,encoding,
+    xs:schema,xs:element,xs:complexType,xs:sequence,xs:attribute}
+}
+\lstset{frame=tb,
+  language=C,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+\newcommand{\pic}[3]{
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=#2]{doc/#1}
+		\end{center}
+		\caption{#3}
+	\end{figure}
+}
+\newcommand{\piclab}[4]{
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=#2]{doc/#1}
+		\end{center}
+		\caption{\label{#4}#3}
+	\end{figure}
+}
+\newcommand{\picsidelab}[6]{
+	\begin{wrapfigure}{#5}{#6}
+		\includegraphics[scale=#2]{doc/#1}
+		\caption{\label{#4}#3}
+	\end{wrapfigure}
+}
+\newcommand{\comp}[5]{
+	\section[#1]{#1 {\small - Codé à #2\% $\vert$ Testé à #3\% $\vert$ Fonctionne: #4 $\vert$ Valgrind: #5}}
+}
+\makeindex
+
+\title[Projet S7]{Projet S7 : Comparaison des performances d'un algorithme tabou dans deux languages différents}
+
+\projet{S7}
+
+\author{Thomas Couchoud\\
+\noindent[\url{thomas.couchoud@etu.univ-tours.fr}]\\
+Clément Grodecœur\\
+\noindent[\url{clement.grodecoeur@etu.univ-tours.fr}]}
+
+\encadrant{Jean-Charles Billaut\\ %
+\noindent[\url{jean-charles.billaut@univ-tours.fr}]~\\
+Polytech Tours\\
+Département DI\\~ %
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\pagenumbering{roman}
+\setcounter{page}{0}
+{
+\setlength{\parskip}{0em}
+
+\tableofcontents
+
+%\listoffigures
+%rq1 : si vous n'avez pratiquement pas de figures, laissez la ligne précédente en commentaire
+
+%\listoftables
+%rq1 : si vous n'avez pratiquement pas de tables, laissez la ligne précédente en commentaire
+}
+
+
+\start
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{Introduction}
+
+%TODO
+
+%--------------------------------------------------------------------------------
+
+%TODO
+
+%--------------------------------------------------------------------------------
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{\numberline{}Conclusion}
+\markboth{Conclusion}{}
+\label{sec:conclusion}
+
+%TODO
+
+%--------------------------------------------------------------------------------
+%si on donne des annexes :
+\appendix
+\addcontentsline{toc}{part}{\numberline{}Annexes}
+
+%--------------------------------------------------------------------------------
+%index : attention, le fichier dindex .ind doit avoir le même nom que le fichier .tex
+%\printindex
+
+%--------------------------------------------------------------------------------
+%page du dos de couverture :
+
+\resume{}%TODO
+
+\motcles{}%TODO
+
+\abstract{}%TODO
+
+\keywords{}%TODO
+
+\makedernierepage
+
+\end{document}
