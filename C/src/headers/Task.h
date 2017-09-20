@@ -1,7 +1,7 @@
 #ifndef TABOU_TASK_H
 #define TABOU_TASK_H
 
-struct _Tast;
+struct _Task;
 
 #include "Instance.h"
 

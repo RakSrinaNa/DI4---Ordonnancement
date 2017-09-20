@@ -1,7 +1,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "headers/Instance.h"
+#include "headers/Task.h"
 #include "headers/Utils.h"
 
 void instance_destroy(Instance * instance)
@@ -11,13 +13,13 @@ void instance_destroy(Instance * instance)
 		for(unsigned int i = 0; i <= instance->taskCount; i++)
 			free(instance->distancesMatrix[i]);
 	free(instance->distancesMatrix);
-	
+
 	//Free the tasks.
 	if(instance->tasks != NULL)
 		for(unsigned int i = 0; i < instance->taskCount; i++)
 			task_destroy(instance->tasks[i]);
 	free(instance->tasks);
-	
+
 	free(instance);
 }
 

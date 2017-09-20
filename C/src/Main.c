@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 #include "unit/headers/MainUnit.h"
+#include "headers/Instance.h"
+#include "headers/Task.h"
 #include "headers/Parser.h"
 
 int main(int argc, char * argv[])
@@ -19,12 +21,12 @@ int main(int argc, char * argv[])
 			filepath = "./../Inputs/Input.txt";
 		}
 	}
-	
+
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	instance_print(instance);
 	//TODO: Compute solution
 	instance_destroy(instance);
-	
+
 	return 0;
 }

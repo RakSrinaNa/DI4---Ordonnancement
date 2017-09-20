@@ -42,15 +42,43 @@
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
 		</Compiler>
-		<Unit filename="src/headers/utils.h" />
+		<Unit filename="src/Instance.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Pack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Parser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Solution.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Task.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/headers/Instance.h" />
+		<Unit filename="src/headers/Pack.h" />
+		<Unit filename="src/headers/Parser.h" />
+		<Unit filename="src/headers/Solution.h" />
+		<Unit filename="src/headers/Task.h" />
+		<Unit filename="src/headers/Utils.h" />
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/unit/headers/mainUnit.h" />
-		<Unit filename="src/unit/headers/unit.h" />
-		<Unit filename="src/unit/mainUnit.c">
+		<Unit filename="src/unit/MainUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/unit/MainUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/UnitUtils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/headers/MainUnit.h" />
+		<Unit filename="src/unit/headers/MainUnit.h" />
+		<Unit filename="src/unit/headers/UnitUtils.h" />
+		<Unit filename="src/unit/headers/unit.h" />
 		<Unit filename="src/unit/unit.c">
 			<Option compilerVar="CC" />
 		</Unit>
