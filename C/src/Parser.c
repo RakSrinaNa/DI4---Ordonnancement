@@ -85,7 +85,7 @@ char * parser_readLine(FILE * file)
 			free(lineRead);
 			lineRead = NULL;
 		}
-		if(getLine(&lineRead, &size, file) == -1) //Read a line, and return NULL if end of file.
+		if(parser_getLine(&lineRead, &size, file) == -1) //Read a line, and return NULL if end of file.
 			return NULL;
 	} while(*lineRead == '\n' || (*lineRead == '\r' && lineRead[1] == '\n')); //While we have a non empty line.
 	return lineRead;
@@ -142,7 +142,7 @@ int * parser_lineToIntArray(char * line, int valuesNumber)
 	return values;
 }
 
-int getLine(char ** linePtr, size_t * lineSize, FILE * file)
+int parser_getLine(char ** linePtr, size_t * lineSize, FILE * file)
 {
 	char * bufferPtr = NULL; //Buffer string.
 	unsigned int writingHead = 0; //Pointer to the writing position in the buffer.
@@ -159,7 +159,7 @@ int getLine(char ** linePtr, size_t * lineSize, FILE * file)
 		return -1;
 	if(bufferPtr == NULL) //If the string passed as parameter is NULL, initialize it.
 	{
-		MMALLOC(bufferPtr, char, 50, NULL);
+		MMALLOC(bufferPtr, char, 50, "parser_getLine");
 		size = 50;
 	}
 	while(charRead != EOF) //While we didn't reach the end of the file.
@@ -167,7 +167,7 @@ int getLine(char ** linePtr, size_t * lineSize, FILE * file)
 		if(writingHead > size - 1U) //If we went over the buffer size (letting space for \0), make it bigger.
 		{
 			size += 50;
-			RREALLOC(bufferPtr, char, size, NULL);
+			RREALLOC(bufferPtr, char, size, "parser_getLine");
 		}
 		bufferPtr[writingHead++] = (char) charRead; //Write the char read into out buffer.
 		if(charRead == '\n') //If it's the end of the line, get out of the while.
