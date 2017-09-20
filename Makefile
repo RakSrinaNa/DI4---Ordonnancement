@@ -7,7 +7,7 @@ EXEC=Tabou
 all: clall $(EXEC) clean
 
 $(EXEC):
-	cd $(SRC_DIR) && $(MAKE) && cd ../.. && mv $(SRC_DIR)/$(EXEC) .
+	cd $(SRC_DIR) && $(MAKE) && cd ../.. && mv $(SRC_DIR)/$(EXEC) ./C
 
 .PHONY: clean
 
@@ -18,4 +18,4 @@ clall:
 	-rm $(EXEC) ; cd $(SRC_DIR) && $(MAKE) $@
 
 test: all
-	./$(EXEC) test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) test
+	cd C && ./$(EXEC) test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) test
