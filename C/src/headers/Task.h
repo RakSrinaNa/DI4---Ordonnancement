@@ -1,6 +1,8 @@
 #ifndef TABOU_TASK_H
 #define TABOU_TASK_H
 
+#include <stdlib.h>
+
 struct _Task;
 
 #include "Instance.h"
