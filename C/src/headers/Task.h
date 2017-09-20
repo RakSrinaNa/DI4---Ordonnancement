@@ -1,8 +1,17 @@
 #ifndef TABOU_TASK_H
 #define TABOU_TASK_H
 
-#include "Structs.h"
+struct _Tast;
+
 #include "Instance.h"
+
+//Structure defining a task.
+typedef struct _Task
+{
+	struct _Instance * instance; //The parent instance.
+	unsigned int * machineDurations; //The duration on each machine.
+	unsigned int dueDate; //The due date.
+} Task;
 
 /**
  * Frees a task.

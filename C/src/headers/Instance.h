@@ -1,6 +1,17 @@
 #ifndef TABOU_INSTANCE_H
 #define TABOU_INSTANCE_H
 
+struct _Instance;
+
+//Structure defining an instance.
+typedef struct _Instance
+{
+	unsigned int machineCount; //Count of machines.
+	unsigned int taskCount; //Count of tasks.
+	unsigned int ** distancesMatrix; //Matrix of the distances for the delivery.
+	struct _Task ** tasks; //List of the tasks of the instance.
+} Instance;
+
 #include <stdio.h>
 #include "Task.h"
 
