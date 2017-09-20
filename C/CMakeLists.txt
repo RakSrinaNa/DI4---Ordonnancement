@@ -17,7 +17,8 @@ set(SOURCE_FILES
         src/Instance.c src/headers/Instance.h
 
         src/Parser.c src/headers/Parser.h
+        src/unit/ParserUnit.c src/unit/ParserUnit.h
 
         src/Solution.c src/headers/Solution.h
-        src/headers/Structs.h)
+        )
 add_executable(Tabou ${SOURCE_FILES})

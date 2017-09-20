@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include "ParserUnit.h"
 
 int mainUnit()
 {
 	setbuf(stdout, NULL);
-	printf("Executing xxx tests...");
-    
+	printf("Executing Parser tests...");
+    parserUnit();
 	printf("OK\n");
 	return 0;
 }

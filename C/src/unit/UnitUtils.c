@@ -7,7 +7,15 @@ void unit_error(char * str)
 	exit(EXIT_FAILURE);
 }
 
-int unit_arrayEquals(int * base, int * compare, int length)
+int unit_intArrayEquals(int * base, int * compare, int length)
+{
+	for(int i = 0; i < length; i++)
+		if(base[i] != compare[i])
+			return 0;
+	return 1;
+}
+
+int unit_uintArrayEquals(unsigned int * base, unsigned int * compare, int length)
 {
 	for(int i = 0; i < length; i++)
 		if(base[i] != compare[i])
