@@ -1,4 +1,64 @@
 #ifndef TABOU_INSTANCE_H
 #define TABOU_INSTANCE_H
 
+#include <stdio.h>
+#include "Task.h"
+
+/**
+ * Frees an instance.
+ *
+ * @param instance The instance to free.
+ */
+void instance_destroy(Instance * instance);
+
+/**
+ * Creates a new instance ready to be used.
+ *
+ * @return A new instance.
+ */
+Instance * instance_create();
+
+/**
+ * Set a distance in the matrix.
+ *
+ * @param instance The instance concerned.
+ * @param from The starting point.
+ * @param to The ending point.
+ * @param distance The distance between these points.
+ */
+static inline void instance_setDistance(Instance * instance, unsigned int from, unsigned int to, unsigned int distance)
+{
+	if(from > instance->taskCount || to > instance->taskCount)
+	{
+		fprintf(stderr, "INSTANCE: Error when setting distance, index out of range (from: %d, to: %d).", from, to);
+		exit(EXIT_FAILURE);
+	}
+	instance->distancesMatrix[from][to] = distance;
+}
+
+/**
+ * Get a distance from the matrix.
+ *
+ * @param instance The instance concerned.
+ * @param from The starting point.
+ * @param to The ending point.
+ * @return The distance between these points.
+ */
+static inline unsigned int instance_getDistance(Instance * instance, unsigned int from, unsigned int to)
+{
+	if(from > instance->taskCount || to > instance->taskCount)
+	{
+		fprintf(stderr, "INSTANCE: Error when getting distance, index out of range (from: %d, to: %d).", from, to);
+		exit(EXIT_FAILURE);
+	}
+	return instance->distancesMatrix[from][to];
+}
+
+/**
+ * Prints an instance in the console.
+ *
+ * @param instance The instance to print.
+ */
+void instance_print(Instance * instance);
+
 #endif //TABOU_INSTANCE_H
