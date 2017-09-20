@@ -1,0 +1,4 @@
+#ifndef TABOU_SOLUTION_H
+#define TABOU_SOLUTION_H
+
+#endif //TABOU_SOLUTION_H

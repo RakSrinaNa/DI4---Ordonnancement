@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "unit/headers/mainUnit.h"
+#include "unit/headers/MainUnit.h"
 
 int main(int argc, char * argv[])
 {

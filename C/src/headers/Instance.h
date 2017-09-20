@@ -1,0 +1,4 @@
+#ifndef TABOU_INSTANCE_H
+#define TABOU_INSTANCE_H
+
+#endif //TABOU_INSTANCE_H

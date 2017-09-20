@@ -6,9 +6,9 @@ set_property(TARGET PROPERTY C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-        src/main.c
-        src/unit/mainUnit.c src/unit/headers/mainUnit.h
-        src/unit/unit.c src/unit/headers/unit.h
-        src/headers/utils.h
-        )
+        src/Main.c
+        src/unit/MainUnit.c src/unit/headers/MainUnit.h
+        src/unit/UnitUtils.c src/unit/headers/UnitUtils.h
+        src/headers/Utils.h
+        src/Instance.c src/headers/Instance.h src/Solution.c src/headers/Solution.h src/Task.c src/headers/Task.h src/Pack.c src/headers/Pack.h)
 add_executable(Tabou ${SOURCE_FILES})
