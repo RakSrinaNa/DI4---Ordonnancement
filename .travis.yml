@@ -7,3 +7,4 @@ notifications:
   email: true
   on_failure: always
   on_success: change
+  webhooks: https://mrcraftcod.fr/travis-ci.php
