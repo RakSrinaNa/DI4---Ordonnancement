@@ -15,9 +15,10 @@ set(SOURCE_FILES
         src/Pack.c src/headers/Pack.h
 
         src/Instance.c src/headers/Instance.h
+        src/unit/InstanceUnit.c src/unit/headers/InstanceUnit.h
 
         src/Parser.c src/headers/Parser.h
-        src/unit/ParserUnit.c src/unit/ParserUnit.h
+        src/unit/ParserUnit.c src/unit/headers/ParserUnit.h
 
         src/Solution.c src/headers/Solution.h
         )
