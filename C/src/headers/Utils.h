@@ -2,6 +2,7 @@
 #define UTILS
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MMIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 

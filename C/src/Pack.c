@@ -1,6 +1,19 @@
 #include "headers/Pack.h"
+#include "headers/Utils.h"
 
-void temp()
+Pack * pack_create()
 {
-	//TODO: Remove
+	Pack * pack = NULL;
+	MMALLOC(pack, Pack, 1, "pack_create");
+	pack->taskCount = 0;
+	pack->processOrder = NULL;
+	pack->deliveryOrder = NULL;
+	return pack;
+}
+
+void pack_destroy(Pack * pack)
+{
+	free(pack->processOrder);
+	free(pack->deliveryOrder);
+	free(pack);
 }
