@@ -13,6 +13,7 @@ Task * task_create(Instance * instance)
 {
 	Task * task;
 	MMALLOC(task, Task, 1, "task_create");
+	task->machineDurations = NULL;
 	task->instance = instance;
 	task->dueDate = 0;
 	MMALLOC(task->machineDurations, unsigned int, instance->machineCount, "task_create");

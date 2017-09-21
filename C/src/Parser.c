@@ -94,7 +94,7 @@ char * parser_readLine(FILE * file)
 
 int * parser_lineToIntArray(char * line, int valuesNumber)
 {
-	int * values;
+	int * values = NULL;
 	MMALLOC(values, int, valuesNumber, "parser_lineToIntArray");
 
 	int valuesLength = 0; //Number of values actually put in the array.

@@ -11,6 +11,7 @@ set(SOURCE_FILES
         src/unit/UnitUtils.c src/unit/headers/UnitUtils.h
 
         src/Task.c src/headers/Task.h
+        src/unit/TaskUnit.c src/unit/headers/TaskUnit.h
 
         src/Pack.c src/headers/Pack.h
 
