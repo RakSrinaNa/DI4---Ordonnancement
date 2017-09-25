@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 		}
 		else if(strcmp(argv[1], "temp") == 0) // For internal testing.
 		{
-			filepath = "./../Inputs/Input.txt";
+			filepath = "./../Inputs/input.txt";
 		}
 	}
 

@@ -66,22 +66,26 @@
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/unit/MainUnit.c">
+		<Unit filename="src/unit/InstanceUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/unit/MainUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/ParserUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/TaskUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/unit/UnitUtils.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/unit/headers/InstanceUnit.h" />
 		<Unit filename="src/unit/headers/MainUnit.h" />
-		<Unit filename="src/unit/headers/MainUnit.h" />
+		<Unit filename="src/unit/headers/ParserUnit.h" />
+		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
-		<Unit filename="src/unit/headers/unit.h" />
-		<Unit filename="src/unit/unit.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<envvars />
 			<code_completion />

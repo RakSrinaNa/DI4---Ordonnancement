@@ -1,6 +1,8 @@
 #ifndef TABOU_SOLUTION_H
 #define TABOU_SOLUTION_H
 
+#include "Pack.h"
+
 struct _Solution;
 
 typedef struct _Solution

@@ -24,6 +24,6 @@ void task_print(Task * task)
 {
 	printf("Due date: %d\nTimes: ", task->dueDate);
 	for(unsigned int i = 0; i < task->instance->machineCount; i++)
-		printf("%d\t", task_getMachineDuration(task, i));
+		printf("%-6d", task_getMachineDuration(task, i));
 	printf("\n");
 }

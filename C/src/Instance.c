@@ -46,7 +46,7 @@ void instance_print(Instance * instance)
 	for(unsigned int i = 0; i <= instance->taskCount; i++)
 	{
 		for(unsigned int j = 0; j <= instance->taskCount; j++)
-			printf("\t%d", instance_getDistance(instance, i, j));
+			printf("%-4d", instance_getDistance(instance, i, j));
 		printf("\n");
 	}
 }

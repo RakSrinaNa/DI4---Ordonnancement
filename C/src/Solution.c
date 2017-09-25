@@ -1,5 +1,8 @@
 #include "headers/Solution.h"
 
+#include "headers/Utils.h"
+#include "headers/Pack.h"
+
 Solution* solution_create()
 {
 	Solution *solution = NULL;
