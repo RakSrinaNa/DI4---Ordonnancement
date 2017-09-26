@@ -2,7 +2,7 @@
 
 void unit_error(char * str)
 {
-	fprintf(stderr, str);
+	fprintf(stderr, "%s\n", str);
 	raise(SIGINT);
 	exit(EXIT_FAILURE);
 }
