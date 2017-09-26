@@ -98,7 +98,7 @@ void pack_moveDelivery(Pack *pack, unsigned int delivery, unsigned int position)
 		unsigned int index = pack_getTaskIndex(pack, delivery);
 		unsigned int temp = pack->deliveryOrder[index]; // TODO : renommer temp
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
-		for(unsigned int i = index; i != position && i >= 0 && i < pack->taskCount; i += direction)
+		for(unsigned int i = index; i != position && i < pack->taskCount; i += direction)
 		{
 			pack->deliveryOrder[i] = pack->deliveryOrder[i + direction];
 		}
