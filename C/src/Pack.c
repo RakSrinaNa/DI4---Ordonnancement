@@ -1,7 +1,6 @@
 #include "headers/Pack.h"
-#include "headers/Utils.h"
 
-Pack * pack_create(Instance *instance)
+Pack * pack_create(Instance * instance)
 {
 	Pack * pack = NULL;
 	MMALLOC(pack, Pack, 1, "pack_create");
@@ -17,7 +16,7 @@ void pack_destroy(Pack * pack)
 	free(pack);
 }
 
-Bool pack_hasTask(Pack *pack, unsigned int task)
+Bool pack_hasTask(Pack * pack, unsigned int task)
 {
 	for(unsigned int i = 0; i < pack->taskCount; i++)
 	{
@@ -27,7 +26,7 @@ Bool pack_hasTask(Pack *pack, unsigned int task)
 	return False;
 }
 
-int pack_getTaskIndex(Pack *pack, unsigned int task)
+int pack_getTaskIndex(Pack * pack, unsigned int task)
 {
 	for(unsigned int i = 0; i < pack->taskCount; i++)
 	{
@@ -37,7 +36,7 @@ int pack_getTaskIndex(Pack *pack, unsigned int task)
 	return -1;
 }
 
-void pack_addTask(Pack *pack, unsigned int task)
+void pack_addTask(Pack * pack, unsigned int task)
 {
 	if(task < pack->instance->taskCount)
 	{
@@ -54,13 +53,12 @@ void pack_addTask(Pack *pack, unsigned int task)
 		{
 			pack->taskCount++;
 			RREALLOC(pack->deliveryOrder, unsigned int, pack->taskCount, "pack_addTask");
-			pack->deliveryOrder[pack->taskCount-1] = task;
+			pack->deliveryOrder[pack->taskCount - 1] = task;
 		}
 	}
-	
 }
 
-void pack_removeTask(Pack *pack, unsigned int task)
+void pack_removeTask(Pack * pack, unsigned int task)
 {
 	unsigned int i;
 	unsigned int found = 0;
@@ -80,7 +78,7 @@ void pack_removeTask(Pack *pack, unsigned int task)
 	}
 }
 
-void pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int delivery2)
+void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2)
 {
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
 	{
@@ -91,7 +89,7 @@ void pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int delive
 	}
 }
 
-void pack_moveDelivery(Pack *pack, unsigned int delivery, unsigned int position)
+void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position)
 {
 	if(pack_hasTask(pack, delivery) && pack->taskCount > position)
 	{

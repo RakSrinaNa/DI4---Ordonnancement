@@ -5,7 +5,7 @@
 
 void packUnit()
 {
-	Instance * instance = parser_readInstanceFromFile("./unitResources/instance2.txt");
+	Instance * instance = parser_readInstanceFromFile("./unitResources/Instance2.txt");
 	
 	pack_destroy(pack_create(instance));
 	
