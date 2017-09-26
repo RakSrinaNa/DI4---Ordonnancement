@@ -4,6 +4,7 @@
 #include "headers/ParserUnit.h"
 #include "headers/InstanceUnit.h"
 #include "headers/TaskUnit.h"
+#include "headers/PackUnit.h"
 
 int mainUnit()
 {
@@ -16,7 +17,11 @@ int mainUnit()
 	instanceUnit();
 	printf("OK\n");
 	printf("Executing Parser tests...");
-    parserUnit();
+	parserUnit();
+	printf("OK\n");
+	
+	printf("Executing Pack tests...");
+	packUnit();
 	printf("OK\n");
 	return 0;
 }
