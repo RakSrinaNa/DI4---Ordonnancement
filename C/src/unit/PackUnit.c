@@ -61,8 +61,19 @@ void packUnit()
 		unit_error("Pack 12: Bad move non-existing task");
 	
 	pack_moveDelivery(pack, 0, 99);
+	unsigned int correctOrder6[] = {2, 1, 0};
+	if(!unit_uintArrayEquals(correctOrder6, pack->deliveryOrder, 3))
+		unit_error("Pack 13: Bad move forward");
 	
-	pack_removeTask(pack, 0);
+	pack_removeTask(pack, 1);
+	unsigned int correctOrder7[] = {2, 0};
+	if(!unit_uintArrayEquals(correctOrder7, pack->deliveryOrder, 2))
+		unit_error("Pack 13: Bad delete");
+	
+	pack_removeTask(pack, 2);
+	unsigned int correctOrder8[] = {0};
+	if(!unit_uintArrayEquals(correctOrder8, pack->deliveryOrder, 1))
+		unit_error("Pack 14: Bad delete");
 	
 	pack_destroy(pack);
 }

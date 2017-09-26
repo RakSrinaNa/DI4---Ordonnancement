@@ -21,7 +21,7 @@ void unit_error(char * str);
  * @param length The arrays length.
  * @return 1 if the same, 0 else.
  */
-int unit_intArrayEquals(int * base, int * compare, int length);
+int unit_intArrayEquals(const int * base, const int * compare, int length);
 
 /**
  * Test if two unsigned int arrays are the same.
@@ -30,6 +30,6 @@ int unit_intArrayEquals(int * base, int * compare, int length);
  * @param length The arrays length.
  * @return 1 if the same, 0 else.
  */
-int unit_uintArrayEquals(unsigned int * base, unsigned int * compare, int length);
+int unit_uintArrayEquals(const unsigned int * base, const unsigned int * compare, int length);
 
 #endif
