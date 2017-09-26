@@ -7,4 +7,4 @@ notifications:
   email: false
   on_failure: always
   on_success: always
-  webhooks: https://mrcraftcod.fr/travis-ci.php
+  webhooks: https://travis-webhook-discord.herokuapp.com/webhook
