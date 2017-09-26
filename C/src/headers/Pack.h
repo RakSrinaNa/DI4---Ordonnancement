@@ -1,13 +1,13 @@
 #ifndef TABOU_PACK_H
 #define TABOU_PACK_H
 
+#include "Instance.h"
+
 struct _Pack;
 
 typedef struct _Pack
 {
-	Instance * instance; // Reference to the parent instance.
 	unsigned int taskCount; //Number of tasks in this pack.
-	unsigned int * processOrder; //Ordered list of the IDs of the task representing the process order.
 	unsigned int * deliveryOrder; //Ordered list of the IDs of the task representing the delivery order.
 } Pack;
 
@@ -31,16 +31,7 @@ void pack_destroy(Pack * pack);
  * @param pack The pack.
  * @param task The index of the task.
  */
-int pack_addTask(Pack *pack, unsigned int task);
-
-/**
- * Switches two processes in the process list.
- *
- * @param pack The pack.
- * @param process1 The first process.
- * @param process2 The second process.
- */
-int pack_switchProcess(Pack *pack, unsigned int process1, unsigned int process2);
+void pack_addTask(Pack *pack, unsigned int task);
 
 /**
  * Switches two deliveries in the delivery list.
@@ -49,8 +40,16 @@ int pack_switchProcess(Pack *pack, unsigned int process1, unsigned int process2)
  * @param delivery1 The first delivery.
  * @param delivery2 The second delivery.
  */
-int pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int delivery2);
+void pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int delivery2);
 
+/**
+ * Moves a delivery in the delivery list.
+ *
+ * @param pack The pack.
+ * @param delivery The first delivery.
+ * @param position The new position.
+ */
+void pack_moveDelivery(Pack *pack, unsigned int delivery, unsigned int position);
 
 /**
  * Removes a task from the lists.
@@ -58,6 +57,6 @@ int pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int deliver
  * @param pack The pack.
  * @param task The task to remove.
  */
-int pack_removeTask(Pack *pack, unsigned int task);
+void pack_removeTask(Pack *pack, unsigned int task);
 
 #endif //TABOU_PACK_H
