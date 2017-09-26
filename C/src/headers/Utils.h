@@ -29,4 +29,10 @@
  */
 #define RREALLOC(p, t, n, m) if((n) == 0){free(p);(p)=NULL;}else{(p) = REALLOC(t, p, n); RCHECK(p, m)};
 
+typedef enum
+{
+	False = 0,
+	True = 1
+} Bool;
+
 #endif
