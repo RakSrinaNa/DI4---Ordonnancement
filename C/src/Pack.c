@@ -60,12 +60,11 @@ void pack_addTask(Pack * pack, unsigned int task)
 
 void pack_removeTask(Pack * pack, unsigned int task)
 {
-	unsigned int i;
-	unsigned int found = 0;
-	for(i = 0; i < pack->taskCount; i++)
+	Bool found = False;
+	for(unsigned int i = 0; i < pack->taskCount; i++)
 	{
 		if(pack->deliveryOrder[i] == task)
-			found = 1;
+			found = True;
 		if(found)
 		{
 			pack->deliveryOrder[i] = pack->deliveryOrder[i];
@@ -82,8 +81,8 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
 {
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
 	{
-		unsigned int pos1 = pack_getTaskIndex(pack, delivery1);
-		unsigned int pos2 = pack_getTaskIndex(pack, delivery2);
+		unsigned int pos1 = (unsigned int) pack_getTaskIndex(pack, delivery1);
+		unsigned int pos2 = (unsigned int) pack_getTaskIndex(pack, delivery2);
 		pack->deliveryOrder[pos1] = delivery2;
 		pack->deliveryOrder[pos2] = delivery1;
 	}
@@ -93,13 +92,13 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 {
 	if(pack_hasTask(pack, delivery) && pack->taskCount > position)
 	{
-		unsigned int index = pack_getTaskIndex(pack, delivery);
-		unsigned int temp = pack->deliveryOrder[index]; // TODO : renommer temp
+		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
+		unsigned int oldValue = pack->deliveryOrder[index];
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
 		for(unsigned int i = index; i != position && i < pack->taskCount; i += direction)
 		{
 			pack->deliveryOrder[i] = pack->deliveryOrder[i + direction];
 		}
-		pack->deliveryOrder[position] = temp;
+		pack->deliveryOrder[position] = oldValue;
 	}
 }
