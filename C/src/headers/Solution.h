@@ -10,7 +10,6 @@ typedef struct _Solution
 	Instance *instance; // Reference to the instance.
 	unsigned int packCount; // Number of packs in this solution.
 	Pack *packList; // Ordered list of the packs in shipping order.
-	unsigned int processCount; // Number of processes in this solution.
 	unsigned int * processOrder; // Order of the processes of the solution.
 } Solution;
 
@@ -19,7 +18,7 @@ typedef struct _Solution
  *
  * @return A new solution.
 */
-Solution* solution_create();
+Solution* solution_create(Instance *instance);
 
 
 /**

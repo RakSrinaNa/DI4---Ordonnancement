@@ -1,4 +1,5 @@
 #include "headers/Pack.h"
+#include "headers/Utils.h"
 
 Pack * pack_create(Instance * instance)
 {
@@ -63,12 +64,12 @@ void pack_removeTask(Pack * pack, unsigned int task)
 	Bool found = False;
 	for(unsigned int i = 0; i < pack->taskCount; i++)
 	{
-		if(pack->deliveryOrder[i] == task)
-			found = True;
 		if(found)
 		{
-			pack->deliveryOrder[i] = pack->deliveryOrder[i];
+			pack->deliveryOrder[i-1] = pack->deliveryOrder[i];
 		}
+		if(pack->deliveryOrder[i] == task)
+			found = True;
 	}
 	if(found)
 	{
@@ -90,7 +91,7 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
 
 void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position)
 {
-	if(pack_hasTask(pack, delivery) && pack->taskCount > position)
+	if(pack_hasTask(pack, delivery))
 	{
 		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
 		unsigned int oldValue = pack->deliveryOrder[index];
@@ -99,6 +100,6 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 		{
 			pack->deliveryOrder[i] = pack->deliveryOrder[i + direction];
 		}
-		pack->deliveryOrder[position] = oldValue;
+		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = oldValue;
 	}
 }
