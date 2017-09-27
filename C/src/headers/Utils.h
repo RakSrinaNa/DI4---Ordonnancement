@@ -21,22 +21,21 @@
  * @param n Number of elements of this type to allocate.
  * @param m Message in case of failure.
  */
-#define MMALLOC(p, t, n, m) if((n) == 0){free(p);(p)=NULL;}else{(p) = MALLOC(t, n); MCHECK(p, m)};
+#define MMALLOC(p, t, n, m) {if((n) == 0){free(p);(p)=NULL;}else{(p) = MALLOC(t, n); MCHECK(p, m)}};
 /**
  * @param p The variable that will contain the allocated pointer.
  * @param t Type to allocate.
  * @param n Number of elements of this type to allocate.
  * @param m Message in case of failure.
  */
-#define RREALLOC(p, t, n, m) if((n) == 0){free(p);(p)=NULL;}else{(p) = REALLOC(t, p, n); RCHECK(p, m)};
+#define RREALLOC(p, t, n, m) {if((n) == 0){free(p);(p)=NULL;}else{(p) = REALLOC(t, p, n); RCHECK(p, m)}};
 
 typedef enum
 {
-	False = 0,
-	True = 1
+	False = 0, True = 1
 } Bool;
 
-void warn(char * format,  ...);
+void warn(char * format, ...);
 
 void fatal_error(char * format, ...);
 

@@ -27,7 +27,7 @@ void unit_breakpoint();
  * @param length The arrays length.
  * @return True if the same, False else.
  */
-int unit_intArrayEquals(const int * base, const int * compare, int length);
+Bool unit_intArrayEquals(const int * base, const int * compare, int length);
 
 /**
  * Test if two unsigned int arrays are the same.

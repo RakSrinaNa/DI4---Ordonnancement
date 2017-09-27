@@ -1,5 +1,4 @@
 #include "headers/Pack.h"
-#include "headers/Utils.h"
 
 Pack * pack_create(Instance * instance)
 {
@@ -20,20 +19,16 @@ void pack_destroy(Pack * pack)
 Bool pack_hasTask(Pack * pack, unsigned int task)
 {
 	for(unsigned int i = 0; i < pack->taskCount; i++)
-	{
 		if(pack->deliveryOrder[i] == task)
 			return True;
-	}
 	return False;
 }
 
 int pack_getTaskIndex(Pack * pack, unsigned int task)
 {
 	for(unsigned int i = 0; i < pack->taskCount; i++)
-	{
 		if(pack->deliveryOrder[i] == task)
 			return (int) i;
-	}
 	return -1;
 }
 
@@ -67,9 +62,7 @@ Bool pack_removeTask(Pack * pack, unsigned int task)
 	for(unsigned int i = 0; i < pack->taskCount; i++)
 	{
 		if(found)
-		{
-			pack->deliveryOrder[i-1] = pack->deliveryOrder[i];
-		}
+			pack->deliveryOrder[i - 1] = pack->deliveryOrder[i];
 		if(pack->deliveryOrder[i] == task)
 			found = True;
 	}
@@ -85,7 +78,8 @@ Bool pack_removeTask(Pack * pack, unsigned int task)
 
 void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2)
 {
-	if(delivery1 == delivery2) return;
+	if(delivery1 == delivery2)
+		return;
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
 	{
 		unsigned int pos1 = (unsigned int) pack_getTaskIndex(pack, delivery1);
@@ -104,9 +98,7 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
 		for(unsigned int i = index; i != position && i < pack->taskCount; i += direction)
-		{
 			pack->deliveryOrder[i] = pack->deliveryOrder[i + direction];
-		}
 		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = delivery;
 	}
 	else

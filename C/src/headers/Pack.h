@@ -18,7 +18,7 @@ typedef struct _Pack
  *
  * @return A new pack.
  */
-Pack * pack_create(Instance *instance);
+Pack * pack_create(Instance * instance);
 
 /**
  * Frees a pack.
@@ -34,7 +34,7 @@ void pack_destroy(Pack * pack);
  * @param task The task id to check.
  * @return True if the task is present, False otherwise.
  */
-Bool pack_hasTask(Pack *pack, unsigned int task);
+Bool pack_hasTask(Pack * pack, unsigned int task);
 
 /**
  * Gets the index of the given task.
@@ -43,7 +43,7 @@ Bool pack_hasTask(Pack *pack, unsigned int task);
  * @param task The task id to get.
  * @return The index of the task if it is present, -1 otherwise.
  */
-int pack_getTaskIndex(Pack *pack, unsigned int task);
+int pack_getTaskIndex(Pack * pack, unsigned int task);
 
 /**
  * Adds a task to the lists.
@@ -51,7 +51,7 @@ int pack_getTaskIndex(Pack *pack, unsigned int task);
  * @param pack The pack.
  * @param task The task id.
  */
-void pack_addTask(Pack *pack, unsigned int task);
+void pack_addTask(Pack * pack, unsigned int task);
 
 /**
  * Removes a task from the lists.
@@ -60,7 +60,7 @@ void pack_addTask(Pack *pack, unsigned int task);
  * @param task The task id to remove.
  * @return True if the pack is empty, False otherwise
  */
-Bool pack_removeTask(Pack *pack, unsigned int task);
+Bool pack_removeTask(Pack * pack, unsigned int task);
 
 /**
  * Switches two deliveries in the delivery list.
@@ -70,7 +70,7 @@ Bool pack_removeTask(Pack *pack, unsigned int task);
  * @param delivery1 The first delivery id.
  * @param delivery2 The second delivery id.
  */
-void pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int delivery2);
+void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2);
 
 /**
  * Moves a delivery in the delivery list.
@@ -80,6 +80,6 @@ void pack_switchDelivery(Pack *pack, unsigned int delivery1, unsigned int delive
  * @param delivery The first delivery id.
  * @param position The new position.
  */
-void pack_moveDelivery(Pack *pack, unsigned int delivery, unsigned int position);
+void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position);
 
 #endif //TABOU_PACK_H

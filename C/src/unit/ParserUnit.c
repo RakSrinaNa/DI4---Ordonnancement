@@ -18,7 +18,6 @@ void parserUnit()
 			unit_error("Parser 4: Wrong distance matrix.");
 	instance_destroy(instance1);
 	
-	
 	Instance * instance2 = parser_readInstanceFromFile("./unitResources/Instance2.txt");
 	if(instance2->machineCount != 3 || instance2->taskCount != 5)
 		unit_error("Parser 5: Wrong machine or task count.");
