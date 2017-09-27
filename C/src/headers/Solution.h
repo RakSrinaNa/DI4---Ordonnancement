@@ -28,6 +28,33 @@ Solution* solution_create(Instance *instance);
 */
 void solution_destroy(Solution *solution);
 
+
+/**
+ * Gets the index of the given pack.
+ *
+ * @param solution The solution.
+ * @param pack The pack id to get.
+ * @return The index of the pack if it is present, -1 otherwise.
+ */
+int solution_getPackIndex(Solution *solution, unsigned int pack);
+
+/**
+ * Gets the index of the given task.
+ *
+ * @param solution The solution.
+ * @param task The task id to get.
+ * @return The index of the task if it is present, -1 otherwise.
+ */
+int solution_getProcessIndex(Solution *solution, unsigned int task);
+
+/**
+ * Moves a task in the task list.
+ * If the position is greater than the task count, it is moved at the end of the list.
+ *
+ * @param solution The solution.
+ * @param task The task to move.
+ * @param position The new position.
+ */
 void solution_setProcessIndex(Solution *solution, unsigned int task, unsigned int position);
 
 #endif //TABOU_SOLUTION_H

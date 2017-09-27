@@ -100,13 +100,12 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 	if(pack_hasTask(pack, delivery))
 	{
 		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
-		unsigned int oldValue = pack->deliveryOrder[index];
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
 		for(unsigned int i = index; i != position && i < pack->taskCount; i += direction)
 		{
 			pack->deliveryOrder[i] = pack->deliveryOrder[i + direction];
 		}
-		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = oldValue;
+		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = delivery;
 	}
 	else
 		warn("WARNING : pack_moveDelivery : given position is out of range (%d)\n", position);
