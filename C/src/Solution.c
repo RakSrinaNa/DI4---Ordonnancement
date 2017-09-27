@@ -19,13 +19,12 @@ Solution* solution_create(Instance *instance)
 	return solution;
 }
 
-void solution_delete(Solution* solution)
+void solution_destroy(Solution* solution)
 {
 	free(solution->packList);
 	free(solution->processOrder);
 	free(solution);
 }
-
 
 int solution_getPackIndex(Solution *solution, unsigned int pack)
 {

@@ -19,11 +19,17 @@ void solutionUnit()
 	solution_setProcessIndex(solution, 3, 0);
 	solution_setProcessIndex(solution, 4, 3);
 	solution_setProcessIndex(solution, 2, 2);
-	if(solution->processOrder[0] != 3 || solution->processOrder[2] != 2 || solution->processOrder[3] != 4)
+	unsigned int correctOrder1[] = {3, 0, 2, 1, 4};
+	if(!unit_uintArrayEquals(correctOrder1, solution->processOrder, 5))
 		unit_error("Solution 3: Bad process index");
 	
 	solution_setProcessIndex(solution, 99, 2);
-	if(solution->processOrder[2] != 2)
+	if(!unit_uintArrayEquals(correctOrder1, solution->processOrder, 5))
+		unit_error("Solution 4: Bad process index");
+	
+	solution_setProcessIndex(solution, 2, 99);
+	unsigned int correctOrder2[] = {3, 0, 1, 4, 2};
+	if(!unit_uintArrayEquals(correctOrder2, solution->processOrder, 5))
 		unit_error("Solution 4: Bad process index");
 	
 	instance_destroy(instance);
