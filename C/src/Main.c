@@ -43,3 +43,13 @@ void warn(char * format, ...)
 		va_end(args);
 	}
 }
+
+void fatal_error(char * format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	fprintf(stderr, "FATAL ERROR!\n |-\t");
+	vfprintf(stderr, format, args);
+	va_end(args);
+	exit(EXIT_FAILURE);
+}

@@ -38,4 +38,6 @@ typedef enum
 
 void warn(char * format,  ...);
 
+void fatal_error(char * format, ...);
+
 #endif
