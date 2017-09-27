@@ -79,7 +79,7 @@ int solution_getTaskPack(Solution *solution, unsigned int task)
 
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack)
 {
-	int index = solution_getTaskPackIndex(solution, task);
+	int index = solution_getTaskPack(solution, task);
 	if(index == -1)
 	{
 		warn("WARNING : solution_moveTaskPack : given task does not exist (%d)\n");
@@ -95,7 +95,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 	if(pack < solution->packCount)
 	{
 		pack_addTask(solution->packList[pack], task);
-		if(pack_removeTask(solution->packList[index]))
+		if(pack_removeTask(solution->packList[index], task))
 		{
 			pack_destroy(solution->packList[index]);
 			for(unsigned int i = index; i < solution->packCount-2; i++)

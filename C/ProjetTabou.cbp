@@ -56,10 +56,8 @@
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
 		</Compiler>
+		<Unit filename="src/FLAGS.h" />
 		<Unit filename="src/Instance.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/Main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/Pack.c">
@@ -80,6 +78,9 @@
 		<Unit filename="src/headers/Solution.h" />
 		<Unit filename="src/headers/Task.h" />
 		<Unit filename="src/headers/Utils.h" />
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/unit/InstanceUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -92,6 +93,9 @@
 		<Unit filename="src/unit/ParserUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/unit/SolutionUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/unit/TaskUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -99,11 +103,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/unit/headers/InstanceUnit.h" />
+		<Unit filename="src/unit/headers/MainUnit.h" />
 		<Unit filename="src/unit/headers/PackUnit.h" />
 		<Unit filename="src/unit/headers/ParserUnit.h" />
+		<Unit filename="src/unit/headers/SolutionUnit.h" />
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
-		<Unit filename="src/unit/headers/MainUnit.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

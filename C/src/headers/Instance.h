@@ -14,6 +14,7 @@ typedef struct _Instance
 
 #include <stdio.h>
 #include "Task.h"
+#include "Utils.h"
 
 /**
  * Frees an instance.
