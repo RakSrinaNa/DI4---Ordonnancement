@@ -58,8 +58,9 @@ void pack_addTask(Pack *pack, unsigned int task);
  *
  * @param pack The pack.
  * @param task The task id to remove.
+ * @return True if the pack is empty, False otherwise
  */
-void pack_removeTask(Pack *pack, unsigned int task);
+Bool pack_removeTask(Pack *pack, unsigned int task);
 
 /**
  * Switches two deliveries in the delivery list.

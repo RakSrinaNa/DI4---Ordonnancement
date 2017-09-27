@@ -61,7 +61,7 @@ void pack_addTask(Pack * pack, unsigned int task)
 	}
 }
 
-void pack_removeTask(Pack * pack, unsigned int task)
+Bool pack_removeTask(Pack * pack, unsigned int task)
 {
 	Bool found = False;
 	for(unsigned int i = 0; i < pack->taskCount; i++)
@@ -80,10 +80,12 @@ void pack_removeTask(Pack * pack, unsigned int task)
 	}
 	else
 		warn("WARNING : pack_removeTask : provided task is not in the list (%d)", task);
+	return (pack->taskCount > 0 ? False : True);
 }
 
 void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2)
 {
+	if(delivery1 == delivery2) return;
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
 	{
 		unsigned int pos1 = (unsigned int) pack_getTaskIndex(pack, delivery1);

@@ -29,6 +29,7 @@ void solution_destroy(Solution* solution)
 int solution_getPackIndex(Solution *solution, unsigned int pack)
 {
 	// TODO : faire ça
+	return 0;
 }
 
 int solution_getProcessIndex(Solution *solution, unsigned int task)
@@ -43,18 +44,70 @@ int solution_getProcessIndex(Solution *solution, unsigned int task)
 
 void solution_setProcessIndex(Solution *solution, unsigned int task, unsigned int position)
 {
-	if(task < solution->packCount)
+	if(task < solution->instance->taskCount)
 	{
 		unsigned int index = solution_getProcessIndex(solution, task);
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
-		for(unsigned int i = index; i != position && i < solution->packCount; i += direction)
+		for(unsigned int i = index; i != position && i < solution->instance->taskCount; i += direction)
 		{
 			solution->processOrder[i] = solution->processOrder[i + direction];
 		}
-		solution->processOrder[MMIN(position, solution->packCount - 1)] = task;
+		solution->processOrder[MMIN(position, solution->instance->taskCount - 1)] = task;
 	}
 	else
 		warn("WARNING : solution_setProcessIndex : given process does not exist (%d)\n", task);
+}
+
+int solution_getTaskPack(Solution *solution, unsigned int task)
+{
+	if(task >= solution->instance->taskCount)
+	{
+		warn("WARNING : solution_getTaskPack : given task does not exist (%d)\n", task);
+		return -1;
+	}
+	for(unsigned int i = 0; i < solution->packCount; i++)
+	{
+		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
+		{
+			if(solution->packList[i]->deliveryOrder[j] == task)
+				return i;
+		}
+	}
+	fatal_error("CRITICAL : solution_getTask : given task exists, but is not in any pack (%d)", task);
+	return -1;
+}
+
+void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack)
+{
+	int index = solution_getTaskPackIndex(solution, task);
+	if(index == -1)
+	{
+		warn("WARNING : solution_moveTaskPack : given task does not exist (%d)\n");
+		return;
+	}
+	if(index == pack) return;
+	if(pack == solution->packCount)
+	{
+		solution->packCount++;
+		RREALLOC(solution->packList, Pack*, solution->packCount, "solution_setTaskPackIndex");
+		solution->packList[solution->packCount-1] = pack_create(solution->instance);
+	}
+	if(pack < solution->packCount)
+	{
+		pack_addTask(solution->packList[pack], task);
+		if(pack_removeTask(solution->packList[index]))
+		{
+			pack_destroy(solution->packList[index]);
+			for(unsigned int i = index; i < solution->packCount-2; i++)
+			{
+				solution->packList[i] = solution->packList[i+1];
+			}
+			solution->packCount--;
+			RREALLOC(solution->packList, Pack*, solution->packCount, "solution_moveTaskPack");
+		}
+	}
+	else
+		warn("WARNING : solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
 }
 
 

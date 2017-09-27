@@ -41,8 +41,7 @@ static inline void instance_setDistance(Instance * instance, unsigned int from, 
 {
 	if(from > instance->taskCount || to > instance->taskCount)
 	{
-		fprintf(stderr, "INSTANCE: Error when setting distance, index out of range (from: %d, to: %d).", from, to);
-		exit(EXIT_FAILURE);
+		fatal_error("CRITICAL : instance_setDistance : Error when setting distance, index out of range (from: %d, to: %d).", from, to);
 	}
 	instance->distancesMatrix[from][to] = distance;
 }
@@ -59,8 +58,7 @@ static inline unsigned int instance_getDistance(Instance * instance, unsigned in
 {
 	if(from > instance->taskCount || to > instance->taskCount)
 	{
-		fprintf(stderr, "INSTANCE: Error when getting distance, index out of range (from: %d, to: %d).", from, to);
-		exit(EXIT_FAILURE);
+		fatal_error("CRITICAL : instance_getDistance : Error when getting distance, index out of range (from: %d, to: %d).", from, to);
 	}
 	return instance->distancesMatrix[from][to];
 }
