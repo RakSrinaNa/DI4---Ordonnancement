@@ -59,6 +59,9 @@ void packUnit()
 	if(!unit_uintArrayEquals(correctOrder5, pack->deliveryOrder, 3))
 		unit_error("Pack 11: Bad move backward");
 	
+	if(pack_getTaskIndex(pack, 0) != 0 || pack_getTaskIndex(pack, 2) != 1 || pack_getTaskIndex(pack, 1) != 2)
+		unit_error("Pack: 11.5: Bad index");
+	
 	pack_moveDelivery(pack, 99, 0);
 	if(!unit_uintArrayEquals(correctOrder5, pack->deliveryOrder, 3))
 		unit_error("Pack 12: Bad move non-existing task");
