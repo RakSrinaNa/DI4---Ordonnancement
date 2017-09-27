@@ -99,15 +99,19 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/unit/headers/InstanceUnit.h" />
-		<Unit filename="src/unit/headers/MainUnit.h" />
 		<Unit filename="src/unit/headers/PackUnit.h" />
 		<Unit filename="src/unit/headers/ParserUnit.h" />
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
+		<Unit filename="src/unit/headers/MainUnit.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />
-			<debugger />
+			<debugger>
+				<remote_debugging target="Unit">
+					<options conn_type="0" serial_baud="115200" additional_cmds_before="break UnitUtils.c:unit_breakpoint" />
+				</remote_debugging>
+			</debugger>
 			<lib_finder disable_auto="1" />
 			<editor_config active="1" use_tabs="1" tab_indents="1" tab_width="4" indent="4" eol_mode="0" />
 		</Extensions>

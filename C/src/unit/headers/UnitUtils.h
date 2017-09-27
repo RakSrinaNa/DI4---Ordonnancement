@@ -14,6 +14,11 @@
 void unit_error(char * str);
 
 /**
+ * Add a "breakpoint".
+ */
+void unit_breakpoint();
+
+/**
  * Test if two int arrays are the same.
  *
  * @param base The array containing expected values.

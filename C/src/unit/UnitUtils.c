@@ -3,8 +3,13 @@
 void unit_error(char * str)
 {
 	fprintf(stderr, "%s\n", str);
-	raise(SIGINT);
+	unit_breakpoint();
 	exit(EXIT_FAILURE);
+}
+
+void unit_breakpoint()
+{
+	raise(SIGINT);
 }
 
 int unit_intArrayEquals(const int * base, const int * compare, int length)
