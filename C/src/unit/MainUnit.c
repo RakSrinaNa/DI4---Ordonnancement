@@ -9,6 +9,7 @@
 
 int mainUnit()
 {
+	#define UNIT 1
 	srand(time(NULL));
 	setbuf(stdout, NULL);
 	printf("Executing Task tests...");

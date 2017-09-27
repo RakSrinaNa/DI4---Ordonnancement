@@ -25,4 +25,5 @@ void taskUnit() //Mainly check for memory leaks.
 			unit_error("Task 2: Wrong machine duration");
 	}
 	task_destroy(task);
+	instance_destroy(instance);
 }

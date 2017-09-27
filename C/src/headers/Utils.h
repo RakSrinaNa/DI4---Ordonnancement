@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #define MMIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
@@ -34,5 +35,7 @@ typedef enum
 	False = 0,
 	True = 1
 } Bool;
+
+void warn(char * format,  ...);
 
 #endif
