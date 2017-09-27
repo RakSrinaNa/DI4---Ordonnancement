@@ -10,6 +10,9 @@ void packUnit()
 	pack_destroy(pack_create(instance));
 	
 	Pack * pack = pack_create(instance);
+	if(pack->instance != instance)
+		unit_error("Pack 0: Wrong instance");
+	
 	if(pack->taskCount != 0)
 		unit_error("Pack 1: Created pack is not empty");
 	

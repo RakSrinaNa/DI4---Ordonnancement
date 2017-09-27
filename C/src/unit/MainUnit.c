@@ -5,6 +5,7 @@
 #include "headers/InstanceUnit.h"
 #include "headers/TaskUnit.h"
 #include "headers/PackUnit.h"
+#include "headers/SolutionUnit.h"
 
 int mainUnit()
 {
@@ -22,6 +23,9 @@ int mainUnit()
 	
 	printf("Executing Pack tests...");
 	packUnit();
+	printf("OK\n");
+	printf("Executing Solution tests...");
+	solutionUnit();
 	printf("OK\n");
 	return 0;
 }

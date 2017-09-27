@@ -1,6 +1,6 @@
 #include "headers/TaskUnit.h"
-#include "../headers/Task.h"
 #include "headers/UnitUtils.h"
+#include "../headers/Task.h"
 
 void taskUnit() //Mainly check for memory leaks.
 {
@@ -8,6 +8,8 @@ void taskUnit() //Mainly check for memory leaks.
 	task_destroy(task_create(instance));
 	instance->machineCount = 10;
 	Task * task = task_create(instance);
+	if(task->instance != instance)
+		unit_error("Task 0: Wrong instance");
 	for(unsigned int i = 0; i < 100; i++)
 	{
 		unsigned int rnd = (unsigned int) rand();
