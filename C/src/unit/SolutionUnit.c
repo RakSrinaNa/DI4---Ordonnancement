@@ -32,7 +32,7 @@ void solutionUnit()
 	if(!unit_uintArrayEquals(correctOrder2, solution->processOrder, 5))
 		unit_error("Solution 4.1: Bad process index");
 	
-	if(!solution_getProcessIndex(solution, 3) != 0 || !solution_getProcessIndex(solution, 0) != 1 || !solution_getProcessIndex(solution, 1) != 2 || !solution_getProcessIndex(solution, 4) != 3 || !solution_getProcessIndex(solution, 2) != 4)
+	if(solution_getProcessIndex(solution, 3) != 0 || solution_getProcessIndex(solution, 0) != 1 || solution_getProcessIndex(solution, 1) != 2 || solution_getProcessIndex(solution, 4) != 3 || solution_getProcessIndex(solution, 2) != 4)
 		unit_error("Solution 5: Bad process index");
 	
 	if(solution->packCount != 1)
