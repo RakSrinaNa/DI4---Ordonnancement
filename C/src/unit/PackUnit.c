@@ -68,12 +68,12 @@ void packUnit()
 	pack_removeTask(pack, 1);
 	unsigned int correctOrder7[] = {2, 0};
 	if(!unit_uintArrayEquals(correctOrder7, pack->deliveryOrder, 2))
-		unit_error("Pack 13: Bad delete");
+		unit_error("Pack 14: Bad delete");
 	
 	pack_removeTask(pack, 2);
 	unsigned int correctOrder8[] = {0};
 	if(!unit_uintArrayEquals(correctOrder8, pack->deliveryOrder, 1))
-		unit_error("Pack 14: Bad delete");
+		unit_error("Pack 15: Bad delete");
 	
 	pack_destroy(pack);
 }
