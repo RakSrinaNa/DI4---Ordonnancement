@@ -56,6 +56,8 @@ void pack_addTask(Pack * pack, unsigned int task)
 			RREALLOC(pack->deliveryOrder, unsigned int, pack->taskCount, "pack_addTask");
 			pack->deliveryOrder[pack->taskCount - 1] = task;
 		}
+		else
+			warn("WARNING : pack_addTask : provided task is already in the list (%d)", task);
 	}
 }
 
@@ -76,6 +78,8 @@ void pack_removeTask(Pack * pack, unsigned int task)
 		pack->taskCount--;
 		RREALLOC(pack->deliveryOrder, unsigned int, pack->taskCount, "pack_removeTask");
 	}
+	else
+		warn("WARNING : pack_removeTask : provided task is not in the list (%d)", task);
 }
 
 void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2)
@@ -87,6 +91,8 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
 		pack->deliveryOrder[pos1] = delivery2;
 		pack->deliveryOrder[pos2] = delivery1;
 	}
+	else
+		warn("WARNING : pack_switchDelivery : one of the provided tasks does not exist (has %d and %d)\n", delivery1, delivery2);
 }
 
 void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position)
@@ -102,4 +108,6 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 		}
 		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = oldValue;
 	}
+	else
+		warn("WARNING : pack_moveDelivery : given position is out of range (%d)\n", position);
 }

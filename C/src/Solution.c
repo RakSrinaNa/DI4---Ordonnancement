@@ -26,4 +26,9 @@ void solution_delete(Solution* solution)
 	free(solution);
 }
 
+void solution_setProcessIndex(Solution *solution, unsigned int task, unsigned int position)
+{
+	
+}
+
 

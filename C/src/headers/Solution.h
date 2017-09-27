@@ -28,4 +28,6 @@ Solution* solution_create(Instance *instance);
 */
 void solution_destroy(Solution *solution);
 
+void solution_setProcessIndex(Solution *solution, unsigned int task, unsigned int position);
+
 #endif //TABOU_SOLUTION_H
