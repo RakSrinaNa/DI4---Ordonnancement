@@ -60,6 +60,9 @@
 		<Unit filename="src/Instance.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/Main.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/Pack.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -69,6 +72,12 @@
 		<Unit filename="src/Solution.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/Sort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Tabu.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/Task.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -76,11 +85,10 @@
 		<Unit filename="src/headers/Pack.h" />
 		<Unit filename="src/headers/Parser.h" />
 		<Unit filename="src/headers/Solution.h" />
+		<Unit filename="src/headers/Sort.h" />
+		<Unit filename="src/headers/Tabu.h" />
 		<Unit filename="src/headers/Task.h" />
 		<Unit filename="src/headers/Utils.h" />
-		<Unit filename="src/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src/unit/InstanceUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
