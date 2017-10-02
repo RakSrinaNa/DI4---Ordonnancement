@@ -28,15 +28,6 @@ Solution * solution_create(Instance * instance);
 void solution_destroy(Solution * solution);
 
 /**
- * Gets the index of the given pack.
- *
- * @param solution The solution.
- * @param pack The pack id to get.
- * @return The index of the pack if it is present, -1 otherwise.
- */
-int solution_getPackIndex(Solution * solution, unsigned int pack);
-
-/**
  * Gets the index of the given task.
  *
  * @param solution The solution.

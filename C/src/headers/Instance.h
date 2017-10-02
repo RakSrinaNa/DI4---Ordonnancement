@@ -17,18 +17,18 @@ typedef struct _Instance
 #include "Utils.h"
 
 /**
- * Frees an instance.
- *
- * @param instance The instance to free.
- */
-void instance_destroy(Instance * instance);
-
-/**
  * Creates a new instance ready to be used.
  *
  * @return A new instance.
  */
 Instance * instance_create();
+
+/**
+ * Frees an instance.
+ *
+ * @param instance The instance to free.
+ */
+void instance_destroy(Instance * instance);
 
 /**
  * Set a distance in the matrix.

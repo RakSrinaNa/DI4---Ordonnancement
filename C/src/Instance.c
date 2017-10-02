@@ -4,6 +4,18 @@
 
 #include "headers/Instance.h"
 
+
+Instance * instance_create()
+{
+	Instance * instance;
+	MMALLOC(instance, Instance, 1, "parser_readInstanceFromFile");
+	instance->machineCount = 0;
+	instance->taskCount = 0;
+	instance->distancesMatrix = NULL;
+	instance->tasks = NULL;
+	return instance;
+}
+
 void instance_destroy(Instance * instance)
 {
 	//Free the distance matrix.
@@ -19,17 +31,6 @@ void instance_destroy(Instance * instance)
 	free(instance->tasks);
 	
 	free(instance);
-}
-
-Instance * instance_create()
-{
-	Instance * instance;
-	MMALLOC(instance, Instance, 1, "parser_readInstanceFromFile");
-	instance->machineCount = 0;
-	instance->taskCount = 0;
-	instance->distancesMatrix = NULL;
-	instance->tasks = NULL;
-	return instance;
 }
 
 void instance_print(Instance * instance)
