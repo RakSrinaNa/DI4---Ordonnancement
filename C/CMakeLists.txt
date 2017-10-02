@@ -6,6 +6,7 @@ set_property(TARGET PROPERTY C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
+        src/FLAGS.h
         src/Main.c src/headers/Utils.h
         src/unit/MainUnit.c src/unit/headers/MainUnit.h
         src/unit/UnitUtils.c src/unit/headers/UnitUtils.h
@@ -24,5 +25,9 @@ set(SOURCE_FILES
 
         src/Solution.c src/headers/Solution.h
         src/unit/SolutionUnit.c src/unit/headers/SolutionUnit.h
-        src/FLAGS.h)
+
+        src/Sort.c src/headers/Sort.h
+
+        src/Tabu.c src/headers/Tabu.h
+        )
 add_executable(Tabou ${SOURCE_FILES})
