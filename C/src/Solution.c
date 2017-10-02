@@ -29,14 +29,6 @@ void solution_destroy(Solution * solution)
 	free(solution);
 }
 
-int solution_getPackIndex(Solution * solution, unsigned int pack)
-{
-	UNUSED(solution);
-	UNUSED(pack);
-	// TODO : faire ça
-	return 0;
-}
-
 int solution_getProcessIndex(Solution * solution, unsigned int task)
 {
 	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
