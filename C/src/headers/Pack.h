@@ -82,4 +82,6 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
  */
 void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position);
 
+void pack_print(Pack *pack);
+
 #endif //TABOU_PACK_H

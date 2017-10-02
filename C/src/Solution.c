@@ -24,9 +24,12 @@ Solution * solution_create(Instance * instance)
 
 void solution_destroy(Solution * solution)
 {
-	free(solution->packList);
-	free(solution->processOrder);
-	free(solution);
+	if(solution != NULL)
+	{
+		free(solution->packList);
+		free(solution->processOrder);
+		free(solution);
+	}
 }
 
 int solution_getProcessIndex(Solution * solution, unsigned int task)
@@ -99,6 +102,29 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 		warn("WARNING : solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
 }
 
+void solution_sortByDD(Solution *solution)
+{
+	for(unsigned int i = 0; i < solution->instance->taskCount - 1; i++)
+	{
+		for(unsigned int j = 0; j < solution->instance->taskCount - i - 1; j++)
+		{
+			if(instance_getDueDate(solution->instance, solution->processOrder[j]) > instance_getDueDate(solution->instance, solution->processOrder[j+1]))
+			{
+				unsigned int temp = solution->processOrder[j];
+				solution->processOrder[j] = solution->processOrder[j+1];
+				solution->processOrder[j+1] = temp;
+			}
+		}
+	}
+}
 
-
-
+void solution_print(Solution *solution)
+{
+	printf("SOLUTION\nPacks : %d\n[\n", solution->packCount);
+	for(unsigned int i = 0; i < solution->packCount; i++)
+	{
+		pack_print(solution->packList[i]);
+		printf("\n");
+	}
+	printf("]\n");
+}

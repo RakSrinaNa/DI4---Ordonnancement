@@ -64,4 +64,14 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
  */
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
 
+/**
+ * Orders a pack by due date.
+ *
+ * @param solution The solution.
+ * @param pack The pack.
+ */
+void solution_sortByDD(Solution *solution);
+
+void solution_print(Solution *solution);
+
 #endif //TABOU_SOLUTION_H

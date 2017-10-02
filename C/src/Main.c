@@ -5,6 +5,7 @@
 #include "unit/headers/MainUnit.h"
 #include "headers/Instance.h"
 #include "headers/Parser.h"
+#include "headers/Solution.h"
 
 static int UNIT = 0;
 
@@ -28,6 +29,10 @@ int main(int argc, char * argv[])
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	instance_print(instance);
+	Solution *solution = solution_create(instance);
+	solution_print(solution);
+	solution_sortByDD(solution);
+	solution_print(solution);
 	//TODO: Compute solution
 	instance_destroy(instance);
 	return 0;

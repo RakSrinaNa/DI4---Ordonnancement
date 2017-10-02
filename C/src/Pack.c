@@ -104,3 +104,16 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 	else
 		warn("WARNING : pack_moveDelivery : given position is out of range (%d)\n", position);
 }
+
+void pack_print(Pack *pack)
+{
+	if(pack != NULL)
+	{
+		printf("Tasks : %d ( ", pack->taskCount);
+		for(unsigned int i = 0; i < pack->taskCount; i++)
+		{
+			printf("%d ");
+		}
+		printf(")");
+	}
+}

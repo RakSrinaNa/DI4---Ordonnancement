@@ -28,6 +28,14 @@ import copy
 # Lecture du fichier
 # ########################################################
 
+"""
+m = nombre de machines
+nbjobs = nombres de taches
+pp = temps machine
+dd = dates dues
+tt = temps de trajet
+"""
+
 mesdonnees = open("input.txt","r")
 ligne1 = mesdonnees.readline()
 indice=0
