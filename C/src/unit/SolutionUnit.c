@@ -65,11 +65,11 @@ void solutionUnit()
 		unit_error("Solution 13: Bad pack move");
 	
 	solution_moveTaskPack(solution, 1, 0);
-	if(solution->packCount != 2 || solution->packList[0]->taskCount != instance->taskCount - 1 || solution->packList[1]->taskCount != 1 || solution_getTaskPack(solution, 1) != 0 || solution_getPackIndex(solution, 2) != 1)
+	if(solution->packCount != 2 || solution->packList[0]->taskCount != instance->taskCount - 1 || solution->packList[1]->taskCount != 1 || solution_getTaskPack(solution, 1) != 0 || solution_getTaskPack(solution, 2) != 1)
 		unit_error("Solution 14: Bad pack move");
 	
 	solution_moveTaskPack(solution, 2, 0);
-	if(solution->packCount != 1 || solution->packList[0]->taskCount != instance->taskCount || solution_getPackIndex(solution, 2) != 0)
+	if(solution->packCount != 1 || solution->packList[0]->taskCount != instance->taskCount || solution_getTaskPack(solution, 2) != 0)
 		unit_error("Solution 15: Bad pack move");
 	
 	instance_destroy(instance);
