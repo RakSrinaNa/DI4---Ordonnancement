@@ -35,6 +35,11 @@ void solutionUnit()
 	if(solution_getProcessIndex(solution, 3) != 0 || solution_getProcessIndex(solution, 0) != 1 || solution_getProcessIndex(solution, 1) != 2 || solution_getProcessIndex(solution, 4) != 3 || solution_getProcessIndex(solution, 2) != 4)
 		unit_error("Solution 5: Bad process index");
 	
+	solution_sortByDD(solution);
+	unsigned int correctOrder3[] = {3, 4, 2, 5, 1};
+	if(!unit_uintArrayEquals(correctOrder3, solution->processOrder, 5))
+		unit_error("Solution 5.5: Bad sort by due date");
+	
 	if(solution->packCount != 1)
 		unit_error("Solution 6: No packs in solution");
 	if(solution->packList[0]->taskCount != instance->taskCount)
