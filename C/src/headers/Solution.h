@@ -28,6 +28,14 @@ Solution * solution_create(Instance * instance);
 void solution_destroy(Solution * solution);
 
 /**
+ * Copies a solution.
+ *
+ * @param solution The solution to copy.
+ * @return A new solution.
+ */
+Solution * solution_copy(Solution * solution);
+
+/**
  * Gets the index of the given task.
  *
  * @param solution The solution.
@@ -72,6 +80,12 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
  */
 void solution_sortByDD(Solution *solution);
 
+
+int solution_eval(Solution *solution);
+
+/**
+ * Prints the solution.
+ */
 void solution_print(Solution *solution);
 
 #endif //TABOU_SOLUTION_H

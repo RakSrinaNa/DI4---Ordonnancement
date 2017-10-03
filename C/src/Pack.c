@@ -112,7 +112,7 @@ void pack_print(Pack *pack)
 		printf("Tasks : %d ( ", pack->taskCount);
 		for(unsigned int i = 0; i < pack->taskCount; i++)
 		{
-			printf("%d ");
+			printf("%d ", pack->deliveryOrder[i]);
 		}
 		printf(")");
 	}

@@ -32,6 +32,29 @@ void solution_destroy(Solution * solution)
 	}
 }
 
+Solution * solution_copy(Solution *solution)
+{
+	if(solution == NULL)
+		return NULL;
+	Solution *copy = NULL;
+	MMALLOC(copy, Solution, 1, "solution_copy");
+	copy->instance = solution->instance;
+	copy->packCount = solution->packCount;
+	MMALLOC(copy->packList, Pack*, copy->packCount, "solution_copy");
+	for(unsigned int i = 0; i < copy->packCount; i++)
+	{
+		MMALLOC(copy->packList[i], Pack, 1, "solution_copy");
+		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
+		{
+			pack_addTask(copy->packList[i], solution->packList[i]->deliveryOrder[j]);
+		}
+	}
+	MMALLOC(copy->processOrder, unsigned int, solution->instance->taskCount, "solution_copy");
+	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+		copy->processOrder[i] = solution->processOrder[i];
+	return copy;
+}
+
 int solution_getProcessIndex(Solution * solution, unsigned int task)
 {
 	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
@@ -116,6 +139,11 @@ void solution_sortByDD(Solution *solution)
 			}
 		}
 	}
+}
+
+int solution_eval(Solution *solution)
+{
+	return 0;
 }
 
 void solution_print(Solution *solution)
