@@ -97,7 +97,7 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 	{
 		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
-		for(unsigned int i = index; i != position && i <= pack->taskCount - direction; i += direction)
+		for(unsigned int i = index; i != position && i < pack->taskCount - direction; i += direction)
 			pack->deliveryOrder[i] = pack->deliveryOrder[i + direction];
 		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = delivery;
 	}
