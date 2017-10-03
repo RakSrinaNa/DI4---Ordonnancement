@@ -39,7 +39,6 @@ Solution * solution_copy(Solution *solution)
 	if(solution == NULL)
 		return NULL;
 	Solution *copy = solution_create(solution->instance);
-	MMALLOC(copy->packList, Pack*, solution->packCount, "solution_copy");
 	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 		copy->processOrder[i] = solution->processOrder[i];
 	for(unsigned int i = 0; i < solution->packCount; i++)
