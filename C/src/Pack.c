@@ -116,4 +116,6 @@ void pack_print(Pack *pack)
 		}
 		printf(")");
 	}
+	else
+		printf("PACK NULL");
 }
