@@ -21,7 +21,7 @@ void parserUnit()
 	Instance * instance2 = parser_readInstanceFromFile("./unitResources/Instance2.txt");
 	if(instance2->machineCount != 3 || instance2->taskCount != 5)
 		unit_error("Parser 5: Wrong machine or task count.");
-	if(task_getDueDate(instance2->tasks[0]) != 10 || task_getDueDate(instance2->tasks[1]) != 20 || task_getDueDate(instance2->tasks[2]) != 30 || task_getDueDate(instance2->tasks[3]) != 40 || task_getDueDate(instance2->tasks[4]) != 50)
+	if(task_getDueDate(instance2->tasks[0]) != 50 || task_getDueDate(instance2->tasks[1]) != 30 || task_getDueDate(instance2->tasks[2]) != 10 || task_getDueDate(instance2->tasks[3]) != 20 || task_getDueDate(instance2->tasks[4]) != 40)
 		unit_error("Parser 6: Wrong due date.");
 	if(task_getMachineDuration(instance2->tasks[0], 0) != 1 || task_getMachineDuration(instance2->tasks[1], 0) != 2 || task_getMachineDuration(instance2->tasks[2], 0) != 3 || task_getMachineDuration(instance2->tasks[3], 0) != 4 || task_getMachineDuration(instance2->tasks[4], 0) != 5)
 		unit_error("Parser 7.1: Wrong machine duration.");

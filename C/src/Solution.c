@@ -143,6 +143,7 @@ void solution_sortByDD(Solution *solution)
 
 int solution_eval(Solution *solution)
 {
+	UNUSED(solution);
 	return 0;
 }
 
