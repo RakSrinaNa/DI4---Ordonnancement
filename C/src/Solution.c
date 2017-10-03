@@ -34,11 +34,11 @@ void solution_destroy(Solution * solution)
 	}
 }
 
-Solution * solution_copy(Solution *solution)
+Solution * solution_copy(Solution * solution)
 {
 	if(solution == NULL)
 		return NULL;
-	Solution *copy = solution_create(solution->instance);
+	Solution * copy = solution_create(solution->instance);
 	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 		copy->processOrder[i] = solution->processOrder[i];
 	for(unsigned int i = 0; i < solution->packCount; i++)
@@ -123,29 +123,29 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 		warn("WARNING : solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
 }
 
-void solution_sortByDD(Solution *solution)
+void solution_sortByDD(Solution * solution)
 {
 	for(unsigned int i = 0; i < solution->instance->taskCount - 1; i++)
 	{
 		for(unsigned int j = 0; j < solution->instance->taskCount - i - 1; j++)
 		{
-			if(instance_getDueDate(solution->instance, solution->processOrder[j]) > instance_getDueDate(solution->instance, solution->processOrder[j+1]))
+			if(instance_getDueDate(solution->instance, solution->processOrder[j]) > instance_getDueDate(solution->instance, solution->processOrder[j + 1]))
 			{
 				unsigned int temp = solution->processOrder[j];
-				solution->processOrder[j] = solution->processOrder[j+1];
-				solution->processOrder[j+1] = temp;
+				solution->processOrder[j] = solution->processOrder[j + 1];
+				solution->processOrder[j + 1] = temp;
 			}
 		}
 	}
 }
 
-int solution_eval(Solution *solution)
+int solution_eval(Solution * solution)
 {
 	UNUSED(solution);
 	return 0;
 }
 
-void solution_print(Solution *solution)
+void solution_print(Solution * solution)
 {
 	printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
 	for(unsigned int i = 0; i < solution->packCount; i++)
