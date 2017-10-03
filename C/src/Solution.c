@@ -66,7 +66,7 @@ void solution_setProcessIndex(Solution * solution, unsigned int task, unsigned i
 	{
 		unsigned int index = (unsigned int) solution_getProcessIndex(solution, task);
 		int direction = (position > index ? 1 : -1); // Direction of the iteration
-		for(unsigned int i = index; i != position && i < solution->instance->taskCount; i += direction)
+		for(unsigned int i = index; i != position && i < solution->instance->taskCount - direction; i += direction)
 			solution->processOrder[i] = solution->processOrder[i + direction];
 		solution->processOrder[MMIN(position, solution->instance->taskCount - 1)] = task;
 	}
