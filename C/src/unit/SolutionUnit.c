@@ -36,7 +36,7 @@ void solutionUnit()
 		unit_error("Solution 5: Bad process index");
 	
 	solution_sortByDD(solution);
-	unsigned int correctOrder3[] = {3, 4, 2, 5, 1};
+	unsigned int correctOrder3[] = {2, 3, 1, 4, 0};
 	if(!unit_uintArrayEquals(correctOrder3, solution->processOrder, 5))
 		unit_error("Solution 5.5: Bad sort by due date");
 	
