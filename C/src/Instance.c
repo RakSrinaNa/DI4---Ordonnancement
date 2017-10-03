@@ -44,13 +44,19 @@ unsigned int instance_getDueDate(Instance * instance, unsigned int task)
 
 void instance_print(Instance * instance)
 {
-	printf("Machine count: %d\nTask count: %d\nTasks:\n", instance->machineCount, instance->taskCount);
-	for(unsigned int i = 0; i < instance->taskCount; i++)
+	printf("\nINSTANCE\nMachine count: %d\nTask count: %d\nTasks:\n", instance->machineCount, instance->taskCount);
+	for(unsigned int i = 0; i < instance->machineCount; i++)
 	{
-		task_print(instance->tasks[i]);
-		printf("------------------------\n");
+		for(unsigned int j = 0; j < instance->taskCount; j++)
+		{
+			printf("%-4d", task_getMachineDuration(instance->tasks[j], i));
+		}
+		printf("\n");
 	}
-	printf("Distances:\n");
+	printf("Due:\n");
+	for(unsigned int i = 0; i < instance->taskCount; i++)
+		printf("%-4d", task_getDueDate(instance->tasks[i]));
+	printf("\nDistances:\n");
 	for(unsigned int i = 0; i <= instance->taskCount; i++)
 	{
 		for(unsigned int j = 0; j <= instance->taskCount; j++)

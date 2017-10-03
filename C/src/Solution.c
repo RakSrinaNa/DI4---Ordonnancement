@@ -146,11 +146,15 @@ int solution_eval(Solution *solution)
 
 void solution_print(Solution *solution)
 {
-	printf("SOLUTION\nPacks : %d\n[\n", solution->packCount);
+	printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
+		printf("\t");
 		pack_print(solution->packList[i]);
 		printf("\n");
 	}
-	printf("]\n");
+	printf("\tOrder : ( ");
+	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+		printf("%d ", solution->processOrder[i]);
+	printf(")\n");
 }
