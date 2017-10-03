@@ -94,5 +94,6 @@ void solutionUnit()
 	if(solution->packCount != 1 || solution->packList[0]->taskCount != instance->taskCount || solution_getTaskPack(solution, 2) != 0)
 		unit_error("Solution 15: Bad pack move");
 	
+	solution_destroy(solution);
 	instance_destroy(instance);
 }
