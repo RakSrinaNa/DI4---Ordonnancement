@@ -65,6 +65,23 @@ void solutionUnit()
 	if(solution->packCount != 3 || solution->packList[0]->taskCount != instance->taskCount - 3 || solution->packList[2]->taskCount != 1 || solution_getTaskPack(solution, 2) != 2)
 		unit_error("Solution 12: Bad pack move");
 	
+	Solution * solutionCopy = solution_copy(solution);
+	if(solutionCopy->instance != solution->instance)
+		unit_error("Solution 12.50: Bad copy instance");
+	if(solutionCopy->packCount != solution->packCount)
+		unit_error("Solution 12.51: Bad copy pack count");
+	if(!unit_uintArrayEquals(solution->processOrder, solutionCopy->processOrder, solution->instance->taskCount))
+		unit_error("Solution 12.52: Bad copy process order");
+	for(unsigned int i = 0; i < solution->packCount; i++)
+	{
+		if(solution->packList[i]->taskCount != solutionCopy->packList[i]->taskCount)
+			unit_error("Solution 12.53: Bad copy delivery count");
+		
+		if(!unit_uintArrayEquals(solution->packList[i]->deliveryOrder, solutionCopy->packList[i]->deliveryOrder, solution->packList[i]->taskCount))
+			unit_error("Solution 12.54: Bad copy delivery order");
+	}
+	solution_destroy(solutionCopy);
+	
 	solution_moveTaskPack(solution, 0, 0);
 	if(solution->packCount != 3 || solution->packList[0]->taskCount != instance->taskCount - 2 || solution->packList[1]->taskCount != 1 || solution_getTaskPack(solution, 0) != 0)
 		unit_error("Solution 13: Bad pack move");

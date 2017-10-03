@@ -36,20 +36,17 @@ Solution * solution_copy(Solution *solution)
 {
 	if(solution == NULL)
 		return NULL;
-	Solution *copy = NULL;
-	MMALLOC(copy, Solution, 1, "solution_copy");
-	copy->instance = solution->instance;
+	Solution *copy = solution_create(solution->instance);
 	copy->packCount = solution->packCount;
-	MMALLOC(copy->packList, Pack*, copy->packCount, "solution_copy");
-	for(unsigned int i = 0; i < copy->packCount; i++)
+	MMALLOC(copy->packList, Pack*, solution->packCount, "solution_copy");
+	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
-		MMALLOC(copy->packList[i], Pack, 1, "solution_copy");
+		copy->packList[i] = pack_create(copy->instance);
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 		{
 			pack_addTask(copy->packList[i], solution->packList[i]->deliveryOrder[j]);
 		}
 	}
-	MMALLOC(copy->processOrder, unsigned int, solution->instance->taskCount, "solution_copy");
 	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 		copy->processOrder[i] = solution->processOrder[i];
 	return copy;
