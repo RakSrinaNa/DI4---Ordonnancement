@@ -71,14 +71,7 @@ static inline unsigned int instance_getDistance(Instance * instance, unsigned in
  * @param task The task.
  * @return The due date of the task.
  */
-static inline unsigned int instance_getDueDate(Instance * instance, unsigned int task)
-{
-	if(task > instance->taskCount)
-	{
-		fatal_error("CRITICAL : instance_getDueDate : task out of range(%d)", task);
-	}
-	return instance->tasks[task]->dueDate;
-}
+unsigned int instance_getDueDate(Instance * instance, unsigned int task);
 
 /**
  * Prints an instance in the console.

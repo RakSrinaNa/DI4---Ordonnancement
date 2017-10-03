@@ -33,6 +33,15 @@ void instance_destroy(Instance * instance)
 	free(instance);
 }
 
+unsigned int instance_getDueDate(Instance * instance, unsigned int task)
+{
+	if(task > instance->taskCount)
+	{
+		fatal_error("CRITICAL : instance_getDueDate : task out of range(%d)", task);
+	}
+	return instance->tasks[task]->dueDate;
+}
+
 void instance_print(Instance * instance)
 {
 	printf("Machine count: %d\nTask count: %d\nTasks:\n", instance->machineCount, instance->taskCount);
