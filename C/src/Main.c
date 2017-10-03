@@ -29,7 +29,7 @@ int main(int argc, char * argv[])
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	instance_print(instance);
-	Solution *solution = solution_create(instance);
+	Solution * solution = solution_create(instance);
 	solution_print(solution);
 	solution_sortByDD(solution);
 	solution_print(solution);
@@ -40,13 +40,12 @@ int main(int argc, char * argv[])
 
 void warn(char * format, ...)
 {
-	if(UNIT == 0)
-	{
-		va_list args;
-		va_start(args, format);
-		vfprintf(stderr, format, args);
-		va_end(args);
-	}
+	va_list args;
+	va_start(args, format);
+	fprintf(stderr, "\n");
+	vfprintf(stderr, format, args);
+	fprintf(stderr, "\n");
+	va_end(args);
 }
 
 void fatal_error(char * format, ...)
