@@ -82,4 +82,5 @@ void packUnit()
 		unit_error("Pack 15: Bad delete");
 	
 	pack_destroy(pack);
+	instance_destroy(instance);
 }
