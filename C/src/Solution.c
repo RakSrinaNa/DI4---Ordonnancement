@@ -45,7 +45,7 @@ Solution * solution_copy(Solution *solution)
 	{
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 		{
-			solution_moveTaskPack(solution, solution->packList[i]->deliveryOrder[j], i);
+			solution_moveTaskPack(copy, solution->packList[i]->deliveryOrder[j], i);
 		}
 	}
 	solution_print(solution);
