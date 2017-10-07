@@ -27,7 +27,9 @@ void solution_destroy(Solution * solution)
 	if(solution != NULL)
 	{
 		for(unsigned int i = 0; i < solution->packCount; i++)
-			free(solution->packList[i]);
+		{
+			pack_destroy(solution->packList[i]);
+		}
 		free(solution->packList);
 		free(solution->processOrder);
 		free(solution);
