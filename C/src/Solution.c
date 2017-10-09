@@ -168,12 +168,13 @@ unsigned int solution_processFinalTime(Instance * instance, unsigned int count, 
 	return finalTime;
 }
 
-unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCount, unsigned int *pack)
+unsigned int * solution_sequenceProcess(Instance * instance, unsigned int taskCount, unsigned int * pack)
 {
 	unsigned int * sequence = NULL;
 	if(taskCount == 2)
 	{
-		unsigned int *sequence01 = NULL, *sequence10 = NULL;
+		unsigned int * sequence01 = NULL;
+		unsigned int * sequence10 = NULL;
 		MMALLOC(sequence01, unsigned int, taskCount, "solution_sequenceProcess");
 		MMALLOC(sequence10, unsigned int, taskCount, "solution_sequenceProcess");
 		sequence01[0] = pack[0];
@@ -197,7 +198,12 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 	
 	else if(taskCount == 3)
 	{
-		unsigned int *sequence012 = NULL, *sequence021 = NULL, *sequence102 = NULL, *sequence120 = NULL, *sequence201 = NULL, *sequence210 = NULL;
+		unsigned int * sequence012 = NULL;
+		unsigned int * sequence021 = NULL;
+		unsigned int * sequence102 = NULL;
+		unsigned int * sequence120 = NULL;
+		unsigned int * sequence201 = NULL;
+		unsigned int * sequence210 = NULL;
 		MMALLOC(sequence012, unsigned int, taskCount, "solution_sequenceProcess");
 		MMALLOC(sequence021, unsigned int, taskCount, "solution_sequenceProcess");
 		MMALLOC(sequence102, unsigned int, taskCount, "solution_sequenceProcess");
@@ -233,7 +239,9 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 			free(best);
 			best = sequence021;
 			bestTime = seqTime;
-		} else {
+		}
+		else
+		{
 			free(sequence021);
 		}
 		seqTime = solution_processFinalTime(instance, taskCount, sequence102);
@@ -242,7 +250,9 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 			free(best);
 			best = sequence102;
 			bestTime = seqTime;
-		} else {
+		}
+		else
+		{
 			free(sequence102);
 		}
 		seqTime = solution_processFinalTime(instance, taskCount, sequence120);
@@ -251,7 +261,9 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 			free(best);
 			best = sequence120;
 			bestTime = seqTime;
-		} else {
+		}
+		else
+		{
 			free(sequence120);
 		}
 		seqTime = solution_processFinalTime(instance, taskCount, sequence201);
@@ -260,7 +272,9 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 			free(best);
 			best = sequence201;
 			bestTime = seqTime;
-		} else {
+		}
+		else
+		{
 			free(sequence201);
 		}
 		seqTime = solution_processFinalTime(instance, taskCount, sequence210);
@@ -268,7 +282,9 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 		{
 			free(best);
 			best = sequence210;
-		} else {
+		}
+		else
+		{
 			free(sequence210);
 		}
 		sequence = best;
