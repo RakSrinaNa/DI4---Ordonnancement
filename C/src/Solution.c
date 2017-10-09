@@ -159,10 +159,14 @@ int solution_eval(Solution * solution)
 
 unsigned int solution_processFinalTime(Instance * instance, unsigned int count, unsigned int * processes)
 {
-	UNUSED(instance);
-	UNUSED(processes);
-	// TODO
-	return 0;
+	unsigned int * tabProcess = NULL;
+	MMALLOC(tabProcess, unsigned int, instance->machineCount, "solution_processFinalTime");
+	for(unsigned int i = 0; i < count; i++)
+		for(unsigned int m = 0; m < instance->machineCount; m++)
+			tabProcess[m] = MMAX(m == 0 ? 0 : tabProcess[m-1], tabProcess[m]) + task_getMachineDuration(instance->tasks[i], m);
+	unsigned int finalTime = tabProcess[instance->machineCount - 1];
+	free(tabProcess);
+	return finalTime;
 }
 
 unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCount, unsigned int *pack)

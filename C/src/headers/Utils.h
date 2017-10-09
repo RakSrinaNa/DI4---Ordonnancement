@@ -6,6 +6,7 @@
 #include <stdarg.h>
 
 #define MMIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+#define MMAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
 #define UNUSED(x) (void)(x)
 
