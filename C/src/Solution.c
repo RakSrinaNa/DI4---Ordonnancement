@@ -1,4 +1,5 @@
 #include <string.h>
+#include <math.h>
 
 #include "headers/Solution.h"
 
@@ -158,19 +159,19 @@ int solution_eval(Solution * solution)
 
 unsigned int solution_processFinalTime(Instance * instance, unsigned int count, unsigned int * processes)
 {
-	unsigned int * tabProcess = NULL;
-	MMALLOC(tabProcess, unsigned int, instance->machineCount, "solution_processFinalTime");
+	unsigned int * machineEndTime = NULL;
+	MMALLOC(machineEndTime, unsigned int, instance->machineCount, "solution_processFinalTime");
 	for(unsigned int i = 0; i < count; i++)
 		for(unsigned int m = 0; m < instance->machineCount; m++)
-			tabProcess[m] = MMAX(m == 0 ? 0 : tabProcess[m - 1], tabProcess[m]) + task_getMachineDuration(instance->tasks[processes[i]], m);
-	unsigned int finalTime = tabProcess[instance->machineCount - 1];
-	free(tabProcess);
+			machineEndTime[m] = MMAX(m == 0 ? 0 : machineEndTime[m - 1], machineEndTime[m]) + task_getMachineDuration(instance->tasks[processes[i]], m);
+	unsigned int finalTime = machineEndTime[instance->machineCount - 1];
+	free(machineEndTime);
 	return finalTime;
 }
 
 unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCount, unsigned int *pack)
 {
-	unsigned int * sequence;
+	unsigned int * sequence = NULL;
 	if(taskCount == 2)
 	{
 		unsigned int *sequence01 = NULL, *sequence10 = NULL;
@@ -224,47 +225,47 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 		sequence210[2] = pack[0];
 		
 		unsigned int * best = sequence012;
-		unsigned int bestScore = solution_processFinalTime(instance, taskCount, sequence012);
-		unsigned int seqScore = 0;
+		unsigned int bestTime = solution_processFinalTime(instance, taskCount, sequence012);
+		unsigned int seqTime = 0;
 		
-		seqScore = solution_processFinalTime(instance, taskCount, sequence021);
-		if(seqScore < bestScore)
+		seqTime = solution_processFinalTime(instance, taskCount, sequence021);
+		if(seqTime < bestTime)
 		{
 			free(best);
 			best = sequence021;
-			bestScore = seqScore;
+			bestTime = seqTime;
 		} else {
 			free(sequence021);
 		}
-		seqScore = solution_processFinalTime(instance, taskCount, sequence102);
-		if(seqScore < bestScore)
+		seqTime = solution_processFinalTime(instance, taskCount, sequence102);
+		if(seqTime < bestTime)
 		{
 			free(best);
 			best = sequence102;
-			bestScore = seqScore;
+			bestTime = seqTime;
 		} else {
 			free(sequence102);
 		}
-		seqScore = solution_processFinalTime(instance, taskCount, sequence120);
-		if(seqScore < bestScore)
+		seqTime = solution_processFinalTime(instance, taskCount, sequence120);
+		if(seqTime < bestTime)
 		{
 			free(best);
 			best = sequence120;
-			bestScore = seqScore;
+			bestTime = seqTime;
 		} else {
 			free(sequence120);
 		}
-		seqScore = solution_processFinalTime(instance, taskCount, sequence201);
-		if(seqScore < bestScore)
+		seqTime = solution_processFinalTime(instance, taskCount, sequence201);
+		if(seqTime < bestTime)
 		{
 			free(best);
 			best = sequence201;
-			bestScore = seqScore;
+			bestTime = seqTime;
 		} else {
 			free(sequence201);
 		}
-		seqScore = solution_processFinalTime(instance, taskCount, sequence210);
-		if(seqScore < bestScore)
+		seqTime = solution_processFinalTime(instance, taskCount, sequence210);
+		if(seqTime < bestTime)
 		{
 			free(best);
 			best = sequence210;
@@ -276,7 +277,7 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 		
 		
 	}
-	else if(taskCount > 3)
+	else
 	{
 		unsigned int * tempSequence;
 		MMALLOC(tempSequence, unsigned int, 2, "solution_sequenceProcess");
@@ -286,26 +287,26 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 		free(tempSequence);
 		unsigned int inside = 2;
 		RREALLOC(finalSequence, unsigned int, taskCount, "solution_sequenceProcess");
-		for(unsigned int i = 2; i < taskCount; i++)
+		for(unsigned int taskID = 2; taskID < taskCount; taskID++)
 		{
-			unsigned int bestScore = -1;
+			unsigned int bestScore = INFINITY;
 			unsigned int bestPos = 0;
-			for(unsigned int j = 0; j <= i; j++)
+			for(unsigned int insertPos = 0; insertPos <= taskID; insertPos++)
 			{
 				MMALLOC(tempSequence, unsigned int, inside + 1, "solution_sequenceProcess");
-				memcpy(tempSequence, finalSequence, sizeof(unsigned int) * j);
-				tempSequence[j] = pack[i];
-				memcpy(tempSequence + j + 1, finalSequence + j, sizeof(unsigned int) * (inside - j));
-				unsigned int tempScore = solution_processFinalTime(instance, inside + 1, tempSequence);
-				if(tempScore < bestScore)
+				memcpy(tempSequence, finalSequence, sizeof(unsigned int) * insertPos);
+				tempSequence[insertPos] = pack[taskID];
+				memcpy(tempSequence + insertPos + 1, finalSequence + insertPos, sizeof(unsigned int) * (inside - insertPos));
+				unsigned int tempTime = solution_processFinalTime(instance, inside + 1, tempSequence);
+				if(tempTime < bestScore)
 				{
-					bestScore = tempScore;
-					bestPos = j;
+					bestScore = tempTime;
+					bestPos = insertPos;
 				}
 				free(tempSequence);
 			}
 			memmove(finalSequence + bestPos, finalSequence + bestPos + 1, inside - bestPos);
-			finalSequence[bestPos] = i;
+			finalSequence[bestPos] = taskID;
 			inside++;
 		}
 		sequence = finalSequence;
