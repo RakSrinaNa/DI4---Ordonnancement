@@ -1,5 +1,4 @@
 #include <string.h>
-#include <math.h>
 
 #include "headers/Solution.h"
 
@@ -289,7 +288,7 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 		RREALLOC(finalSequence, unsigned int, taskCount, "solution_sequenceProcess");
 		for(unsigned int taskID = 2; taskID < taskCount; taskID++)
 		{
-			unsigned int bestScore = INFINITY;
+			unsigned int bestScore = 999999999;
 			unsigned int bestPos = 0;
 			for(unsigned int insertPos = 0; insertPos <= taskID; insertPos++)
 			{
