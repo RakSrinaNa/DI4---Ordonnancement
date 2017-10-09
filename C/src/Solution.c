@@ -1,7 +1,6 @@
 #include <string.h>
 
 #include "headers/Solution.h"
-#include "headers/Instance.h"
 
 #include "FLAGS.h"
 
@@ -163,7 +162,7 @@ unsigned int solution_processFinalTime(Instance * instance, unsigned int count, 
 	MMALLOC(tabProcess, unsigned int, instance->machineCount, "solution_processFinalTime");
 	for(unsigned int i = 0; i < count; i++)
 		for(unsigned int m = 0; m < instance->machineCount; m++)
-			tabProcess[m] = MMAX(m == 0 ? 0 : tabProcess[m-1], tabProcess[m]) + task_getMachineDuration(instance->tasks[i], m);
+			tabProcess[m] = MMAX(m == 0 ? 0 : tabProcess[m - 1], tabProcess[m]) + task_getMachineDuration(instance->tasks[processes[i]], m);
 	unsigned int finalTime = tabProcess[instance->machineCount - 1];
 	free(tabProcess);
 	return finalTime;
@@ -269,7 +268,6 @@ unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCou
 		{
 			free(best);
 			best = sequence210;
-			bestScore = seqScore;
 		} else {
 			free(sequence210);
 		}
