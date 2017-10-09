@@ -1,4 +1,9 @@
+#include <string.h>
+
 #include "headers/Solution.h"
+#include "headers/Instance.h"
+
+#include "FLAGS.h"
 
 Solution * solution_create(Instance * instance)
 {
@@ -8,6 +13,7 @@ Solution * solution_create(Instance * instance)
 	solution->packCount = 0;
 	solution->packList = NULL;
 	solution->processOrder = NULL;
+	solution->score = -1;
 	
 	MMALLOC(solution->processOrder, unsigned int, solution->instance->taskCount, "solution_create");
 	MMALLOC(solution->packList, Pack *, 1, "solution_create");
@@ -50,8 +56,7 @@ Solution * solution_copy(Solution * solution)
 			solution_moveTaskPack(copy, solution->packList[i]->deliveryOrder[j], i);
 		}
 	}
-	solution_print(solution);
-	solution_print(copy);
+	copy->score = solution->score;
 	return copy;
 }
 
@@ -72,6 +77,7 @@ void solution_setProcessIndex(Solution * solution, unsigned int task, unsigned i
 		for(unsigned int i = index; i != position && i < solution->instance->taskCount - direction; i += direction)
 			solution->processOrder[i] = solution->processOrder[i + direction];
 		solution->processOrder[MMIN(position, solution->instance->taskCount - 1)] = task;
+		solution->score = -1;
 	}
 	else
 		warn("WARNING : solution_setProcessIndex : given process does not exist (%d)\n", task);
@@ -120,6 +126,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 			solution->packCount--;
 			RREALLOC(solution->packList, Pack*, solution->packCount, "solution_moveTaskPack");
 		}
+		solution->score = -1;
 	}
 	else
 		warn("WARNING : solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
@@ -139,12 +146,169 @@ void solution_sortByDD(Solution * solution)
 			}
 		}
 	}
+	solution->score = -1;
 }
 
 int solution_eval(Solution * solution)
 {
-	UNUSED(solution);
+	if(CACHED_SCORE && solution->score != -1)
+		return solution->score;
+	
 	return 0;
+}
+
+unsigned int solution_processFinalTime(Instance * instance, unsigned int count, unsigned int * processes)
+{
+	UNUSED(instance);
+	UNUSED(processes);
+	// TODO
+	return 0;
+}
+
+unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCount, unsigned int *pack)
+{
+	unsigned int * sequence;
+	if(taskCount == 2)
+	{
+		unsigned int *sequence01 = NULL, *sequence10 = NULL;
+		MMALLOC(sequence01, unsigned int, taskCount, "solution_sequenceProcess");
+		MMALLOC(sequence10, unsigned int, taskCount, "solution_sequenceProcess");
+		sequence01[0] = pack[0];
+		sequence01[1] = pack[1];
+		sequence10[0] = pack[1];
+		sequence10[1] = pack[0];
+		
+		unsigned int sol01 = solution_processFinalTime(instance, taskCount, sequence01);
+		unsigned int sol10 = solution_processFinalTime(instance, taskCount, sequence10);
+		if(sol01 < sol10)
+		{
+			sequence = sequence01;
+			free(sequence10);
+		}
+		else
+		{
+			sequence = sequence10;
+			free(sequence01);
+		}
+	}
+	
+	else if(taskCount == 3)
+	{
+		unsigned int *sequence012 = NULL, *sequence021 = NULL, *sequence102 = NULL, *sequence120 = NULL, *sequence201 = NULL, *sequence210 = NULL;
+		MMALLOC(sequence012, unsigned int, taskCount, "solution_sequenceProcess");
+		MMALLOC(sequence021, unsigned int, taskCount, "solution_sequenceProcess");
+		MMALLOC(sequence102, unsigned int, taskCount, "solution_sequenceProcess");
+		MMALLOC(sequence120, unsigned int, taskCount, "solution_sequenceProcess");
+		MMALLOC(sequence201, unsigned int, taskCount, "solution_sequenceProcess");
+		MMALLOC(sequence210, unsigned int, taskCount, "solution_sequenceProcess");
+		sequence012[0] = pack[0];
+		sequence012[1] = pack[1];
+		sequence012[2] = pack[2];
+		sequence021[0] = pack[0];
+		sequence021[1] = pack[2];
+		sequence021[2] = pack[1];
+		sequence102[0] = pack[1];
+		sequence102[1] = pack[0];
+		sequence102[2] = pack[2];
+		sequence120[0] = pack[1];
+		sequence120[1] = pack[2];
+		sequence120[2] = pack[0];
+		sequence201[0] = pack[2];
+		sequence201[1] = pack[0];
+		sequence201[2] = pack[1];
+		sequence210[0] = pack[2];
+		sequence210[1] = pack[1];
+		sequence210[2] = pack[0];
+		
+		unsigned int * best = sequence012;
+		unsigned int bestScore = solution_processFinalTime(instance, taskCount, sequence012);
+		unsigned int seqScore = 0;
+		
+		seqScore = solution_processFinalTime(instance, taskCount, sequence021);
+		if(seqScore < bestScore)
+		{
+			free(best);
+			best = sequence021;
+			bestScore = seqScore;
+		} else {
+			free(sequence021);
+		}
+		seqScore = solution_processFinalTime(instance, taskCount, sequence102);
+		if(seqScore < bestScore)
+		{
+			free(best);
+			best = sequence102;
+			bestScore = seqScore;
+		} else {
+			free(sequence102);
+		}
+		seqScore = solution_processFinalTime(instance, taskCount, sequence120);
+		if(seqScore < bestScore)
+		{
+			free(best);
+			best = sequence120;
+			bestScore = seqScore;
+		} else {
+			free(sequence120);
+		}
+		seqScore = solution_processFinalTime(instance, taskCount, sequence201);
+		if(seqScore < bestScore)
+		{
+			free(best);
+			best = sequence201;
+			bestScore = seqScore;
+		} else {
+			free(sequence201);
+		}
+		seqScore = solution_processFinalTime(instance, taskCount, sequence210);
+		if(seqScore < bestScore)
+		{
+			free(best);
+			best = sequence210;
+			bestScore = seqScore;
+		} else {
+			free(sequence210);
+		}
+		sequence = best;
+		// TODO !!!
+		
+		
+	}
+	else if(taskCount > 3)
+	{
+		unsigned int * tempSequence;
+		MMALLOC(tempSequence, unsigned int, 2, "solution_sequenceProcess");
+		tempSequence[0] = pack[0];
+		tempSequence[1] = pack[1];
+		unsigned int * finalSequence = solution_sequenceProcess(instance, 2, tempSequence);
+		free(tempSequence);
+		unsigned int inside = 2;
+		RREALLOC(finalSequence, unsigned int, taskCount, "solution_sequenceProcess");
+		for(unsigned int i = 2; i < taskCount; i++)
+		{
+			unsigned int bestScore = -1;
+			unsigned int bestPos = 0;
+			for(unsigned int j = 0; j <= i; j++)
+			{
+				MMALLOC(tempSequence, unsigned int, inside + 1, "solution_sequenceProcess");
+				memcpy(tempSequence, finalSequence, sizeof(unsigned int) * j);
+				tempSequence[j] = pack[i];
+				memcpy(tempSequence + j + 1, finalSequence + j, sizeof(unsigned int) * (inside - j));
+				unsigned int tempScore = solution_processFinalTime(instance, inside + 1, tempSequence);
+				if(tempScore < bestScore)
+				{
+					bestScore = tempScore;
+					bestPos = j;
+				}
+				free(tempSequence);
+			}
+			memmove(finalSequence + bestPos, finalSequence + bestPos + 1, inside - bestPos);
+			finalSequence[bestPos] = i;
+			inside++;
+		}
+		sequence = finalSequence;
+	}
+	return sequence;
 }
 
 void solution_print(Solution * solution)

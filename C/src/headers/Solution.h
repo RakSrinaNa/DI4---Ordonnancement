@@ -11,6 +11,7 @@ typedef struct _Solution
 	unsigned int packCount; // Number of packs in this solution.
 	Pack ** packList; // Ordered list of the packs in shipping order.
 	unsigned int * processOrder; // Order of the processes of the solution.
+	int score; // Cached score of the solution (-1 if not calculated).
 } Solution;
 
 /**
@@ -82,6 +83,10 @@ void solution_sortByDD(Solution *solution);
 
 
 int solution_eval(Solution *solution);
+
+unsigned int solution_processFinalTime(Instance * instance, unsigned int count, unsigned int * processes);
+
+unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCount, unsigned int *pack);
 
 /**
  * Prints the solution.
