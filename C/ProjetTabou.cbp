@@ -25,7 +25,6 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-pedantic" />
@@ -37,28 +36,95 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
+			<Target title="Unit">
+				<Option output="bin/Debug/ProjetTabou" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="test" />
+				<Compiler>
+					<Add option="-pedantic" />
+					<Add option="-Wall" />
+					<Add option="-std=c99" />
+					<Add option="-g" />
+					<Add option="-Werror" />
+				</Compiler>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-pedantic" />
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
 		</Compiler>
-		<Unit filename="src/headers/utils.h" />
-		<Unit filename="src/main.c">
+		<Unit filename="src/FLAGS.h" />
+		<Unit filename="src/Instance.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/unit/headers/mainUnit.h" />
-		<Unit filename="src/unit/headers/unit.h" />
-		<Unit filename="src/unit/mainUnit.c">
+		<Unit filename="src/Main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/unit/unit.c">
+		<Unit filename="src/Pack.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/Parser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Solution.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Sort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Tabu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Task.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/headers/Instance.h" />
+		<Unit filename="src/headers/Pack.h" />
+		<Unit filename="src/headers/Parser.h" />
+		<Unit filename="src/headers/Solution.h" />
+		<Unit filename="src/headers/Sort.h" />
+		<Unit filename="src/headers/Tabu.h" />
+		<Unit filename="src/headers/Task.h" />
+		<Unit filename="src/headers/Utils.h" />
+		<Unit filename="src/unit/InstanceUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/MainUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/PackUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/ParserUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/SolutionUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/TaskUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/UnitUtils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/headers/InstanceUnit.h" />
+		<Unit filename="src/unit/headers/MainUnit.h" />
+		<Unit filename="src/unit/headers/PackUnit.h" />
+		<Unit filename="src/unit/headers/ParserUnit.h" />
+		<Unit filename="src/unit/headers/SolutionUnit.h" />
+		<Unit filename="src/unit/headers/TaskUnit.h" />
+		<Unit filename="src/unit/headers/UnitUtils.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />
-			<debugger />
+			<debugger>
+				<remote_debugging target="Unit">
+					<options conn_type="0" serial_baud="115200" additional_cmds_before="break UnitUtils.c:unit_breakpoint" />
+				</remote_debugging>
+			</debugger>
 			<lib_finder disable_auto="1" />
 			<editor_config active="1" use_tabs="1" tab_indents="1" tab_width="4" indent="4" eol_mode="0" />
 		</Extensions>

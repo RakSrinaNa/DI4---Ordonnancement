@@ -4,6 +4,7 @@ install:
   - sudo apt-get install valgrind
 script: make test
 notifications:
-  email: true
+  email: false
   on_failure: always
-  on_success: change
+  on_success: always
+  webhooks: https://travis-webhook-discord.herokuapp.com/webhook
