@@ -279,7 +279,7 @@ unsigned int solution_deliveryDelay(Instance *instance, unsigned int count, unsi
 	for(unsigned int i = 0; i <= count; i++)
 	{
 		date += instance_getDistance(instance, dep, arr);
-		delay += MMAX(0, (int)date - (int)instance_getDueDate(instance, deliveries[i]));
+		delay += (i < count ? MMAX(0, (int)date - (int)instance_getDueDate(instance, deliveries[i])) : 0);
 		dep = arr;
 		arr = (i < count-1 ? deliveries[i+1] : instance->taskCount);
 	}
