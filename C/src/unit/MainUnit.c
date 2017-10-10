@@ -33,5 +33,7 @@ int mainUnit()
 	
 	if(UNIT_FAILED)
 		exit(EXIT_FAILURE);
+	else
+		printf("TESTS OK - CONGRATULATIONS\n");
 	return 0;
 }

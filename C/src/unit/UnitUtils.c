@@ -7,7 +7,7 @@ void unit_error(char * str, ...)
 {
 	va_list args;
 	va_start(args, str);
-	fprintf(stderr, "\n");
+	fprintf(stderr, "\nUNIT: ");
 	vfprintf(stderr, str, args);
 	va_end(args);
 	//unit_breakpoint();

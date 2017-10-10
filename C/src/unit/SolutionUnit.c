@@ -127,4 +127,12 @@ void solutionUnit()
 	time = solution_processFinalTime(instance, 3, tasks6);
 	if(time != 46)
 		unit_error("Solution 21: Bad final time, was %d expected %d", time, 46);
+	
+	unsigned int cSol[] = {0, 1, 2};
+	unsigned int * sol = solution_sequenceProcess(instance, 3, tasks);
+	if(!unit_uintArrayEquals(cSol, sol, 3))
+		unit_error("Solution 21: Bad sequence process");
+	
+	free(sol);
+	instance_destroy(instance);
 }
