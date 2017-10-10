@@ -157,8 +157,8 @@ void solutionUnit()
 	
 	unsigned int tasks9[] = {0, 2};
 	time = solution_deliveryDelay(instance, 2, tasks9, 100);
-	if(time != 12)
-		unit_error("Solution 26: Bad delivery delay, got %d expected %d", time, 12);
+	if(time != 10)
+		unit_error("Solution 26: Bad delivery delay, got %d expected %d", time, 10);
 	
 	time = solution_deliveryDelay(instance, 2, tasks9, 0);
 	if(time != 0)
@@ -166,13 +166,13 @@ void solutionUnit()
 	
 	unsigned int tasks10[] = {0, 1};
 	time = solution_deliveryDelay(instance, 2, tasks10, 100);
-	if(time != 11)
-		unit_error("Solution 28: Bad delivery delay, got %d expected %d", time, 11);
+	if(time != 9)
+		unit_error("Solution 28: Bad delivery delay, got %d expected %d", time, 9);
 	
 	unsigned int tasks11[] = {2, 0};
 	time = solution_deliveryDelay(instance, 2, tasks11, 100);
-	if(time != 12)
-		unit_error("Solution 28: Bad delivery delay, got %d expected %d", time, 12);
+	if(time != 10)
+		unit_error("Solution 28: Bad delivery delay, got %d expected %d", time, 10);
 	
 	instance_destroy(instance);
 }
