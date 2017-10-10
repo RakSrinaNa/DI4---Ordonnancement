@@ -107,4 +107,24 @@ void solutionUnit()
 	time = solution_processFinalTime(instance, 3, tasks2);
 	if(time != 35)
 		unit_error("Solution 17: Bad final time, was %d expected %d", time, 35);
+	
+	unsigned int tasks3[] = {2, 1, 0};
+	time = solution_processFinalTime(instance, 3, tasks3);
+	if(time != 51)
+		unit_error("Solution 18: Bad final time, was %d expected %d", time, 51);
+	
+	unsigned int tasks4[] = {0, 2, 1};
+	time = solution_processFinalTime(instance, 3, tasks4);
+	if(time != 42)
+		unit_error("Solution 19: Bad final time, was %d expected %d", time, 42);
+	
+	unsigned int tasks5[] = {1, 2, 0};
+	time = solution_processFinalTime(instance, 3, tasks5);
+	if(time != 37)
+		unit_error("Solution 20: Bad final time, was %d expected %d", time, 37);
+	
+	unsigned int tasks6[] = {2, 0, 1};
+	time = solution_processFinalTime(instance, 3, tasks6);
+	if(time != 46)
+		unit_error("Solution 21: Bad final time, was %d expected %d", time, 46);
 }
