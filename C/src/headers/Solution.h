@@ -83,10 +83,16 @@ void solution_sortByDD(Solution *solution);
 
 
 int solution_eval(Solution *solution);
-
+//TODO A tester
 unsigned int solution_processFinalTime(Instance * instance, unsigned int count, unsigned int * processes);
-
+// TODO a tester
 unsigned int * solution_sequenceProcess(Instance *instance, unsigned int taskCount, unsigned int *pack);
+// TODO a tester
+
+unsigned int solution_deliveryDelay(Instance *instance, unsigned int count, unsigned int * deliveries, unsigned int date);
+// TODOa tester
+unsigned int * solution_sequenceDeliveries(Instance *instance, unsigned int taskCount, unsigned int * deliveries, unsigned int date);
+// TODO a tester
 
 /**
  * Prints the solution.
