@@ -171,7 +171,12 @@ unsigned int solution_processFinalTime(Instance * instance, unsigned int count, 
 unsigned int * solution_sequenceProcess(Instance * instance, unsigned int taskCount, unsigned int * pack)
 {
 	unsigned int * sequence = NULL;
-	if(taskCount == 2)
+	if(taskCount == 1)
+	{
+		MMALLOC(sequence, unsigned int, 1, "solution_sequenceProcess");
+		sequence = memcpy(sequence, pack, sizeof(unsigned int));
+	}
+	else if(taskCount == 2)
 	{
 		unsigned int * sequence01 = NULL;
 		unsigned int * sequence10 = NULL;
