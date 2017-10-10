@@ -262,7 +262,7 @@ unsigned int * solution_sequenceProcess(Instance * instance, unsigned int taskCo
 				}
 				free(tempSequence);
 			}
-			memmove(finalSequence + bestPos, finalSequence + bestPos + 1, inside - bestPos);
+			memmove(finalSequence + bestPos + 1, finalSequence + bestPos, sizeof(unsigned int)*(inside - bestPos));
 			finalSequence[bestPos] = taskID;
 			inside++;
 		}
@@ -350,6 +350,7 @@ unsigned int * solution_sequenceDeliveries(Instance *instance, unsigned int task
 	}
 	else
 	{
+		printf("AAAAAAAA a remplir gros sac");
 		// TODO
 	}
 	return sequence;
