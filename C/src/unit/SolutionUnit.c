@@ -131,8 +131,15 @@ void solutionUnit()
 	unsigned int cSol[] = {0, 1, 2};
 	unsigned int * sol = solution_sequenceProcess(instance, 3, tasks);
 	if(!unit_uintArrayEquals(cSol, sol, 3))
-		unit_error("Solution 21: Bad sequence process");
-	
+		unit_error("Solution 22: Bad sequence process");
 	free(sol);
+	
+	unsigned int tasks7[] = {0, 1};
+	unsigned int cSol2[] = {0, 1};
+	sol = solution_sequenceProcess(instance, 3, tasks7);
+	if(!unit_uintArrayEquals(cSol2, sol, 3))
+		unit_error("Solution 23: Bad sequence process");
+	free(sol);
+	
 	instance_destroy(instance);
 }
