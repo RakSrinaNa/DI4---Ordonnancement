@@ -1,4 +1,7 @@
 #include "headers/UnitUtils.h"
+#include "../FLAGS.h"
+
+Bool UNIT_FAILED = False;
 
 void unit_error(char * str, ...)
 {
@@ -7,13 +10,15 @@ void unit_error(char * str, ...)
 	fprintf(stderr, "\n");
 	vfprintf(stderr, str, args);
 	va_end(args);
-	unit_breakpoint();
-	exit(EXIT_FAILURE);
+	//unit_breakpoint();
+	UNIT_FAILED = True;
+	//exit(EXIT_FAILURE);
 }
 
 void unit_breakpoint()
 {
-	raise(SIGINT);
+	if(DEBUG)
+		raise(SIGINT);
 }
 
 Bool unit_intArrayEquals(const int * base, const int * compare, int length)

@@ -102,4 +102,9 @@ void solutionUnit()
 	unsigned int time = solution_processFinalTime(instance, 3, tasks);
 	if(time != 31)
 		unit_error("Solution 16: Bad final time, was %d expected %d", time, 31);
+	
+	unsigned int tasks2[] = {1, 0, 2};
+	time = solution_processFinalTime(instance, 3, tasks2);
+	if(time != 35)
+		unit_error("Solution 17: Bad final time, was %d expected %d", time, 35);
 }

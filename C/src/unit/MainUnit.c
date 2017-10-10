@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include "headers/UnitUtils.h"
 #include "headers/ParserUnit.h"
 #include "headers/InstanceUnit.h"
 #include "headers/TaskUnit.h"
 #include "headers/PackUnit.h"
 #include "headers/SolutionUnit.h"
 
+extern Bool UNIT_FAILED;
+
 int mainUnit()
 {
-#define UNIT 1
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
 	printf("Executing Task tests...");
@@ -28,5 +30,8 @@ int mainUnit()
 	printf("Executing Solution tests...");
 	solutionUnit();
 	printf("OK\n");
+	
+	if(UNIT_FAILED)
+		exit(EXIT_FAILURE);
 	return 0;
 }
