@@ -160,6 +160,8 @@ unsigned int solution_processFinalTime(Instance * instance, unsigned int count, 
 {
 	unsigned int * machineEndTime = NULL;
 	MMALLOC(machineEndTime, unsigned int, instance->machineCount, "solution_processFinalTime");
+	for(unsigned int i = 0; i < instance->machineCount; i++)
+		machineEndTime[i] = 0;
 	for(unsigned int i = 0; i < count; i++)
 		for(unsigned int m = 0; m < instance->machineCount; m++)
 			machineEndTime[m] = MMAX(m == 0 ? 0 : machineEndTime[m - 1], machineEndTime[m]) + task_getMachineDuration(instance->tasks[processes[i]], m);
@@ -277,7 +279,7 @@ unsigned int solution_deliveryDelay(Instance *instance, unsigned int count, unsi
 	for(unsigned int i = 0; i < count; i++)
 	{
 		date += instance_getDistance(instance, dep, arr);
-		delay += MMAX(0, date - instance_getDueDate(instance, deliveries[i]));
+		delay += MMAX(0, (int)date - (int)instance_getDueDate(instance, deliveries[i]));
 	}
 	return delay;
 }
