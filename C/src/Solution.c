@@ -198,99 +198,36 @@ unsigned int * solution_sequenceProcess(Instance * instance, unsigned int taskCo
 	
 	else if(taskCount == 3)
 	{
-		unsigned int * sequence012 = NULL;
-		unsigned int * sequence021 = NULL;
-		unsigned int * sequence102 = NULL;
-		unsigned int * sequence120 = NULL;
-		unsigned int * sequence201 = NULL;
-		unsigned int * sequence210 = NULL;
-		MMALLOC(sequence012, unsigned int, taskCount, "solution_sequenceProcess");
-		MMALLOC(sequence021, unsigned int, taskCount, "solution_sequenceProcess");
-		MMALLOC(sequence102, unsigned int, taskCount, "solution_sequenceProcess");
-		MMALLOC(sequence120, unsigned int, taskCount, "solution_sequenceProcess");
-		MMALLOC(sequence201, unsigned int, taskCount, "solution_sequenceProcess");
-		MMALLOC(sequence210, unsigned int, taskCount, "solution_sequenceProcess");
-		sequence012[0] = pack[0];
-		sequence012[1] = pack[1];
-		sequence012[2] = pack[2];
-		sequence021[0] = pack[0];
-		sequence021[1] = pack[2];
-		sequence021[2] = pack[1];
-		sequence102[0] = pack[1];
-		sequence102[1] = pack[0];
-		sequence102[2] = pack[2];
-		sequence120[0] = pack[1];
-		sequence120[1] = pack[2];
-		sequence120[2] = pack[0];
-		sequence201[0] = pack[2];
-		sequence201[1] = pack[0];
-		sequence201[2] = pack[1];
-		sequence210[0] = pack[2];
-		sequence210[1] = pack[1];
-		sequence210[2] = pack[0];
+		unsigned int seqID = 0;
+		unsigned int ** seqList = NULL;
+		MMALLOC(seqList, unsigned int *, 6, "solution_sequenceProcess");
+		for(unsigned int i = 0; i < 3; i++)
+			for(unsigned int j = 0; j < 2; j++)
+			{
+				MMALLOC(seqList[seqID], unsigned int, 3, "solution_sequenceProcess");
+				
+				seqList[seqID][i] = pack[0];
+				seqList[seqID][i == 0 ? (j + 1) : (i == 1 && j == 1 ? 2 : j)] = pack[1];
+				seqList[seqID][(i + j == 0) ? 2 : ((j == 1 && i == 0) ? 1 : ((i == 1 && j == 0) ? 2 : ((i == 1 && j == 1) ? 0 : ((i == 2 && j == 0) ? 1 : 0))))] = pack[2];
+				seqID++;
+			}
 		
-		unsigned int * best = sequence012;
-		unsigned int bestTime = solution_processFinalTime(instance, taskCount, sequence012);
-		unsigned int seqTime = 0;
-		
-		seqTime = solution_processFinalTime(instance, taskCount, sequence021);
-		if(seqTime < bestTime)
+		unsigned int * best = NULL;
+		unsigned int bestTime = 0xFFFFFFFF;
+		for(unsigned int i = 0; i < 6; i++)
 		{
-			free(best);
-			best = sequence021;
-			bestTime = seqTime;
+			unsigned int seqTime = solution_processFinalTime(instance, taskCount, seqList[i]);
+			if(best == NULL || seqTime < bestTime)
+			{
+				free(best);
+				best = seqList[i];
+				bestTime = seqTime;
+			}
+			else
+				free(seqList[i]);
 		}
-		else
-		{
-			free(sequence021);
-		}
-		seqTime = solution_processFinalTime(instance, taskCount, sequence102);
-		if(seqTime < bestTime)
-		{
-			free(best);
-			best = sequence102;
-			bestTime = seqTime;
-		}
-		else
-		{
-			free(sequence102);
-		}
-		seqTime = solution_processFinalTime(instance, taskCount, sequence120);
-		if(seqTime < bestTime)
-		{
-			free(best);
-			best = sequence120;
-			bestTime = seqTime;
-		}
-		else
-		{
-			free(sequence120);
-		}
-		seqTime = solution_processFinalTime(instance, taskCount, sequence201);
-		if(seqTime < bestTime)
-		{
-			free(best);
-			best = sequence201;
-			bestTime = seqTime;
-		}
-		else
-		{
-			free(sequence201);
-		}
-		seqTime = solution_processFinalTime(instance, taskCount, sequence210);
-		if(seqTime < bestTime)
-		{
-			free(best);
-			best = sequence210;
-		}
-		else
-		{
-			free(sequence210);
-		}
+		free(seqList);
 		sequence = best;
-		// TODO !!!
-		
-		
 	}
 	else
 	{
