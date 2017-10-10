@@ -1,8 +1,12 @@
 #include "headers/UnitUtils.h"
 
-void unit_error(char * str)
+void unit_error(char * str, ...)
 {
-	fprintf(stderr, "%s\n", str);
+	va_list args;
+	va_start(args, str);
+	fprintf(stderr, "\n");
+	vfprintf(stderr, str, args);
+	va_end(args);
 	unit_breakpoint();
 	exit(EXIT_FAILURE);
 }

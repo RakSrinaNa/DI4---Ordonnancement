@@ -96,4 +96,10 @@ void solutionUnit()
 	
 	solution_destroy(solution);
 	instance_destroy(instance);
+	
+	instance = parser_readInstanceFromFile("./unitResources/Instance3.txt");
+	unsigned int tasks[] = {0, 1, 2};
+	unsigned int time = solution_processFinalTime(instance, 3, tasks);
+	if(time != 31)
+		unit_error("Solution 16: Bad final time, was %d expected %d", time, 31);
 }
