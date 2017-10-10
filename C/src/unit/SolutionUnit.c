@@ -148,5 +148,12 @@ void solutionUnit()
 		unit_error("Solution 24: Bad sequence process");
 	free(sol);
 	
+	instance->tasks[3]->machineDurations[0] = 0;
+	unsigned int cSol4[] = {3, 0, 1, 2};
+	sol = solution_sequenceProcess(instance, 4, tasks8);
+	if(!unit_uintArrayEquals(cSol4, sol, 4))
+		unit_error("Solution 25: Bad sequence process");
+	free(sol);
+	
 	instance_destroy(instance);
 }
