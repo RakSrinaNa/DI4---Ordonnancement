@@ -14,6 +14,7 @@ Instance * parser_readInstanceFromFile(char * filepath);
 
 /**
  * Fill an instance with the content of a file.
+ * Only for Parser.c functions.
  *
  * @param file The file that will be read.
  * @param instance The instance to fill.
@@ -23,6 +24,7 @@ Instance * parser_fillInstance(FILE * file, Instance * instance);
 
 /**
  * Read a non empty line from a file.
+ * Only for Parser.c functions.
  *
  * @param file The file to read from.
  * @return A string on the heap being the next non empty line in the file. If it couldn't read any, NULL is returned.
@@ -31,6 +33,7 @@ char * parser_readLine(FILE * file);
 
 /**
  * Transform a line of numbers into an array of integers.
+ * Only for Parser.c functions.
  *
  * @param line The line to parse.
  * @param valuesNumber The maximum number values to read.
@@ -40,6 +43,7 @@ int * parser_lineToIntArray(char * line, int valuesNumber);
 
 /**
  * Read a line from the file.
+ * Only for Parser.c functions.
  *
  * @param linePtr A pointer to the string that will be read.
  * @param lineSize A pointer to a size_t defining the size of linePtr.
@@ -48,4 +52,4 @@ int * parser_lineToIntArray(char * line, int valuesNumber);
  */
 int parser_getLine(char ** linePtr, size_t * lineSize, FILE * file);
 
-#endif //TABOU_PARSER_H
+#endif

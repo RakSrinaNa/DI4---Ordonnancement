@@ -7,8 +7,6 @@
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 
-static int UNIT = 0;
-
 int main(int argc, char * argv[])
 {
 	char * filepath = "./Input.txt";
@@ -16,7 +14,6 @@ int main(int argc, char * argv[])
 	{
 		if(strcmp(argv[1], "test") == 0) // Used to start unit tests.
 		{
-			UNIT = 1;
 			mainUnit();
 			exit(EXIT_SUCCESS);
 		}
@@ -42,7 +39,7 @@ void warn(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, "\n");
+	fprintf(stderr, "\nWARNING: ");
 	vfprintf(stderr, format, args);
 	va_end(args);
 }

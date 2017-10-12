@@ -25,44 +25,35 @@ void task_destroy(Task * task);
 /**
  * Creates a new task ready to be used.
  *
- * @param instance The parent instance.
+ * @param instance The parent instance. Not null.
  * @return A new task.
  */
 Task * task_create(struct _Instance * instance);
 
 /**
  * Set the duration on a machine for a task.
+ * If the machine isn't found, nothing is changed.
  *
- * @param task The task to modify.
+ * @param task The task to modify. Not null.
  * @param machineID The ID of the machine concerned.
  * @param duration The duration on the defined machine for this task.
  */
-static inline void task_setMachineDuration(Task * task, unsigned int machineID, unsigned int duration)
-{
-	task->machineDurations[machineID] = duration;
-}
+void task_setMachineDuration(Task * task, unsigned int machineID, unsigned int duration);
 
 /**
  * Get the duration on a machine for a task.
+ * If the machine isn't found, a fatal error is thrown.
  *
- * @param task The task to modify.
+ * @param task The task to get the duration for. Not null.
  * @param machineID The ID of the machine concerned.
  * @return The duration on the defined machine for this task.
  */
-static inline unsigned int task_getMachineDuration(Task * task, unsigned int machineID)
-{
-	if(machineID > task->instance->machineCount)
-	{
-		fprintf(stderr, "TASK: Error when getting machine duration, index out of range (machineID: %d).", machineID);
-		exit(EXIT_FAILURE);
-	}
-	return task->machineDurations[machineID];
-}
+unsigned int task_getMachineDuration(Task * task, unsigned int machineID);
 
 /**
  * Set the due date for a task.
  *
- * @param task The task to modify.
+ * @param task The task to modify. Not null.
  * @param duration The due date for this task.
  */
 static inline void task_setDueDate(Task * task, unsigned int date)
@@ -73,7 +64,7 @@ static inline void task_setDueDate(Task * task, unsigned int date)
 /**
  * Get the due date for a task.
  *
- * @param task The task to modify.
+ * @param task The task to modify. Not null.
  * @return The due date for this task.
  */
 static inline unsigned int task_getDueDate(Task * task)
@@ -88,4 +79,4 @@ static inline unsigned int task_getDueDate(Task * task)
  */
 void task_print(Task * task);
 
-#endif //TABOU_TASK_H
+#endif

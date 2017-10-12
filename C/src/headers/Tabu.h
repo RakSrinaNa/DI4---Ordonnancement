@@ -4,6 +4,12 @@
 #include "Solution.h"
 #include "Instance.h"
 
+//TODO: @Schttopup Doc
+/**
+ *
+ * @param instance The instance to build the solution for. Not null.
+ * @return
+ */
 Solution * tabu_solutionInit(Instance * instance);
 
-#endif // TABU_H_INCLUDED
+#endif

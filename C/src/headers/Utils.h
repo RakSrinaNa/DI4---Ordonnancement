@@ -31,13 +31,28 @@
  */
 #define RREALLOC(p, t, n, m) {if((n) == 0){free(p);(p)=NULL;}else{(p) = REALLOC(t, p, n); RCHECK(p, m)}};
 
+/**
+ * Enumeration to represent a boolean.
+ */
 typedef enum
 {
 	False = 0, True = 1
 } Bool;
 
+/**
+ * Warn in the console.
+ *
+ * @param format The message format.
+ * @param ... Message parameters.
+ */
 void warn(char * format, ...);
 
+/**
+ * Send a fatal error to the console end exit the program.
+ *
+ * @param format The message format.
+ * @param ... Message parameters.
+ */
 void fatal_error(char * format, ...);
 
 #endif

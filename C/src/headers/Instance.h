@@ -32,8 +32,9 @@ void instance_destroy(Instance * instance);
 
 /**
  * Set a distance in the matrix.
+ * If the path isn't recognized, nothing will be changed.
  *
- * @param instance The instance concerned.
+ * @param instance The instance concerned. Not null.
  * @param from The starting point.
  * @param to The ending point.
  * @param distance The distance between these points.
@@ -41,33 +42,34 @@ void instance_destroy(Instance * instance);
 static inline void instance_setDistance(Instance * instance, unsigned int from, unsigned int to, unsigned int distance)
 {
 	if(from > instance->taskCount || to > instance->taskCount)
-	{
-		fatal_error("CRITICAL : instance_setDistance : Error when setting distance, index out of range (from: %d, to: %d).", from, to);
-	}
-	instance->distancesMatrix[from][to] = distance;
+		warn("instance_setDistance : Error when setting distance, index out of range (from: %d, to: %d).", from, to);
+	else
+		instance->distancesMatrix[from][to] = distance;
 }
 
 /**
  * Get a distance from the matrix.
+ * If the path isn't known, a fatal error is thrown.
  *
- * @param instance The instance concerned.
+ * @param instance The instance concerned. Not null.
  * @param from The starting point.
  * @param to The ending point.
  * @return The distance between these points.
  */
-static inline unsigned int instance_getDistance(Instance * instance, unsigned int from, unsigned int to)
+static inline int instance_getDistance(Instance * instance, unsigned int from, unsigned int to)
 {
 	if(from > instance->taskCount || to > instance->taskCount)
 	{
-		fatal_error("CRITICAL : instance_getDistance : Error when getting distance, index out of range (from: %d, to: %d).", from, to);
+		fatal_error("instance_getDistance : Error when getting distance, index out of range (from: %d, to: %d).", from, to);
 	}
 	return instance->distancesMatrix[from][to];
 }
 
 /**
  * Gets the due date of the given task.
+ * If the task isn't found, a fatal error is thrown.
  *
- * @param instance The instance concerned.
+ * @param instance The instance concerned. Not null.
  * @param task The task.
  * @return The due date of the task.
  */
@@ -76,8 +78,8 @@ unsigned int instance_getDueDate(Instance * instance, unsigned int task);
 /**
  * Prints an instance in the console.
  *
- * @param instance The instance to print.
+ * @param instance The instance to print. Not null.
  */
 void instance_print(Instance * instance);
 
-#endif //TABOU_INSTANCE_H
+#endif

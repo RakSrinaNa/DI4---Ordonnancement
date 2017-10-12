@@ -13,7 +13,7 @@
 #define FLAG_FIRST_IMPROVE 1
 #define FLAG_TABOU_LOGIC 0
 
-#define DEBUG 1
-#define CACHED_SCORE 0
+#define DEBUG 1 //Show debug infos.
+#define CACHED_SCORE 0 //Use the score cache system.
 
 #endif //TABOU_FLAGS_H

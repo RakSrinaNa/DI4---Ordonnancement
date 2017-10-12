@@ -4,7 +4,6 @@
 
 #include "headers/Instance.h"
 
-
 Instance * instance_create()
 {
 	Instance * instance;
@@ -18,6 +17,9 @@ Instance * instance_create()
 
 void instance_destroy(Instance * instance)
 {
+	if(instance == NULL)
+		return;
+	
 	//Free the distance matrix.
 	if(instance->distancesMatrix != NULL)
 		for(unsigned int i = 0; i <= instance->taskCount; i++)
@@ -36,9 +38,7 @@ void instance_destroy(Instance * instance)
 unsigned int instance_getDueDate(Instance * instance, unsigned int task)
 {
 	if(task > instance->taskCount)
-	{
-		fatal_error("CRITICAL : instance_getDueDate : task out of range(%d)", task);
-	}
+		fatal_error("instance_getDueDate : task out of range(%d)", task);
 	return instance->tasks[task]->dueDate;
 }
 
@@ -48,9 +48,7 @@ void instance_print(Instance * instance)
 	for(unsigned int i = 0; i < instance->machineCount; i++)
 	{
 		for(unsigned int j = 0; j < instance->taskCount; j++)
-		{
 			printf("%-4d", task_getMachineDuration(instance->tasks[j], i));
-		}
 		printf("\n");
 	}
 	printf("Due:\n");
