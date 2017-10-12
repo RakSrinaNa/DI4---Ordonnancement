@@ -134,10 +134,16 @@ void sequencerUnit_delivery()
 	free(sol);
 	
 	unsigned int tasks15[] = {0, 1};
-	unsigned int cSol2[] = {1, 0};
+	unsigned int cSol2[] = {0, 1};
 	sol = sequencer_sequenceDeliveries(instance, 2, tasks15, 0);
 	if(!unit_uintArrayEquals(cSol2, sol, 2))
 		unit_error("Sequencer 9B: Bad delivery sequence");
+	free(sol);
+	
+	unsigned int cSol3[] = {1, 0};
+	sol = sequencer_sequenceDeliveries(instance, 2, tasks15, 100);
+	if(!unit_uintArrayEquals(cSol3, sol, 2))
+		unit_error("Sequencer 10B: Bad delivery sequence");
 	free(sol);
 	
 	instance_destroy(instance);

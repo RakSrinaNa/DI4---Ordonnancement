@@ -39,7 +39,7 @@ unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int ta
 		
 		unsigned int score01 = sequencer_productionFinalTime(instance, taskCount, sequence01);
 		unsigned int score10 = sequencer_productionFinalTime(instance, taskCount, sequence10);
-		if(score01 < score10)
+		if(score01 <= score10)
 		{
 			finalSequence = sequence01;
 			free(sequence10);
@@ -162,7 +162,7 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 		
 		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, initialDate);
 		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, initialDate);
-		if(sol01 < sol10)
+		if(sol01 <= sol10)
 		{
 			sequence = sequence01;
 			free(sequence10);
@@ -205,7 +205,7 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 		free(seqList);
 		sequence = best;
 	}
-	else
+	else if(taskCount > 3)
 	{
 		if(DELIVERY_NEAREST_NEIGHBOR)
 			sequence = sequencer_sequenceDeliveriesNearestNeighbor();
