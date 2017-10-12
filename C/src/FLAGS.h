@@ -15,5 +15,6 @@
 
 #define DEBUG 1 //Show debug infos.
 #define CACHED_SCORE 0 //Use the score cache system.
+#define DELIVERY_NEAREST_NEIGHBOR 1 //Sort deliveries using the nearest neighbor, else sort by lowest due date first.
 
 #endif //TABOU_FLAGS_H

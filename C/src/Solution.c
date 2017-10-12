@@ -363,6 +363,14 @@ unsigned int * solution_sequenceDeliveries(Instance * instance, unsigned int tas
 	}
 	else
 	{
+		if(DELIVERY_NEAREST_NEIGHBOR)
+		{
+		
+		}
+		else
+		{
+		
+		}
 		printf("AAAAAAAA a remplir gros sac");
 		// TODO
 	}

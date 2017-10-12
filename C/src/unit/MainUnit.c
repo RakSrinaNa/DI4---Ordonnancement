@@ -14,6 +14,7 @@ int mainUnit()
 {
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
+	setbuf(stderr, NULL);
 	printf("Executing Task tests...");
 	taskUnit();
 	printf("OK\n");
