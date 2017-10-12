@@ -56,6 +56,18 @@ void sequencerUnit_production()
 		unit_error("Sequencer 8A: Bad sequence process");
 	free(sol);
 	
+	unsigned int tasks7_2[] = {0};
+	unsigned int cSol2_2[] = {0};
+	sol = sequencer_sequenceProduction(instance, 1, tasks7_2);
+	if(!unit_uintArrayEquals(cSol2_2, sol, 1))
+		unit_error("Sequencer 8.5A: Bad sequence process");
+	free(sol);
+	
+	sol = sequencer_sequenceProduction(instance, 0, NULL);
+	if(sol != NULL)
+		unit_error("Sequencer 8.75A: Bad sequence process");
+	free(sol);
+	
 	unsigned int tasks8[] = {0, 1, 2, 3};
 	unsigned int cSol3[] = {0, 1, 2, 3};
 	sol = sequencer_sequenceProduction(instance, 4, tasks8);

@@ -84,7 +84,7 @@ unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int ta
 		free(sequenceList);
 		finalSequence = bestSequence;
 	}
-	else
+	else if(taskCount > 3)
 	{
 		unsigned int * tempSequence;
 		MMALLOC(tempSequence, unsigned int, 2, "sequencer_sequenceProduction");
