@@ -3,8 +3,4 @@
 
 void solutionUnit();
 
-void solutionUnit_processes();
-
-void solutionUnit_delivery();
-
 #endif //TABOU_SOLUTIONUNIT_H

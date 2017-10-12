@@ -88,19 +88,6 @@ void solution_sortByDD(Solution * solution);
 //TODO: @Schttopup Doc
 int solution_eval(Solution * solution);
 
-//TODO: @Schttopup Doc
-unsigned int solution_productionFinalTime(Instance * instance, unsigned int count, unsigned int const * tasks);
-
-//TODO: @Schttopup Doc
-unsigned int * solution_sequenceProduction(Instance * instance, unsigned int taskCount, unsigned int * tasks);
-
-//TODO: @Schttopup Doc
-unsigned int solution_deliveryDelay(Instance * instance, unsigned int count, unsigned int * deliveries, unsigned int date);
-
-//TODO: @Schttopup Doc
-//TODO a tester
-unsigned int * solution_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * deliveries, unsigned int date);
-
 /**
  * Prints the solution.
  */

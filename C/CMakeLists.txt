@@ -26,6 +26,9 @@ set(SOURCE_FILES
         src/Solution.c src/headers/Solution.h
         src/unit/SolutionUnit.c src/unit/headers/SolutionUnit.h
 
+        src/Sequencer.c src/headers/Sequencer.h
+        src/unit/SequencerUnit.c src/unit/headers/SequencerUnit.h
+
         src/Sort.c src/headers/Sort.h
 
         src/Tabu.c src/headers/Tabu.h

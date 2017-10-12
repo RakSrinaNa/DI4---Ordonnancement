@@ -7,6 +7,7 @@
 #include "headers/TaskUnit.h"
 #include "headers/PackUnit.h"
 #include "headers/SolutionUnit.h"
+#include "headers/SequencerUnit.h"
 
 extern Bool UNIT_FAILED;
 
@@ -30,6 +31,10 @@ int mainUnit()
 	printf("OK\n");
 	printf("Executing Solution tests...");
 	solutionUnit();
+	printf("OK\n");
+	
+	printf("Executing Sequencer tests...");
+	sequencerUnit();
 	printf("OK\n");
 	
 	if(UNIT_FAILED)
