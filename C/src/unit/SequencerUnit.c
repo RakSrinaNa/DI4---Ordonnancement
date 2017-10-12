@@ -119,4 +119,26 @@ void sequencerUnit_delivery()
 		unit_error("Sequencer 6B: Bad delivery delay, got %d expected %d", time, 25);
 	
 	instance_destroy(instance);
+	
+	instance = parser_readInstanceFromFile("./unitResources/Instance4.txt");
+	
+	unsigned int * sol = sequencer_sequenceDeliveries(instance, 0, NULL, 0);
+	if(sol != NULL)
+		unit_error("Sequencer 7B: Bad delivery sequence");
+	
+	unsigned int tasks14[] = {0};
+	unsigned int cSol1[] = {0};
+	sol = sequencer_sequenceDeliveries(instance, 1, tasks14, 0);
+	if(!unit_uintArrayEquals(cSol1, sol, 1))
+		unit_error("Sequencer 8B: Bad delivery sequence");
+	free(sol);
+	
+	unsigned int tasks15[] = {0, 1};
+	unsigned int cSol2[] = {1, 0};
+	sol = sequencer_sequenceDeliveries(instance, 2, tasks15, 0);
+	if(!unit_uintArrayEquals(cSol2, sol, 2))
+		unit_error("Sequencer 9B: Bad delivery sequence");
+	free(sol);
+	
+	instance_destroy(instance);
 }

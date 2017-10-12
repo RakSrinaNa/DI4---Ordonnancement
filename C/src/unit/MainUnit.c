@@ -16,30 +16,30 @@ int mainUnit()
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
-	printf("Executing Task tests...");
+	printf("UNIT: Executing Task tests...\n");
 	taskUnit();
-	printf("OK\n");
-	printf("Executing Instance tests...");
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing Instance tests...\n");
 	instanceUnit();
-	printf("OK\n");
-	printf("Executing Parser tests...");
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing Parser tests...\n");
 	parserUnit();
-	printf("OK\n");
+	printf("UNIT: OK\n");
 	
-	printf("Executing Pack tests...");
+	printf("UNIT: Executing Pack tests...\n");
 	packUnit();
-	printf("OK\n");
-	printf("Executing Solution tests...");
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing Solution tests...\n");
 	solutionUnit();
-	printf("OK\n");
+	printf("UNIT: OK\n");
 	
-	printf("Executing Sequencer tests...");
+	printf("UNIT: Executing Sequencer tests...\n");
 	sequencerUnit();
-	printf("OK\n");
+	printf("UNIT: OK\n");
 	
 	if(UNIT_FAILED)
 		exit(EXIT_FAILURE);
 	else
-		printf("TESTS OK - CONGRATULATIONS\n");
+		printf("UNIT: TESTS OK - CONGRATULATIONS\n");
 	return 0;
 }
