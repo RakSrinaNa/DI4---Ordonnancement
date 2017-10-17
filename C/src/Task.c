@@ -30,7 +30,7 @@ void task_setMachineDuration(Task * task, unsigned int machineID, unsigned int d
 unsigned int task_getMachineDuration(Task * task, unsigned int machineID)
 {
 	if(machineID > task->instance->machineCount)
-		fatal_error("task_getMachineDuration: Error when getting machine duration, index out of range (machineID: %d).", machineID);
+		fatalError("task_getMachineDuration: Error when getting machine duration, index out of range (machineID: %d).", machineID);
 	return task->machineDurations[machineID];
 }
 

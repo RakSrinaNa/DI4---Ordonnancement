@@ -6,6 +6,7 @@
 #include "headers/Instance.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "FLAGS.h"
 
 int main(int argc, char * argv[])
 {
@@ -35,6 +36,17 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
+void debugPrint(char * format, ...)
+{
+	if(DEBUG)
+	{
+		va_list args;
+		va_start(args, format);
+		vfprintf(stdout, format, args);
+		va_end(args);
+	}
+}
+
 void warn(char * format, ...)
 {
 	va_list args;
@@ -44,7 +56,7 @@ void warn(char * format, ...)
 	va_end(args);
 }
 
-void fatal_error(char * format, ...)
+void fatalError(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);

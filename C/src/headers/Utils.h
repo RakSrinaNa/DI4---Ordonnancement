@@ -53,6 +53,14 @@ void warn(char * format, ...);
  * @param format The message format.
  * @param ... Message parameters.
  */
-void fatal_error(char * format, ...);
+void fatalError(char * format, ...);
+
+/**
+ * Print in the console if debug mode is set.
+ *
+ * @param format The message format.
+ * @param ... Message parameters.
+ */
+void debugPrint(char * format, ...);
 
 #endif

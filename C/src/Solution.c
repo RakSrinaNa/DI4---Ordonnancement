@@ -95,7 +95,7 @@ int solution_getTaskPack(Solution * solution, unsigned int task)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			if(solution->packList[i]->deliveryOrder[j] == task)
 				return i;
-	fatal_error("solution_getTask : given task exists, but is not in any pack (%d)", task);
+	fatalError("solution_getTask : given task exists, but is not in any pack (%d)", task);
 	return -1;
 }
 

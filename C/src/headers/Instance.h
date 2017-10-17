@@ -60,7 +60,7 @@ static inline int instance_getDistance(Instance * instance, unsigned int from, u
 {
 	if(from > instance->taskCount || to > instance->taskCount)
 	{
-		fatal_error("instance_getDistance : Error when getting distance, index out of range (from: %d, to: %d).", from, to);
+		fatalError("instance_getDistance : Error when getting distance, index out of range (from: %d, to: %d).", from, to);
 	}
 	return instance->distancesMatrix[from][to];
 }

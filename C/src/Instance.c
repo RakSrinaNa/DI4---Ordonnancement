@@ -38,7 +38,7 @@ void instance_destroy(Instance * instance)
 unsigned int instance_getDueDate(Instance * instance, unsigned int task)
 {
 	if(task > instance->taskCount)
-		fatal_error("instance_getDueDate : task out of range(%d)", task);
+		fatalError("instance_getDueDate : task out of range(%d)", task);
 	return instance->tasks[task]->dueDate;
 }
 
