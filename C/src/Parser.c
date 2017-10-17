@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "headers/Parser.h"
+#include "FLAGS.h"
 
 Instance * parser_readInstanceFromFile(char * filepath)
 {
@@ -18,6 +19,13 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	instance = parser_fillInstance(file, instance);
 	
 	fclose(file);
+	
+	if(DEBUG)
+	{
+		debugPrint("Parsed instance:");
+		instance_print(instance);
+	}
+	
 	return instance;
 }
 
