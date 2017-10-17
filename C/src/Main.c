@@ -15,7 +15,7 @@ int main(int argc, char * argv[])
 	{
 		if(strcmp(argv[1], "test") == 0) // Used to start unit tests.
 		{
-			mainUnit();
+			//mainUnit();
 			exit(EXIT_SUCCESS);
 		}
 		else if(strcmp(argv[1], "temp") == 0) // For internal testing.
@@ -28,8 +28,6 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	instance_print(instance);
 	Solution * solution = solution_create(instance);
-	solution_print(solution);
-	solution_sortByDD(solution);
 	solution_print(solution);
 	//TODO: Compute solution
 	instance_destroy(instance);

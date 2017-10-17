@@ -141,7 +141,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, un
 	return delay;
 }
 
-unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int initialDate)
+unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
 {
 	unsigned int * sequence = NULL;
 	if(taskCount == 1)
@@ -160,10 +160,10 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 		sequence10[0] = tasks[1];
 		sequence10[1] = tasks[0];
 		
-		unsigned int backupDate = initialDate;
-		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, &initialDate);
+		unsigned int backupDate = *initialDate;
+		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, initialDate);
 		*initialDate = backupDate;
-		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, &initialDate);
+		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, initialDate);
 		if(sol01 <= sol10)
 		{
 			sequence = sequence01;

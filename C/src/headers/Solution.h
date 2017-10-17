@@ -1,20 +1,17 @@
 #ifndef TABOU_SOLUTION_H
 #define TABOU_SOLUTION_H
 
-#include "Pack.h"
-
-/**
- * Structure representing a solution.
- */
 struct _Solution;
+
+#include "Sequencer.h"
+#include "Pack.h"
 
 typedef struct _Solution
 {
 	Instance * instance; // Reference to the instance.
 	unsigned int packCount; // Number of packs in this solution.
 	Pack ** packList; // Ordered list of the packs in shipping order.
-	unsigned int * productionOrder; // Order of the production of the solution.
-	int score; // Cached score of the solution (-1 if not calculated).
+	SolutionInfo * info;
 } Solution;
 
 /**
@@ -76,14 +73,6 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
  * @param pack The pack to assign.
  */
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
-
-/**
- * Sorts a pack by due date.
- *
- * @param solution The solution. Not null.
- * @param pack The pack.
- */
-void solution_sortByDD(Solution * solution);
 
 //TODO: @Schttopup Doc
 int solution_eval(Solution * solution);

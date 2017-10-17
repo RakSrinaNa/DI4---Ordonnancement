@@ -11,19 +11,13 @@ Solution * solution_create(Instance * instance)
 	solution->instance = instance;
 	solution->packCount = 0;
 	solution->packList = NULL;
-	solution->productionOrder = NULL;
-	solution->score = -1;
-	
-	MMALLOC(solution->productionOrder, unsigned int, solution->instance->taskCount, "solution_create");
+	solution->info = NULL;
 	
 	//Create a pack and put every tasks inside it.
 	MMALLOC(solution->packList, Pack *, 1, "solution_create");
 	solution->packList[0] = pack_create(instance);
 	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-	{
-		solution->productionOrder[i] = i;
 		pack_addTask(solution->packList[0], i);
-	}
 	solution->packCount++;
 	
 	return solution;
@@ -39,7 +33,7 @@ void solution_destroy(Solution * solution)
 		pack_destroy(solution->packList[i]);
 	
 	free(solution->packList);
-	free(solution->productionOrder);
+	//TODO solutionInfo_destroy(solution->info);
 	free(solution);
 }
 
@@ -48,40 +42,12 @@ Solution * solution_copy(Solution * solution)
 	if(solution == NULL)
 		return NULL;
 	Solution * copy = solution_create(solution->instance);
-	copy->score = solution->score;
-	
-	//Copy production order
-	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-		copy->productionOrder[i] = solution->productionOrder[i];
 	
 	//Copy packs
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			solution_moveTaskPack(copy, solution->packList[i]->deliveryOrder[j], i);
 	return copy;
-}
-
-int solution_getProductionIndex(Solution * solution, unsigned int task)
-{
-	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-		if(solution->productionOrder[i] == task)
-			return (int) i;
-	return -1;
-}
-
-void solution_setProductionIndex(Solution * solution, unsigned int task, unsigned int position)
-{
-	if(task < solution->instance->taskCount)
-	{
-		unsigned int index = (unsigned int) solution_getProductionIndex(solution, task);
-		int direction = (position > index ? 1 : -1); //Direction of the iteration
-		for(unsigned int i = index; i != position && i < solution->instance->taskCount - direction; i += direction)
-			solution->productionOrder[i] = solution->productionOrder[i + direction];
-		solution->productionOrder[MMIN(position, solution->instance->taskCount - 1)] = task; //If the index is greater than the list size, put it at the end.
-		solution->score = -1;
-	}
-	else
-		warn("solution_setProductionIndex : given process does not exist (%d)\n", task);
 }
 
 int solution_getTaskPack(Solution * solution, unsigned int task)
@@ -129,29 +95,16 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 			solution->packCount--;
 			RREALLOC(solution->packList, Pack*, solution->packCount, "solution_moveTaskPack");
 		}
-		solution->score = -1;
 	}
 	else
 		warn("solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
 }
 
-void solution_sortByDD(Solution * solution)
-{
-	for(unsigned int i = 0; i < solution->instance->taskCount - 1; i++)
-		for(unsigned int j = 0; j < solution->instance->taskCount - i - 1; j++)
-			if(instance_getDueDate(solution->instance, solution->productionOrder[j]) > instance_getDueDate(solution->instance, solution->productionOrder[j + 1]))
-			{
-				unsigned int temp = solution->productionOrder[j];
-				solution->productionOrder[j] = solution->productionOrder[j + 1];
-				solution->productionOrder[j + 1] = temp;
-			}
-	solution->score = -1;
-}
-
 int solution_eval(Solution * solution)
 {
-	if(CACHED_SCORE && solution->score != -1) //We can use the cached score.
-		return solution->score;
+	UNUSED(solution);
+	if(CACHED_SCORE)
+		return 0;
 	
 	//TODO
 	
@@ -160,10 +113,7 @@ int solution_eval(Solution * solution)
 
 void solution_print(Solution * solution)
 {
-	printf("\nSOLUTION\n\tOrder : ( ");
-	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-		printf("%d ", solution->productionOrder[i]);
-	printf(")\nPacks : %d\n", solution->packCount);
+	printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		printf("\t");

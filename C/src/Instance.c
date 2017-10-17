@@ -42,6 +42,24 @@ unsigned int instance_getDueDate(Instance * instance, unsigned int task)
 	return instance->tasks[task]->dueDate;
 }
 
+unsigned int * instance_sortByDueDate(Instance * instance)
+{
+	unsigned int * sorted = NULL;
+	MMALLOC(sorted, unsigned int, instance->taskCount, "instance_sortByDueDate");
+	for(unsigned int i = 0; i < instance->taskCount; i++)
+		sorted[i] = i;
+	
+	for(unsigned int i = 0; i < instance->taskCount - 1; i++)
+		for(unsigned int j = 0; j < instance->taskCount - i - 1; j++)
+			if(instance_getDueDate(instance, sorted[j]) > instance_getDueDate(instance, sorted[j + 1]))
+			{
+				unsigned int temp = sorted[j];
+				sorted[j] = sorted[j + 1];
+				sorted[j + 1] = temp;
+			}
+	return sorted;
+}
+
 void instance_print(Instance * instance)
 {
 	printf("\nINSTANCE\nMachine count: %d\nTask count: %d\nTasks:\n", instance->machineCount, instance->taskCount);

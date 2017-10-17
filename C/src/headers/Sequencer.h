@@ -3,6 +3,13 @@
 
 #include "Instance.h"
 
+typedef struct _SolutionInfo
+{
+	unsigned int * productionOrder;
+	unsigned int * readyToDeliver;
+	unsigned int ** deliveries;
+} SolutionInfo;
+
 //TODO: @Schttopup Doc
 unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, unsigned int const * tasks);
 
@@ -23,7 +30,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, un
 
 //TODO: @Schttopup Doc
 //TODO: @MrCraftCod Test
-unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int initialDate);
+unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
 
 //TODO: @Schttopup Doc
 //TODO: @MrCraftCod Test

@@ -76,6 +76,14 @@ static inline int instance_getDistance(Instance * instance, unsigned int from, u
 unsigned int instance_getDueDate(Instance * instance, unsigned int task);
 
 /**
+ * Sorts tasks by due date.
+ *
+ * @param instance The instance.
+ * @return A sorted table of the tasks.
+ */
+unsigned int * instance_sortByDueDate(Instance * instance);
+
+/**
  * Prints an instance in the console.
  *
  * @param instance The instance to print. Not null.
