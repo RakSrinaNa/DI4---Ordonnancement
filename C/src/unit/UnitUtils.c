@@ -1,7 +1,8 @@
 #include "headers/UnitUtils.h"
-#include "../FLAGS.h"
 
 Bool UNIT_FAILED = False;
+
+extern Bool DEBUG;
 
 void unit_error(char * str, ...)
 {

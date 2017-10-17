@@ -10,9 +10,12 @@
 #include "headers/SequencerUnit.h"
 
 extern Bool UNIT_FAILED;
+extern Bool DEBUG;
 
 int mainUnit()
 {
+	DEBUG = False;
+	
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);

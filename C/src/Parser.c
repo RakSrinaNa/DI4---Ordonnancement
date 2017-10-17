@@ -4,7 +4,8 @@
 #include <stdlib.h>
 
 #include "headers/Parser.h"
-#include "FLAGS.h"
+
+extern Bool DEBUG;
 
 Instance * parser_readInstanceFromFile(char * filepath)
 {

@@ -6,7 +6,8 @@
 #include "headers/Instance.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
-#include "FLAGS.h"
+
+Bool DEBUG = True;
 
 int main(int argc, char * argv[])
 {
@@ -15,7 +16,7 @@ int main(int argc, char * argv[])
 	{
 		if(strcmp(argv[1], "test") == 0) // Used to start unit tests.
 		{
-			//mainUnit();
+			mainUnit();
 			exit(EXIT_SUCCESS);
 		}
 		else if(strcmp(argv[1], "temp") == 0) // For internal testing.

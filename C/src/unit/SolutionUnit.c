@@ -13,32 +13,8 @@ void solutionUnit()
 	if(solution->instance != instance)
 		unit_error("Solution 1: Wrong instance");
 	
-	if(solution->productionOrder == NULL)
-		unit_error("Solution 2: Process list shouldn't be NULL");
-	
-	solution_setProductionIndex(solution, 3, 0);
-	solution_setProductionIndex(solution, 4, 3);
-	solution_setProductionIndex(solution, 2, 2);
-	unsigned int correctOrder1[] = {3, 0, 2, 1, 4};
-	if(!unit_uintArrayEquals(correctOrder1, solution->productionOrder, 5))
-		unit_error("Solution 3: Bad process index");
-	
-	solution_setProductionIndex(solution, 99, 2);
-	if(!unit_uintArrayEquals(correctOrder1, solution->productionOrder, 5))
-		unit_error("Solution 4: Bad process index");
-	
-	solution_setProductionIndex(solution, 2, 99);
-	unsigned int correctOrder2[] = {3, 0, 1, 4, 2};
-	if(!unit_uintArrayEquals(correctOrder2, solution->productionOrder, 5))
-		unit_error("Solution 4.1: Bad process index");
-	
-	if(solution_getProductionIndex(solution, 3) != 0 || solution_getProductionIndex(solution, 0) != 1 || solution_getProductionIndex(solution, 1) != 2 || solution_getProductionIndex(solution, 4) != 3 || solution_getProductionIndex(solution, 2) != 4)
-		unit_error("Solution 5: Bad process index");
-	
-	solution_sortByDD(solution);
-	unsigned int correctOrder3[] = {2, 3, 1, 4, 0};
-	if(!unit_uintArrayEquals(correctOrder3, solution->productionOrder, 5))
-		unit_error("Solution 5.5: Bad sort by due date");
+	if(solution->info != NULL)
+		unit_error("Solution 2: Process info should be NULL");
 	
 	if(solution->packCount != 1)
 		unit_error("Solution 6: No packs in solution");
@@ -70,8 +46,8 @@ void solutionUnit()
 		unit_error("Solution 12.50: Bad copy instance");
 	if(solutionCopy->packCount != solution->packCount)
 		unit_error("Solution 12.51: Bad copy pack count");
-	if(!unit_uintArrayEquals(solution->productionOrder, solutionCopy->productionOrder, solution->instance->taskCount))
-		unit_error("Solution 12.52: Bad copy process order");
+	if(solution->info != NULL)
+		unit_error("Solution 12.52: Bad copy info");
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		if(solution->packList[i]->taskCount != solutionCopy->packList[i]->taskCount)
