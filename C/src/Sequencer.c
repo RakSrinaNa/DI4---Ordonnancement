@@ -160,19 +160,21 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 		sequence10[0] = tasks[1];
 		sequence10[1] = tasks[0];
 		
-		unsigned int backupDate = *initialDate;
-		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, initialDate);
-		*initialDate = backupDate;
-		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, initialDate);
+		unsigned int dateSol01 = *initialDate;
+		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, &dateSol01);
+		unsigned int dateSol10 = *initialDate;
+		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, &dateSol10);
 		if(sol01 <= sol10)
 		{
 			sequence = sequence01;
 			free(sequence10);
+			*initialDate = dateSol01;
 		}
 		else
 		{
 			sequence = sequence10;
 			free(sequence01);
+			*initialDate = dateSol10;
 		}
 	}
 	else if(taskCount == 3)
@@ -192,14 +194,18 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 			}
 		unsigned int * best = NULL;
 		unsigned int bestTime = 0xFFFFFFFF;
+		unsigned int * dates = NULL;
+		MMALLOC(dates, unsigned int, 6, "sequencer_sequenceDeliveries");
+		unsigned int tempDate;
 		for(unsigned int i = 0; i < 6; i++)
 		{
-			unsigned int seqTime = sequencer_deliveryDelay(instance, taskCount, seqList[i], initialDate);
+			unsigned int seqTime = sequencer_deliveryDelay(instance, taskCount, seqList[i], &tempDate);
 			if(best == NULL || seqTime < bestTime)
 			{
 				free(best);
 				best = seqList[i];
 				bestTime = seqTime;
+				*initialDate = tempDate;
 			}
 			else
 				free(seqList[i]);
