@@ -38,25 +38,6 @@ void solution_destroy(Solution * solution);
 Solution * solution_copy(Solution * solution);
 
 /**
- * Gets the production index of the given task.
- *
- * @param solution The solution. Not null.
- * @param task The task id to get.
- * @return The index of the task if it is present, -1 otherwise.
- */
-int solution_getProductionIndex(Solution * solution, unsigned int task);
-
-/**
- * Moves a task in the production list.
- * If the position is greater than the task count, it is moved at the end of the list.
- *
- * @param solution The solution. Not null.
- * @param task The task to move.
- * @param position The new position.
- */
-void solution_setProductionIndex(Solution * solution, unsigned int task, unsigned int position);
-
-/**
  * Gets the corresponding pack index for the given task.
  *
  * @param solution The solution. Not null.
