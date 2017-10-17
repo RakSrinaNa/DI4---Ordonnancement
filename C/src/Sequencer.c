@@ -96,7 +96,7 @@ unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int ta
 		RREALLOC(bestSequence, unsigned int, taskCount, "sequencer_sequenceProduction");
 		for(unsigned int taskID = 2; taskID < taskCount; taskID++) //Try to insert every task.
 		{
-			unsigned int bestScore = 999999999;
+			unsigned int bestScore = 0xFFFFFFFF;
 			unsigned int bestPos = 0;
 			for(unsigned int insertPos = 0; insertPos <= taskID; insertPos++) //Try to insert at every position.
 			{
@@ -126,15 +126,15 @@ unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int ta
 	return finalSequence;
 }
 
-unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int date)
+unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int * date)
 {
 	unsigned int delay = 0;
 	unsigned int departure = instance->taskCount;
 	unsigned int arrival = tasks[0];
 	for(unsigned int i = 0; i <= count; i++)
 	{
-		date += instance_getDistance(instance, departure, arrival);
-		delay += (i < count ? MMAX(0, (int) date - (int) instance_getDueDate(instance, tasks[i])) : 0);
+		*date += instance_getDistance(instance, departure, arrival);
+		delay += (i < count ? MMAX(0, (int) *date - (int) instance_getDueDate(instance, tasks[i])) : 0); // If arrival point is the origin, no delay added
 		departure = arrival;
 		arrival = (i < count - 1 ? tasks[i + 1] : instance->taskCount);
 	}
@@ -160,8 +160,10 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 		sequence10[0] = tasks[1];
 		sequence10[1] = tasks[0];
 		
-		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, initialDate);
-		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, initialDate);
+		unsigned int backupDate = initialDate;
+		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, &initialDate);
+		*initialDate = backupDate;
+		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, &initialDate);
 		if(sol01 <= sol10)
 		{
 			sequence = sequence01;
@@ -211,8 +213,6 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 			sequence = sequencer_sequenceDeliveriesNearestNeighbor();
 		else
 			sequence = sequencer_sequenceDeliveriesDueDate();
-		printf("AAAAAAAA a remplir gros sac");
-		//TODO @Schttopup
 	}
 	return sequence;
 }

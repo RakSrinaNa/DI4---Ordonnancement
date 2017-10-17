@@ -9,8 +9,17 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 //TODO: @Schttopup Doc
 unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int taskCount, unsigned int * tasks);
 
-//TODO: @Schttopup Doc
-unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int date);
+/**
+ * Computes the total delay of this sequence.
+ * Also updates parameter date with the arrival time of the truck.
+ *
+ * @param instance The instance.
+ * @param count The number of tasks.
+ * @param tasks A table of the tasks.
+ * @param date A pointer to the departure time. At the end, contains the arrival time.
+ * @return The total delay of the sequence.
+ */
+unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int * date);
 
 //TODO: @Schttopup Doc
 //TODO: @MrCraftCod Test
