@@ -151,7 +151,7 @@ void sequencerUnit_delivery()
 	startTime = 100;
 	unsigned int cSol3[] = {1, 0};
 	sol = sequencer_sequenceDeliveries(instance, 2, tasks15, &startTime);
-	if(!unit_uintArrayEquals(cSol3, sol, 2) || startTime != 1100)
+	if(!unit_uintArrayEquals(cSol3, sol, 2) || startTime != 108)
 		unit_error("Sequencer 10B: Bad delivery sequence, with car back at %d, expected %d", startTime, 108);
 	free(sol);
 	
@@ -166,7 +166,7 @@ void sequencerUnit_delivery()
 	startTime = 95;
 	unsigned int cSol5[] = {1,2,3};
 	sol = sequencer_sequenceDeliveries(instance, 3, tasks16, &startTime);
-	if(!unit_uintArrayEquals(cSol5, sol, 3) || startTime != 13)
+	if(!unit_uintArrayEquals(cSol5, sol, 3) || startTime != 1100)
 		unit_error("Sequencer 12B: Bad delivery sequence, with car back at %d, expected %d", startTime, 1100);
 	free(sol);
 	

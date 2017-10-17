@@ -148,6 +148,7 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 	{
 		MMALLOC(sequence, unsigned int, 1, "sequencer_sequenceDeliveries");
 		sequence = memcpy(sequence, tasks, sizeof(unsigned int));
+		*initialDate += instance_getDistance(instance, instance->taskCount, tasks[0]) + instance_getDistance(instance, instance->taskCount, tasks[0]);
 	}
 	else if(taskCount == 2)
 	{
@@ -194,22 +195,23 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 			}
 		unsigned int * best = NULL;
 		unsigned int bestTime = 0xFFFFFFFF;
-		unsigned int * dates = NULL;
-		MMALLOC(dates, unsigned int, 6, "sequencer_sequenceDeliveries");
 		unsigned int tempDate;
+		unsigned int bestDate;
 		for(unsigned int i = 0; i < 6; i++)
 		{
+			tempDate = *initialDate;
 			unsigned int seqTime = sequencer_deliveryDelay(instance, taskCount, seqList[i], &tempDate);
 			if(best == NULL || seqTime < bestTime)
 			{
 				free(best);
 				best = seqList[i];
 				bestTime = seqTime;
-				*initialDate = tempDate;
+				bestDate = tempDate;
 			}
 			else
 				free(seqList[i]);
 		}
+		*initialDate = bestDate;
 		free(seqList);
 		sequence = best;
 	}
