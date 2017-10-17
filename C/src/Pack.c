@@ -79,6 +79,7 @@ Bool pack_removeTask(Pack * pack, unsigned int task)
 
 void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2)
 {
+	debugPrint("Switching deliveries %d and %d\n", delivery1, delivery2);
 	if(delivery1 == delivery2)
 		return;
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
@@ -94,6 +95,7 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
 
 void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position)
 {
+	debugPrint("Moving delivery %d to position %d\n", delivery, position);
 	if(pack_hasTask(pack, delivery))
 	{
 		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
