@@ -26,9 +26,10 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
  * @param instance The instance.
  * @param taskCount The number of tasks.
  * @param tasks The list of the tasks.
+ * @param date A pointer to the starting time. At the end, contains the ending time.
  * @return An ordered sequence of deliveries.
  */
-unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks);
+unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * date);
 
 /**
  * Computes the total delay of this sequence.

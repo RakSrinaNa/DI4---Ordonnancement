@@ -18,7 +18,7 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 	return finalTime;
 }
 
-unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks)
+unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * date)
 {
 	unsigned int * finalSequence = NULL;
 	if(taskCount == 1)
@@ -90,7 +90,8 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 		MMALLOC(tempSequence, unsigned int, 2, "sequencer_sequenceProductionPack");
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
-		unsigned int * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence); //Get the best order of the 2 first tasks.
+		unsigned int * time = 0;
+		unsigned int * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, &time); //Get the best order of the 2 first tasks.
 		free(tempSequence);
 		unsigned int inside = 2;
 		RREALLOC(bestSequence, unsigned int, taskCount, "sequencer_sequenceProductionPack");
@@ -123,6 +124,7 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 		}
 		finalSequence = bestSequence;
 	}
+	*date += sequencer_productionFinalTime(instance, taskCount, finalSequence);
 	return finalSequence;
 }
 
