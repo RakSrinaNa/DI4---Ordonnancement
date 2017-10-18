@@ -91,7 +91,7 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
 		unsigned int * time = 0;
-		unsigned int * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, &time); //Get the best order of the 2 first tasks.
+		unsigned int * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, time); //Get the best order of the 2 first tasks.
 		free(tempSequence);
 		unsigned int inside = 2;
 		RREALLOC(bestSequence, unsigned int, taskCount, "sequencer_sequenceProductionPack");
