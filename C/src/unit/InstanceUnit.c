@@ -29,4 +29,6 @@ void instanceUnit() //Mainly test for memory leaks
 	unsigned int correctOrder3[] = {2, 3, 1, 4, 0};
 	if(!unit_uintArrayEquals(correctOrder3, order, 5))
 		unit_error("Instance 1: Bad sort by due date");
+	
+	instance_destroy(instance);
 }
