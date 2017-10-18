@@ -10,10 +10,24 @@ typedef struct _SolutionInfo
 	unsigned int ** deliveries;
 } SolutionInfo;
 
-//TODO: @Schttopup Doc
+/**
+ * Computes the total production time.
+ *
+ * @param instance The instance.
+ * @param count The number of tasks.
+ * @param tasks A table of the tasks.
+ * @return The total delay of the sequence.
+ */
 unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, unsigned int const * tasks);
 
-//TODO: @Schttopup Doc
+/**
+ * Orders the production in the given list.
+ *
+ * @param instance The instance.
+ * @param taskCount The number of tasks.
+ * @param tasks The list of the tasks.
+ * @return An ordered sequence of deliveries.
+ */
 unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int taskCount, unsigned int * tasks);
 
 /**
@@ -39,12 +53,26 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, un
  */
 unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
 
-//TODO: @Schttopup Doc
-//TODO: @MrCraftCod Test
+/**
+ * Orders the deliveries in the given list by nearest neighbor.
+ *
+ * @param instance The instance.
+ * @param taskCount The number of tasks.
+ * @param tasks The list of the tasks.
+ * @param initialDate A pointer to the departure time. At the end, contains the arrival time.
+ * @return An ordered sequence of deliveries.
+ */
 unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
 
-//TODO: @Schttopup Doc
-//TODO: @MrCraftCod Test
+/**
+ * Orders the deliveries in the given list by due date.
+ *
+ * @param instance The instance.
+ * @param taskCount The number of tasks.
+ * @param tasks The list of the tasks.
+ * @param initialDate A pointer to the departure time. At the end, contains the arrival time.
+ * @return An ordered sequence of deliveries.
+ */
 unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
 
 #endif
