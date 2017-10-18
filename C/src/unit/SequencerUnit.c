@@ -170,5 +170,61 @@ void sequencerUnit_delivery()
 		unit_error("Sequencer 12B: Bad delivery sequence, with car back at %d, expected %d", startTime, 1100);
 	free(sol);
 	
+	startTime = 0;
+	unsigned int tasks17[] = {0};
+	unsigned int cSol6[] = {0};
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 1, tasks17, &startTime);
+	if(!unit_uintArrayEquals(cSol6, sol, 1) || startTime != 4)
+		unit_error("Sequencer 13B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 4);
+	free(sol);
+	
+	startTime = 50;
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 1, tasks17, &startTime);
+	if(!unit_uintArrayEquals(cSol6, sol, 1) || startTime != 54)
+		unit_error("Sequencer 14B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 54);
+	free(sol);
+	
+	startTime = 0;
+	unsigned int tasks18[] = {0, 1};
+	unsigned int cSol7[] = {1, 0};
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 2, tasks18, &startTime);
+	if(!unit_uintArrayEquals(cSol7, sol, 2) || startTime != 6)
+		unit_error("Sequencer 15B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 6);
+	free(sol);
+	
+	startTime = 50;
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 2, tasks18, &startTime);
+	if(!unit_uintArrayEquals(cSol7, sol, 2) || startTime != 56)
+		unit_error("Sequencer 15B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 56);
+	free(sol);
+	
+	startTime = 0;
+	unsigned int tasks19[] = {0, 1, 2};
+	unsigned int cSol8[] = {1, 2, 0};
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 3, tasks19, &startTime);
+	if(!unit_uintArrayEquals(cSol8, sol, 3) || startTime != 6)
+		unit_error("Sequencer 16B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 8);
+	free(sol);
+	
+	startTime = 50;
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 3, tasks19, &startTime);
+	if(!unit_uintArrayEquals(cSol8, sol, 3) || startTime != 56)
+		unit_error("Sequencer 16B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 58);
+	free(sol);
+	
+	startTime = 0;
+	unsigned int tasks20[] = {0, 1, 2, 3};
+	unsigned int cSol9[] = {1, 2, 3, 0};
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 4, tasks20, &startTime);
+	if(!unit_uintArrayEquals(cSol9, sol, 4) || startTime != 12)
+		unit_error("Sequencer 17B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 12);
+	free(sol);
+	
+	startTime = 50;
+	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 4, tasks20, &startTime);
+	if(!unit_uintArrayEquals(cSol9, sol, 4) || startTime != 62)
+		unit_error("Sequencer 18B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 62);
+	free(sol);
+	
 	instance_destroy(instance);
 }
