@@ -218,19 +218,45 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 	else if(taskCount > 3)
 	{
 		if(DELIVERY_NEAREST_NEIGHBOR)
-			sequence = sequencer_sequenceDeliveriesNearestNeighbor();
+			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
 		else
-			sequence = sequencer_sequenceDeliveriesDueDate();
+			sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate);
 	}
 	return sequence;
 }
 
-unsigned int * sequencer_sequenceDeliveriesNearestNeighbor()
+unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
 {
-	return NULL; //TODO @Schttopup
+	unsigned int * sequence = NULL;
+	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
+	Bool * explored = NULL;
+	MMALLOC(explored, Bool, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
+	for(unsigned int i = 0; i < taskCount; i++)
+		explored[i] = False;
+	unsigned int departure = instance->taskCount;
+	unsigned int nearestIndex = 0;
+	for(unsigned int i = 0; i < taskCount; i++)
+	{
+		for(unsigned int j = 0; j < taskCount; j++)
+		{
+			if(!explored[j] && instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex]))
+			{
+				nearestIndex = j;
+			}
+		}
+		explored[nearestIndex] = True;
+		initialDate += instance_getDistance(instance, departure, tasks[nearestIndex]);
+		departure = tasks[nearestIndex];
+	}
+	initialDate += instance_getDistance(instance, departure, instance->taskCount);
+	return sequence;
 }
 
-unsigned int * sequencer_sequenceDeliveriesDueDate()
+unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
 {
+	UNUSED(instance);
+	UNUSED(taskCount);
+	UNUSED(tasks);
+	UNUSED(initialDate);
 	return NULL; //TODO @Schttopup
 }
