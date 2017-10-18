@@ -227,4 +227,35 @@ void sequencerUnit_delivery()
 	free(sol);
 	
 	instance_destroy(instance);
+	
+	instance = parser_readInstanceFromFile("./unitResources/Instance4.txt");
+	
+	startTime = 0;
+	unsigned int cSol10[] = {0, 1, 3, 2};
+	sol = sequencer_sequenceDeliveriesDueDate(instance, 4, tasks20, &startTime);
+	if(!unit_uintArrayEquals(cSol10, sol, 4) || startTime != 15)
+		unit_error("Sequencer 19B: Bad delivery sequence, due date, with car back at %d, expected %d", startTime, 15);
+	free(sol);
+	
+	startTime = 20;
+	sol = sequencer_sequenceDeliveriesDueDate(instance, 4, tasks20, &startTime);
+	if(!unit_uintArrayEquals(cSol10, sol, 4) || startTime != 35)
+		unit_error("Sequencer 20B: Bad delivery sequence, due date, with car back at %d, expected %d", startTime, 35);
+	free(sol);
+	
+	startTime = 0;
+	unsigned int tasks21[] = {0};
+	unsigned int cSol11[] = {0};
+	sol = sequencer_sequenceDeliveriesDueDate(instance, 1, tasks21, &startTime);
+	if(!unit_uintArrayEquals(cSol11, sol, 1) || startTime != 6)
+		unit_error("Sequencer 21B: Bad delivery sequence, due date, with car back at %d, expected %d", startTime, 6);
+	free(sol);
+	
+	startTime = 30;
+	sol = sequencer_sequenceDeliveriesDueDate(instance, 1, tasks21, &startTime);
+	if(!unit_uintArrayEquals(cSol11, sol, 1) || startTime != 36)
+		unit_error("Sequencer 22B: Bad delivery sequence, due date, with car back at %d, expected %d", startTime, 36);
+	free(sol);
+	
+	instance_destroy(instance);
 }
