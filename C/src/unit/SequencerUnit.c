@@ -228,7 +228,7 @@ void sequencerUnit_delivery()
 	
 	instance_destroy(instance);
 	
-	instance = parser_readInstanceFromFile("./unitResources/Instance4.txt");
+	instance = parser_readInstanceFromFile("./unitResources/Instance5.txt");
 	
 	startTime = 0;
 	unsigned int cSol10[] = {0, 1, 3, 2};
