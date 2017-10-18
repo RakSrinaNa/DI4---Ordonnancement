@@ -245,10 +245,10 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 			}
 		}
 		explored[nearestIndex] = True;
-		initialDate += instance_getDistance(instance, departure, tasks[nearestIndex]);
+		*initialDate += instance_getDistance(instance, departure, tasks[nearestIndex]);
 		departure = tasks[nearestIndex];
 	}
-	initialDate += instance_getDistance(instance, departure, instance->taskCount);
+	*initialDate += instance_getDistance(instance, departure, instance->taskCount);
 	return sequence;
 }
 
