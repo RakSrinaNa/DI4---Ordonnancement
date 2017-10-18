@@ -180,8 +180,8 @@ void sequencerUnit_delivery()
 	
 	startTime = 50;
 	sol = sequencer_sequenceDeliveriesNearestNeighbor(instance, 1, tasks17, &startTime);
-	if(!unit_uintArrayEquals(cSol6, sol, 1) || startTime != 54)
-		unit_error("Sequencer 14B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 54);
+	if(!unit_uintArrayEquals(cSol6, sol, 1) || startTime != 56)
+		unit_error("Sequencer 14B: Bad delivery sequence, nearest neighbor, with car back at %d, expected %d", startTime, 56);
 	free(sol);
 	
 	startTime = 0;
