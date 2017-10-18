@@ -150,7 +150,7 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 		sequence = memcpy(sequence, tasks, sizeof(unsigned int));
 		*initialDate += instance_getDistance(instance, instance->taskCount, tasks[0]) + instance_getDistance(instance, instance->taskCount, tasks[0]);
 	}
-	else if(taskCount == 2)
+	else if(taskCount == 2) // Try every case.
 	{
 		unsigned int * sequence01 = NULL;
 		unsigned int * sequence10 = NULL;
@@ -178,7 +178,7 @@ unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int ta
 			*initialDate = dateSol10;
 		}
 	}
-	else if(taskCount == 3)
+	else if(taskCount == 3) // Try every case.
 	{
 		unsigned int seqID = 0;
 		unsigned int ** seqList = NULL;
@@ -229,13 +229,14 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 {
 	unsigned int * sequence = NULL;
 	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
-	Bool * explored = NULL;
+	Bool * explored = NULL; // If we already delivered this node, we shouldn't deliver it again
 	MMALLOC(explored, Bool, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
 	for(unsigned int i = 0; i < taskCount; i++)
 		explored[i] = False;
 	unsigned int departure = instance->taskCount;
 	for(unsigned int i = 0; i < taskCount; i++)
 	{
+		// Finding the nearest neighbor at each step.
 		unsigned int nearestIndex = 0xFFFFFFFF;
 		for(unsigned int j = 0; j < taskCount; j++)
 		{
@@ -244,12 +245,14 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 				nearestIndex = j;
 			}
 		}
+		
+		// Updating the sequence and distance according to the latest delivered node.
 		explored[nearestIndex] = True;
 		sequence[i] = tasks[nearestIndex];
 		*initialDate += instance_getDistance(instance, departure, tasks[nearestIndex]);
 		departure = tasks[nearestIndex];
 	}
-	*initialDate += instance_getDistance(instance, departure, instance->taskCount);
+	*initialDate += instance_getDistance(instance, departure, instance->taskCount); // Going back home
 	free(explored);
 	return sequence;
 }
@@ -260,6 +263,8 @@ unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned
 	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
 	for(unsigned int i = 0; i < taskCount; i++)
 		sequence[i] = tasks[i];
+	
+	// Sorting by due date.
 	for(unsigned int i = 0; i < taskCount-1; i++)
 	{
 		for(unsigned int j = 0; j < taskCount-i-1; j++)
