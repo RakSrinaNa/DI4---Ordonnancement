@@ -255,9 +255,22 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 
 unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
 {
-	UNUSED(instance);
-	UNUSED(taskCount);
-	UNUSED(tasks);
-	UNUSED(initialDate);
-	return NULL; //TODO @Schttopup
+	unsigned int * sequence = NULL;
+	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
+	for(unsigned int i = 0; i < taskCount; i++)
+		sequence[i] = tasks[i];
+	for(unsigned int i = 0; i < taskCount-1; i++)
+	{
+		for(unsigned int j = i; j < taskCount-1; j++)
+		{
+			if(instance_getDueDate(instance, sequence[j]) < instance_getDueDate(instance, sequence[i]))
+			{
+				unsigned int temp = sequence[i];
+				sequence[i] = sequence[j];
+				sequence[j] = temp;
+			}
+		}
+	}
+	sequencer_deliveryDelay(instance, taskCount, sequence, initialDate);
+	return sequence;
 }
