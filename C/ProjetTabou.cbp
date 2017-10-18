@@ -73,6 +73,9 @@
 		<Unit filename="src/Parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/Sequencer.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/Solution.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -88,6 +91,7 @@
 		<Unit filename="src/headers/Instance.h" />
 		<Unit filename="src/headers/Pack.h" />
 		<Unit filename="src/headers/Parser.h" />
+		<Unit filename="src/headers/Sequencer.h" />
 		<Unit filename="src/headers/Solution.h" />
 		<Unit filename="src/headers/Sort.h" />
 		<Unit filename="src/headers/Tabu.h" />
@@ -105,6 +109,9 @@
 		<Unit filename="src/unit/ParserUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/unit/SequencerUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/unit/SolutionUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -118,6 +125,7 @@
 		<Unit filename="src/unit/headers/MainUnit.h" />
 		<Unit filename="src/unit/headers/PackUnit.h" />
 		<Unit filename="src/unit/headers/ParserUnit.h" />
+		<Unit filename="src/unit/headers/SequencerUnit.h" />
 		<Unit filename="src/unit/headers/SolutionUnit.h" />
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
