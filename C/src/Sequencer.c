@@ -261,13 +261,13 @@ unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned
 		sequence[i] = tasks[i];
 	for(unsigned int i = 0; i < taskCount-1; i++)
 	{
-		for(unsigned int j = i; j < taskCount-1; j++)
+		for(unsigned int j = 0; j < taskCount-i-1; j++)
 		{
-			if(instance_getDueDate(instance, sequence[j]) < instance_getDueDate(instance, sequence[i]))
+			if(instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j+1]))
 			{
-				unsigned int temp = sequence[i];
-				sequence[i] = sequence[j];
-				sequence[j] = temp;
+				unsigned int temp = sequence[j];
+				sequence[j] = sequence[j+1];
+				sequence[j+1] = temp;
 			}
 		}
 	}
