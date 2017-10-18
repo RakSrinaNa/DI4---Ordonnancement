@@ -44,40 +44,40 @@ void sequencerUnit_production()
 		unit_error("Sequencer 6A: Bad final time, was %d expected %d", time, 46);
 	
 	unsigned int cSol[] = {0, 1, 2};
-	unsigned int * sol = sequencer_sequenceProduction(instance, 3, tasks);
+	unsigned int * sol = sequencer_sequenceProductionPack(instance, 3, tasks);
 	if(!unit_uintArrayEquals(cSol, sol, 3))
 		unit_error("Sequencer 7A: Bad sequence process");
 	free(sol);
 	
 	unsigned int tasks7[] = {0, 1};
 	unsigned int cSol2[] = {0, 1};
-	sol = sequencer_sequenceProduction(instance, 2, tasks7);
+	sol = sequencer_sequenceProductionPack(instance, 2, tasks7);
 	if(!unit_uintArrayEquals(cSol2, sol, 2))
 		unit_error("Sequencer 8A: Bad sequence process");
 	free(sol);
 	
 	unsigned int tasks7_2[] = {0};
 	unsigned int cSol2_2[] = {0};
-	sol = sequencer_sequenceProduction(instance, 1, tasks7_2);
+	sol = sequencer_sequenceProductionPack(instance, 1, tasks7_2);
 	if(!unit_uintArrayEquals(cSol2_2, sol, 1))
 		unit_error("Sequencer 8.5A: Bad sequence process");
 	free(sol);
 	
-	sol = sequencer_sequenceProduction(instance, 0, NULL);
+	sol = sequencer_sequenceProductionPack(instance, 0, NULL);
 	if(sol != NULL)
 		unit_error("Sequencer 8.75A: Bad sequence process");
 	free(sol);
 	
 	unsigned int tasks8[] = {0, 1, 2, 3};
 	unsigned int cSol3[] = {0, 1, 2, 3};
-	sol = sequencer_sequenceProduction(instance, 4, tasks8);
+	sol = sequencer_sequenceProductionPack(instance, 4, tasks8);
 	if(!unit_uintArrayEquals(cSol3, sol, 4))
 		unit_error("Sequencer 9A: Bad sequence process");
 	free(sol);
 	
 	instance->tasks[3]->machineDurations[0] = 0;
 	unsigned int cSol4[] = {3, 0, 1, 2};
-	sol = sequencer_sequenceProduction(instance, 4, tasks8);
+	sol = sequencer_sequenceProductionPack(instance, 4, tasks8);
 	if(!unit_uintArrayEquals(cSol4, sol, 4))
 		unit_error("Sequencer 10A: Bad sequence process");
 	free(sol);
@@ -128,14 +128,14 @@ void sequencerUnit_delivery()
 	
 	instance = parser_readInstanceFromFile("./unitResources/Instance4.txt");
 	
-	unsigned int * sol = sequencer_sequenceDeliveries(instance, 0, NULL, 0);
+	unsigned int * sol = sequencer_sequenceDeliveriesPack(instance, 0, NULL, 0);
 	if(sol != NULL)
 		unit_error("Sequencer 7B: Bad delivery sequence");
 	
 	startTime = 0;
 	unsigned int tasks14[] = {0};
 	unsigned int cSol1[] = {0};
-	sol = sequencer_sequenceDeliveries(instance, 1, tasks14, &startTime);
+	sol = sequencer_sequenceDeliveriesPack(instance, 1, tasks14, &startTime);
 	if(!unit_uintArrayEquals(cSol1, sol, 1) || startTime != 6)
 		unit_error("Sequencer 8B: Bad delivery sequence, with car back at %d, expected %d", startTime, 6);
 	free(sol);
@@ -143,14 +143,14 @@ void sequencerUnit_delivery()
 	startTime = 0;
 	unsigned int tasks15[] = {0, 1};
 	unsigned int cSol2[] = {0, 1};
-	sol = sequencer_sequenceDeliveries(instance, 2, tasks15, &startTime);
+	sol = sequencer_sequenceDeliveriesPack(instance, 2, tasks15, &startTime);
 	if(!unit_uintArrayEquals(cSol2, sol, 2) || startTime != 8)
 		unit_error("Sequencer 9B: Bad delivery sequence, with car back at %d, expected %d", startTime, 8);
 	free(sol);
 	
 	startTime = 100;
 	unsigned int cSol3[] = {1, 0};
-	sol = sequencer_sequenceDeliveries(instance, 2, tasks15, &startTime);
+	sol = sequencer_sequenceDeliveriesPack(instance, 2, tasks15, &startTime);
 	if(!unit_uintArrayEquals(cSol3, sol, 2) || startTime != 108)
 		unit_error("Sequencer 10B: Bad delivery sequence, with car back at %d, expected %d", startTime, 108);
 	free(sol);
@@ -158,14 +158,14 @@ void sequencerUnit_delivery()
 	startTime = 0;
 	unsigned int tasks16[] = {1,2,3};
 	unsigned int cSol4[] = {1,2,3};
-	sol = sequencer_sequenceDeliveries(instance, 3, tasks16, &startTime);
+	sol = sequencer_sequenceDeliveriesPack(instance, 3, tasks16, &startTime);
 	if(!unit_uintArrayEquals(cSol4, sol, 3) || startTime != 1005)
 		unit_error("Sequencer 11B: Bad delivery sequence, with car back at %d, expected %d", startTime, 1005);
 	free(sol);
 	
 	startTime = 95;
 	unsigned int cSol5[] = {1,2,3};
-	sol = sequencer_sequenceDeliveries(instance, 3, tasks16, &startTime);
+	sol = sequencer_sequenceDeliveriesPack(instance, 3, tasks16, &startTime);
 	if(!unit_uintArrayEquals(cSol5, sol, 3) || startTime != 1100)
 		unit_error("Sequencer 12B: Bad delivery sequence, with car back at %d, expected %d", startTime, 1100);
 	free(sol);

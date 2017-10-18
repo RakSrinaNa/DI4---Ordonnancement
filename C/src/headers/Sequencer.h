@@ -28,7 +28,7 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
  * @param tasks The list of the tasks.
  * @return An ordered sequence of deliveries.
  */
-unsigned int * sequencer_sequenceProduction(Instance * instance, unsigned int taskCount, unsigned int * tasks);
+unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks);
 
 /**
  * Computes the total delay of this sequence.
@@ -51,7 +51,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, un
  * @param initialDate A pointer to the departure time. At the end, contains the arrival time.
  * @return An ordered sequence of deliveries.
  */
-unsigned int * sequencer_sequenceDeliveries(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
+unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
 
 /**
  * Orders the deliveries in the given list by nearest neighbor.
