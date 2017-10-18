@@ -250,6 +250,7 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 		departure = tasks[nearestIndex];
 	}
 	*initialDate += instance_getDistance(instance, departure, instance->taskCount);
+	free(explored);
 	return sequence;
 }
 
