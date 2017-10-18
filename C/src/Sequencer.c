@@ -234,7 +234,7 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 	for(unsigned int i = 0; i < taskCount; i++)
 		explored[i] = False;
 	unsigned int departure = instance->taskCount;
-	unsigned int nearestIndex = 0;
+	unsigned int nearestIndex = tasks[0];
 	for(unsigned int i = 0; i < taskCount; i++)
 	{
 		for(unsigned int j = 0; j < taskCount; j++)
@@ -245,6 +245,7 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 			}
 		}
 		explored[nearestIndex] = True;
+		sequence[i] = tasks[nearestIndex];
 		*initialDate += instance_getDistance(instance, departure, tasks[nearestIndex]);
 		departure = tasks[nearestIndex];
 	}
