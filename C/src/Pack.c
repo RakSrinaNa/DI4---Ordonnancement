@@ -12,6 +12,9 @@ Pack * pack_create(Instance * instance)
 
 void pack_destroy(Pack * pack)
 {
+	if(pack == NULL)
+		return;
+	
 	free(pack->deliveryOrder);
 	free(pack);
 }
@@ -34,25 +37,23 @@ int pack_getTaskIndex(Pack * pack, unsigned int task)
 
 void pack_addTask(Pack * pack, unsigned int task)
 {
-	if(task < pack->instance->taskCount)
+	if(task < pack->instance->taskCount) //Check task ID range.
 	{
 		Bool found = False;
 		for(unsigned int i = 0; i < pack->taskCount; i++)
-		{
 			if(pack->deliveryOrder[i] == task)
 			{
 				found = True;
 				break;
 			}
-		}
-		if(!found)
+		if(!found) //Not found so we add at the end.
 		{
 			pack->taskCount++;
 			RREALLOC(pack->deliveryOrder, unsigned int, pack->taskCount, "pack_addTask");
 			pack->deliveryOrder[pack->taskCount - 1] = task;
 		}
 		else
-			warn("WARNING : pack_addTask : provided task is already in the list (%d)", task);
+			warn("pack_addTask : provided task is already in the pack (%d)", task);
 	}
 }
 
@@ -72,12 +73,13 @@ Bool pack_removeTask(Pack * pack, unsigned int task)
 		RREALLOC(pack->deliveryOrder, unsigned int, pack->taskCount, "pack_removeTask");
 	}
 	else
-		warn("WARNING : pack_removeTask : provided task is not in the list (%d)", task);
+		warn("pack_removeTask : provided task is not in the list (%d)", task);
 	return (pack->taskCount > 0 ? False : True);
 }
 
 void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2)
 {
+	debugPrint("Switching deliveries %d and %d\n", delivery1, delivery2);
 	if(delivery1 == delivery2)
 		return;
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
@@ -88,11 +90,12 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
 		pack->deliveryOrder[pos2] = delivery1;
 	}
 	else
-		warn("WARNING : pack_switchDelivery : one of the provided tasks does not exist (has %d and %d)\n", delivery1, delivery2);
+		warn("pack_switchDelivery : one of the provided tasks does not exist (has %d and %d)\n", delivery1, delivery2);
 }
 
 void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position)
 {
+	debugPrint("Moving delivery %d to position %d\n", delivery, position);
 	if(pack_hasTask(pack, delivery))
 	{
 		unsigned int index = (unsigned int) pack_getTaskIndex(pack, delivery);
@@ -102,18 +105,16 @@ void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position
 		pack->deliveryOrder[MMIN(position, pack->taskCount - 1)] = delivery;
 	}
 	else
-		warn("WARNING : pack_moveDelivery : given position is out of range (%d)\n", position);
+		warn("pack_moveDelivery : given position is out of range (%d)\n", position);
 }
 
-void pack_print(Pack *pack)
+void pack_print(Pack * pack)
 {
 	if(pack != NULL)
 	{
 		printf("Tasks : %d ( ", pack->taskCount);
 		for(unsigned int i = 0; i < pack->taskCount; i++)
-		{
 			printf("%d(%d) ", pack->deliveryOrder[i], instance_getDueDate(pack->instance, pack->deliveryOrder[i]));
-		}
 		printf(")");
 	}
 	else

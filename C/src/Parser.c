@@ -5,12 +5,14 @@
 
 #include "headers/Parser.h"
 
+extern Bool DEBUG;
+
 Instance * parser_readInstanceFromFile(char * filepath)
 {
 	FILE * file = fopen(filepath, "r");
 	if(file == NULL)
 	{
-		fprintf(stderr, "PARSER: Couldn't open file \"%s\" to parse it.", filepath);
+		warn("parser_readInstanceFromFile: Couldn't open file \"%s\" to parse it.", filepath);
 		return NULL;
 	}
 	
@@ -18,6 +20,13 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	instance = parser_fillInstance(file, instance);
 	
 	fclose(file);
+	
+	if(DEBUG)
+	{
+		debugPrint("Parsed instance:");
+		instance_print(instance);
+	}
+	
 	return instance;
 }
 
@@ -37,7 +46,7 @@ Instance * parser_fillInstance(FILE * file, Instance * instance)
 		instance->tasks[i] = task_create(instance);
 	MMALLOC(instance->distancesMatrix, unsigned int*, instance->taskCount + 1, "parser_fillInstance");
 	for(unsigned int i = 0; i <= instance->taskCount; i++)
-		MMALLOC(instance->distancesMatrix[i], unsigned int, instance->taskCount + 1, "parser_fillInstance");
+	MMALLOC(instance->distancesMatrix[i], unsigned int, instance->taskCount + 1, "parser_fillInstance");
 	
 	//Parse the time on each machine for each task.
 	for(unsigned int machineID = 0; machineID < instance->machineCount; machineID++)

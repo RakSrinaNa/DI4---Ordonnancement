@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(Tabou)
 
-add_definitions(-std=c99 -Wall -Werror -W -pedantic -static -g)
+add_definitions(-std=c99 -Wall -Werror -W -pedantic -pedantic-errors -static -g)
 set_property(TARGET PROPERTY C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
 
@@ -25,6 +25,9 @@ set(SOURCE_FILES
 
         src/Solution.c src/headers/Solution.h
         src/unit/SolutionUnit.c src/unit/headers/SolutionUnit.h
+
+        src/Sequencer.c src/headers/Sequencer.h
+        src/unit/SequencerUnit.c src/unit/headers/SequencerUnit.h
 
         src/Sort.c src/headers/Sort.h
 

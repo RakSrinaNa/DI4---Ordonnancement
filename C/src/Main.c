@@ -7,7 +7,7 @@
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 
-static int UNIT = 0;
+Bool DEBUG = True;
 
 int main(int argc, char * argv[])
 {
@@ -16,7 +16,6 @@ int main(int argc, char * argv[])
 	{
 		if(strcmp(argv[1], "test") == 0) // Used to start unit tests.
 		{
-			UNIT = 1;
 			mainUnit();
 			exit(EXIT_SUCCESS);
 		}
@@ -31,23 +30,32 @@ int main(int argc, char * argv[])
 	instance_print(instance);
 	Solution * solution = solution_create(instance);
 	solution_print(solution);
-	solution_sortByDD(solution);
-	solution_print(solution);
 	//TODO: Compute solution
 	instance_destroy(instance);
 	return 0;
+}
+
+void debugPrint(char * format, ...)
+{
+	if(DEBUG)
+	{
+		va_list args;
+		va_start(args, format);
+		vfprintf(stdout, format, args);
+		va_end(args);
+	}
 }
 
 void warn(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, "\n");
+	fprintf(stderr, "\nWARNING: ");
 	vfprintf(stderr, format, args);
 	va_end(args);
 }
 
-void fatal_error(char * format, ...)
+void fatalError(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);

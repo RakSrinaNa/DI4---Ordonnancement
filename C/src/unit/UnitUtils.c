@@ -1,15 +1,25 @@
 #include "headers/UnitUtils.h"
 
-void unit_error(char * str)
+Bool UNIT_FAILED = False;
+
+extern Bool DEBUG;
+
+void unit_error(char * str, ...)
 {
-	fprintf(stderr, "%s\n", str);
-	unit_breakpoint();
-	exit(EXIT_FAILURE);
+	va_list args;
+	va_start(args, str);
+	fprintf(stderr, "\nFATAL UNIT: ");
+	vfprintf(stderr, str, args);
+	va_end(args);
+	//unit_breakpoint();
+	UNIT_FAILED = True;
+	//exit(EXIT_FAILURE);
 }
 
 void unit_breakpoint()
 {
-	raise(SIGINT);
+	if(DEBUG)
+		raise(SIGINT);
 }
 
 Bool unit_intArrayEquals(const int * base, const int * compare, int length)

@@ -1,32 +1,48 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include "headers/UnitUtils.h"
 #include "headers/ParserUnit.h"
 #include "headers/InstanceUnit.h"
 #include "headers/TaskUnit.h"
 #include "headers/PackUnit.h"
 #include "headers/SolutionUnit.h"
+#include "headers/SequencerUnit.h"
+
+extern Bool UNIT_FAILED;
+extern Bool DEBUG;
 
 int mainUnit()
 {
-#define UNIT 1
+	DEBUG = False;
+	
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
-	printf("Executing Task tests...");
+	setbuf(stderr, NULL);
+	printf("UNIT: Executing Task tests...\n");
 	taskUnit();
-	printf("OK\n");
-	printf("Executing Instance tests...");
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing Instance tests...\n");
 	instanceUnit();
-	printf("OK\n");
-	printf("Executing Parser tests...");
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing Parser tests...\n");
 	parserUnit();
-	printf("OK\n");
+	printf("UNIT: OK\n");
 	
-	printf("Executing Pack tests...");
+	printf("UNIT: Executing Pack tests...\n");
 	packUnit();
-	printf("OK\n");
-	printf("Executing Solution tests...");
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing Solution tests...\n");
 	solutionUnit();
-	printf("OK\n");
+	printf("UNIT: OK\n");
+	
+	printf("UNIT: Executing Sequencer tests...\n");
+	sequencerUnit();
+	printf("UNIT: OK\n");
+	
+	if(UNIT_FAILED)
+		exit(EXIT_FAILURE);
+	else
+		printf("UNIT: TESTS OK - CONGRATULATIONS\n");
 	return 0;
 }

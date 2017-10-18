@@ -12,7 +12,7 @@
  *
  * @param str The error to print.
  */
-void unit_error(char * str);
+void unit_error(char * str, ...);
 
 /**
  * Add a "breakpoint".
