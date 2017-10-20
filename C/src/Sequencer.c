@@ -1,6 +1,10 @@
 #include <string.h>
 #include "headers/Sequencer.h"
+#include "headers/Solution.h"
+#include "headers/SolutionInfo.h"
 #include "FLAGS.h"
+
+
 
 unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const unsigned int * tasks)
 {
@@ -282,3 +286,31 @@ unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned
 	sequencer_deliveryDelay(instance, taskCount, sequence, initialDate);
 	return sequence;
 }
+
+SolutionInfo * sequencer_productionOrder(Solution * solution)
+{
+	SolutionInfo *info = solutionInfo_create(solution);
+	unsigned int productionIndex = 0;
+	unsigned int * sequence;
+	for(unsigned int i = 0; i < solution->packCount; i++)
+	{
+		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i-1]);
+		Pack * p = solution->packList[i];
+		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveryOrder, &(info->readyToDeliver[i]));
+		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(unsigned int));
+		free(sequence);
+	}
+	return info;
+}
+
+void sequencer_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
+{
+	unsigned int truckReady = 0;
+	for(unsigned int i = 0; i < solution->packCount; i++)
+	{
+		Pack * p = solution->packList[i];
+		truckReady = MMAX(truckReady, info->readyToDeliver[i]);
+		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveryOrder, &truckReady);
+	}
+}
+

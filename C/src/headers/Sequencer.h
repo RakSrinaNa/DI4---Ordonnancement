@@ -2,13 +2,7 @@
 #define TABOU_SEQUENCER_H
 
 #include "Instance.h"
-
-typedef struct _SolutionInfo
-{
-	unsigned int * productionOrder;
-	unsigned int * readyToDeliver;
-	unsigned int ** deliveries;
-} SolutionInfo;
+#include "SolutionInfo.h"
 
 /**
  * Computes the total production time.
@@ -75,5 +69,15 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
  * @return An ordered sequence of deliveries.
  */
 unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
+
+// TODO unit
+// TODO doc
+// TODO rename
+struct _SolutionInfo * sequencer_productionOrder(struct _Solution * solution);
+
+// TODO unit
+// TODO doc
+// TODO rename
+void sequencer_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
 
 #endif

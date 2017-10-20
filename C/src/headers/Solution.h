@@ -3,6 +3,7 @@
 
 struct _Solution;
 
+#include "SolutionInfo.h"
 #include "Sequencer.h"
 #include "Pack.h"
 
@@ -11,7 +12,7 @@ typedef struct _Solution
 	Instance * instance; // Reference to the instance.
 	unsigned int packCount; // Number of packs in this solution.
 	Pack ** packList; // Ordered list of the packs in shipping order.
-	SolutionInfo * info;
+	struct _SolutionInfo * info;
 } Solution;
 
 /**
