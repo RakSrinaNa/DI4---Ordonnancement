@@ -56,6 +56,15 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
  */
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
 
+/**
+ * Switches two tasks between two packs.
+ *
+ * @param solution The solution. Not null.
+ * @param task1 The first task.
+ * @param task2 The second task.
+ */
+void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned int task2);
+
 //TODO: unit
 /**
  * Evaluates the score of the given solution and saves it in the info.
