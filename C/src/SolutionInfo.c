@@ -1,6 +1,8 @@
 #include "headers/SolutionInfo.h"
 #include "headers/Solution.h"
 
+#include <string.h>
+
 SolutionInfo * solutionInfo_create(Solution * solution)
 {
 	SolutionInfo *info = NULL;
@@ -42,11 +44,14 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
 {
 	unsigned int truckReady = 0;
+	unsigned int truckReadyNow = 0;
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		Pack * p = solution->packList[i];
 		truckReady = MMAX(truckReady, info->readyToDeliver[i]);
+		truckReadyNow = truckReady;
 		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveryOrder, &truckReady);
+		info->score += sequencer_deliveryDelay(solution->instance, solution->packList[i]->taskCount, solution->packList[i]->deliveryOrder, &truckReadyNow);
 	}
 }
 
