@@ -7,17 +7,42 @@ struct _SolutionInfo;
 
 typedef struct _SolutionInfo
 {
-	unsigned int * productionOrder;
-	unsigned int * readyToDeliver;
-	unsigned int ** deliveries;
+	unsigned int * productionOrder; // The ordered production.
+	unsigned int * readyToDeliver; // Dates when the truck is ready to go.
+	unsigned int ** deliveries; // The ordered deliveries.
 } SolutionInfo;
 
-// TODO unit
-// TODO doc
+/**
+ * Creates an info.
+ *
+ * @param solution The solution.
+ * @return A new info.
+ */
 SolutionInfo * solutionInfo_create(struct _Solution * solution);
 
-// TODO unit
-// TODO doc
+/**
+ * Destroys an info.
+ *
+ * @param solution The solution.
+ * @param info The info to destroy.
+ */
 void solutionInfo_destroy(struct _Solution * solution, SolutionInfo * info);
+
+/**
+ * Orders the total production.
+ *
+ * @param solution The solution.
+ * @return An ordered info.
+ */
+struct _SolutionInfo * solutionInfo_productionOrder(struct _Solution * solution);
+
+/**
+ * Orders a delivery pack.
+ *
+ * @param solution The solution.
+ * @param info The info to fill.
+ */
+void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
+
 
 #endif // SOLUTIONINFO_H_INCLUDED

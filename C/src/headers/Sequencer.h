@@ -70,14 +70,4 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
  */
 unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
 
-// TODO unit
-// TODO doc
-// TODO rename
-struct _SolutionInfo * solutionInfo_productionOrder(struct _Solution * solution);
-
-// TODO unit
-// TODO doc
-// TODO rename
-void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
-
 #endif
