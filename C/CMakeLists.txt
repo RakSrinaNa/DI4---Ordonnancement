@@ -5,32 +5,8 @@ add_definitions(-std=c99 -Wall -Werror -W -pedantic -pedantic-errors -static -g)
 set_property(TARGET PROPERTY C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES
-        src/FLAGS.h
-        src/Main.c src/headers/Utils.h
-        src/unit/MainUnit.c src/unit/headers/MainUnit.h
-        src/unit/UnitUtils.c src/unit/headers/UnitUtils.h
+file(GLOB base_SRC "src/headers/*.h" "src/*.c")
+file(GLOB test_SRC "src/unit/headers/*.h" "src/unit/*.c")
 
-        src/Task.c src/headers/Task.h
-        src/unit/TaskUnit.c src/unit/headers/TaskUnit.h
-
-        src/Pack.c src/headers/Pack.h
-        src/unit/PackUnit.c src/unit/headers/PackUnit.h
-
-        src/Instance.c src/headers/Instance.h
-        src/unit/InstanceUnit.c src/unit/headers/InstanceUnit.h
-
-        src/Parser.c src/headers/Parser.h
-        src/unit/ParserUnit.c src/unit/headers/ParserUnit.h
-
-        src/Solution.c src/headers/Solution.h
-        src/unit/SolutionUnit.c src/unit/headers/SolutionUnit.h
-
-        src/Sequencer.c src/headers/Sequencer.h
-        src/unit/SequencerUnit.c src/unit/headers/SequencerUnit.h
-
-        src/Sort.c src/headers/Sort.h
-
-        src/Tabu.c src/headers/Tabu.h
-        )
+set(SOURCE_FILES ${base_SRC} src/FLAGS.h ${test_SRC})
 add_executable(Tabou ${SOURCE_FILES})
