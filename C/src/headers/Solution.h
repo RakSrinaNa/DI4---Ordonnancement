@@ -57,7 +57,7 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
 
 //TODO: @Schttopup Doc
-int solution_eval(Solution * solution);
+struct _SolutionInfo * solution_eval(Solution * solution);
 
 /**
  * Prints the solution.

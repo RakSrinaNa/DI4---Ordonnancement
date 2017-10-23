@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "headers/Solution.h"
+#include "headers/Sequencer.h"
 
 #include "FLAGS.h"
 
@@ -100,15 +101,17 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 		warn("solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
 }
 
-int solution_eval(Solution * solution)
+SolutionInfo * solution_eval(Solution * solution)
 {
-	UNUSED(solution);
-	if(CACHED_SCORE)
-		return 0;
+	if(CACHED_SCORE && solution->info != NULL)
+		return solution->info;
 	
-	//TODO
+	if(solution->info != NULL)
+		solutionInfo_destroy(solution, solution->info);
+	solution->info = solutionInfo_productionOrder(solution);
+	solutionInfo_deliveryOrder(solution, solution->info);
 	
-	return 0;
+	return solution->info;
 }
 
 void solution_print(Solution * solution)
