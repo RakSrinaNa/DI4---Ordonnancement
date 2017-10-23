@@ -56,7 +56,14 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
  */
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
 
-//TODO: @Schttopup Doc
+//TODO: unit
+/**
+ * Evaluates the score of the given solution and saves it in the info.
+ * If the score has already been computed, no changes have been made and CACHED_SCORE = 1, the score is not computed again.
+ *
+ * @param The solution.
+ * @return The info of the solution.
+ */
 struct _SolutionInfo * solution_eval(Solution * solution);
 
 /**
