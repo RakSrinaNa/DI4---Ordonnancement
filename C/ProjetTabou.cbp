@@ -116,6 +116,9 @@
 		<Unit filename="src/unit/SequencerUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/unit/SolutionInfoUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/unit/SolutionUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -130,6 +133,7 @@
 		<Unit filename="src/unit/headers/PackUnit.h" />
 		<Unit filename="src/unit/headers/ParserUnit.h" />
 		<Unit filename="src/unit/headers/SequencerUnit.h" />
+		<Unit filename="src/unit/headers/SolutionInfoUnit.h" />
 		<Unit filename="src/unit/headers/SolutionUnit.h" />
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
