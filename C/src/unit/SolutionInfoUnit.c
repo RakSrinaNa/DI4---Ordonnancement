@@ -23,7 +23,7 @@ void solutionInfoUnit()
 	if(!unit_uintArrayEquals(prodOrder, info->productionOrder, 5))
 		unit_error("SolutionInfo 2: Bad production order");
 	if(!unit_uintArrayEquals(ready, info->readyToDeliver, 3))
-		unit_error("SolutionInfo 2: Bad ready to deliver");
+		unit_error("SolutionInfo 3: Bad ready to deliver");
 	
 	solutionInfo_destroy(solution, info);
 	solution_destroy(solution);
