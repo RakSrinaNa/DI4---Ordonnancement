@@ -36,6 +36,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 		Pack * p = solution->packList[i];
 		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveryOrder, &(info->readyToDeliver[i]));
 		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(unsigned int));
+		productionIndex += p->taskCount;
 		free(sequence);
 	}
 	return info;
