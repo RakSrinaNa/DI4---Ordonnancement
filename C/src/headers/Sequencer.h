@@ -73,11 +73,11 @@ unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned
 // TODO unit
 // TODO doc
 // TODO rename
-struct _SolutionInfo * sequencer_productionOrder(struct _Solution * solution);
+struct _SolutionInfo * solutionInfo_productionOrder(struct _Solution * solution);
 
 // TODO unit
 // TODO doc
 // TODO rename
-void sequencer_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
+void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
 
 #endif

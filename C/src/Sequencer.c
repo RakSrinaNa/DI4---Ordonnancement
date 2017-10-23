@@ -287,7 +287,7 @@ unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned
 	return sequence;
 }
 
-SolutionInfo * sequencer_productionOrder(Solution * solution)
+SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 {
 	SolutionInfo *info = solutionInfo_create(solution);
 	unsigned int productionIndex = 0;
@@ -303,7 +303,7 @@ SolutionInfo * sequencer_productionOrder(Solution * solution)
 	return info;
 }
 
-void sequencer_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
+void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
 {
 	unsigned int truckReady = 0;
 	for(unsigned int i = 0; i < solution->packCount; i++)
