@@ -101,6 +101,19 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 		warn("solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
 }
 
+void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned int task2)
+{
+	int pack1 = solution_getTaskPack(solution, task1);
+	int pack2 = solution_getTaskPack(solution, task2);
+	if(pack1 < 0 || pack2 < 0)
+	{
+		warn("solution_switchTaskPack : missing task");
+		return;
+	}
+	solution_moveTaskPack(solution, task1, pack2);
+	solution_moveTaskPack(solution, task2, pack1);
+}
+
 SolutionInfo * solution_eval(Solution * solution)
 {
 	if(CACHED_SCORE && solution->info != NULL)

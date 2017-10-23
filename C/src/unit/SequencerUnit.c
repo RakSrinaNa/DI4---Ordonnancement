@@ -43,6 +43,9 @@ void sequencerUnit_production()
 	if(time != 46)
 		unit_error("Sequencer 6A: Bad final time, was %d expected %d", time, 46);
 	
+	// TODO : sequenceProductionPack
+	// TODO : &endTime check value
+	
 	unsigned int endTime = 45;
 	unsigned int cSol[] = {0, 1, 2};
 	unsigned int * sol = sequencer_sequenceProductionPack(instance, 3, tasks, &endTime);

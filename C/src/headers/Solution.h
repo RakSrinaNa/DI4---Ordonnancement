@@ -56,7 +56,23 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
  */
 void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
 
-//TODO: @Schttopup Doc
+/**
+ * Switches two tasks between two packs.
+ *
+ * @param solution The solution. Not null.
+ * @param task1 The first task.
+ * @param task2 The second task.
+ */
+void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned int task2);
+
+//TODO: unit
+/**
+ * Evaluates the score of the given solution and saves it in the info.
+ * If the score has already been computed, no changes have been made and CACHED_SCORE = 1, the score is not computed again.
+ *
+ * @param The solution.
+ * @return The info of the solution.
+ */
 struct _SolutionInfo * solution_eval(Solution * solution);
 
 /**
