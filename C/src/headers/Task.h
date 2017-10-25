@@ -27,6 +27,7 @@ void task_destroy(Task * task);
  *
  * @param instance The parent instance. Not null.
  * @return A new task.
+ * @remark Needs to be freed with task_destroy.
  */
 Task * task_create(struct _Instance * instance);
 

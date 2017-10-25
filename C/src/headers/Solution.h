@@ -20,6 +20,7 @@ typedef struct _Solution
  *
  * @param instance The instance the solution is for. Not null.
  * @return A new solution.
+ * @remark Needs to be freed with solution_destroy.
 */
 Solution * solution_create(Instance * instance);
 
@@ -35,6 +36,7 @@ void solution_destroy(Solution * solution);
  *
  * @param solution The solution to copy.
  * @return A new solution.
+ * @remark Needs to be freed with solution_destroy.
  */
 Solution * solution_copy(Solution * solution);
 
@@ -49,6 +51,8 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
 
 /**
  * Assigns a pack to the given task.
+ * If the task doesn't exist, nothing is done.
+ * If the pack doesn't exist, we create it and move the task only if it is the n+1 pack.
  *
  * @param solution The solution. Not null.
  * @param task The task.
@@ -58,6 +62,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 
 /**
  * Switches two tasks between two packs.
+ * If one of the tasks isn't in the pack, nothing is done.
  *
  * @param solution The solution. Not null.
  * @param task1 The first task.
@@ -68,10 +73,11 @@ void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned i
 //TODO: unit
 /**
  * Evaluates the score of the given solution and saves it in the info.
- * If the score has already been computed, no changes have been made and CACHED_SCORE = 1, the score is not computed again.
+ * If the score has already been computed and CACHED_SCORE is set to 1, the score is not computed again.
  *
- * @param The solution.
+ * @param solution The solution. Not null.
  * @return The info of the solution.
+ * @remark Needs to be freed with solutionInfo_destroy.
  */
 struct _SolutionInfo * solution_eval(Solution * solution);
 

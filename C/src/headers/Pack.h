@@ -19,8 +19,10 @@ typedef struct _Pack
 /**
  * Creates an empty pack.
  *
+ *
  * @param instance The parent instance. Not null.
  * @return A new pack.
+ * @remark Needs to be freed with pack_destroy.
  */
 Pack * pack_create(Instance * instance);
 
@@ -62,7 +64,7 @@ void pack_addTask(Pack * pack, unsigned int task);
  *
  * @param pack The pack. Not null.
  * @param task The task id to remove.
- * @return True if the pack is empty, False otherwise
+ * @return True if the pack is now empty, False otherwise
  */
 Bool pack_removeTask(Pack * pack, unsigned int task);
 
