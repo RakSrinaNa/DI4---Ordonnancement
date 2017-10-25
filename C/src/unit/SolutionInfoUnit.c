@@ -32,7 +32,7 @@ void solutionInfoUnit()
 	if(!unit_uintArrayEquals(delivery1, info->deliveries[0], 2) || !unit_uintArrayEquals(delivery2, info->deliveries[1], 2) || !unit_uintArrayEquals(delivery3, info->deliveries[2], 1))
 		unit_error("SolutionInfo 4: Bad deliver order");
 	
-	if(info->score != 31)
+	if(info->score != 33)
 		unit_error("SolutionInfo 5: Bad score");
 	
 	solutionInfo_destroy(solution, info);
