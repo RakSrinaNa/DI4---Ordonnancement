@@ -3,12 +3,37 @@
 
 #include "Solution.h"
 
-// TODO doc
 // TODO unit
+/**
+ * Duplicates a solution then swaps two deliveries between separate packs.
+ *
+ * @param solution The solution.
+ * @param task1 The first task to swap.
+ * @param task2 The second task to swap.
+ * @return The duplicated and swapped solution.
+ */
 Solution * sort_swapDeliveries(Solution *solution, unsigned int task1, unsigned int task2);
 
-// TODO doc
 // TODO unit
-Solution * sort_moveDeliveries(Solution *solution, unsigned int task, unsigned int pack);
+/**
+ * Duplicates a solution then moves a delivery backwards.
+ *
+ * @param solution The solution.
+ * @param task The task to move.
+ * @param shift The number of packs away the task shall be moved backwards to.
+ * @return The duplicated and moved solution.
+ */
+Solution * sort_moveDeliveriesEBSR(Solution *solution, unsigned int task, unsigned int shift);
+
+// TODO unit
+/**
+ * Duplicates a solution then moves a delivery forward.
+ *
+ * @param solution The solution.
+ * @param task The task to move.
+ * @param shift The number of packs away the task shall be moved forward to.
+ * @return The duplicated and moved solution.
+ */
+Solution * sort_moveDeliveriesEFSR(Solution *solution, unsigned int task, unsigned int shift);
 
 #endif
