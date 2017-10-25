@@ -56,7 +56,7 @@ void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInf
 		truckReady = MMAX(truckReady, info->readyToDeliver[i]);
 		truckReadyNow = truckReady;
 		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveryOrder, &truckReady);
-		info->score += sequencer_deliveryDelay(solution->instance, solution->packList[i]->taskCount, solution->packList[i]->deliveryOrder, &truckReadyNow);
+		info->score += sequencer_deliveryDelay(solution->instance, solution->packList[i]->taskCount, info->deliveries[i], &truckReadyNow);
 	}
 }
 
