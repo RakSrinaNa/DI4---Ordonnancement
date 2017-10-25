@@ -33,7 +33,7 @@ void solutionInfoUnit()
 		unit_error("SolutionInfo 4: Bad deliver order");
 	
 	if(info->score != 33)
-		unit_error("SolutionInfo 5: Bad score");
+		unit_error("SolutionInfo 5: Bad score, %d but expected %d", info->score, 33);
 	
 	solutionInfo_destroy(solution, info);
 	solution_destroy(solution);
