@@ -34,7 +34,7 @@ void solution_destroy(Solution * solution)
 		pack_destroy(solution->packList[i]);
 	
 	free(solution->packList);
-	//TODO solutionInfo_destroy(solution->info);
+	solutionInfo_destroy(solution, solution->info);
 	free(solution);
 }
 
