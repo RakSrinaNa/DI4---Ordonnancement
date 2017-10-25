@@ -18,7 +18,7 @@ void solutionInfoUnit()
 		unit_error("SolutionInfo 1: Null infos");
 	
 	unsigned int prodOrder[] = {1, 0, 2, 3, 4};
-	unsigned int ready[] = {22, 42, 61};
+	unsigned int ready[] = {22, 42, 63};
 	
 	if(!unit_uintArrayEquals(prodOrder, info->productionOrder, 5))
 		unit_error("SolutionInfo 2: Bad production order");
