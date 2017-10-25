@@ -38,17 +38,19 @@ void instance_destroy(Instance * instance)
 unsigned int instance_getDueDate(Instance * instance, unsigned int task)
 {
 	if(task > instance->taskCount)
-		fatalError("instance_getDueDate : task out of range(%d)", task);
+		fatalError("instance_getDueDate : Missing task %d (Only %d tasks).\n", task, instance->taskCount);
 	return instance->tasks[task]->dueDate;
 }
 
 unsigned int * instance_sortByDueDate(Instance * instance)
 {
+	// Initializing a new array
 	unsigned int * sorted = NULL;
 	MMALLOC(sorted, unsigned int, instance->taskCount, "instance_sortByDueDate");
 	for(unsigned int i = 0; i < instance->taskCount; i++)
 		sorted[i] = i;
 	
+	// Bubble sort
 	for(unsigned int i = 0; i < instance->taskCount - 1; i++)
 		for(unsigned int j = 0; j < instance->taskCount - i - 1; j++)
 			if(instance_getDueDate(instance, sorted[j]) > instance_getDueDate(instance, sorted[j + 1]))

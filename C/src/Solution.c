@@ -55,14 +55,14 @@ int solution_getTaskPack(Solution * solution, unsigned int task)
 {
 	if(task >= solution->instance->taskCount)
 	{
-		warn("solution_getTaskPack : given task does not exist (%d)\n", task);
+		warn("solution_getTaskPack : Task %d does not exist.\n", task);
 		return -1;
 	}
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			if(solution->packList[i]->deliveryOrder[j] == task)
 				return i;
-	fatalError("solution_getTask : given task exists, but is not in any pack (%d)", task);
+	fatalError("solution_getTask : Task %d exists, but is not in any pack.\n", task);
 	return -1;
 }
 
@@ -71,7 +71,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 	int temp = solution_getTaskPack(solution, task);
 	if(temp == -1)
 	{
-		warn("solution_moveTaskPack : given task does not exist (%d)\n");
+		warn("solution_moveTaskPack : Task %d does not exist.\n");
 		return;
 	}
 	unsigned int index = (unsigned int) temp;
@@ -85,6 +85,8 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 	}
 	if(pack < solution->packCount)
 	{
+		solutionInfo_destroy(solution, solution->info);
+		solution->info = NULL;
 		pack_addTask(solution->packList[pack], task);
 		if(pack_removeTask(solution->packList[index], task)) //If it leaves an empty pack, remove it.
 		{
@@ -98,7 +100,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 		}
 	}
 	else
-		warn("solution_setTaskPackIndex : given pack is out of range (%d)\n", pack);
+		warn("solution_setTaskPackIndex : Pack %d does not exist.\n", pack);
 }
 
 void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned int task2)
@@ -107,9 +109,12 @@ void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned i
 	int pack2 = solution_getTaskPack(solution, task2);
 	if(pack1 < 0 || pack2 < 0)
 	{
-		warn("solution_switchTaskPack : missing task");
+		warn("solution_switchTaskPack : Missing task (%d / %d).\n", task1, task2);
 		return;
 	}
+	if(pack1 == pack2) return;
+	solutionInfo_destroy(solution, solution->info);
+	solution->info = NULL;
 	solution_moveTaskPack(solution, task1, pack2);
 	solution_moveTaskPack(solution, task2, pack1);
 }
@@ -129,11 +134,16 @@ SolutionInfo * solution_eval(Solution * solution)
 
 void solution_print(Solution * solution)
 {
-	printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
-	for(unsigned int i = 0; i < solution->packCount; i++)
+	if(solution != NULL)
 	{
-		printf("\t");
-		pack_print(solution->packList[i]);
-		printf("\n");
+		printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
+		for(unsigned int i = 0; i < solution->packCount; i++)
+		{
+			printf("\t");
+			pack_print(solution->packList[i]);
+			printf("\n");
+		}
 	}
+	else
+		printf("SOLUTION NULL\n");
 }

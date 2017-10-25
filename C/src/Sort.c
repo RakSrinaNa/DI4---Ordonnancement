@@ -12,7 +12,7 @@ Solution * sort_moveDeliveriesEBSR(Solution *solution, unsigned int task, unsign
 	int packIndex = solution_getTaskPack(solution, task);
 	if(packIndex < 0)
 	{
-		warn("sort_moveDeliveriesEBSR : task does not exist (%d)", task);
+		warn("sort_moveDeliveriesEBSR : Task %d does not exist.\n", task);
 		return NULL;
 	}
 	Solution * sol = solution_copy(solution);
@@ -27,7 +27,7 @@ Solution * sort_moveDeliveriesEFSR(Solution *solution, unsigned int task, unsign
 	int packIndex = solution_getTaskPack(solution, task);
 	if(packIndex < 0)
 	{
-		warn("sort_moveDeliveriesEFSR : task does not exist (%d)", task);
+		warn("sort_moveDeliveriesEFSR : Task %d does not exist.\n", task);
 		return NULL;
 	}
 	Solution * sol = solution_copy(solution);

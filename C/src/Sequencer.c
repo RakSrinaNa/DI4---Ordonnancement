@@ -101,7 +101,7 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 		RREALLOC(bestSequence, unsigned int, taskCount, "sequencer_sequenceProductionPack");
 		for(unsigned int taskID = 2; taskID < taskCount; taskID++) //Try to insert every task.
 		{
-			unsigned int bestScore = 0xFFFFFFFF;
+			unsigned int bestScore = 0xFFFFFFFF; // Infinity
 			unsigned int bestPos = 0;
 			for(unsigned int insertPos = 0; insertPos <= taskID; insertPos++) //Try to insert at every position.
 			{
@@ -134,6 +134,7 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 
 unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int * date)
 {
+	if(count == 0) return 0;
 	unsigned int delay = 0;
 	unsigned int departure = instance->taskCount;
 	unsigned int arrival = tasks[0];
@@ -200,7 +201,7 @@ unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned in
 				seqID++;
 			}
 		unsigned int * best = NULL;
-		unsigned int bestTime = 0xFFFFFFFF;
+		unsigned int bestTime = 0xFFFFFFFF; // Infinity
 		unsigned int tempDate;
 		unsigned int bestDate;
 		for(unsigned int i = 0; i < 6; i++)
@@ -243,7 +244,7 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 	for(unsigned int i = 0; i < taskCount; i++)
 	{
 		// Finding the nearest neighbor at each step.
-		unsigned int nearestIndex = 0xFFFFFFFF;
+		unsigned int nearestIndex = 0xFFFFFFFF; // Infinity
 		for(unsigned int j = 0; j < taskCount; j++)
 		{
 			if(!explored[j] && (nearestIndex == 0xFFFFFFFF || instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex])))
@@ -266,7 +267,7 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
 {
 	unsigned int * sequence = NULL;
-	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
+	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesDueDate");
 	for(unsigned int i = 0; i < taskCount; i++)
 		sequence[i] = tasks[i];
 	
