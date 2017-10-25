@@ -12,6 +12,7 @@ SolutionInfo * solutionInfo_create(Solution * solution)
 	MMALLOC(info->deliveries, unsigned int *, solution->packCount, "solutionInfo_create");
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		info->deliveries[i] = NULL;
+	info->score = 0;
 	return info;
 }
 
@@ -46,6 +47,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 
 void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
 {
+	info->score = 0;
 	unsigned int truckReady = 0;
 	unsigned int truckReadyNow = 0;
 	for(unsigned int i = 0; i < solution->packCount; i++)
