@@ -77,6 +77,8 @@ struct _SolutionInfo * solution_eval(Solution * solution);
 
 /**
  * Prints the solution.
+ *
+ * @param solution The solution.
  */
 void solution_print(Solution * solution);
 

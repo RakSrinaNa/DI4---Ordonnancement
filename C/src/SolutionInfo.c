@@ -17,6 +17,8 @@ SolutionInfo * solutionInfo_create(Solution * solution)
 
 void solutionInfo_destroy(Solution * solution, SolutionInfo * info)
 {
+	if(info == NULL)
+		return;
 	free(info->productionOrder);
 	free(info->readyToDeliver);
 	for(unsigned int i = 0; i < solution->packCount; i++)
