@@ -86,7 +86,11 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
  */
 void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position);
 
-//TODO: @Schttopup Doc
+/**
+ * Prints a pack.
+ *
+ * @param pack The pack.
+ */
 void pack_print(Pack * pack);
 
 #endif
