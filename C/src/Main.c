@@ -29,6 +29,9 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	instance_print(instance);
 	Solution * solution = solution_create(instance);
+	solution_moveTaskPack(solution, 2, 1);
+	solution_moveTaskPack(solution, 4, 1);
+	solution_eval(solution);
 	solution_print(solution);
 	//TODO: Compute solution
 	instance_destroy(instance);
