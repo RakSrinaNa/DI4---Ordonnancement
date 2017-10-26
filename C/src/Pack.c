@@ -113,11 +113,11 @@ void pack_print(Pack * pack)
 {
 	if(pack != NULL)
 	{
-		printf("PACK : %d (", pack->taskCount);
+		printf("Pack : %d (", pack->taskCount);
 		for(unsigned int i = 0; i < pack->taskCount; i++)
-			printf(" %d ", pack->deliveryOrder[i]);
+			printf(" T%d", pack->deliveryOrder[i]+1);
 		printf(" )");
 	}
 	else
-		printf("PACK NULL");
+		printf("Pack : NULL");
 }
