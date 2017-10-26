@@ -136,13 +136,14 @@ void solution_print(Solution * solution)
 {
 	if(solution != NULL)
 	{
-		printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
+		printf("SOLUTION\n\tPacks : %d\n", solution->packCount);
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			printf("\t");
+			printf("\t\t");
 			pack_print(solution->packList[i]);
 			printf("\n");
 		}
+		solutionInfo_print(solution, solution->info);
 	}
 	else
 		printf("SOLUTION NULL\n");
