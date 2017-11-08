@@ -55,7 +55,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
  * @param instance The instance. Not null.
  * @param taskCount The number of tasks.
  * @param tasks The list of the tasks.
- * @param initialDate A pointer to the departure time. At the end, contains the arrival time of the truck.
+ * @param initialDate A pointer to the departure time. At the end, contains the arrival time of the truck. Not null.
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
@@ -67,7 +67,7 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
  * @param instance The instance. Not null.
  * @param taskCount The number of tasks.
  * @param tasks The list of the tasks.
- * @param initialDate A pointer to the departure time. At the end, contains the arrival time.
+ * @param initialDate A pointer to the departure time. At the end, contains the arrival time. Not null.
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
