@@ -136,14 +136,39 @@ void solution_print(Solution * solution)
 {
 	if(solution != NULL)
 	{
-		printf("\nSOLUTION\nPacks : %d\n", solution->packCount);
+		printf("Solution :\n\tPacks : %d\n", solution->packCount);
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			printf("\t");
+			printf("\t\t");
 			pack_print(solution->packList[i]);
 			printf("\n");
 		}
+		solutionInfo_print(solution, solution->info);
 	}
 	else
-		printf("SOLUTION NULL\n");
+		printf("Solution : NULL\n");
+}
+
+void solution_save(Solution * solution, const char * filename)
+{
+	if(solution->info == NULL)
+		return;
+	FILE * f = fopen(filename, "w");
+	if(f != NULL)
+	{
+		fprintf(f, "%d %d %d\n", solution->instance->taskCount, solution->packCount, solution->info->score);
+		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+			fprintf(f, "%d ", solution->info->productionOrder[i]);
+		fprintf(f, "\n");
+		for(unsigned int i = 0; i < solution->packCount; i++)
+		{
+			fprintf(f, "%d ", solution->packList[i]->taskCount);
+			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
+			{
+				fprintf(f, "%d ", solution->info->deliveries[i][j]);
+			}
+			fprintf(f, "\n");
+		}
+		fclose(f);
+	}
 }

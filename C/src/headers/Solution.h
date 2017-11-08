@@ -88,4 +88,13 @@ struct _SolutionInfo * solution_eval(Solution * solution);
  */
 void solution_print(Solution * solution);
 
+/**
+ * Saves the solution to a file.
+ *
+ * @param solution The solution. Not null.
+ * @param filename The path of the file.
+ * @remark Does nothing if the solution hasn't been computed.
+ */
+void solution_save(Solution * solution, const char * filename);
+
 #endif //TABOU_SOLUTION_H

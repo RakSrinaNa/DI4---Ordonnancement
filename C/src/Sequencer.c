@@ -20,13 +20,13 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 	return finalTime;
 }
 
-unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * date)
+unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date)
 {
-	unsigned int * finalSequence = NULL;
+	task_t * finalSequence = NULL;
 	if(taskCount == 1)
 	{
-		MMALLOC(finalSequence, unsigned int, 1, "sequencer_sequenceProductionPack");
-		finalSequence = memcpy(finalSequence, tasks, sizeof(unsigned int));
+		MMALLOC(finalSequence, task_t , 1, "sequencer_sequenceProductionPack");
+		finalSequence = memcpy(finalSequence, tasks, sizeof(task_t));
 	}
 	else if(taskCount == 2) //Try every case.
 	{

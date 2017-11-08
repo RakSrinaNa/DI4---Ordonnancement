@@ -23,7 +23,7 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	
 	if(DEBUG)
 	{
-		debugPrint("Parsed instance:");
+		debugPrint("Parsed instance :\n");
 		instance_print(instance);
 	}
 	

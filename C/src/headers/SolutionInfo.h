@@ -48,5 +48,13 @@ struct _SolutionInfo * solutionInfo_productionOrder(struct _Solution * solution)
  */
 void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
 
+/**
+ * Prints a solution info.
+ *
+ * @param solution The solution. Not null.
+ * @param info The info.
+ */
+void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info);
+
 
 #endif // SOLUTIONINFO_H_INCLUDED

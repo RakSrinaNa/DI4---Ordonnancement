@@ -53,10 +53,31 @@ void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInf
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		Pack * p = solution->packList[i];
-		truckReady = MMAX(truckReady, info->readyToDeliver[i]); // Wainting for the truck to come back and for the processes to be done.
+		truckReady = MMAX(truckReady, info->readyToDeliver[i]); // Waiting for the truck to come back and for the processes to be done.
 		truckReadyNow = truckReady;
 		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveries, &truckReady); // Copying the best sequence into the info.
 		info->score += sequencer_deliveryDelay(solution->instance, solution->packList[i]->taskCount, info->deliveries[i], &truckReadyNow);
 	}
+}
+
+void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info)
+{
+	if(info != NULL)
+	{
+		printf("\tInfo :\n\t\tProduction :\n\t\t\t");
+		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+			printf(" %d", info->productionOrder[i]);
+		printf("\n\t\tDeliveries :\n");
+		for(unsigned int i = 0; i < solution->packCount; i++)
+		{
+			printf("\t\t\tBatch : (");
+			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
+				printf(" T%d", info->deliveries[i][j]+1);
+			printf(" )\n");
+		}
+		printf("\t\tScore : %d", info->score);
+	}
+	else
+		printf("\tInfo : NULL\n");
 }
 

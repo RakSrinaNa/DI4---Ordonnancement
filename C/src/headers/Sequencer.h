@@ -24,7 +24,7 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * date);
+unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date);
 
 /**
  * Computes the total delay of this sequence.
