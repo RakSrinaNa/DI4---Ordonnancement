@@ -13,7 +13,7 @@
  * @return The duplicated and swapped solution.
  * @remark The user is in charge of freeing the returned value.
  */
-Solution * sort_swapDeliveries(Solution *solution, unsigned int task1, unsigned int task2);
+Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2);
 
 // TODO unit
 /**
@@ -25,7 +25,7 @@ Solution * sort_swapDeliveries(Solution *solution, unsigned int task1, unsigned 
  * @return The duplicated and moved solution.
  * @remark The user is in charge of freeing the returned value.
  */
-Solution * sort_moveDeliveriesEBSR(Solution *solution, unsigned int task, unsigned int shift);
+Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned int shift);
 
 // TODO unit
 /**
@@ -37,6 +37,6 @@ Solution * sort_moveDeliveriesEBSR(Solution *solution, unsigned int task, unsign
  * @return The duplicated and moved solution.
  * @remark The user is in charge of freeing the returned value.
  */
-Solution * sort_moveDeliveriesEFSR(Solution *solution, unsigned int task, unsigned int shift);
+Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned int shift);
 
 #endif

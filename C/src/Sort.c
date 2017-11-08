@@ -1,13 +1,13 @@
 #include "headers/Sort.h"
 
-Solution * sort_swapDeliveries(Solution *solution, unsigned int task1, unsigned int task2)
+Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2)
 {
 	Solution * sol = solution_copy(solution);
 	solution_switchTaskPack(solution, task1, task2);
 	return sol;
 }
 
-Solution * sort_moveDeliveriesEBSR(Solution *solution, unsigned int task, unsigned int shift)
+Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned int shift)
 {
 	int packIndex = solution_getTaskPack(solution, task);
 	if(packIndex < 0)
@@ -22,7 +22,7 @@ Solution * sort_moveDeliveriesEBSR(Solution *solution, unsigned int task, unsign
 	return sol;
 }
 
-Solution * sort_moveDeliveriesEFSR(Solution *solution, unsigned int task, unsigned int shift)
+Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned int shift)
 {
 	int packIndex = solution_getTaskPack(solution, task);
 	if(packIndex < 0)
