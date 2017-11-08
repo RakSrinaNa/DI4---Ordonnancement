@@ -9,6 +9,7 @@ extern Bool DEBUG;
 
 Instance * parser_readInstanceFromFile(char * filepath)
 {
+	debugPrint("Parsing file %s\n", filepath);
 	FILE * file = fopen(filepath, "r");
 	if(file == NULL)
 	{

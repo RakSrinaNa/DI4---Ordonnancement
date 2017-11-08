@@ -2,14 +2,6 @@
 
 #include "headers/Task.h"
 
-void task_destroy(Task * task)
-{
-	if(task == NULL)
-		return;
-	free(task->machineDurations);
-	free(task);
-}
-
 Task * task_create(Instance * instance)
 {
 	Task * task;
@@ -18,7 +10,17 @@ Task * task_create(Instance * instance)
 	task->instance = instance;
 	task->dueDate = 0;
 	MMALLOC(task->machineDurations, unsigned int, instance->machineCount, "task_create");
+	debugPrint("Task created : %p\n", task);
 	return task;
+}
+
+void task_destroy(Task * task)
+{
+	if(task == NULL)
+		return;
+	free(task->machineDurations);
+	free(task);
+	debugPrint("Task destroyed : %p\n", task);
 }
 
 void task_setMachineDuration(Task * task, unsigned int machineID, unsigned int duration)

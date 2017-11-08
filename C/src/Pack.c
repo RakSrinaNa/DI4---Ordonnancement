@@ -7,6 +7,7 @@ Pack * pack_create(Instance * instance)
 	pack->instance = instance;
 	pack->taskCount = 0;
 	pack->deliveries = NULL;
+	debugPrint("Pack created : %p\n", pack);
 	return pack;
 }
 
@@ -17,6 +18,7 @@ void pack_destroy(Pack * pack)
 	
 	free(pack->deliveries);
 	free(pack);
+	debugPrint("Pack destroyed : %p\n", pack);
 }
 
 Bool pack_hasTask(Pack * pack, task_t task)
@@ -37,6 +39,7 @@ int pack_getTaskIndex(Pack * pack, task_t task)
 
 void pack_addTask(Pack * pack, task_t task)
 {
+	debugPrint("Adding task %d in pack %p\n", task, pack);
 	if(task < pack->instance->taskCount) //Check task ID range.
 	{
 		Bool found = False;
@@ -59,6 +62,7 @@ void pack_addTask(Pack * pack, task_t task)
 
 Bool pack_removeTask(Pack * pack, task_t task)
 {
+	debugPrint("Removing task %d from pack %p\n", task, pack);
 	Bool found = False;
 	for(unsigned int i = 0; i < pack->taskCount; i++) // Looking for the task
 	{
@@ -80,7 +84,7 @@ Bool pack_removeTask(Pack * pack, task_t task)
 
 void pack_switchDelivery(Pack * pack, task_t delivery1, task_t delivery2)
 {
-	debugPrint("Switching deliveries %d and %d.\n", delivery1, delivery2);
+	debugPrint("Switching deliveries %d and %d in pack %p\n", delivery1, delivery2, pack);
 	if(delivery1 == delivery2)
 		return;
 	if(pack_hasTask(pack, delivery1) && pack_hasTask(pack, delivery2))
@@ -96,7 +100,7 @@ void pack_switchDelivery(Pack * pack, task_t delivery1, task_t delivery2)
 
 void pack_moveDelivery(Pack * pack, task_t delivery, unsigned int position)
 {
-	debugPrint("Moving delivery %d to position %d.\n", delivery, position);
+	debugPrint("Moving delivery %d to position %d in pack %p\n", delivery, position, pack);
 	if(pack_hasTask(pack, delivery))
 	{
 		task_t index = (task_t) pack_getTaskIndex(pack, delivery);

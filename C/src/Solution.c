@@ -20,6 +20,7 @@ Solution * solution_create(Instance * instance)
 		pack_addTask(solution->packList[0], i);
 	solution->packCount++;
 	
+	debugPrint("Created solution : %p\n", solution);
 	return solution;
 }
 
@@ -35,6 +36,7 @@ void solution_destroy(Solution * solution)
 	free(solution->packList);
 	solutionInfo_destroy(solution, solution->info);
 	free(solution);
+	debugPrint("Destroyed solution : %p\n", solution);
 }
 
 Solution * solution_copy(Solution * solution)
@@ -47,6 +49,7 @@ Solution * solution_copy(Solution * solution)
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			solution_moveTaskPack(copy, solution->packList[i]->deliveries[j], i);
+	debugPrint("Copied solution %p to %p\n", solution, copy);
 	return copy;
 }
 
@@ -67,6 +70,7 @@ int solution_getTaskPack(Solution * solution, task_t task)
 
 void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 {
+	debugPrint("Moving task %d to pack %d of solution %p\n", task, pack, solution);
 	int temp = solution_getTaskPack(solution, task);
 	if(temp == -1)
 	{
@@ -104,6 +108,7 @@ void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 
 void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 {
+	debugPrint("Switching tasks %d and %d in solution %p\n", task1, task2, solution);
 	int pack1 = solution_getTaskPack(solution, task1);
 	int pack2 = solution_getTaskPack(solution, task2);
 	if(pack1 < 0 || pack2 < 0)
@@ -121,6 +126,7 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 
 SolutionInfo * solution_eval(Solution * solution)
 {
+	debugPrint("Evaluation solution %p\n", solution);
 	if(CACHED_SCORE && solution->info != NULL)
 		return solution->info;
 	
@@ -151,6 +157,7 @@ void solution_print(Solution * solution)
 
 void solution_save(Solution * solution, const char * filename)
 {
+	debugPrint("Saving solution %p to %s", solution, filename);
 	if(solution->info == NULL)
 		return;
 	FILE * file = fopen(filename, "w");

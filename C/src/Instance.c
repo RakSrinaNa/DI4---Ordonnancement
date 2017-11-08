@@ -12,6 +12,7 @@ Instance * instance_create()
 	instance->taskCount = 0;
 	instance->distancesMatrix = NULL;
 	instance->tasks = NULL;
+	debugPrint("Instance created : %p\n", instance);
 	return instance;
 }
 
@@ -33,6 +34,8 @@ void instance_destroy(Instance * instance)
 	free(instance->tasks);
 	
 	free(instance);
+	debugPrint("Instance destroyed : %p\n", instance);
+	
 }
 
 unsigned int instance_getDueDate(Instance * instance, task_t task)
@@ -67,10 +70,10 @@ void instance_print(Instance * instance)
 	printf("Instance :\n\tMachine count : %d\n\tTask count : %d\n\tTasks :\n\t\t     ", instance->machineCount, instance->taskCount);
 	// Tasks
 	for(task_t i = 0; i < instance->taskCount; i++)
-		printf("T%-3d", i+1);
+		printf("T%-3d", i);
 	for(machine_t i = 0; i < instance->machineCount; i++)
 	{
-		printf("\n\t\tM%-4d", i+1);
+		printf("\n\t\tM%-4d", i);
 		for(task_t j = 0; j < instance->taskCount; j++)
 			printf("%-4d", task_getMachineDuration(instance->tasks[j], i));
 	}
@@ -81,10 +84,18 @@ void instance_print(Instance * instance)
 	// Distances
 	printf("\n\tDistances :\n\t\t     ");
 	for(task_t i = 0; i <= instance->taskCount; i++)
-		printf("T%-3d", (i == instance->taskCount ? 0 : i+1));
+	{
+		if(i == instance->taskCount)
+			printf("ORG");
+		else
+			printf("T%-3d", i);
+	}
 	for(task_t i = 0; i <= instance->taskCount; i++)
 	{
-		printf("\n\t\tT%-4d",  (i == instance->taskCount ? 0 : i+1));
+		if(i == instance->taskCount)
+			printf("\n\t\tORG  ");
+		else
+			printf("\n\t\tT%-4d", i);
 		for(task_t j = 0; j <= instance->taskCount; j++)
 			printf("%-4d", instance_getDistance(instance, i, j));
 	}

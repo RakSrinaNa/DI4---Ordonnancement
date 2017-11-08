@@ -15,11 +15,13 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 			machineEndTime[m] = MMAX(m == 0 ? 0 : machineEndTime[m - 1], machineEndTime[m]) + task_getMachineDuration(instance->tasks[tasks[taskIndex]], m);
 	unsigned int finalTime = machineEndTime[instance->machineCount - 1];
 	free(machineEndTime);
+	debugPrint("Production time for %d tasks is %d\n", count, finalTime);
 	return finalTime;
 }
 
 task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date)
 {
+	debugPrint("Ordering production for %d tasks at %d\n", taskCount, *date);
 	task_t * finalSequence = NULL;
 	if(taskCount == 1)
 	{
@@ -142,11 +144,13 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, ta
 		departure = arrival;
 		arrival = (taskIndex < count - 1 ? tasks[taskIndex + 1] : instance->taskCount);
 	}
+	debugPrint("Delay for %d tasks is %d\n", count, delay);
 	return delay;
 }
 
 task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
 {
+	debugPrint("Ordering deliveries for %d tasks at %d\n", taskCount, *initialDate);
 	unsigned int * sequence = NULL;
 	if(taskCount == 1)
 	{
@@ -231,6 +235,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 
 task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
 {
+	debugPrint("\tUsing nearest neighbor\n");
 	task_t * sequence = NULL;
 	MMALLOC(sequence, task_t, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
 	Bool * explored = NULL; // If we already delivered this node, we shouldn't deliver it again
@@ -263,6 +268,7 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
 
 task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate)
 {
+	debugPrint("\tUsing smallest due date\n");
 	task_t * sequence = NULL;
 	MMALLOC(sequence, task_t, taskCount, "sequencer_sequenceDeliveriesDueDate");
 	for(unsigned int i = 0; i < taskCount; i++)

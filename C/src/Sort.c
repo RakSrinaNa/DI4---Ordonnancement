@@ -2,6 +2,7 @@
 
 Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2)
 {
+	debugPrint("Applying swap on tasks %d and %d in solution %p\n", task1, task2, solution);
 	Solution * sol = solution_copy(solution);
 	solution_switchTaskPack(solution, task1, task2);
 	return sol;
@@ -9,6 +10,7 @@ Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2)
 
 Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned int shift)
 {
+	debugPrint("Applying EBSR on task %d with a shift of %d in solution %p\n", task, shift, solution);
 	int packIndex = solution_getTaskPack(solution, task);
 	if(packIndex < 0)
 	{
@@ -24,6 +26,7 @@ Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned in
 
 Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned int shift)
 {
+	debugPrint("Applying EFSR on task %d with a shift of %d in solution %p\n", task, shift, solution);
 	int packIndex = solution_getTaskPack(solution, task);
 	if(packIndex < 0)
 	{

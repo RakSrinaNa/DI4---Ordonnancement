@@ -12,6 +12,7 @@ SolutionInfo * solutionInfo_create(Solution * solution)
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		info->deliveries[i] = NULL;
 	info->score = 0;
+	debugPrint("SolutionInfo created : %p\n", info);
 	return info;
 }
 
@@ -25,15 +26,18 @@ void solutionInfo_destroy(Solution * solution, SolutionInfo * info)
 		free(info->deliveries[i]);
 	free(info->deliveries);
 	free(info);
+	debugPrint("SolutionInfo destroyed : %p\n", info);
 }
 
 SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 {
+	debugPrint("Calculating production for solution %p\n", solution);
 	SolutionInfo * info = solutionInfo_create(solution);
 	unsigned int productionIndex = 0;
 	task_t * sequence;
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
+		debugPrint("\tProcessing pack %d\n", i);
 		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i - 1]); // Storing information for the next production and the deliveries.
 		Pack * p = solution->packList[i];
 		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveries, &(info->readyToDeliver[i]));
@@ -46,11 +50,13 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 
 void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
 {
+	debugPrint("Calculating deliveries for solution %p with info %p\n", solution, info);
 	info->score = 0;
 	unsigned int truckReady = 0;
 	unsigned int truckReadyNow = 0;
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
+		debugPrint("\tProcessing pack %d\n", i);
 		Pack * p = solution->packList[i];
 		truckReady = MMAX(truckReady, info->readyToDeliver[i]); // Waiting for the truck to come back and for the processes to be done.
 		truckReadyNow = truckReady;
@@ -76,7 +82,7 @@ void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info
 				printf(" T%d", info->deliveries[i][j] + 1);
 			printf(" )\n");
 		}
-		printf("\t\tScore : %d", info->score);
+		printf("\t\tScore : %d\n", info->score);
 	}
 	else
 		printf("\tInfo : NULL\n");
