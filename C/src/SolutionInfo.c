@@ -1,15 +1,14 @@
 #include "headers/SolutionInfo.h"
-#include "headers/Solution.h"
 
 #include <string.h>
 
 SolutionInfo * solutionInfo_create(Solution * solution)
 {
-	SolutionInfo *info = NULL;
+	SolutionInfo * info = NULL;
 	MMALLOC(info, SolutionInfo, 1, "solutionInfo_create");
-	MMALLOC(info->productionOrder, unsigned int, solution->instance->taskCount, "solutionInfo_create");
+	MMALLOC(info->productionOrder, task_t, solution->instance->taskCount, "solutionInfo_create");
 	MMALLOC(info->readyToDeliver, unsigned int, solution->packCount, "solutionInfo_create");
-	MMALLOC(info->deliveries, unsigned int *, solution->packCount, "solutionInfo_create");
+	MMALLOC(info->deliveries, task_t  *, solution->packCount, "solutionInfo_create");
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		info->deliveries[i] = NULL;
 	info->score = 0;
@@ -30,15 +29,15 @@ void solutionInfo_destroy(Solution * solution, SolutionInfo * info)
 
 SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 {
-	SolutionInfo *info = solutionInfo_create(solution);
+	SolutionInfo * info = solutionInfo_create(solution);
 	unsigned int productionIndex = 0;
-	unsigned int * sequence;
+	task_t  * sequence;
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
-		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i-1]); // Storing information for the next production and the deliveries.
+		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i - 1]); // Storing information for the next production and the deliveries.
 		Pack * p = solution->packList[i];
 		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveries, &(info->readyToDeliver[i]));
-		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(unsigned int)); // Copying the best sequence into the info production.
+		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(task_t)); // Copying the best sequence into the info production.
 		productionIndex += p->taskCount;
 		free(sequence);
 	}
@@ -72,7 +71,7 @@ void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info
 		{
 			printf("\t\t\tBatch : (");
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-				printf(" T%d", info->deliveries[i][j]+1);
+				printf(" T%d", info->deliveries[i][j] + 1);
 			printf(" )\n");
 		}
 		printf("\t\tScore : %d", info->score);
