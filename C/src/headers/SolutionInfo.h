@@ -1,6 +1,8 @@
 #ifndef SOLUTIONINFO_H_INCLUDED
 #define SOLUTIONINFO_H_INCLUDED
 
+#include "Utils.h"
+
 struct _SolutionInfo;
 
 #include "Solution.h"
