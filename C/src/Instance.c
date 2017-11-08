@@ -65,24 +65,24 @@ unsigned int * instance_sortByDueDate(Instance * instance)
 void instance_print(Instance * instance)
 {
 	printf("Instance :\n\tMachine count : %d\n\tTask count : %d\n\tTasks :\n\t\t     ", instance->machineCount, instance->taskCount);
-	for(unsigned int i = 0; i < instance->taskCount; i++)
+	for(task_t i = 0; i < instance->taskCount; i++)
 		printf("T%-3d", i+1);
-	for(unsigned int i = 0; i < instance->machineCount; i++)
+	for(machine_t i = 0; i < instance->machineCount; i++)
 	{
 		printf("\n\t\tM%-4d", i+1);
-		for(unsigned int j = 0; j < instance->taskCount; j++)
+		for(task_t j = 0; j < instance->taskCount; j++)
 			printf("%-4d", task_getMachineDuration(instance->tasks[j], i));
 	}
 	printf("\n\tDue :\n\t\t     ");
-	for(unsigned int i = 0; i < instance->taskCount; i++)
+	for(task_t i = 0; i < instance->taskCount; i++)
 		printf("%-4d", task_getDueDate(instance->tasks[i]));
 	printf("\n\tDistances :\n\t\t     ");
-	for(unsigned int i = 0; i <= instance->taskCount; i++)
+	for(task_t i = 0; i <= instance->taskCount; i++)
 		printf("T%-3d", (i == instance->taskCount ? 0 : i+1));
-	for(unsigned int i = 0; i <= instance->taskCount; i++)
+	for(task_t i = 0; i <= instance->taskCount; i++)
 	{
 		printf("\n\t\tT%-4d",  (i == instance->taskCount ? 0 : i+1));
-		for(unsigned int j = 0; j <= instance->taskCount; j++)
+		for(task_t j = 0; j <= instance->taskCount; j++)
 			printf("%-4d", instance_getDistance(instance, i, j));
 	}
 	printf("\n");
