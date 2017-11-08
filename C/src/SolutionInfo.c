@@ -63,9 +63,11 @@ void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info
 {
 	if(info != NULL)
 	{
+		// Production
 		printf("\tInfo :\n\t\tProduction :\n\t\t\t");
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 			printf(" %d", info->productionOrder[i]);
+		// Deliveries
 		printf("\n\t\tDeliveries :\n");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{

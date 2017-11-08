@@ -65,6 +65,7 @@ unsigned int * instance_sortByDueDate(Instance * instance)
 void instance_print(Instance * instance)
 {
 	printf("Instance :\n\tMachine count : %d\n\tTask count : %d\n\tTasks :\n\t\t     ", instance->machineCount, instance->taskCount);
+	// Tasks
 	for(task_t i = 0; i < instance->taskCount; i++)
 		printf("T%-3d", i+1);
 	for(machine_t i = 0; i < instance->machineCount; i++)
@@ -73,9 +74,11 @@ void instance_print(Instance * instance)
 		for(task_t j = 0; j < instance->taskCount; j++)
 			printf("%-4d", task_getMachineDuration(instance->tasks[j], i));
 	}
+	//Due dates
 	printf("\n\tDue :\n\t\t     ");
 	for(task_t i = 0; i < instance->taskCount; i++)
 		printf("%-4d", task_getDueDate(instance->tasks[i]));
+	// Distances
 	printf("\n\tDistances :\n\t\t     ");
 	for(task_t i = 0; i <= instance->taskCount; i++)
 		printf("T%-3d", (i == instance->taskCount ? 0 : i+1));
