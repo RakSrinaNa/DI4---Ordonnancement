@@ -13,7 +13,7 @@ typedef struct _Pack
 {
 	Instance * instance; // Reference to the instance.
 	unsigned int taskCount; // Number of tasks in this pack.
-	unsigned int * deliveries; // Ordered list of the IDs of the task representing the delivery order.
+	task_t * deliveries; // Ordered list of the IDs of the task representing the delivery order.
 } Pack;
 
 /**

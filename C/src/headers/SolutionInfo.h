@@ -8,9 +8,9 @@ struct _SolutionInfo;
 //Stores the computed informations of a solution.
 typedef struct _SolutionInfo
 {
-	unsigned int * productionOrder; // The ordered production.
+	task_t * productionOrder; // The ordered production.
 	unsigned int * readyToDeliver; // Dates when the truck is ready to go.
-	unsigned int ** deliveries; // The ordered deliveries.
+	task_t  ** deliveries; // The ordered deliveries.
 	unsigned int score; // The score of the info.
 } SolutionInfo;
 
