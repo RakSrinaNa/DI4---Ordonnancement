@@ -21,7 +21,7 @@ void pack_destroy(Pack * pack)
 
 Bool pack_hasTask(Pack * pack, task_t task)
 {
-	for(task_t i = 0; i < pack->taskCount; i++)
+	for(unsigned int i = 0; i < pack->taskCount; i++)
 		if(pack->deliveries[i] == task)
 			return True;
 	return False;
@@ -29,7 +29,7 @@ Bool pack_hasTask(Pack * pack, task_t task)
 
 int pack_getTaskIndex(Pack * pack, task_t task)
 {
-	for(task_t i = 0; i < pack->taskCount; i++)
+	for(unsigned int i = 0; i < pack->taskCount; i++)
 		if(pack->deliveries[i] == task)
 			return (int) i;
 	return -1; // If the task was not found.
@@ -40,7 +40,7 @@ void pack_addTask(Pack * pack, task_t task)
 	if(task < pack->instance->taskCount) //Check task ID range.
 	{
 		Bool found = False;
-		for(task_t i = 0; i < pack->taskCount; i++)
+		for(unsigned int i = 0; i < pack->taskCount; i++)
 			if(pack->deliveries[i] == task)
 			{
 				found = True;
@@ -60,7 +60,7 @@ void pack_addTask(Pack * pack, task_t task)
 Bool pack_removeTask(Pack * pack, task_t task)
 {
 	Bool found = False;
-	for(task_t i = 0; i < pack->taskCount; i++) // Looking for the task
+	for(unsigned int i = 0; i < pack->taskCount; i++) // Looking for the task
 	{
 		// If we already found the task, shifting to the left.
 		if(found)

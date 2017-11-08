@@ -24,7 +24,7 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date);
+task_t  * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date);
 
 /**
  * Computes the total delay of this sequence.
@@ -35,7 +35,7 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
  * @param date A pointer to the departure time. At the end, contains the arrival time of the truck. Not null.
  * @return The total delay of the sequence.
  */
-unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int * date);
+unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, task_t  * tasks, unsigned int * date);
 
 /**
  * Orders the deliveries in the given list.
@@ -47,7 +47,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, un
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
+task_t  * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t  * tasks, unsigned int * initialDate);
 
 /**
  * Orders the deliveries in the given list by nearest neighbor.
@@ -59,7 +59,7 @@ unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned in
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
+task_t  * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t  * tasks, unsigned int * initialDate);
 
 /**
  * Orders the deliveries in the given list by due date.
@@ -71,6 +71,6 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate);
+task_t  * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t  * tasks, unsigned int * initialDate);
 
 #endif

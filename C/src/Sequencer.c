@@ -1,13 +1,11 @@
 #include <string.h>
 #include "headers/Sequencer.h"
-#include "headers/Solution.h"
-#include "headers/SolutionInfo.h"
 #include "FLAGS.h"
 
 unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks)
 {
 	unsigned int * machineEndTime = NULL;
-	MMALLOC(machineEndTime, machine_t , instance->machineCount, "sequencer_productionFinalTime");
+	MMALLOC(machineEndTime, machine_t, instance->machineCount, "sequencer_productionFinalTime");
 	for(machine_t i = 0; i < instance->machineCount; i++)
 		machineEndTime[i] = 0;
 	
@@ -20,20 +18,20 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 	return finalTime;
 }
 
-unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date)
+task_t  * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date)
 {
 	task_t * finalSequence = NULL;
 	if(taskCount == 1)
 	{
-		MMALLOC(finalSequence, task_t , 1, "sequencer_sequenceProductionPack");
+		MMALLOC(finalSequence, task_t, 1, "sequencer_sequenceProductionPack");
 		finalSequence = memcpy(finalSequence, tasks, sizeof(task_t));
 	}
 	else if(taskCount == 2) //Try every case.
 	{
 		unsigned int * sequence01 = NULL;
 		unsigned int * sequence10 = NULL;
-		MMALLOC(sequence01, unsigned int, taskCount, "sequencer_sequenceProductionPack");
-		MMALLOC(sequence10, unsigned int, taskCount, "sequencer_sequenceProductionPack");
+		MMALLOC(sequence01, task_t, taskCount, "sequencer_sequenceProductionPack");
+		MMALLOC(sequence10, task_t, taskCount, "sequencer_sequenceProductionPack");
 		sequence01[0] = tasks[0];
 		sequence01[1] = tasks[1];
 		sequence10[0] = tasks[1];
@@ -55,12 +53,12 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 	else if(taskCount == 3) //Try every case.
 	{
 		unsigned int nextSequenceID = 0;
-		unsigned int ** sequenceList = NULL;
-		MMALLOC(sequenceList, unsigned int *, 6, "sequencer_sequenceProductionPack");
+		task_t ** sequenceList = NULL;
+		MMALLOC(sequenceList, task_t  *, 6, "sequencer_sequenceProductionPack");
 		for(unsigned int i = 0; i < 3; i++) //For every position of the first task
 			for(unsigned int j = 0; j < 2; j++) //For every position of the second task.
 			{
-				MMALLOC(sequenceList[nextSequenceID], unsigned int, 3, "sequencer_sequenceProductionPack");
+				MMALLOC(sequenceList[nextSequenceID], task_t, 3, "sequencer_sequenceProductionPack");
 				
 				sequenceList[nextSequenceID][i] = tasks[0];
 				sequenceList[nextSequenceID][i == 0 ? (j + 1) : (i == 1 && j == 1 ? 2 : j)] = tasks[1];
@@ -69,34 +67,34 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 			}
 		
 		//Identify the best sequence.
-		unsigned int * bestSequence = NULL;
+		task_t  * bestSequence = NULL;
 		unsigned int bestTime = 0xFFFFFFFF;
-		for(unsigned int i = 0; i < 6; i++)
+		for(unsigned int sequenceIndex = 0; sequenceIndex < 6; sequenceIndex++)
 		{
-			unsigned int scoreSequence = sequencer_productionFinalTime(instance, taskCount, sequenceList[i]);
+			unsigned int scoreSequence = sequencer_productionFinalTime(instance, taskCount, sequenceList[sequenceIndex]);
 			if(bestSequence == NULL || scoreSequence < bestTime)
 			{
 				free(bestSequence);
-				bestSequence = sequenceList[i];
+				bestSequence = sequenceList[sequenceIndex];
 				bestTime = scoreSequence;
 			}
 			else
-				free(sequenceList[i]);
+				free(sequenceList[sequenceIndex]);
 		}
 		free(sequenceList);
 		finalSequence = bestSequence;
 	}
 	else if(taskCount > 3)
 	{
-		unsigned int * tempSequence;
-		MMALLOC(tempSequence, unsigned int, 2, "sequencer_sequenceProductionPack");
+		task_t  * tempSequence;
+		MMALLOC(tempSequence, task_t , 2, "sequencer_sequenceProductionPack");
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
 		unsigned int time = 0;
-		unsigned int * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, &time); //Get the best order of the 2 first tasks.
+		task_t  * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, &time); //Get the best order of the 2 first tasks.
 		free(tempSequence);
 		unsigned int inside = 2;
-		RREALLOC(bestSequence, unsigned int, taskCount, "sequencer_sequenceProductionPack");
+		RREALLOC(bestSequence, task_t , taskCount, "sequencer_sequenceProductionPack");
 		for(unsigned int taskID = 2; taskID < taskCount; taskID++) //Try to insert every task.
 		{
 			unsigned int bestScore = 0xFFFFFFFF; // Infinity
@@ -104,10 +102,10 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 			for(unsigned int insertPos = 0; insertPos <= taskID; insertPos++) //Try to insert at every position.
 			{
 				//Build temp sequence with the task inserted.
-				MMALLOC(tempSequence, unsigned int, inside + 1, "sequencer_sequenceProductionPack");
-				memcpy(tempSequence, bestSequence, sizeof(unsigned int) * insertPos);
+				MMALLOC(tempSequence, task_t , inside + 1, "sequencer_sequenceProductionPack");
+				memcpy(tempSequence, bestSequence, sizeof(task_t) * insertPos);
 				tempSequence[insertPos] = tasks[taskID];
-				memcpy(tempSequence + insertPos + 1, bestSequence + insertPos, sizeof(unsigned int) * (inside - insertPos));
+				memcpy(tempSequence + insertPos + 1, bestSequence + insertPos, sizeof(task_t) * (inside - insertPos));
 				
 				//Keep track of the best position.
 				unsigned int tempScore = sequencer_productionFinalTime(instance, inside + 1, tempSequence);
@@ -120,7 +118,7 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 			}
 			
 			//Set the task at the best found position.
-			memmove(bestSequence + bestPos + 1, bestSequence + bestPos, sizeof(unsigned int) * (inside - bestPos));
+			memmove(bestSequence + bestPos + 1, bestSequence + bestPos, sizeof(task_t) * (inside - bestPos));
 			bestSequence[bestPos] = taskID;
 			inside++;
 		}
@@ -130,37 +128,38 @@ unsigned int * sequencer_sequenceProductionPack(Instance * instance, unsigned in
 	return finalSequence;
 }
 
-unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, unsigned int * tasks, unsigned int * date)
+unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, task_t  * tasks, unsigned int * date)
 {
-	if(count == 0) return 0;
+	if(count == 0)
+		return 0;
 	unsigned int delay = 0;
 	unsigned int departure = instance->taskCount;
 	unsigned int arrival = tasks[0];
-	for(unsigned int i = 0; i <= count; i++)
+	for(unsigned int taskIndex = 0; taskIndex <= count; taskIndex++)
 	{
 		*date += instance_getDistance(instance, departure, arrival);
-		delay += (i < count ? MMAX(0, (int) *date - (int) instance_getDueDate(instance, tasks[i])) : 0); // If arrival point is the origin, no delay added
+		delay += (taskIndex < count ? MMAX(0, (int) *date - (int) instance_getDueDate(instance, tasks[taskIndex])) : 0); // If arrival point is the origin, no delay added
 		departure = arrival;
-		arrival = (i < count - 1 ? tasks[i + 1] : instance->taskCount);
+		arrival = (taskIndex < count - 1 ? tasks[taskIndex + 1] : instance->taskCount);
 	}
 	return delay;
 }
 
-unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
+task_t  * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t  * tasks, unsigned int * initialDate)
 {
 	unsigned int * sequence = NULL;
 	if(taskCount == 1)
 	{
-		MMALLOC(sequence, unsigned int, 1, "sequencer_sequenceDeliveriesPack");
-		sequence = memcpy(sequence, tasks, sizeof(unsigned int));
+		MMALLOC(sequence, task_t, 1, "sequencer_sequenceDeliveriesPack");
+		sequence = memcpy(sequence, tasks, sizeof(task_t ));
 		*initialDate += instance_getDistance(instance, instance->taskCount, tasks[0]) + instance_getDistance(instance, instance->taskCount, tasks[0]);
 	}
 	else if(taskCount == 2) // Try every case.
 	{
-		unsigned int * sequence01 = NULL;
-		unsigned int * sequence10 = NULL;
-		MMALLOC(sequence01, unsigned int, taskCount, "sequencer_sequenceDeliveriesPack");
-		MMALLOC(sequence10, unsigned int, taskCount, "sequencer_sequenceDeliveriesPack");
+		task_t  * sequence01 = NULL;
+		task_t  * sequence10 = NULL;
+		MMALLOC(sequence01, task_t , taskCount, "sequencer_sequenceDeliveriesPack");
+		MMALLOC(sequence10, task_t , taskCount, "sequencer_sequenceDeliveriesPack");
 		sequence01[0] = tasks[0];
 		sequence01[1] = tasks[1];
 		sequence10[0] = tasks[1];
@@ -187,18 +186,18 @@ unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned in
 	{
 		unsigned int seqID = 0;
 		unsigned int ** seqList = NULL;
-		MMALLOC(seqList, unsigned int *, 6, "sequencer_sequenceDeliveriesPack");
+		MMALLOC(seqList, task_t  *, 6, "sequencer_sequenceDeliveriesPack");
 		for(unsigned int i = 0; i < 3; i++)
 			for(unsigned int j = 0; j < 2; j++)
 			{
-				MMALLOC(seqList[seqID], unsigned int, 3, "sequencer_sequenceDeliveriesPack");
+				MMALLOC(seqList[seqID], task_t , 3, "sequencer_sequenceDeliveriesPack");
 				
 				seqList[seqID][i] = tasks[0];
 				seqList[seqID][i == 0 ? (j + 1) : (i == 1 && j == 1 ? 2 : j)] = tasks[1];
 				seqList[seqID][(i + j == 0) ? 2 : ((j == 1 && i == 0) ? 1 : ((i == 1 && j == 0) ? 2 : ((i == 1 && j == 1) ? 0 : ((i == 2 && j == 0) ? 1 : 0))))] = tasks[2];
 				seqID++;
 			}
-		unsigned int * best = NULL;
+		task_t  * best = NULL;
 		unsigned int bestTime = 0xFFFFFFFF; // Infinity
 		unsigned int tempDate;
 		unsigned int bestDate;
@@ -230,10 +229,10 @@ unsigned int * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned in
 	return sequence;
 }
 
-unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
+task_t  * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t  * tasks, unsigned int * initialDate)
 {
-	unsigned int * sequence = NULL;
-	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
+	task_t  * sequence = NULL;
+	MMALLOC(sequence, task_t , taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
 	Bool * explored = NULL; // If we already delivered this node, we shouldn't deliver it again
 	MMALLOC(explored, Bool, taskCount, "sequencer_sequenceDeliveriesNearestNeighbor");
 	for(unsigned int i = 0; i < taskCount; i++)
@@ -262,26 +261,23 @@ unsigned int * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, 
 	return sequence;
 }
 
-unsigned int * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, unsigned int * tasks, unsigned int * initialDate)
+task_t  * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t  * tasks, unsigned int * initialDate)
 {
-	unsigned int * sequence = NULL;
-	MMALLOC(sequence, unsigned int, taskCount, "sequencer_sequenceDeliveriesDueDate");
+	task_t  * sequence = NULL;
+	MMALLOC(sequence, task_t , taskCount, "sequencer_sequenceDeliveriesDueDate");
 	for(unsigned int i = 0; i < taskCount; i++)
 		sequence[i] = tasks[i];
 	
 	// Sorting by due date.
-	for(unsigned int i = 0; i < taskCount-1; i++)
-	{
-		for(unsigned int j = 0; j < taskCount-i-1; j++)
-		{
-			if(instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j+1]))
+	for(unsigned int i = 0; i < taskCount - 1; i++)
+		for(unsigned int j = 0; j < taskCount - i - 1; j++)
+			if(instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j + 1]))
 			{
-				unsigned int temp = sequence[j];
-				sequence[j] = sequence[j+1];
-				sequence[j+1] = temp;
+				task_t temp = sequence[j];
+				sequence[j] = sequence[j + 1];
+				sequence[j + 1] = temp;
 			}
-		}
-	}
+	
 	sequencer_deliveryDelay(instance, taskCount, sequence, initialDate);
 	return sequence;
 }
