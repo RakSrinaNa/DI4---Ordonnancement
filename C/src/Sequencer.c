@@ -4,19 +4,17 @@
 #include "headers/SolutionInfo.h"
 #include "FLAGS.h"
 
-
-
-unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const unsigned int * tasks)
+unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks)
 {
 	unsigned int * machineEndTime = NULL;
-	MMALLOC(machineEndTime, unsigned int, instance->machineCount, "sequencer_productionFinalTime");
-	for(unsigned int i = 0; i < instance->machineCount; i++)
+	MMALLOC(machineEndTime, machine_t , instance->machineCount, "sequencer_productionFinalTime");
+	for(machine_t i = 0; i < instance->machineCount; i++)
 		machineEndTime[i] = 0;
 	
 	//Update the ending time of a machine after the task i is processed.
-	for(unsigned int i = 0; i < count; i++)
-		for(unsigned int m = 0; m < instance->machineCount; m++)
-			machineEndTime[m] = MMAX(m == 0 ? 0 : machineEndTime[m - 1], machineEndTime[m]) + task_getMachineDuration(instance->tasks[tasks[i]], m);
+	for(unsigned int taskIndex = 0; taskIndex < count; taskIndex++)
+		for(machine_t m = 0; m < instance->machineCount; m++)
+			machineEndTime[m] = MMAX(m == 0 ? 0 : machineEndTime[m - 1], machineEndTime[m]) + task_getMachineDuration(instance->tasks[tasks[taskIndex]], m);
 	unsigned int finalTime = machineEndTime[instance->machineCount - 1];
 	free(machineEndTime);
 	return finalTime;

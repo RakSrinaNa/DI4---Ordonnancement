@@ -13,7 +13,7 @@ typedef struct _Pack
 {
 	Instance * instance; // Reference to the instance.
 	unsigned int taskCount; // Number of tasks in this pack.
-	unsigned int * deliveryOrder; // Ordered list of the IDs of the task representing the delivery order.
+	unsigned int * deliveries; // Ordered list of the IDs of the task representing the delivery order.
 } Pack;
 
 /**
@@ -40,7 +40,7 @@ void pack_destroy(Pack * pack);
  * @param task The task id to check.
  * @return True if the task is present, False otherwise.
  */
-Bool pack_hasTask(Pack * pack, unsigned int task);
+Bool pack_hasTask(Pack * pack, task_t task);
 
 /**
  * Gets the index of the given task inside a pack.
@@ -49,7 +49,7 @@ Bool pack_hasTask(Pack * pack, unsigned int task);
  * @param task The task id to get.
  * @return The index of the task inside the pack if it is present, -1 otherwise.
  */
-int pack_getTaskIndex(Pack * pack, unsigned int task);
+int pack_getTaskIndex(Pack * pack, task_t task);
 
 /**
  * Adds a task to the pack.
@@ -57,7 +57,7 @@ int pack_getTaskIndex(Pack * pack, unsigned int task);
  * @param pack The pack. Not null.
  * @param task The task id.
  */
-void pack_addTask(Pack * pack, unsigned int task);
+void pack_addTask(Pack * pack, task_t task);
 
 /**
  * Removes a task from the pack.
@@ -66,7 +66,7 @@ void pack_addTask(Pack * pack, unsigned int task);
  * @param task The task id to remove.
  * @return True if the pack is now empty, False otherwise
  */
-Bool pack_removeTask(Pack * pack, unsigned int task);
+Bool pack_removeTask(Pack * pack, task_t task);
 
 /**
  * Switches two deliveries in the delivery list.
@@ -76,7 +76,7 @@ Bool pack_removeTask(Pack * pack, unsigned int task);
  * @param delivery1 The first delivery id.
  * @param delivery2 The second delivery id.
  */
-void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int delivery2);
+void pack_switchDelivery(Pack * pack, task_t delivery1, task_t delivery2);
 
 /**
  * Moves a delivery in the delivery list.
@@ -86,7 +86,7 @@ void pack_switchDelivery(Pack * pack, unsigned int delivery1, unsigned int deliv
  * @param delivery The delivery id.
  * @param position The new position.
  */
-void pack_moveDelivery(Pack * pack, unsigned int delivery, unsigned int position);
+void pack_moveDelivery(Pack * pack, task_t delivery, task_t position);
 
 /**
  * Prints a pack.

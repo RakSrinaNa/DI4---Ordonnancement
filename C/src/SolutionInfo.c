@@ -37,7 +37,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 	{
 		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i-1]); // Storing information for the next production and the deliveries.
 		Pack * p = solution->packList[i];
-		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveryOrder, &(info->readyToDeliver[i]));
+		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveries, &(info->readyToDeliver[i]));
 		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(unsigned int)); // Copying the best sequence into the info production.
 		productionIndex += p->taskCount;
 		free(sequence);
@@ -55,7 +55,7 @@ void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInf
 		Pack * p = solution->packList[i];
 		truckReady = MMAX(truckReady, info->readyToDeliver[i]); // Wainting for the truck to come back and for the processes to be done.
 		truckReadyNow = truckReady;
-		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveryOrder, &truckReady); // Copying the best sequence into the info.
+		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveries, &truckReady); // Copying the best sequence into the info.
 		info->score += sequencer_deliveryDelay(solution->instance, solution->packList[i]->taskCount, info->deliveries[i], &truckReadyNow);
 	}
 }

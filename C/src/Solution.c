@@ -47,7 +47,7 @@ Solution * solution_copy(Solution * solution)
 	//Copy packs
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-			solution_moveTaskPack(copy, solution->packList[i]->deliveryOrder[j], i);
+			solution_moveTaskPack(copy, solution->packList[i]->deliveries[j], i);
 	return copy;
 }
 
@@ -60,7 +60,7 @@ int solution_getTaskPack(Solution * solution, unsigned int task)
 	}
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-			if(solution->packList[i]->deliveryOrder[j] == task)
+			if(solution->packList[i]->deliveries[j] == task)
 				return i;
 	fatalError("solution_getTask : Task %d exists, but is not in any pack.\n", task);
 	return -1;
@@ -115,8 +115,8 @@ void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned i
 	if(pack1 == pack2) return;
 	solutionInfo_destroy(solution, solution->info);
 	solution->info = NULL;
-	solution_moveTaskPack(solution, task1, pack2);
-	solution_moveTaskPack(solution, task2, pack1);
+	solution_moveTaskPack(solution, task1, (unsigned int) pack2);
+	solution_moveTaskPack(solution, task2, (unsigned int) pack1);
 }
 
 SolutionInfo * solution_eval(Solution * solution)

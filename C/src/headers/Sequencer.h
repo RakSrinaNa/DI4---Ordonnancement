@@ -12,7 +12,7 @@
  * @param tasks A table of the tasks.
  * @return The total delay to produce the sequence.
  */
-unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, unsigned int const * tasks);
+unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, task_t const * tasks);
 
 /**
  * Orders the production in the given list.
