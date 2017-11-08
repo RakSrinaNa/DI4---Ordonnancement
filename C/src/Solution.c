@@ -1,7 +1,6 @@
 #include <string.h>
 
 #include "headers/Solution.h"
-#include "headers/Sequencer.h"
 
 #include "FLAGS.h"
 
@@ -17,7 +16,7 @@ Solution * solution_create(Instance * instance)
 	//Create a pack and put every tasks inside it.
 	MMALLOC(solution->packList, Pack *, 1, "solution_create");
 	solution->packList[0] = pack_create(instance);
-	for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+	for(task_t i = 0; i < solution->instance->taskCount; i++)
 		pack_addTask(solution->packList[0], i);
 	solution->packCount++;
 	
@@ -51,7 +50,7 @@ Solution * solution_copy(Solution * solution)
 	return copy;
 }
 
-int solution_getTaskPack(Solution * solution, unsigned int task)
+int solution_getTaskPack(Solution * solution, task_t task)
 {
 	if(task >= solution->instance->taskCount)
 	{
@@ -66,7 +65,7 @@ int solution_getTaskPack(Solution * solution, unsigned int task)
 	return -1;
 }
 
-void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack)
+void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 {
 	int temp = solution_getTaskPack(solution, task);
 	if(temp == -1)
@@ -103,7 +102,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
 		warn("solution_setTaskPackIndex : Pack %d does not exist.\n", pack);
 }
 
-void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned int task2)
+void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 {
 	int pack1 = solution_getTaskPack(solution, task1);
 	int pack2 = solution_getTaskPack(solution, task2);
@@ -112,7 +111,8 @@ void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned i
 		warn("solution_switchTaskPack : Missing task (%d / %d).\n", task1, task2);
 		return;
 	}
-	if(pack1 == pack2) return;
+	if(pack1 == pack2)
+		return;
 	solutionInfo_destroy(solution, solution->info);
 	solution->info = NULL;
 	solution_moveTaskPack(solution, task1, (unsigned int) pack2);
@@ -153,22 +153,22 @@ void solution_save(Solution * solution, const char * filename)
 {
 	if(solution->info == NULL)
 		return;
-	FILE * f = fopen(filename, "w");
-	if(f != NULL)
+	FILE * file = fopen(filename, "w");
+	if(file != NULL)
 	{
-		fprintf(f, "%d %d %d\n", solution->instance->taskCount, solution->packCount, solution->info->score);
+		fprintf(file, "%d %d %d\n", solution->instance->taskCount, solution->packCount, solution->info->score);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-			fprintf(f, "%d ", solution->info->productionOrder[i]);
-		fprintf(f, "\n");
+			fprintf(file, "%d ", solution->info->productionOrder[i]);
+		fprintf(file, "\n");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			fprintf(f, "%d ", solution->packList[i]->taskCount);
+			fprintf(file, "%d ", solution->packList[i]->taskCount);
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
-				fprintf(f, "%d ", solution->info->deliveries[i][j]);
+				fprintf(file, "%d ", solution->info->deliveries[i][j]);
 			}
-			fprintf(f, "\n");
+			fprintf(file, "\n");
 		}
-		fclose(f);
+		fclose(file);
 	}
 }

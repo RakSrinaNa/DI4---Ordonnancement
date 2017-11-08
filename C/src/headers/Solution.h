@@ -47,7 +47,7 @@ Solution * solution_copy(Solution * solution);
  * @param task The task to search.
  * @return The index of the pack containing the task. If the task doesn't exist, returns -1. If the task exists, but is not in any pack, a fatal error is thrown (and it returns value -1).
  */
-int solution_getTaskPack(Solution * solution, unsigned int task);
+int solution_getTaskPack(Solution * solution, task_t task);
 
 /**
  * Assigns a pack to the given task.
@@ -58,7 +58,7 @@ int solution_getTaskPack(Solution * solution, unsigned int task);
  * @param task The task.
  * @param pack The pack to assign.
  */
-void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int pack);
+void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack);
 
 /**
  * Switches two tasks between two packs.
@@ -68,7 +68,7 @@ void solution_moveTaskPack(Solution * solution, unsigned int task, unsigned int 
  * @param task1 The first task.
  * @param task2 The second task.
  */
-void solution_switchTaskPack(Solution * solution, unsigned int task1, unsigned int task2);
+void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2);
 
 //TODO: unit
 /**
