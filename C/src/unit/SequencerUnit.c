@@ -132,7 +132,8 @@ void sequencerUnit_delivery()
 	
 	instance = parser_readInstanceFromFile("./unitResources/Instance4.txt");
 	
-	unsigned int * sol = sequencer_sequenceDeliveriesPack(instance, 0, NULL, 0);
+	startTime = 0;
+	unsigned int * sol = sequencer_sequenceDeliveriesPack(instance, 0, NULL, &startTime);
 	if(sol != NULL)
 		unit_error("Sequencer 7B: Bad delivery sequence");
 	
