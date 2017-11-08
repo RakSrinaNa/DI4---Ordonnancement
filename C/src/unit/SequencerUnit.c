@@ -160,15 +160,15 @@ void sequencerUnit_delivery()
 	free(sol);
 	
 	startTime = 0;
-	unsigned int tasks16[] = {1,2,3};
-	unsigned int cSol4[] = {1,2,3};
+	unsigned int tasks16[] = {1, 2, 3};
+	unsigned int cSol4[] = {1, 2, 3};
 	sol = sequencer_sequenceDeliveriesPack(instance, 3, tasks16, &startTime);
 	if(!unit_uintArrayEquals(cSol4, sol, 3) || startTime != 1005)
 		unit_error("Sequencer 11B: Bad delivery sequence, with car back at %d, expected %d", startTime, 1005);
 	free(sol);
 	
 	startTime = 95;
-	unsigned int cSol5[] = {1,2,3};
+	unsigned int cSol5[] = {1, 2, 3};
 	sol = sequencer_sequenceDeliveriesPack(instance, 3, tasks16, &startTime);
 	if(!unit_uintArrayEquals(cSol5, sol, 3) || startTime != 1100)
 		unit_error("Sequencer 12B: Bad delivery sequence, with car back at %d, expected %d", startTime, 1100);

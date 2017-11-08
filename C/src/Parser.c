@@ -46,7 +46,7 @@ Instance * parser_fillInstance(FILE * file, Instance * instance)
 		instance->tasks[i] = task_create(instance);
 	MMALLOC(instance->distancesMatrix, unsigned int*, instance->taskCount + 1, "parser_fillInstance");
 	for(task_t i = 0; i <= instance->taskCount; i++)
-		MMALLOC(instance->distancesMatrix[i], unsigned int, instance->taskCount + 1, "parser_fillInstance");
+	MMALLOC(instance->distancesMatrix[i], unsigned int, instance->taskCount + 1, "parser_fillInstance");
 	
 	//Parse the time on each machine for each task.
 	for(machine_t machineID = 0; machineID < instance->machineCount; machineID++)

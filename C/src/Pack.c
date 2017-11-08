@@ -115,7 +115,7 @@ void pack_print(Pack * pack)
 	{
 		printf("Pack : %d (", pack->taskCount);
 		for(task_t i = 0; i < pack->taskCount; i++)
-			printf(" T%d", pack->deliveries[i]+1);
+			printf(" T%d", pack->deliveries[i] + 1);
 		printf(" )");
 	}
 	else

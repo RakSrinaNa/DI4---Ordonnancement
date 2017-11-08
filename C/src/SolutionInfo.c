@@ -31,7 +31,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 {
 	SolutionInfo * info = solutionInfo_create(solution);
 	unsigned int productionIndex = 0;
-	task_t  * sequence;
+	task_t * sequence;
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i - 1]); // Storing information for the next production and the deliveries.
