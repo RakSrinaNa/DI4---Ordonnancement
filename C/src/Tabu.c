@@ -3,7 +3,7 @@
 Solution * tabu_solutionInit(Instance * instance)
 {
 	Solution * bestSolution = NULL;
-	unsigned int * sortedDueDates = instance_sortByDueDate(instance);
+	task_t * sortedDueDates = instance_sortByDueDate(instance);
 	unsigned int maxTasksPerPack = 1;
 	while(maxTasksPerPack <= instance->taskCount / 2) //Try every size of packs.
 	{
