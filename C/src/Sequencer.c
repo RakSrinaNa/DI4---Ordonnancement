@@ -16,7 +16,7 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 
 task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * machineEndTime)
 {
-	debugPrint("Ordering production for %d tasks at %d\n", taskCount);
+	debugPrint("Ordering production for %d tasks\n", taskCount);
 	task_t * finalSequence = NULL;
 	if(taskCount == 1)
 	{
