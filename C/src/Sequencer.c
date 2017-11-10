@@ -2,12 +2,12 @@
 #include "headers/Sequencer.h"
 #include "FLAGS.h"
 
-unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks)
+unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks, unsigned int * machineReady)
 {
 	unsigned int * machineEndTime = NULL;
 	MMALLOC(machineEndTime, machine_t, instance->machineCount, "sequencer_productionFinalTime");
 	for(machine_t i = 0; i < instance->machineCount; i++)
-		machineEndTime[i] = 0;
+		machineEndTime[i] = machineReady[i];
 	
 	//Update the ending time of a machine after the task i is processed.
 	for(unsigned int taskIndex = 0; taskIndex < count; taskIndex++)
@@ -19,8 +19,8 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 	return finalTime;
 }
 
-task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date)
-{
+task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * machineReady, unsigned int * date)
+{	
 	debugPrint("Ordering production for %d tasks at %d\n", taskCount, *date);
 	task_t * finalSequence = NULL;
 	if(taskCount == 1)
@@ -39,8 +39,8 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		sequence10[0] = tasks[1];
 		sequence10[1] = tasks[0];
 		
-		unsigned int score01 = sequencer_productionFinalTime(instance, taskCount, sequence01);
-		unsigned int score10 = sequencer_productionFinalTime(instance, taskCount, sequence10);
+		unsigned int score01 = sequencer_productionFinalTime(instance, taskCount, sequence01, machineReady);
+		unsigned int score10 = sequencer_productionFinalTime(instance, taskCount, sequence10, machineReady);
 		if(score01 <= score10)
 		{
 			finalSequence = sequence01;
@@ -73,7 +73,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		unsigned int bestTime = 0xFFFFFFFF;
 		for(unsigned int sequenceIndex = 0; sequenceIndex < 6; sequenceIndex++)
 		{
-			unsigned int scoreSequence = sequencer_productionFinalTime(instance, taskCount, sequenceList[sequenceIndex]);
+			unsigned int scoreSequence = sequencer_productionFinalTime(instance, taskCount, sequenceList[sequenceIndex], machineReady);
 			if(bestSequence == NULL || scoreSequence < bestTime)
 			{
 				free(bestSequence);
@@ -93,7 +93,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
 		unsigned int time = 0;
-		task_t * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, &time); //Get the best order of the 2 first tasks.
+		task_t * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, machineReady, &time); //Get the best order of the 2 first tasks.
 		free(tempSequence);
 		unsigned int inside = 2;
 		RREALLOC(bestSequence, task_t, taskCount, "sequencer_sequenceProductionPack");
@@ -110,7 +110,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 				memcpy(tempSequence + insertPos + 1, bestSequence + insertPos, sizeof(task_t) * (inside - insertPos));
 				
 				//Keep track of the best position.
-				unsigned int tempScore = sequencer_productionFinalTime(instance, inside + 1, tempSequence);
+				unsigned int tempScore = sequencer_productionFinalTime(instance, inside + 1, tempSequence, machineReady);
 				if(tempScore < bestScore)
 				{
 					bestScore = tempScore;
@@ -126,7 +126,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		}
 		finalSequence = bestSequence;
 	}
-	*date += sequencer_productionFinalTime(instance, taskCount, finalSequence);
+	*date += sequencer_productionFinalTime(instance, taskCount, finalSequence, machineReady);
 	return finalSequence;
 }
 

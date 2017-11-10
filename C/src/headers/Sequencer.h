@@ -10,9 +10,10 @@
  * @param instance The instance. Not null.
  * @param count The number of tasks.
  * @param tasks A table of the tasks.
+ * @param machineReady The times when the machines are ready.
  * @return The total delay to produce the sequence.
  */
-unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, task_t const * tasks);
+unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, task_t const * tasks, unsigned int * machineReady);
 
 /**
  * Orders the production in the given list.
@@ -24,7 +25,7 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * date);
+task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * machineReady, unsigned int * date);
 
 /**
  * Computes the total delay of this sequence.
