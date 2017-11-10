@@ -23,8 +23,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 file(GLOB base_SRC "src/prod/headers/*.h" "src/prod/*.c")
 file(GLOB test_SRC "src/unit/headers/*.h" "src/unit/*.c")
-filter_items(base_SRC "src/prod/MainTest.cpp")
-filter_items(base_SRC "src/prod/Main.cpp")
+filter_items(base_SRC "src/prod/MainTests.c")
+filter_items(base_SRC "src/prod/Main.c")
 
 set(SOURCE_FILES_PROD ${base_SRC} src/prod/FLAGS.h src/prod/Main.c)
 set(SOURCE_FILES_TEST ${base_SRC} src/prod/FLAGS.h src/prod/MainTests.c ${test_SRC})
