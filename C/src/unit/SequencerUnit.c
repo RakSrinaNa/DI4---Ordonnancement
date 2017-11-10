@@ -101,9 +101,9 @@ void sequencerUnit_production()
 		unit_error("Sequencer 7.1A: Bad sequence end times");
 	free(sol);
 	
-	endTimes[0] = 20;
-	endTimes[1] = 20;
-	endTimes[2] = 20;
+	endTimes[0] = 0;
+	endTimes[1] = 0;
+	endTimes[2] = 0;
 	validEndTimes[0] = 3;
 	validEndTimes[1] = 23;
 	validEndTimes[2] = 26;
