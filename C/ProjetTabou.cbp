@@ -8,6 +8,7 @@
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/ProjetTabou" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../C" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -22,6 +23,7 @@
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/ProjetTabou" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../C" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -38,6 +40,7 @@
 			</Target>
 			<Target title="Unit">
 				<Option output="bin/Debug/ProjetTabou" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../C" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -60,47 +63,53 @@
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
 		</Compiler>
-		<Unit filename="src/FLAGS.h" />
-		<Unit filename="src/Instance.c">
+		<Unit filename="src/prod/FLAGS.h" />
+		<Unit filename="src/prod/Instance.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Main.c">
+		<Unit filename="src/prod/Main.c">
+			<Option compilerVar="CC" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/prod/MainTests.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
+		</Unit>
+		<Unit filename="src/prod/Pack.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Pack.c">
+		<Unit filename="src/prod/Parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Parser.c">
+		<Unit filename="src/prod/Sequencer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Sequencer.c">
+		<Unit filename="src/prod/Solution.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Solution.c">
+		<Unit filename="src/prod/SolutionInfo.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/SolutionInfo.c">
+		<Unit filename="src/prod/Sort.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Sort.c">
+		<Unit filename="src/prod/Tabu.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Tabu.c">
+		<Unit filename="src/prod/Task.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Task.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/headers/Instance.h" />
-		<Unit filename="src/headers/Pack.h" />
-		<Unit filename="src/headers/Parser.h" />
-		<Unit filename="src/headers/Sequencer.h" />
-		<Unit filename="src/headers/Solution.h" />
-		<Unit filename="src/headers/SolutionInfo.h" />
-		<Unit filename="src/headers/Sort.h" />
-		<Unit filename="src/headers/Tabu.h" />
-		<Unit filename="src/headers/Task.h" />
-		<Unit filename="src/headers/Utils.h" />
+		<Unit filename="src/prod/headers/Instance.h" />
+		<Unit filename="src/prod/headers/Pack.h" />
+		<Unit filename="src/prod/headers/Parser.h" />
+		<Unit filename="src/prod/headers/Sequencer.h" />
+		<Unit filename="src/prod/headers/Solution.h" />
+		<Unit filename="src/prod/headers/SolutionInfo.h" />
+		<Unit filename="src/prod/headers/Sort.h" />
+		<Unit filename="src/prod/headers/Tabu.h" />
+		<Unit filename="src/prod/headers/Task.h" />
+		<Unit filename="src/prod/headers/Utils.h" />
 		<Unit filename="src/unit/InstanceUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>

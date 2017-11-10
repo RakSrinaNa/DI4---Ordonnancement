@@ -10,7 +10,6 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 		for(machine_t m = 0; m < instance->machineCount; m++)
 			machineEndTime[m] = MMAX(m == 0 ? 0 : machineEndTime[m - 1], machineEndTime[m]) + task_getMachineDuration(instance->tasks[tasks[taskIndex]], m);
 	unsigned int finalTime = machineEndTime[instance->machineCount - 1];
-	free(machineEndTime);
 	debugPrint("Production time for %d tasks is %d\n", count, finalTime);
 	return finalTime;
 }
@@ -116,12 +115,13 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 	}
 	else if(taskCount > 3)
 	{
-		task_t * tempSequence;
+		task_t * tempSequence = NULL;
 		MMALLOC(tempSequence, task_t, 2, "sequencer_sequenceProductionPack");
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
 		machine_t * machineReady = NULL;
-		MMALLOC(machineReady, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
+		machineReady = (machine_t *) malloc(instance->machineCount * sizeof(machine_t));
+		//MMALLOC(machineReady, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
 		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
 			machineReady[machineIndex] = machineEndTime[machineIndex];
 		task_t * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, machineReady); //Get the best order of the 2 first tasks.
@@ -157,6 +157,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 						bestMachineTime[machineIndex] = machineReady[machineIndex];
 				}
 				free(tempSequence);
+				tempSequence = NULL;
 			}
 			
 			//Set the task at the best found position.

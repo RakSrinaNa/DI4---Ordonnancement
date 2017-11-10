@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 	Solution * solution = solution_create(instance);
 	solution_eval(solution);
 	solution_print(solution);
-	solution_save(solution, "../Inputs/output1.txt");
+	solution_save(solution, "./Inputs/output1.txt");
 	instance_destroy(instance);
 	return 0;
 }
