@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include "headers/UnitUtils.h"
 #include "headers/ParserUnit.h"
 #include "headers/InstanceUnit.h"
 #include "headers/TaskUnit.h"
@@ -9,6 +8,7 @@
 #include "headers/SolutionUnit.h"
 #include "headers/SequencerUnit.h"
 #include "headers/SolutionInfoUnit.h"
+#include "../prod/headers/Utils.h"
 
 extern Bool UNIT_FAILED;
 extern Bool DEBUG;

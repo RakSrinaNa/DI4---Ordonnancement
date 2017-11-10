@@ -1,7 +1,8 @@
 #include "headers/PackUnit.h"
-#include "../headers/Pack.h"
 #include "headers/UnitUtils.h"
-#include "../headers/Parser.h"
+#include "../prod/headers/Instance.h"
+#include "../prod/headers/Parser.h"
+#include "../prod/headers/Pack.h"
 
 void packUnit()
 {

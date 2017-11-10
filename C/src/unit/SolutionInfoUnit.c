@@ -1,8 +1,8 @@
 #include "headers/SolutionInfoUnit.h"
-#include "../headers/Instance.h"
-#include "../headers/Parser.h"
-#include "../headers/SolutionInfo.h"
 #include "headers/UnitUtils.h"
+#include "../prod/headers/Instance.h"
+#include "../prod/headers/Parser.h"
+#include "../prod/headers/Solution.h"
 
 void solutionInfoUnit()
 {

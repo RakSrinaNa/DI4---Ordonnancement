@@ -1,8 +1,8 @@
 #include "headers/SequencerUnit.h"
-#include "../headers/Instance.h"
 #include "headers/UnitUtils.h"
-#include "../headers/Parser.h"
-#include "../headers/Sequencer.h"
+#include "../prod/headers/Instance.h"
+#include "../prod/headers/Parser.h"
+#include "../prod/headers/Sequencer.h"
 
 void sequencerUnit()
 {
