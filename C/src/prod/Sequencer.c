@@ -101,8 +101,10 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 				bestMachineTime = machineReadyList[sequenceIndex];
 			}
 			else
+			{
 				free(sequenceList[sequenceIndex]);
-			free(machineReadyList[sequenceIndex]);
+				free(machineReadyList[sequenceIndex]);
+			}
 		}
 		free(sequenceList);
 		for(unsigned int i = 0; i < instance->machineCount; i++)
