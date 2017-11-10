@@ -16,19 +16,20 @@ typedef struct _Task
 } Task;
 
 /**
+ * Creates a new task ready to be used.
+ *
+ * @param instance The parent instance. Not null.
+ * @return A new task.
+ * @remark Needs to be freed with task_destroy.
+ */
+Task * task_create(struct _Instance * instance);
+
+/**
  * Frees a task.
  *
  * @param task The task to free.
  */
 void task_destroy(Task * task);
-
-/**
- * Creates a new task ready to be used.
- *
- * @param instance The parent instance. Not null.
- * @return A new task.
- */
-Task * task_create(struct _Instance * instance);
 
 /**
  * Set the duration on a machine for a task.

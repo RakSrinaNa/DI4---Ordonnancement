@@ -2,12 +2,6 @@
 
 #include "headers/Task.h"
 
-void task_destroy(Task * task)
-{
-	free(task->machineDurations);
-	free(task);
-}
-
 Task * task_create(Instance * instance)
 {
 	Task * task;
@@ -16,13 +10,23 @@ Task * task_create(Instance * instance)
 	task->instance = instance;
 	task->dueDate = 0;
 	MMALLOC(task->machineDurations, unsigned int, instance->machineCount, "task_create");
+	debugPrint("Task created : %p\n", task);
 	return task;
+}
+
+void task_destroy(Task * task)
+{
+	if(task == NULL)
+		return;
+	free(task->machineDurations);
+	free(task);
+	debugPrint("Task destroyed : %p\n", task);
 }
 
 void task_setMachineDuration(Task * task, unsigned int machineID, unsigned int duration)
 {
 	if(machineID >= task->instance->machineCount)
-		warn("task_setMachineDuration : machine %d doesn't exist.", machineID);
+		warn("task_setMachineDuration : Machine %d doesn't exist.\n", machineID);
 	else
 		task->machineDurations[machineID] = duration;
 }
@@ -30,14 +34,17 @@ void task_setMachineDuration(Task * task, unsigned int machineID, unsigned int d
 unsigned int task_getMachineDuration(Task * task, unsigned int machineID)
 {
 	if(machineID > task->instance->machineCount)
-		fatalError("task_getMachineDuration: Error when getting machine duration, index out of range (machineID: %d).", machineID);
+		fatalError("task_getMachineDuration: Machine %d doesn't exist.\n", machineID);
 	return task->machineDurations[machineID];
 }
 
 void task_print(Task * task)
 {
-	printf("Due date: %d\nTimes: ", task->dueDate);
-	for(unsigned int i = 0; i < task->instance->machineCount; i++)
-		printf("%-6d", task_getMachineDuration(task, i));
-	printf("\n");
+	if(task != NULL)
+	{
+		printf("Due date: %d\nTimes: ", task->dueDate);
+		for(unsigned int i = 0; i < task->instance->machineCount; i++)
+			printf("%-6d", task_getMachineDuration(task, i));
+		printf("\n");
+	}
 }

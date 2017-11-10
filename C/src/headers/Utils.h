@@ -39,6 +39,9 @@ typedef enum
 	False = 0, True = 1
 } Bool;
 
+typedef unsigned int task_t;
+typedef unsigned int machine_t;
+
 /**
  * Warn in the console.
  *

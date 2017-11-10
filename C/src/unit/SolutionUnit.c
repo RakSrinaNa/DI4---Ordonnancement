@@ -53,7 +53,7 @@ void solutionUnit()
 		if(solution->packList[i]->taskCount != solutionCopy->packList[i]->taskCount)
 			unit_error("Solution 12.53: Bad copy delivery count");
 		
-		if(!unit_uintArrayEquals(solution->packList[i]->deliveryOrder, solutionCopy->packList[i]->deliveryOrder, solution->packList[i]->taskCount))
+		if(!unit_uintArrayEquals(solution->packList[i]->deliveries, solutionCopy->packList[i]->deliveries, solution->packList[i]->taskCount))
 			unit_error("Solution 12.54: Bad copy delivery order");
 	}
 	solution_destroy(solutionCopy);

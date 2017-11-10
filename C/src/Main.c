@@ -21,16 +21,18 @@ int main(int argc, char * argv[])
 		}
 		else if(strcmp(argv[1], "temp") == 0) // For internal testing.
 		{
-			filepath = "./unitResources/Instance2.txt";
+			//filepath = "./unitResources/Instance2.txt";
+			filepath = "../Inputs/input.txt";
 		}
 	}
 	
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
-	instance_print(instance);
+	//instance_print(instance);
 	Solution * solution = solution_create(instance);
+	solution_eval(solution);
 	solution_print(solution);
-	//TODO: Compute solution
+	solution_save(solution, "../Inputs/output1.txt");
 	instance_destroy(instance);
 	return 0;
 }

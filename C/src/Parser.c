@@ -9,6 +9,7 @@ extern Bool DEBUG;
 
 Instance * parser_readInstanceFromFile(char * filepath)
 {
+	debugPrint("Parsing file %s\n", filepath);
 	FILE * file = fopen(filepath, "r");
 	if(file == NULL)
 	{
@@ -23,7 +24,7 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	
 	if(DEBUG)
 	{
-		debugPrint("Parsed instance:");
+		debugPrint("Parsed instance :\n");
 		instance_print(instance);
 	}
 	
@@ -36,24 +37,24 @@ Instance * parser_fillInstance(FILE * file, Instance * instance)
 	char * currentLine = parser_readLine(file);
 	int * currentLineValues = parser_lineToIntArray(currentLine, 2);
 	free(currentLine);
-	instance->machineCount = (unsigned int) currentLineValues[0];
-	instance->taskCount = (unsigned int) currentLineValues[1];
+	instance->machineCount = (machine_t) currentLineValues[0];
+	instance->taskCount = (task_t) currentLineValues[1];
 	free(currentLineValues);
 	
 	//Create tasks & distance matrix.
 	MMALLOC(instance->tasks, Task*, instance->taskCount, "parser_fillInstance");
-	for(unsigned int i = 0; i < instance->taskCount; i++)
+	for(task_t i = 0; i < instance->taskCount; i++)
 		instance->tasks[i] = task_create(instance);
 	MMALLOC(instance->distancesMatrix, unsigned int*, instance->taskCount + 1, "parser_fillInstance");
-	for(unsigned int i = 0; i <= instance->taskCount; i++)
+	for(task_t i = 0; i <= instance->taskCount; i++)
 	MMALLOC(instance->distancesMatrix[i], unsigned int, instance->taskCount + 1, "parser_fillInstance");
 	
 	//Parse the time on each machine for each task.
-	for(unsigned int machineID = 0; machineID < instance->machineCount; machineID++)
+	for(machine_t machineID = 0; machineID < instance->machineCount; machineID++)
 	{
 		currentLine = parser_readLine(file);
 		currentLineValues = parser_lineToIntArray(currentLine, instance->taskCount);
-		for(unsigned int taskID = 0; taskID < instance->taskCount; taskID++)
+		for(task_t taskID = 0; taskID < instance->taskCount; taskID++)
 			task_setMachineDuration(instance->tasks[taskID], machineID, (unsigned int) currentLineValues[taskID]);
 		free(currentLine);
 		free(currentLineValues);
@@ -62,17 +63,17 @@ Instance * parser_fillInstance(FILE * file, Instance * instance)
 	//Parse the due date for each task.
 	currentLine = parser_readLine(file);
 	currentLineValues = parser_lineToIntArray(currentLine, instance->taskCount);
-	for(unsigned int taskID = 0; taskID < instance->taskCount; taskID++)
+	for(task_t taskID = 0; taskID < instance->taskCount; taskID++)
 		task_setDueDate(instance->tasks[taskID], (unsigned int) currentLineValues[taskID]);
 	free(currentLine);
 	free(currentLineValues);
 	
 	//Parse the distance matrix.
-	for(unsigned int i = 0; i <= instance->taskCount; i++)
+	for(task_t i = 0; i <= instance->taskCount; i++)
 	{
 		currentLine = parser_readLine(file);
 		currentLineValues = parser_lineToIntArray(currentLine, instance->taskCount + 1);
-		for(unsigned int j = 0; j <= instance->taskCount; j++)
+		for(task_t j = 0; j <= instance->taskCount; j++)
 			instance_setDistance(instance, i, j, (unsigned int) currentLineValues[j]);
 		free(currentLine);
 		free(currentLineValues);

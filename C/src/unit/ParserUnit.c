@@ -12,7 +12,7 @@ void parserUnit()
 		unit_error("Parser 2: Wrong due date.");
 	if(task_getMachineDuration(instance1->tasks[0], 0) != 3 || task_getMachineDuration(instance1->tasks[1], 0) != 5)
 		unit_error("Parser 3: Wrong machine duration.");
-	unsigned int correctMatrix1[3][3] = {{0,5,6},{5,0,9},{6,9,0}};
+	unsigned int correctMatrix1[3][3] = {{0, 5, 6}, {5, 0, 9}, {6, 9, 0}};
 	for(unsigned int i = 0; i < 3; i++)
 		if(!unit_uintArrayEquals(correctMatrix1[i], instance1->distancesMatrix[i], 3))
 			unit_error("Parser 4: Wrong distance matrix.");
@@ -29,7 +29,7 @@ void parserUnit()
 		unit_error("Parser 7.2: Wrong machine duration.");
 	if(task_getMachineDuration(instance2->tasks[0], 2) != 11 || task_getMachineDuration(instance2->tasks[1], 2) != 12 || task_getMachineDuration(instance2->tasks[2], 2) != 13 || task_getMachineDuration(instance2->tasks[3], 2) != 14 || task_getMachineDuration(instance2->tasks[4], 2) != 15)
 		unit_error("Parser 7.3: Wrong machine duration.");
-	unsigned int correctMatrix2[6][6] = {{0,1,2,3,4,5},{1,0,2,3,4,5},{2,2,0,3,4,5},{3,3,3,0,4,5},{4,4,4,4,0,5},{5,5,5,5,5,0}};
+	unsigned int correctMatrix2[6][6] = {{0, 1, 2, 3, 4, 5}, {1, 0, 2, 3, 4, 5}, {2, 2, 0, 3, 4, 5}, {3, 3, 3, 0, 4, 5}, {4, 4, 4, 4, 0, 5}, {5, 5, 5, 5, 5, 0}};
 	for(unsigned int i = 0; i < 6; i++)
 		if(!unit_uintArrayEquals(correctMatrix2[i], instance2->distancesMatrix[i], 3))
 			unit_error("Parser 8: Wrong distance matrix.");

@@ -24,7 +24,7 @@ void packUnit()
 		unit_error("Pack 3: Added task is not present");
 	
 	unsigned int correctOrder1[] = {0};
-	if(!unit_uintArrayEquals(correctOrder1, pack->deliveryOrder, 1))
+	if(!unit_uintArrayEquals(correctOrder1, pack->deliveries, 1))
 		unit_error("Pack 4: Wrong array order");
 	
 	pack_addTask(pack, 2);
@@ -33,7 +33,7 @@ void packUnit()
 		unit_error("Pack 5: Added task is not present");
 	
 	unsigned int correctOrder2[] = {0, 2, 1};
-	if(!unit_uintArrayEquals(correctOrder2, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder2, pack->deliveries, 3))
 		unit_error("Pack 6: Wrong array order");
 	
 	pack_addTask(pack, 9999999);
@@ -42,43 +42,43 @@ void packUnit()
 	
 	pack_switchDelivery(pack, 0, 1);
 	unsigned int correctOrder3[] = {1, 2, 0};
-	if(!unit_uintArrayEquals(correctOrder3, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder3, pack->deliveries, 3))
 		unit_error("Pack 8: Bad switch");
 	
 	pack_switchDelivery(pack, 99, 2);
-	if(!unit_uintArrayEquals(correctOrder3, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder3, pack->deliveries, 3))
 		unit_error("Pack 9: Bad switch");
 	
 	pack_moveDelivery(pack, 1, 1);
 	unsigned int correctOrder4[] = {2, 1, 0};
-	if(!unit_uintArrayEquals(correctOrder4, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder4, pack->deliveries, 3))
 		unit_error("Pack 10: Bad move forward");
 	
 	pack_moveDelivery(pack, 0, 0);
 	unsigned int correctOrder5[] = {0, 2, 1};
-	if(!unit_uintArrayEquals(correctOrder5, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder5, pack->deliveries, 3))
 		unit_error("Pack 11: Bad move backward");
 	
 	if(pack_getTaskIndex(pack, 0) != 0 || pack_getTaskIndex(pack, 2) != 1 || pack_getTaskIndex(pack, 1) != 2)
 		unit_error("Pack: 11.5: Bad index");
 	
 	pack_moveDelivery(pack, 99, 0);
-	if(!unit_uintArrayEquals(correctOrder5, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder5, pack->deliveries, 3))
 		unit_error("Pack 12: Bad move non-existing task");
 	
 	pack_moveDelivery(pack, 0, 99);
 	unsigned int correctOrder6[] = {2, 1, 0};
-	if(!unit_uintArrayEquals(correctOrder6, pack->deliveryOrder, 3))
+	if(!unit_uintArrayEquals(correctOrder6, pack->deliveries, 3))
 		unit_error("Pack 13: Bad move forward");
 	
 	pack_removeTask(pack, 1);
 	unsigned int correctOrder7[] = {2, 0};
-	if(!unit_uintArrayEquals(correctOrder7, pack->deliveryOrder, 2))
+	if(!unit_uintArrayEquals(correctOrder7, pack->deliveries, 2))
 		unit_error("Pack 14: Bad delete");
 	
 	pack_removeTask(pack, 2);
 	unsigned int correctOrder8[] = {0};
-	if(!unit_uintArrayEquals(correctOrder8, pack->deliveryOrder, 1))
+	if(!unit_uintArrayEquals(correctOrder8, pack->deliveries, 1))
 		unit_error("Pack 15: Bad delete");
 	
 	pack_destroy(pack);

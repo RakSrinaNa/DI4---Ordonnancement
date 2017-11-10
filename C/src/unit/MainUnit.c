@@ -8,13 +8,14 @@
 #include "headers/PackUnit.h"
 #include "headers/SolutionUnit.h"
 #include "headers/SequencerUnit.h"
+#include "headers/SolutionInfoUnit.h"
 
 extern Bool UNIT_FAILED;
 extern Bool DEBUG;
 
 int mainUnit()
 {
-	DEBUG = False;
+	//DEBUG = False;
 	
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
@@ -31,6 +32,9 @@ int mainUnit()
 	
 	printf("UNIT: Executing Pack tests...\n");
 	packUnit();
+	printf("UNIT: OK\n");
+	printf("UNIT: Executing SolutionInfo tests...\n");
+	solutionInfoUnit();
 	printf("UNIT: OK\n");
 	printf("UNIT: Executing Solution tests...\n");
 	solutionUnit();
