@@ -22,6 +22,7 @@ typedef struct _SolutionInfo
  * @param solution The solution. Not null.
  * @return A new info.
  * @remark Needs to be freed with solutionInfo_destroy.
+ * @remark Doesn't initialize info.deliveries ; needing to use solutionInfo_deliveryOrder() before freeing or printing.
  */
 SolutionInfo * solutionInfo_create(struct _Solution * solution);
 
