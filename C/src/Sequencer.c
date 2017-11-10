@@ -2,13 +2,8 @@
 #include "headers/Sequencer.h"
 #include "FLAGS.h"
 
-unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks, unsigned int * machineReady)
+unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks, unsigned int * machineEndTime)
 {
-	unsigned int * machineEndTime = NULL;
-	MMALLOC(machineEndTime, machine_t, instance->machineCount, "sequencer_productionFinalTime");
-	for(machine_t i = 0; i < instance->machineCount; i++)
-		machineEndTime[i] = machineReady[i];
-	
 	//Update the ending time of a machine after the task i is processed.
 	for(unsigned int taskIndex = 0; taskIndex < count; taskIndex++)
 		for(machine_t m = 0; m < instance->machineCount; m++)
@@ -19,14 +14,15 @@ unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int cou
 	return finalTime;
 }
 
-task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * machineReady, unsigned int * date)
-{	
-	debugPrint("Ordering production for %d tasks at %d\n", taskCount, *date);
+task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * machineEndTime)
+{
+	debugPrint("Ordering production for %d tasks at %d\n", taskCount);
 	task_t * finalSequence = NULL;
 	if(taskCount == 1)
 	{
 		MMALLOC(finalSequence, task_t, 1, "sequencer_sequenceProductionPack");
 		finalSequence = memcpy(finalSequence, tasks, sizeof(task_t));
+		sequencer_productionFinalTime(instance, taskCount, finalSequence, machineEndTime);
 	}
 	else if(taskCount == 2) //Try every case.
 	{
@@ -39,28 +35,47 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		sequence10[0] = tasks[1];
 		sequence10[1] = tasks[0];
 		
-		unsigned int score01 = sequencer_productionFinalTime(instance, taskCount, sequence01, machineReady);
-		unsigned int score10 = sequencer_productionFinalTime(instance, taskCount, sequence10, machineReady);
+		machine_t * machineReady01 = NULL;
+		MMALLOC(machineReady01, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
+		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+			machineReady01[machineIndex] = machineEndTime[machineIndex];
+		machine_t * machineReady10 = NULL;
+		MMALLOC(machineReady10, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
+		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+			machineReady10[machineIndex] = machineEndTime[machineIndex];
+		
+		unsigned int score01 = sequencer_productionFinalTime(instance, taskCount, sequence01, machineReady01);
+		unsigned int score10 = sequencer_productionFinalTime(instance, taskCount, sequence10, machineReady10);
 		if(score01 <= score10)
 		{
 			finalSequence = sequence01;
 			free(sequence10);
+			for(machine_t machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+				machineEndTime[machineIndex] = machineReady01[machineIndex];
 		}
 		else
 		{
 			finalSequence = sequence10;
 			free(sequence01);
+			for(machine_t machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+				machineEndTime[machineIndex] = machineReady10[machineIndex];
 		}
+		free(machineReady01);
+		free(machineReady10);
 	}
 	else if(taskCount == 3) //Try every case.
 	{
 		unsigned int nextSequenceID = 0;
 		task_t ** sequenceList = NULL;
-		MMALLOC(sequenceList, task_t  *, 6, "sequencer_sequenceProductionPack");
+		MMALLOC(sequenceList, task_t *, 6, "sequencer_sequenceProductionPack");
+		machine_t ** machineReadyList = NULL;
+		MMALLOC(machineReadyList, machine_t *, 6, "sequencer_sequenceProductionPack");
+		
 		for(unsigned int i = 0; i < 3; i++) //For every position of the first task
 			for(unsigned int j = 0; j < 2; j++) //For every position of the second task.
 			{
 				MMALLOC(sequenceList[nextSequenceID], task_t, 3, "sequencer_sequenceProductionPack");
+				MMALLOC(machineReadyList[nextSequenceID], machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
 				
 				sequenceList[nextSequenceID][i] = tasks[0];
 				sequenceList[nextSequenceID][i == 0 ? (j + 1) : (i == 1 && j == 1 ? 2 : j)] = tasks[1];
@@ -70,20 +85,32 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		
 		//Identify the best sequence.
 		task_t * bestSequence = NULL;
+		machine_t * bestMachineTime = NULL;
 		unsigned int bestTime = 0xFFFFFFFF;
 		for(unsigned int sequenceIndex = 0; sequenceIndex < 6; sequenceIndex++)
 		{
-			unsigned int scoreSequence = sequencer_productionFinalTime(instance, taskCount, sequenceList[sequenceIndex], machineReady);
+			for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+				machineReadyList[sequenceIndex][machineIndex] = machineEndTime[machineIndex];
+			unsigned int scoreSequence = sequencer_productionFinalTime(instance, taskCount, sequenceList[sequenceIndex], machineReadyList[sequenceIndex]);
 			if(bestSequence == NULL || scoreSequence < bestTime)
 			{
 				free(bestSequence);
 				bestSequence = sequenceList[sequenceIndex];
 				bestTime = scoreSequence;
+				free(bestMachineTime);
+				bestMachineTime = machineReadyList[sequenceIndex];
 			}
 			else
 				free(sequenceList[sequenceIndex]);
+				free(machineReadyList[sequenceIndex]);
 		}
 		free(sequenceList);
+		for(unsigned int i = 0; i < instance->machineCount; i++)
+			free(machineReadyList[i]);
+		free(machineReadyList);
+		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+			machineEndTime[machineIndex] = bestMachineTime[machineIndex];
+		free(bestMachineTime);
 		finalSequence = bestSequence;
 	}
 	else if(taskCount > 3)
@@ -92,11 +119,18 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		MMALLOC(tempSequence, task_t, 2, "sequencer_sequenceProductionPack");
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
-		unsigned int time = 0;
-		task_t * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, machineReady, &time); //Get the best order of the 2 first tasks.
+		machine_t * machineReady = NULL;
+		MMALLOC(machineReady, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
+		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+			machineReady[machineIndex] = machineEndTime[machineIndex];
+		task_t * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, machineReady); //Get the best order of the 2 first tasks.
 		free(tempSequence);
 		unsigned int inside = 2;
 		RREALLOC(bestSequence, task_t, taskCount, "sequencer_sequenceProductionPack");
+		
+		machine_t * bestMachineTime = NULL;
+		MMALLOC(bestMachineTime, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
+		
 		for(unsigned int taskID = 2; taskID < taskCount; taskID++) //Try to insert every task.
 		{
 			unsigned int bestScore = 0xFFFFFFFF; // Infinity
@@ -109,12 +143,17 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 				tempSequence[insertPos] = tasks[taskID];
 				memcpy(tempSequence + insertPos + 1, bestSequence + insertPos, sizeof(task_t) * (inside - insertPos));
 				
+				for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+					machineReady[machineIndex] = machineEndTime[machineIndex];
+				
 				//Keep track of the best position.
 				unsigned int tempScore = sequencer_productionFinalTime(instance, inside + 1, tempSequence, machineReady);
 				if(tempScore < bestScore)
 				{
 					bestScore = tempScore;
 					bestPos = insertPos;
+					for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+						bestMachineTime[machineIndex] = machineReady[machineIndex];
 				}
 				free(tempSequence);
 			}
@@ -125,8 +164,11 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 			inside++;
 		}
 		finalSequence = bestSequence;
+		free(machineReady);
+		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
+			machineEndTime[machineIndex] = bestMachineTime[machineIndex];
+		free(bestMachineTime);
 	}
-	*date += sequencer_productionFinalTime(instance, taskCount, finalSequence, machineReady);
 	return finalSequence;
 }
 
