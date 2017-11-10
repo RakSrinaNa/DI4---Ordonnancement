@@ -23,7 +23,7 @@ int mainUnit()
 	char *linebreak = "-------------------------------------------------------------------------\n";
 	char *linebreakbreak = "\n-------------------------------------------------------------------------\n";
 
-	printf(linebreakbreak);
+	printf("%s", linebreakbreak);
 	printf("UNIT: Executing Task tests...\n");
 	taskUnit();
 	printf("UNIT: OK\n");
