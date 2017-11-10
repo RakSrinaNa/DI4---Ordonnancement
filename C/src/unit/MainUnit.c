@@ -20,29 +20,44 @@ int mainUnit()
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
+
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing Task tests...\n");
 	taskUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing Instance tests...\n");
 	instanceUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing Parser tests...\n");
 	parserUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
 	
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing Pack tests...\n");
 	packUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing SolutionInfo tests...\n");
 	solutionInfoUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing Solution tests...\n");
 	solutionUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
 	
+	printf("\n-------------------------------------------------------------------------\n");
 	printf("UNIT: Executing Sequencer tests...\n");
 	sequencerUnit();
 	printf("UNIT: OK\n");
+	printf("-------------------------------------------------------------------------\n");
 	
 	if(UNIT_FAILED)
 		exit(EXIT_FAILURE);
