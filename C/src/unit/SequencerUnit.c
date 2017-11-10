@@ -46,44 +46,79 @@ void sequencerUnit_production()
 	// TODO : sequenceProductionPack
 	// TODO : &endTime check value
 	
-	unsigned int endTime = 45;
+	unsigned int endTimes[] = {0, 0, 0};
+	unsigned int validEndTimes[] = {23, 25, 31};
 	unsigned int cSol[] = {0, 1, 2};
-	unsigned int * sol = sequencer_sequenceProductionPack(instance, 3, tasks, &endTime);
-	if(!unit_uintArrayEquals(cSol, sol, 3) || endTime != 76)
-		unit_error("Sequencer 7A: Bad sequence process, ending time at %d, expected %d", endTime, 76);
+	unsigned int * sol = sequencer_sequenceProductionPack(instance, 3, tasks, endTimes);
+	if(!unit_uintArrayEquals(cSol, sol, 3))
+		unit_error("Sequencer 7A: Bad sequence process");
+	if(!unit_uintArrayEquals(validEndTimes, endTimes, 3))
+		unit_error("Sequencer 7.1A: Bad sequence end times");
 	free(sol);
 	
+	endTimes[0] = 20;
+	endTimes[1] = 20;
+	endTimes[2] = 20;
+	validEndTimes[0] = 3;
+	validEndTimes[1] = 23;
+	validEndTimes[2] = 26;
 	unsigned int tasks7[] = {0, 1};
 	unsigned int cSol2[] = {0, 1};
-	sol = sequencer_sequenceProductionPack(instance, 2, tasks7, &endTime);
+	sol = sequencer_sequenceProductionPack(instance, 2, tasks7, endTimes);
 	if(!unit_uintArrayEquals(cSol2, sol, 2))
 		unit_error("Sequencer 8A: Bad sequence process");
+	if(!unit_uintArrayEquals(validEndTimes, endTimes, 3))
+		unit_error("Sequencer 8.1A: Bad sequence end times");
 	free(sol);
 	
+	endTimes[0] = 10;
+	endTimes[1] = 20;
+	endTimes[2] = 5;
+	validEndTimes[0] = 12;
+	validEndTimes[1] = 26;
+	validEndTimes[2] = 34;
 	unsigned int tasks7_2[] = {0};
 	unsigned int cSol2_2[] = {0};
-	sol = sequencer_sequenceProductionPack(instance, 1, tasks7_2, &endTime);
+	sol = sequencer_sequenceProductionPack(instance, 1, tasks7_2, endTimes);
 	if(!unit_uintArrayEquals(cSol2_2, sol, 1))
 		unit_error("Sequencer 8.5A: Bad sequence process");
+	if(!unit_uintArrayEquals(validEndTimes, endTimes, 3))
+		unit_error("Sequencer 8.6A: Bad sequence end times");
 	free(sol);
 	
-	sol = sequencer_sequenceProductionPack(instance, 0, NULL, &endTime);
+	sol = sequencer_sequenceProductionPack(instance, 0, NULL, NULL);
 	if(sol != NULL)
 		unit_error("Sequencer 8.75A: Bad sequence process");
 	free(sol);
 	
+	endTimes[0] = 0;
+	endTimes[1] = 0;
+	endTimes[2] = 0;
+	validEndTimes[0] = 31;
+	validEndTimes[1] = 32;
+	validEndTimes[2] = 33;
 	unsigned int tasks8[] = {0, 1, 2, 3};
 	unsigned int cSol3[] = {0, 1, 2, 3};
-	sol = sequencer_sequenceProductionPack(instance, 4, tasks8, &endTime);
+	sol = sequencer_sequenceProductionPack(instance, 4, tasks8, endTimes);
 	if(!unit_uintArrayEquals(cSol3, sol, 4))
 		unit_error("Sequencer 9A: Bad sequence process");
+	if(!unit_uintArrayEquals(validEndTimes, endTimes, 3))
+		unit_error("Sequencer 9.1A: Bad sequence end times");
 	free(sol);
 	
 	instance->tasks[3]->machineDurations[0] = 0;
+	endTimes[0] = 0;
+	endTimes[1] = 0;
+	endTimes[2] = 0;
+	validEndTimes[0] = 23;
+	validEndTimes[1] = 25;
+	validEndTimes[2] = 31;
 	unsigned int cSol4[] = {3, 0, 1, 2};
-	sol = sequencer_sequenceProductionPack(instance, 4, tasks8, &endTime);
+	sol = sequencer_sequenceProductionPack(instance, 4, tasks8, endTimes);
 	if(!unit_uintArrayEquals(cSol4, sol, 4))
 		unit_error("Sequencer 10A: Bad sequence process");
+	if(!unit_uintArrayEquals(validEndTimes, endTimes, 3))
+		unit_error("Sequencer 10.1A: Bad sequence end times");
 	free(sol);
 	
 	instance_destroy(instance);
