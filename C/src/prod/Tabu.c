@@ -1,4 +1,5 @@
-#include "headers/Tabu.h"
+#include "headers/Instance.h"
+#include "headers/Solution.h"
 
 Solution * tabu_solutionInit(Instance * instance)
 {

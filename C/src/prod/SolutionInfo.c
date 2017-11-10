@@ -1,4 +1,4 @@
-#include "headers/SolutionInfo.h"
+#include "headers/Sequencer.h"
 
 #include <string.h>
 
@@ -35,16 +35,22 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 	SolutionInfo * info = solutionInfo_create(solution);
 	unsigned int productionIndex = 0;
 	task_t * sequence;
+	machine_t * machineReady = NULL;
+	MMALLOC(machineReady, machine_t, solution->instance->machineCount, "sequencer_sequenceProductionPack");
+	for(unsigned int machineIndex = 0; machineIndex < solution->instance->machineCount; machineIndex++)
+		machineReady[machineIndex] = 0;
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		debugPrint("\tProcessing pack %d\n", i);
 		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i - 1]); // Storing information for the next production and the deliveries.
 		Pack * p = solution->packList[i];
-		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveries, &(info->readyToDeliver[i]));
+		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveries, machineReady);
 		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(task_t)); // Copying the best sequence into the info production.
 		productionIndex += p->taskCount;
 		free(sequence);
+		info->readyToDeliver[i] = machineReady[solution->instance->machineCount - 1];
 	}
+	free(machineReady);
 	return info;
 }
 

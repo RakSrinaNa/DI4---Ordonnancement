@@ -1,4 +1,5 @@
 #include "headers/UnitUtils.h"
+#include "../prod/headers/Utils.h"
 
 Bool UNIT_FAILED = False;
 
@@ -10,6 +11,7 @@ void unit_error(char * str, ...)
 	va_start(args, str);
 	fprintf(stderr, "\nFATAL UNIT: ");
 	vfprintf(stderr, str, args);
+	fprintf(stderr, "\n");
 	va_end(args);
 	//unit_breakpoint();
 	UNIT_FAILED = True;

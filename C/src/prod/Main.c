@@ -2,8 +2,6 @@
 #include <stdlib.h>
 
 #include "headers/Utils.h"
-#include "unit/headers/MainUnit.h"
-#include "headers/Instance.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 
@@ -11,28 +9,16 @@ Bool DEBUG = True;
 
 int main(int argc, char * argv[])
 {
+	UNUSED(argc);
+	UNUSED(argv);
 	char * filepath = "./Input.txt";
-	if(argc == 2) //Testings and stuff.
-	{
-		if(strcmp(argv[1], "test") == 0) // Used to start unit tests.
-		{
-			mainUnit();
-			exit(EXIT_SUCCESS);
-		}
-		else if(strcmp(argv[1], "temp") == 0) // For internal testing.
-		{
-			//filepath = "./unitResources/Instance2.txt";
-			filepath = "../Inputs/input.txt";
-		}
-	}
-	
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	//instance_print(instance);
 	Solution * solution = solution_create(instance);
 	solution_eval(solution);
 	solution_print(solution);
-	solution_save(solution, "../Inputs/output1.txt");
+	solution_save(solution, "./Inputs/output1.txt");
 	instance_destroy(instance);
 	return 0;
 }

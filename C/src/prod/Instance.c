@@ -1,7 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-
 #include "headers/Instance.h"
 
 Instance * instance_create()
@@ -35,7 +34,6 @@ void instance_destroy(Instance * instance)
 	
 	free(instance);
 	debugPrint("Instance destroyed : %p\n", instance);
-	
 }
 
 unsigned int instance_getDueDate(Instance * instance, task_t task)

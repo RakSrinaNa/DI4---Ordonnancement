@@ -1,8 +1,7 @@
 #include <string.h>
 
-#include "headers/Solution.h"
-
 #include "FLAGS.h"
+#include "headers/Solution.h"
 
 Solution * solution_create(Instance * instance)
 {

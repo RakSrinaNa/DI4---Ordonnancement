@@ -70,7 +70,6 @@ void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack);
  */
 void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2);
 
-//TODO: unit
 /**
  * Evaluates the score of the given solution and saves it in the info.
  * If the score has already been computed and CACHED_SCORE is set to 1, the score is not computed again.
