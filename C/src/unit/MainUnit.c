@@ -15,7 +15,7 @@ extern Bool DEBUG;
 
 int mainUnit()
 {
-	DEBUG = False;
+	//DEBUG = False;
 	
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
