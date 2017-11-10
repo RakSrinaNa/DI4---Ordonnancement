@@ -9,6 +9,8 @@ Bool DEBUG = True;
 
 int main(int argc, char * argv[])
 {
+	UNUSED(argc);
+	UNUSED(argv);
 	char * filepath = "./Input.txt";
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);

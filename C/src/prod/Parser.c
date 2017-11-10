@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
+#include "headers/Parser.h"
 #include "headers/Utils.h"
 #include "headers/Instance.h"
 

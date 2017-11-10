@@ -1,5 +1,6 @@
 #include <string.h>
 #include "FLAGS.h"
+#include "headers/Sequencer.h"
 #include "headers/Instance.h"
 
 unsigned int sequencer_productionFinalTime(Instance * instance, unsigned int count, const task_t * tasks, unsigned int * machineEndTime)

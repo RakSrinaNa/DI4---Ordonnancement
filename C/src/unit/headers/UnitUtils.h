@@ -5,7 +5,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../headers/Utils.h"
+#include "../../prod/headers/Utils.h"
 
 /**
  * Add a "breakpoint" and exit the program.
