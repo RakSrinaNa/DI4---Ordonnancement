@@ -50,6 +50,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 		free(sequence);
 		info->readyToDeliver[i] = machineReady[solution->instance->machineCount - 1];
 	}
+	free(machineReady);
 	return info;
 }
 
