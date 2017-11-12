@@ -16,11 +16,9 @@ extern Bool DEBUG;
 
 int mainUnit()
 {
-	//DEBUG = False;
-	
 	srand((unsigned int) time(NULL));
-	setbuf(stdout, NULL);
-	setbuf(stderr, NULL);
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
 	char * startTest = "\nUNIT: -------------------------------------------------------------------------\n";
 	char * endTest = "UNIT: -------------------------------------------------------------------------\n";
 	
@@ -67,10 +65,9 @@ int mainUnit()
 	printf("UNIT: OK\n");
 	printf("%s", endTest);
 	
-	
 	if(UNIT_FAILED)
 	{
-		fprintf(stderr, "UNIT: TESTS FAILED\n");
+		fprintf(stdout, "UNIT: TESTS FAILED\n");
 		exit(EXIT_FAILURE);
 	}
 	else

@@ -5,17 +5,22 @@
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 
-Bool DEBUG = True;
+Bool DEBUG = False;
 
 int main(int argc, char * argv[])
 {
 	char * filepath = "./Input.txt";
-	if(argc > 1)
+	if(argc >= 2) //Testings and stuff.
 	{
-		filepath = argv[0];
+		for(int i = 1; i < argc; i++)
+		{
+			if(strcmp(argv[i], "--debug") == 0)
+				DEBUG = True;
+			else
+				filepath = argv[i];
+		}
 	}
-	UNUSED(argc);
-	UNUSED(argv);
+	
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	//instance_print(instance);
