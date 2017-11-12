@@ -10,7 +10,7 @@ Bool DEBUG = True;
 int main(int argc, char * argv[])
 {
 	char * filepath = "./Input.txt";
-	if(argc > 0)
+	if(argc > 1)
 	{
 		filepath = argv[0];
 	}
