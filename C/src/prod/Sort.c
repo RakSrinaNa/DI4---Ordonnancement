@@ -20,7 +20,7 @@ Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned in
 	Solution * sol = solution_copy(solution);
 	if(shift == 0)
 		return sol;
-	solution_moveTaskPack(solution, task, MMIN(packIndex + shift, solution->packCount));
+	solution_moveTaskPack(sol, task, MMIN(packIndex + shift, solution->packCount));
 	return sol;
 }
 
@@ -36,6 +36,6 @@ Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned in
 	Solution * sol = solution_copy(solution);
 	if(shift == 0)
 		return sol;
-	solution_moveTaskPack(solution, task, MMAX(packIndex - shift, 0));
+	solution_moveTaskPack(sol, task, MMAX(packIndex - shift, 0));
 	return sol;
 }
