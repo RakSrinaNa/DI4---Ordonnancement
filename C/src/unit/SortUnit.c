@@ -79,44 +79,44 @@ void sortUnit()
 	solution_moveTaskPack(solution, 1, 2);
 	result = sort_moveDeliveriesEFSR(solution, 1, 0);
 	if(result == solution)
-		unit_error("Sort 17: EBSR - Solution is not duplicated");
+		unit_error("Sort 17: EFSR - Solution is not duplicated");
 	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 2 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 1 || solution_getTaskPack(result, 4) != 1)
-		unit_error("Sort 18: Wrong EBSR");
+		unit_error("Sort 18: Wrong EFSR");
 	solution_destroy(result);
 	
 	result = sort_moveDeliveriesEFSR(solution, 1, 1);
 	if(result == solution)
-		unit_error("Sort 19: EBSR - Solution is not duplicated");
+		unit_error("Sort 19: EFSR - Solution is not duplicated");
 	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 1 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 1 || solution_getTaskPack(result, 4) != 1)
-		unit_error("Sort 20: Wrong EBSR");
+		unit_error("Sort 20: Wrong EFSR");
 	solution_destroy(result);
 	
 	result = sort_moveDeliveriesEFSR(solution, 1, 2);
 	if(result == solution)
-		unit_error("Sort 21: EBSR - Solution is not duplicated");
+		unit_error("Sort 21: EFSR - Solution is not duplicated");
 	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 0 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 1 || solution_getTaskPack(result, 4) != 1)
-		unit_error("Sort 21: Wrong EBSR");
+		unit_error("Sort 21: Wrong EFSR");
 	solution_destroy(result);
 	
 	result = sort_moveDeliveriesEFSR(solution, 3, 1);
 	if(result == solution)
-		unit_error("Sort 22: EBSR - Solution is not duplicated");
-	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 2 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 1 || solution_getTaskPack(result, 4) != 1)
-		unit_error("Sort 23: Wrong EBSR");
+		unit_error("Sort 22: EFSR - Solution is not duplicated");
+	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 2 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 0 || solution_getTaskPack(result, 4) != 1)
+		unit_error("Sort 23: Wrong EFSR");
 	solution_destroy(result);
 	
 	result = sort_moveDeliveriesEFSR(solution, 1, 0xFFFFFFFF);
 	if(result == solution)
-		unit_error("Sort 24: EBSR - Solution is not duplicated");
+		unit_error("Sort 24: EFSR - Solution is not duplicated");
 	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 0 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 1 || solution_getTaskPack(result, 4) != 1)
-		unit_error("Sort 25: Wrong EBSR");
+		unit_error("Sort 25: Wrong EFSR");
 	solution_destroy(result);
 	
 	result = sort_moveDeliveriesEFSR(solution, 99, 1);
 	if(result == solution)
-		unit_error("Sort 26: EBSR - Solution is not duplicated");
+		unit_error("Sort 26: EFSR - Solution is not duplicated");
 	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 2 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 1 || solution_getTaskPack(result, 4) != 1)
-		unit_error("Sort 27: Wrong EBSR");
+		unit_error("Sort 27: Wrong EFSR");
 	solution_destroy(result);
 	
 	solution_destroy(solution);

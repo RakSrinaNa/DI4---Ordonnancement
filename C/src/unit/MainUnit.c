@@ -21,8 +21,8 @@ int mainUnit()
 	srand((unsigned int) time(NULL));
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
-	char * startTest = "\n-------------------------------------------------------------------------\n";
-	char * endTest = "-------------------------------------------------------------------------\n";
+	char * startTest = "\nUNIT: -------------------------------------------------------------------------\n";
+	char * endTest = "UNIT: -------------------------------------------------------------------------\n";
 	
 	printf("%s", startTest);
 	printf("UNIT: Executing Task tests...\n");
@@ -69,7 +69,10 @@ int mainUnit()
 	
 	
 	if(UNIT_FAILED)
+	{
+		fprintf(stderr, "UNIT: TESTS FAILED\n");
 		exit(EXIT_FAILURE);
+	}
 	else
 		printf("UNIT: TESTS OK - CONGRATULATIONS\n");
 	return 0;

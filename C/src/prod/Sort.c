@@ -12,12 +12,12 @@ Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned in
 {
 	debugPrint("Applying EBSR on task %d with a shift of %d in solution %p\n", task, shift, solution);
 	int packIndex = solution_getTaskPack(solution, task);
+	Solution * sol = solution_copy(solution);
 	if(packIndex < 0)
 	{
 		warn("sort_moveDeliveriesEBSR : Task %d does not exist.\n", task);
-		return NULL;
+		return sol;
 	}
-	Solution * sol = solution_copy(solution);
 	if(shift == 0)
 		return sol;
 	solution_moveTaskPack(sol, task, MMIN(packIndex + shift, solution->packCount));
@@ -28,12 +28,12 @@ Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned in
 {
 	debugPrint("Applying EFSR on task %d with a shift of %d in solution %p\n", task, shift, solution);
 	int packIndex = solution_getTaskPack(solution, task);
+	Solution * sol = solution_copy(solution);
 	if(packIndex < 0)
 	{
 		warn("sort_moveDeliveriesEFSR : Task %d does not exist.\n", task);
-		return NULL;
+		return sol;
 	}
-	Solution * sol = solution_copy(solution);
 	if(shift == 0)
 		return sol;
 	solution_moveTaskPack(sol, task, MMAX(packIndex - shift, 0));
