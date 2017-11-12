@@ -4,6 +4,7 @@
 #include "Solution.h"
 
 // TODO unit
+// TODO @Schttopup What if a task doesn't exists?
 /**
  * Duplicates a solution then swaps two deliveries between two distinct packs.
  *
@@ -16,6 +17,10 @@
 Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2);
 
 // TODO unit
+// TODO @Schttopup What if shift is bigger than the # of packs? // If task does not exists?
+// TODO Perso le fait de renvoyer NULL dans ce cas, je rouve pas cohérent avec swap qui renvoie sol.
+// TODO J'opterais pour faire en sorte que l'on affiche un warn si on swap 2 sur le même pack, et on revoie sol,
+// TODO pareil pour EBxR, on warn et renvoie une copie.
 /**
  * Duplicates a solution then moves a delivery backwards.
  *
