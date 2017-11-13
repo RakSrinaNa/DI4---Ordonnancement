@@ -13,15 +13,14 @@ void unit_error(char * str, ...)
 	vfprintf(stderr, str, args);
 	fprintf(stderr, "\n");
 	va_end(args);
-	//unit_breakpoint();
+	unit_breakpoint();
 	UNIT_FAILED = True;
 	//exit(EXIT_FAILURE);
 }
 
 void unit_breakpoint()
 {
-	if(DEBUG)
-		raise(SIGINT);
+	raise(SIGINT);
 }
 
 Bool unit_intArrayEquals(const int * base, const int * compare, int length)

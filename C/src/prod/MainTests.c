@@ -6,22 +6,32 @@
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 
-Bool DEBUG = True;
+Bool DEBUG = False;
 
 int main(int argc, char * argv[])
 {
 	char * filepath = "./Input.txt";
-	if(argc == 2) //Testings and stuff.
+	if(argc >= 2) //Testings and stuff.
 	{
-		if(strcmp(argv[1], "test") == 0) // Used to start unit tests.
+		char * method = NULL;
+		for(int i = 1; i < argc; i++)
 		{
-			mainUnit();
-			exit(EXIT_SUCCESS);
+			if(strcmp(argv[i], "--debug") == 0)
+				DEBUG = True;
+			else
+				method = argv[i];
 		}
-		else if(strcmp(argv[1], "temp") == 0) // For internal testing.
+		if(method != NULL)
 		{
-			//filepath = "./unitResources/Instance2.txt";
-			filepath = "../Inputs/input.txt";
+			if(strcmp(method, "test") == 0) // Used to start unit tests.
+			{
+				mainUnit();
+				exit(EXIT_SUCCESS);
+			}
+			else if(strcmp(method, "temp") == 0) // For internal testing.
+			{
+				filepath = "../Inputs/input.txt";
+			}
 		}
 	}
 	
