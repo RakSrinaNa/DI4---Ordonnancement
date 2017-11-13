@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="temp" />
+				<Option parameters="temp --debug" />
 				<Compiler>
 					<Add option="-pedantic" />
 					<Add option="-Wall" />
@@ -44,7 +44,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test" />
+				<Option parameters="test --debug" />
 				<Compiler>
 					<Add option="-pedantic-errors" />
 					<Add option="-pedantic" />
@@ -124,11 +124,16 @@
 		</Unit>
 		<Unit filename="src/unit/SequencerUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/SolutionInfoUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/unit/SolutionUnit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/unit/SortUnit.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/unit/TaskUnit.c">
@@ -144,6 +149,7 @@
 		<Unit filename="src/unit/headers/SequencerUnit.h" />
 		<Unit filename="src/unit/headers/SolutionInfoUnit.h" />
 		<Unit filename="src/unit/headers/SolutionUnit.h" />
+		<Unit filename="src/unit/headers/SortUnit.h" />
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
 		<Extensions>
