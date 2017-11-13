@@ -102,7 +102,6 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 			}
 			else
 			{
-				printf("LALALA POINTEURS %p %p\n", (void*)sequenceList[sequenceIndex], (void*)machineReadyList[sequenceIndex]);
 				free(sequenceList[sequenceIndex]);
 				free(machineReadyList[sequenceIndex]);
 			}

@@ -3,8 +3,6 @@
 
 #include "Solution.h"
 
-// TODO unit
-// TODO @Schttopup What if a task doesn't exists?
 /**
  * Duplicates a solution then swaps two deliveries between two distinct packs.
  *
@@ -13,15 +11,10 @@
  * @param task2 The second task to swap.
  * @return The duplicated and swapped solution.
  * @remark The user is in charge of freeing the returned value.
+ * @remark No action performed if one of the tasks doesn't exist.
  */
 Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2);
 
-// TODO unit
-// TODO @Schttopup What if shift is bigger than the # of packs? // If task does not exists?
-// TODO Perso le fait de renvoyer NULL dans ce cas, je rouve pas cohérent avec swap qui renvoie sol.
-// TODO J'opterais pour faire en sorte que l'on affiche un warn si on swap 2 sur le même pack, et on revoie sol,
-// TODO pareil pour EBxR, on warn et renvoie une copie.
-// TODO J'ai fait le changement pour ca
 /**
  * Duplicates a solution then moves a delivery backwards.
  *
@@ -30,11 +23,11 @@ Solution * sort_swapDeliveries(Solution * solution, task_t task1, task_t task2);
  * @param shift The number of packs away the task shall be moved backwards to.
  * @return The duplicated and moved solution.
  * @remark The user is in charge of freeing the returned value.
+ * @remark If the task doesn't exist, no move is performed but the solution is still duplicated.
+ * @remark If shift implies that the task is moved outside of the number of packs, it is moved to the first pack.
  */
 Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned int shift);
 
-// TODO unit
-// TODO @Schttopup Same as EFSR
 /**
  * Duplicates a solution then moves a delivery forward.
  *
@@ -43,6 +36,8 @@ Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned in
  * @param shift The number of packs away the task shall be moved forward to.
  * @return The duplicated and moved solution.
  * @remark The user is in charge of freeing the returned value.
+ * @remark If the task doesn't exist, no move is performed but the solution is still duplicated.
+ * @remark If shift implies that the task is moved outside of the number of packs, it is moved to the last pack.
  */
 Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned int shift);
 
