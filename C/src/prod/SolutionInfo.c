@@ -54,7 +54,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 	return info;
 }
 
-void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info)
+void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info, Bool diversification)
 {
 	debugPrint("Calculating deliveries for solution %p with info %p\n", solution, info);
 	info->score = 0;
@@ -66,7 +66,7 @@ void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInf
 		Pack * p = solution->packList[i];
 		truckReady = MMAX(truckReady, info->readyToDeliver[i]); // Waiting for the truck to come back and for the processes to be done.
 		truckReadyNow = truckReady;
-		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveries, &truckReady); // Copying the best sequence into the info.
+		info->deliveries[i] = sequencer_sequenceDeliveriesPack(solution->instance, p->taskCount, p->deliveries, &truckReady, diversification); // Copying the best sequence into the info.
 		info->score += sequencer_deliveryDelay(solution->instance, solution->packList[i]->taskCount, info->deliveries[i], &truckReadyNow);
 	}
 }

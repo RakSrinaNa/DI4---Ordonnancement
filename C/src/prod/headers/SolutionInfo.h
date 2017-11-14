@@ -7,13 +7,17 @@ struct _SolutionInfo;
 
 #include "Solution.h"
 
-//Stores the computed informations of a solution.
+//!Stores the computed informations of a solution.
 typedef struct _SolutionInfo
 {
-	task_t * productionOrder; // The ordered production.
-	unsigned int * readyToDeliver; // Dates when the truck is ready to go.
-	task_t ** deliveries; // The ordered deliveries.
-	unsigned int score; // The score of the info.
+	//!The ordered production.
+	task_t * productionOrder;
+	//!Dates when the truck is ready to go.
+	unsigned int * readyToDeliver;
+	//!The ordered deliveries.
+	task_t ** deliveries;
+	//!The score of the info.
+	unsigned int score;
 } SolutionInfo;
 
 /**
@@ -48,8 +52,9 @@ struct _SolutionInfo * solutionInfo_productionOrder(struct _Solution * solution)
  *
  * @param solution The solution. Not null.
  * @param info The info to fill. Not null.
+ * @param diversification True if we want to generate a really different solution, False otherwise.
  */
-void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
+void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info, Bool diversification);
 
 /**
  * Prints a solution info.

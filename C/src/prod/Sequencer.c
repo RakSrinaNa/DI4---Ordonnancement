@@ -192,7 +192,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, ta
 	return delay;
 }
 
-task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
+task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate, Bool diversification)
 {
 	debugPrint("Ordering deliveries for %d tasks at %d\n", taskCount, *initialDate);
 	unsigned int * sequence = NULL;
@@ -277,7 +277,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 	return sequence;
 }
 
-task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
+task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate, Bool diversification)
 {
 	debugPrint("\tUsing nearest neighbor\n");
 	task_t * sequence = NULL;
@@ -310,7 +310,7 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
 	return sequence;
 }
 
-task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate)
+task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate, Bool diversification)
 {
 	debugPrint("\tUsing smallest due date\n");
 	task_t * sequence = NULL;
@@ -321,7 +321,7 @@ task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int t
 	// Sorting by due date.
 	for(unsigned int i = 0; i < taskCount - 1; i++)
 		for(unsigned int j = 0; j < taskCount - i - 1; j++)
-			if(instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j + 1]))
+			if((instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j + 1])))
 			{
 				task_t temp = sequence[j];
 				sequence[j] = sequence[j + 1];

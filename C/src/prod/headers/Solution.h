@@ -7,11 +7,16 @@ struct _Solution;
 #include "Sequencer.h"
 #include "Pack.h"
 
+//!Contains the solution being computed.
 typedef struct _Solution
 {
-	Instance * instance; // Reference to the instance.
-	unsigned int packCount; // Number of packs in this solution.
-	Pack ** packList; // Ordered list of the packs in shipping order.
+	//!Reference to the instance.
+	Instance * instance;
+	//!Number of packs in this solution.
+	unsigned int packCount;
+	//!Ordered list of the packs in shipping order.
+	Pack ** packList;
+	//!The solution value.
 	struct _SolutionInfo * info;
 } Solution;
 
@@ -75,10 +80,11 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2);
  * If the score has already been computed and CACHED_SCORE is set to 1, the score is not computed again.
  *
  * @param solution The solution. Not null.
+ * @param diversification True if we want to generate a really different solution, False otherwise.
  * @return The info of the solution.
  * @remark Needs to be freed with solutionInfo_destroy.
  */
-struct _SolutionInfo * solution_eval(Solution * solution);
+struct _SolutionInfo * solution_eval(Solution * solution, Bool diversification);
 
 /**
  * Prints the solution.

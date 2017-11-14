@@ -44,10 +44,11 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, ta
  * @param taskCount The number of tasks.
  * @param tasks The list of the tasks.
  * @param initialDate A pointer to the departure time. At the end, contains the arrival time. Not null.
+ * @param diversification True if we want to generate a really different solution, False otherwise.
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate);
+task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate, Bool diversification);
 
 /**
  * Orders the deliveries in the given list by nearest neighbor.
@@ -56,10 +57,11 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
  * @param taskCount The number of tasks.
  * @param tasks The list of the tasks.
  * @param initialDate A pointer to the departure time. At the end, contains the arrival time of the truck. Not null.
+ * @param diversification True if we want to generate a really different solution, False otherwise.
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate);
+task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate, Bool diversification);
 
 /**
  * Orders the deliveries in the given list by due date.
@@ -68,9 +70,10 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
  * @param taskCount The number of tasks.
  * @param tasks The list of the tasks.
  * @param initialDate A pointer to the departure time. At the end, contains the arrival time. Not null.
+ * @param diversification True if we want to generate a really different solution, False otherwise.
  * @return An ordered sequence of deliveries.
  * @remark The user is in charge of freeing the returned value.
  */
-task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate);
+task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate, Bool diversification);
 
 #endif

@@ -123,7 +123,7 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 	solution_moveTaskPack(solution, task2, (unsigned int) pack1);
 }
 
-SolutionInfo * solution_eval(Solution * solution)
+SolutionInfo * solution_eval(Solution * solution, Bool diversification)
 {
 	debugPrint("Evaluation solution %p\n", solution);
 	if(CACHED_SCORE && solution->info != NULL)
@@ -132,7 +132,7 @@ SolutionInfo * solution_eval(Solution * solution)
 	if(solution->info != NULL)
 		solutionInfo_destroy(solution, solution->info);
 	solution->info = solutionInfo_productionOrder(solution);
-	solutionInfo_deliveryOrder(solution, solution->info);
+	solutionInfo_deliveryOrder(solution, solution->info, diversification);
 	
 	return solution->info;
 }
