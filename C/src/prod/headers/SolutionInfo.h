@@ -52,9 +52,8 @@ struct _SolutionInfo * solutionInfo_productionOrder(struct _Solution * solution)
  *
  * @param solution The solution. Not null.
  * @param info The info to fill. Not null.
- * @param diversification True if we want to generate a really different solution, False otherwise.
  */
-void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info, Bool diversification);
+void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInfo * info);
 
 /**
  * Prints a solution info.

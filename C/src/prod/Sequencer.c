@@ -192,7 +192,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, ta
 	return delay;
 }
 
-task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate, Bool diversification)
+task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
 {
 	debugPrint("Ordering deliveries for %d tasks at %d\n", taskCount, *initialDate);
 	unsigned int * sequence = NULL;
@@ -277,7 +277,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 	return sequence;
 }
 
-task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate, Bool diversification)
+task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
 {
 	debugPrint("\tUsing nearest neighbor\n");
 	task_t * sequence = NULL;
@@ -310,7 +310,7 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
 	return sequence;
 }
 
-task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate, Bool diversification)
+task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int taskCount, const task_t * tasks, unsigned int * initialDate)
 {
 	debugPrint("\tUsing smallest due date\n");
 	task_t * sequence = NULL;

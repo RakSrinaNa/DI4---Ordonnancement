@@ -80,11 +80,10 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2);
  * If the score has already been computed and CACHED_SCORE is set to 1, the score is not computed again.
  *
  * @param solution The solution. Not null.
- * @param diversification True if we want to generate a really different solution, False otherwise.
  * @return The info of the solution.
  * @remark Needs to be freed with solutionInfo_destroy.
  */
-struct _SolutionInfo * solution_eval(Solution * solution, Bool diversification);
+struct _SolutionInfo * solution_eval(Solution * solution);
 
 /**
  * Prints the solution.
