@@ -7,12 +7,15 @@ struct _Task;
 
 #include "Instance.h"
 
-//Structure defining a task.
+//!Structure defining a task.
 typedef struct _Task
 {
-	struct _Instance * instance; //The parent instance.
-	unsigned int * machineDurations; //The duration on each machine.
-	unsigned int dueDate; //The due date.
+	//!The parent instance.
+	struct _Instance * instance;
+	//!The duration on each machine.
+	unsigned int * machineDurations;
+	//!The due date.
+	unsigned int dueDate;
 } Task;
 
 /**

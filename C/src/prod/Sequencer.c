@@ -293,7 +293,12 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
 		unsigned int nearestIndex = 0xFFFFFFFF; // Infinity
 		for(unsigned int j = 0; j < taskCount; j++)
 		{
-			if(!explored[j] && (nearestIndex == 0xFFFFFFFF || (diversification ? (instance_getDistance(instance, departure, tasks[j]) > instance_getDistance(instance, departure, tasks[nearestIndex]) ; (instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex]))))))
+			if(!explored[j] &&
+					(nearestIndex == 0xFFFFFFFF ||
+							(diversification ?
+							 (instance_getDistance(instance, departure, tasks[j]) > instance_getDistance(instance, departure, tasks[nearestIndex])) :
+							 (instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex]))
+							)))
 			{
 				nearestIndex = j;
 			}
