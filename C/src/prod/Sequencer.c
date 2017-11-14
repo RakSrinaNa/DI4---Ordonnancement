@@ -217,7 +217,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 		unsigned int sol01 = sequencer_deliveryDelay(instance, taskCount, sequence01, &dateSol01);
 		unsigned int dateSol10 = *initialDate;
 		unsigned int sol10 = sequencer_deliveryDelay(instance, taskCount, sequence10, &dateSol10);
-		if(sol01 <= sol10)
+		if(diversification ? (sol01 >= sol10) : (sol01 <= sol10))
 		{
 			sequence = sequence01;
 			free(sequence10);
@@ -253,7 +253,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 		{
 			tempDate = *initialDate;
 			unsigned int seqTime = sequencer_deliveryDelay(instance, taskCount, seqList[i], &tempDate);
-			if(best == NULL || seqTime < bestTime)
+			if(best == NULL || (diversification ? (seqTime > bestTime) : (seqTime < bestTime)))
 			{
 				free(best);
 				best = seqList[i];
@@ -270,9 +270,9 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 	else if(taskCount > 3)
 	{
 		if(DELIVERY_NEAREST_NEIGHBOR)
-			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
+			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate, diversification);
 		else
-			sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate);
+			sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate, diversification);
 	}
 	return sequence;
 }
@@ -293,7 +293,7 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
 		unsigned int nearestIndex = 0xFFFFFFFF; // Infinity
 		for(unsigned int j = 0; j < taskCount; j++)
 		{
-			if(!explored[j] && (nearestIndex == 0xFFFFFFFF || instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex])))
+			if(!explored[j] && (nearestIndex == 0xFFFFFFFF || (diversification ? (instance_getDistance(instance, departure, tasks[j]) > instance_getDistance(instance, departure, tasks[nearestIndex]) ; (instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex]))))))
 			{
 				nearestIndex = j;
 			}
