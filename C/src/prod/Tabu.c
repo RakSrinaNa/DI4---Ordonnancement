@@ -13,7 +13,7 @@ Solution * tabu_solutionInit(Instance * instance)
 		Solution * solution = solution_create(instance);
 		for(unsigned int i = 0; i < instance->taskCount; i++) //Move tasks to do packs of max maxTasksPerPack tasks per pack.
 			solution_moveTaskPack(solution, sortedDueDates[i], i / maxTasksPerPack);
-		if(bestSolution == NULL || solution_eval(solution, False) < solution_eval(bestSolution, False))
+		if(bestSolution == NULL || solution_eval(solution) < solution_eval(bestSolution))
 		{
 			solution_destroy(bestSolution);
 			bestSolution = solution;

@@ -28,7 +28,7 @@ void solutionInfoUnit()
 	unsigned int delivery1[] = {1, 0};
 	unsigned int delivery2[] = {3, 2};
 	unsigned int delivery3[] = {4};
-	solutionInfo_deliveryOrder(solution, info, False);
+	solutionInfo_deliveryOrder(solution, info);
 	if(!unit_uintArrayEquals(delivery1, info->deliveries[0], 2) || !unit_uintArrayEquals(delivery2, info->deliveries[1], 2) || !unit_uintArrayEquals(delivery3, info->deliveries[2], 1))
 		unit_error("SolutionInfo 4: Bad deliver order");
 	
