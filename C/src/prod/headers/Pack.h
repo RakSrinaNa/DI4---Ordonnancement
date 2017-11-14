@@ -4,16 +4,17 @@
 #include "Instance.h"
 #include "Utils.h"
 
-/**
- * Structure representing a batch.
- */
 struct _Pack;
 
+//!Structure representing a batch.
 typedef struct _Pack
 {
-	Instance * instance; // Reference to the instance.
-	unsigned int taskCount; // Number of tasks in this pack.
-	task_t * deliveries; // Ordered list of the IDs of the task representing the delivery order.
+	//!Reference to the instance.
+	Instance * instance;
+	//!Number of tasks in this pack.
+	unsigned int taskCount;
+	//!Ordered list of the IDs of the task representing the delivery order.
+	task_t * deliveries;
 } Pack;
 
 /**

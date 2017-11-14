@@ -321,7 +321,7 @@ task_t * sequencer_sequenceDeliveriesDueDate(Instance * instance, unsigned int t
 	// Sorting by due date.
 	for(unsigned int i = 0; i < taskCount - 1; i++)
 		for(unsigned int j = 0; j < taskCount - i - 1; j++)
-			if(instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j + 1]))
+			if((instance_getDueDate(instance, sequence[j]) > instance_getDueDate(instance, sequence[j + 1])))
 			{
 				task_t temp = sequence[j];
 				sequence[j] = sequence[j + 1];

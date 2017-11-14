@@ -7,11 +7,16 @@ struct _Solution;
 #include "Sequencer.h"
 #include "Pack.h"
 
+//!Contains the solution being computed.
 typedef struct _Solution
 {
-	Instance * instance; // Reference to the instance.
-	unsigned int packCount; // Number of packs in this solution.
-	Pack ** packList; // Ordered list of the packs in shipping order.
+	//!Reference to the instance.
+	Instance * instance;
+	//!Number of packs in this solution.
+	unsigned int packCount;
+	//!Ordered list of the packs in shipping order.
+	Pack ** packList;
+	//!The solution value.
 	struct _SolutionInfo * info;
 } Solution;
 

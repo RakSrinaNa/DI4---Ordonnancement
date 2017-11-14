@@ -3,13 +3,17 @@
 
 struct _Instance;
 
-//Structure defining an instance.
+//!Structure defining an instance.
 typedef struct _Instance
 {
-	unsigned int machineCount; //Count of machines.
-	unsigned int taskCount; //Count of tasks.
-	unsigned int ** distancesMatrix; //Matrix of the distances for the delivery.
-	struct _Task ** tasks; //List of the tasks of the instance.
+	//!Count of machines.
+	unsigned int machineCount;
+	//!Count of tasks.
+	unsigned int taskCount;
+	//!Matrix of the distances for the delivery.
+	unsigned int ** distancesMatrix;
+	//!List of the tasks of the instance.
+	struct _Task ** tasks;
 } Instance;
 
 #include <stdio.h>

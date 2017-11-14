@@ -7,13 +7,17 @@ struct _SolutionInfo;
 
 #include "Solution.h"
 
-//Stores the computed informations of a solution.
+//!Stores the computed informations of a solution.
 typedef struct _SolutionInfo
 {
-	task_t * productionOrder; // The ordered production.
-	unsigned int * readyToDeliver; // Dates when the truck is ready to go.
-	task_t ** deliveries; // The ordered deliveries.
-	unsigned int score; // The score of the info.
+	//!The ordered production.
+	task_t * productionOrder;
+	//!Dates when the truck is ready to go.
+	unsigned int * readyToDeliver;
+	//!The ordered deliveries.
+	task_t ** deliveries;
+	//!The score of the info.
+	unsigned int score;
 } SolutionInfo;
 
 /**
