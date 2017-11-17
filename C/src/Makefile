@@ -32,7 +32,7 @@ main.o: $(HEAD_UNIT)
 clall: clean
 
 clean:
-	-rm *.o ; rm */*.o ; rm $(EXEC)
+	-rm *.o ; rm */*.o ; rm $(EXEC) ; rm $(EXEC_PROD)
 
 test:
 	echo “Tests OK”
