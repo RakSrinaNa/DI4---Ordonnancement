@@ -154,7 +154,7 @@ void solution_print(Solution * solution)
 		printf("Solution : NULL\n");
 }
 
-void solution_save(Solution * solution, const char * filename)
+void solution_save(Solution * solution, const char * filename, double time)
 {
 	debugPrint("Saving solution %p to %s", solution, filename);
 	if(solution->info == NULL)
@@ -162,19 +162,20 @@ void solution_save(Solution * solution, const char * filename)
 	FILE * file = fopen(filename, "w");
 	if(file != NULL)
 	{
-		fprintf(file, "%d %d %d\n", solution->instance->taskCount, solution->packCount, solution->info->score);
+		fprintf(file, "%d\t%f\t{ production:[ ", solution->info->score, time);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-			fprintf(file, "%d ", solution->info->productionOrder[i]);
-		fprintf(file, "\n");
+			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount-1)?' ':',');
+		fprintf(file, "], deliveries:[ ");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			fprintf(file, "%d ", solution->packList[i]->taskCount);
+			fprintf(file, "[ ", solution->packList[i]->taskCount);
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
-				fprintf(file, "%d ", solution->info->deliveries[i][j]);
+				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount-1)?' ':',');
 			}
-			fprintf(file, "\n");
+			fprintf(file, "]%c", (i == solution->packCount-1)?' ':',');
 		}
+		fprintf(file, "] }\n");
 		fclose(file);
 	}
 }
