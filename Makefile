@@ -10,11 +10,11 @@ test: clall $(EXEC) clean
 prod: clall $(EXEC_PROD) clean
 
 $(EXEC):
-	export CFLAGS="-std=c99 -Wall -Wextra -pedantic -g"
+	export CFLAGS='-std=c99 -Wall -Wextra -pedantic -g'
 	cd $(SRC_DIR) && $(MAKE) && cd ../.. && mv $(SRC_DIR)/$(EXEC) ./C
 
 $(EXEC_PROD):
-	export CFLAGS="-std=c99 -Wall -Wextra -Werror -W -pedantic -pedantic-errors -O2"
+	export CFLAGS='-std=c99 -Wall -Wextra -Werror -W -pedantic -pedantic-errors -O2'
 	cd $(SRC_DIR) && $(MAKE) prod && cd ../.. && mv $(SRC_DIR)/$(EXEC_PROD) ./C
 
 .PHONY: clean
