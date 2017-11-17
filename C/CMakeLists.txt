@@ -31,5 +31,5 @@ set(SOURCE_FILES_TEST ${base_SRC} src/prod/FLAGS.h src/prod/MainTests.c ${test_S
 add_executable(TabouProd ${SOURCE_FILES_PROD})
 add_executable(TabouTest ${SOURCE_FILES_TEST})
 
-set_target_properties(TabouProd PROPERTIES COMPILE_FLAGS "-std=c99 -Wall -Wextra -Werror -W -pedantic -pedantic-errors -O2 -s")
+set_target_properties(TabouProd PROPERTIES COMPILE_FLAGS "-std=c99 -Wall -Wextra -Werror -W -pedantic -pedantic-errors -O2")
 set_target_properties(TabouTest PROPERTIES COMPILE_FLAGS "-std=c99 -Wall -Wextra -pedantic -g")
