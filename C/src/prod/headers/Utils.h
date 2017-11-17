@@ -31,6 +31,9 @@
  */
 #define RREALLOC(p, t, n, m) {if((n) == 0){free(p);(p)=NULL;}else{(p) = REALLOC(t, p, n); RCHECK(p, m)}};
 
+
+#define RRAND(min, max) min + drand48() * ((max) - (min))
+
 /**
  * Enumeration to represent a boolean.
  */
