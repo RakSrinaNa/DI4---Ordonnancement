@@ -17,7 +17,6 @@ endfunction (filter_items)
 cmake_minimum_required(VERSION 3.6)
 project(Tabou)
 
-add_definitions(-std=c99 -Wall -Werror -W -pedantic -pedantic-errors -static -g)
 set_property(TARGET PROPERTY C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
 
@@ -31,3 +30,6 @@ set(SOURCE_FILES_TEST ${base_SRC} src/prod/FLAGS.h src/prod/MainTests.c ${test_S
 
 add_executable(TabouProd ${SOURCE_FILES_PROD})
 add_executable(TabouTest ${SOURCE_FILES_TEST})
+
+set_target_properties(TabouProd PROPERTIES COMPILE_FLAGS "-std=c99 -Wall -Wextra -Werror -W -pedantic -pedantic-errors -O2 -s")
+set_target_properties(TabouTest PROPERTIES COMPILE_FLAGS "-std=c99 -Wall -Wextra -pedantic -g")

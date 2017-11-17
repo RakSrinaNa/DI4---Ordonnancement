@@ -2,7 +2,7 @@ language: c
 compiler: gcc
 install:
   - sudo apt-get install valgrind
-script: make test
+script: make doTest
 notifications:
   email: false
   on_failure: always

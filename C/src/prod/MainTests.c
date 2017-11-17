@@ -40,12 +40,15 @@ int main(int argc, char * argv[])
 	
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
-	//instance_print(instance);
-	Solution * solution = solution_create(instance);
-	solution_eval(solution);
-	solution_print(solution);
-	solution_save(solution, "../Inputs/output1.txt", 14.25);
-	instance_destroy(instance);
+	if(instance != NULL)
+	{
+		//instance_print(instance);
+		Solution * solution = solution_create(instance);
+		solution_eval(solution);
+		solution_print(solution);
+		solution_save(solution, "../Inputs/output1.txt", 14.25);
+		instance_destroy(instance);
+	}
 	return 0;
 }
 
