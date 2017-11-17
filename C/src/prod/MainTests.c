@@ -12,9 +12,7 @@ Bool DEBUG = False;
 
 int main(int argc, char * argv[])
 {
-	unsigned short seed = (unsigned short) SEED;
-	seed48(&seed);
-	nrand48(42);
+	srand((unsigned long) SEED);
 	char * filepath = "./Input.txt";
 	if(argc >= 2) //Testings and stuff.
 	{
