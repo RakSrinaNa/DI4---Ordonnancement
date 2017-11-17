@@ -1,20 +1,17 @@
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
+
 #include "headers/Utils.h"
 #include "headers/Instance.h"
 #include "../unit/headers/MainUnit.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "FLAGS.h"
 
 Bool DEBUG = False;
 
 int main(int argc, char * argv[])
 {
-	unsigned short seed = (unsigned short) SEED;
-	seed48(&seed);
-	nrand48(42);
 	char * filepath = "./Input.txt";
 	if(argc >= 2) //Testings and stuff.
 	{
