@@ -168,7 +168,7 @@ void solution_save(Solution * solution, const char * filename, double time)
 		fprintf(file, "], deliveries:[ ");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			fprintf(file, "[ ", solution->packList[i]->taskCount);
+			fprintf(file, "[ ");
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
 				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount-1)?' ':',');
