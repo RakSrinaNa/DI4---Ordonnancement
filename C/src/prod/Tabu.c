@@ -1,3 +1,4 @@
+#include <sys/timeb.h>
 #include "headers/Instance.h"
 #include "headers/Solution.h"
 
@@ -25,4 +26,9 @@ Solution * tabu_solutionInit(Instance * instance)
 	free(sortedDueDates);
 	debugPrint("Initial solution is %p\n", bestSolution);
 	return bestSolution;
+}
+
+long double tabu_getTimeDiff(struct timeb start, struct timeb end)
+{
+	return end.time - start.time + (end.millitm - start.millitm) / 1000.0f;
 }
