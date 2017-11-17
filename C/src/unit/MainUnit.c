@@ -16,7 +16,6 @@ extern Bool DEBUG;
 
 int mainUnit()
 {
-	srand((unsigned int) time(NULL));
 	setvbuf(stdout, NULL, _IONBF, 0);
 	setvbuf(stderr, NULL, _IONBF, 0);
 	char * startTest = "\nUNIT: -------------------------------------------------------------------------\n";

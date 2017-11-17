@@ -1,10 +1,12 @@
 #include <string.h>
 #include <stdlib.h>
+
 #include "headers/Utils.h"
 #include "headers/Instance.h"
 #include "../unit/headers/MainUnit.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "FLAGS.h"
 
 Bool DEBUG = False;
 

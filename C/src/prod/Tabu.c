@@ -32,3 +32,10 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 {
 	return end.time - start.time + (end.millitm - start.millitm) / 1000.0f;
 }
+
+Solution * tabu_search(Instance * instance)
+{
+	return NULL;
+}
+
+

@@ -16,4 +16,9 @@
 #define CACHED_SCORE 1 //Use the score cache system.
 #define DELIVERY_NEAREST_NEIGHBOR 1 //Sort deliveries using the nearest neighbor, else sort by lowest due date first.
 
+#define SEED 42
+#ifndef SEED
+	#define SEED time(NULL)
+#endif
+
 #endif //TABOU_FLAGS_H

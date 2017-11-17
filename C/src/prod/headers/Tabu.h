@@ -24,4 +24,7 @@ Solution * tabu_solutionInit(Instance * instance);
  */
 long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 
+//TODO doc
+Solution * tabu_search(Instance * instance);
+
 #endif

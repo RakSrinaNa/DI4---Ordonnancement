@@ -4,6 +4,7 @@
 #include "headers/Utils.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "FLAGS.h"
 
 Bool DEBUG = False;
 
