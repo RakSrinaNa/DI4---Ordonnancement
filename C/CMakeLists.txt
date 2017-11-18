@@ -14,7 +14,7 @@ function (filter_items aItems aRegEx)
     set(${aItems} ${${aItems}} PARENT_SCOPE)
 endfunction (filter_items)
 
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.3.2)
 project(Tabou)
 
 set_property(TARGET PROPERTY C_STANDARD 99)

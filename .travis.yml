@@ -2,15 +2,6 @@ language: c
 compiler: gcc
 install:
 - sudo apt-get install valgrind
-- DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-- mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
-- CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
-- mkdir cmake && travis_retry wget -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-- export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-- cd ..
-- pwd
-- cd ${TRAVIS_BUILD_DIR}
-- pwd
 after_success:
 - wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
 - chmod +x send.sh
