@@ -1,10 +1,30 @@
 language: c
 compiler: gcc
 install:
-  - sudo apt-get install valgrind
-script: make test
+- sudo apt-get install valgrind
+- DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+- mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
+    mkdir cmake && travis_retry wget --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+  elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+    brew install cmake gcc
+  fi
+after_success:
+- wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
+- chmod +x send.sh
+- "./send.sh success"
+after_failure:
+- wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
+- chmod +x send.sh
+- "./send.sh failure"
+script: make doTest
 notifications:
   email: false
   on_failure: always
   on_success: always
-  webhooks: https://travis-webhook-discord.herokuapp.com/webhook
+env:
+  global:
+    secure: kQ3WZibP+h5csRtbsElVPxWWqx60L/CVBnzxCN6D6rHfogJaWQT5L146SKfqRXUy69I83bPaH5saDOws1VZ+Wh+jGV/aTnE2ZCGLkkh2Et4EUjTeqagDUgDdsxVtAZNyc9u59FM8v7gDIL1E2xrGqiHtA2cbvUsRnj07Mki/y0mKAAm1geCstj6ErusW4ub72yF7tYGeSg0UZynOTZiiww+PPnb5XgsN0BIhWgtMQmoRq8V9hGLZ1txD4HuxsootTkYwYsr1qRK5uKl9oujk7y/rgkRok6IwBh0pUs79kvklvea6BLCBPzR1md2htKsyfcIsxspPzZf7khmpZcHfnv3LA3p3hZgw8KamJj1Zy45lZC5J65S0pU8C8gX4KFB+wUyZH36O6mf2lls1M/a0KTtcZrjsJiPTrd76ypb6NSl3rTXN85k+ije3TRwQrRlo8j5zZtetkGY6fIsN37C/Ae6hkRSZrpUvnhoZhvw6N34Rk3b+83LoP1saDV89mclvV2crV/LGXpLZ5jV/f+dRLiDuqNCY2/mjpDAkktq9CvXNI03mZa1mK5wGuLHAJIGANTQ4Nl3jXjI2kGUPy3Mu3qHy2CPlkq03r4fMafz/7rPOOFqFkCnPoXbA2LpCe2z29yh0Z+KqH414QnY5B6YLgHkMAYtQOuUlzibaPLUAXOs=

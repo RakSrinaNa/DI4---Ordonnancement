@@ -22,3 +22,10 @@ Tabou
 Tabou.dSYM
 output1*txt
 Python/.idea
+TabouFull
+*.plist
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+C/CMakeFiles
+Tabou.cbp

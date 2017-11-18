@@ -97,8 +97,9 @@ void solution_print(Solution * solution);
  *
  * @param solution The solution. Not null.
  * @param filename The path of the file.
+ * @param time The execution time.
  * @remark Does nothing if the solution hasn't been computed.
  */
-void solution_save(Solution * solution, const char * filename);
+void solution_save(Solution * solution, const char * filename, double time);
 
 #endif //TABOU_SOLUTION_H

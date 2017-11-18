@@ -4,13 +4,14 @@
 #include "headers/Utils.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "FLAGS.h"
 
 Bool DEBUG = False;
 
 int main(int argc, char * argv[])
 {
 	char * filepath = "./Input.txt";
-	if(argc >= 2) //Testings and stuff.
+	if(argc >= 2)
 	{
 		for(int i = 1; i < argc; i++)
 		{
@@ -23,12 +24,15 @@ int main(int argc, char * argv[])
 	
 	//Main, read file and compute a solution.
 	Instance * instance = parser_readInstanceFromFile(filepath);
-	//instance_print(instance);
-	Solution * solution = solution_create(instance);
-	solution_eval(solution);
-	solution_print(solution);
-	solution_save(solution, "./Inputs/output1.txt");
-	instance_destroy(instance);
+	if(instance != NULL)
+	{
+		//instance_print(instance);
+		Solution * solution = solution_create(instance);
+		solution_eval(solution);
+		solution_print(solution);
+		solution_save(solution, "./Inputs/output1.txt", 14.25);
+		instance_destroy(instance);
+	}
 	return 0;
 }
 

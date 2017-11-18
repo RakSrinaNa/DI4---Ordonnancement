@@ -15,9 +15,10 @@
 				<Option parameters="temp --debug" />
 				<Compiler>
 					<Add option="-pedantic" />
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c99" />
 					<Add option="-g" />
+					<Add option="-std=c99" />
 					<Add option="-Werror" />
 				</Compiler>
 			</Target>
@@ -29,7 +30,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-pedantic-errors" />
 					<Add option="-pedantic" />
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-std=c99" />
 					<Add option="-Werror" />
@@ -112,15 +115,23 @@
 		<Unit filename="src/prod/headers/Utils.h" />
 		<Unit filename="src/unit/InstanceUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/MainUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/PackUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/ParserUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/SequencerUnit.c">
 			<Option compilerVar="CC" />
@@ -129,18 +140,28 @@
 		</Unit>
 		<Unit filename="src/unit/SolutionInfoUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/SolutionUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/SortUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/TaskUnit.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/UnitUtils.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/headers/InstanceUnit.h" />
 		<Unit filename="src/unit/headers/MainUnit.h" />

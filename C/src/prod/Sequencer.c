@@ -120,8 +120,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		tempSequence[0] = tasks[0];
 		tempSequence[1] = tasks[1];
 		machine_t * machineReady = NULL;
-		machineReady = (machine_t *) malloc(instance->machineCount * sizeof(machine_t));
-		//MMALLOC(machineReady, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
+		MMALLOC(machineReady, machine_t, instance->machineCount, "sequencer_sequenceProductionPack");
 		for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
 			machineReady[machineIndex] = machineEndTime[machineIndex];
 		task_t * bestSequence = sequencer_sequenceProductionPack(instance, 2, tempSequence, machineReady); //Get the best order of the 2 first tasks.
