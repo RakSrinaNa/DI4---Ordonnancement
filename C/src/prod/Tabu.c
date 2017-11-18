@@ -1,7 +1,10 @@
 #include <sys/timeb.h>
+
+#include "headers/Tabu.h"
 #include "headers/Instance.h"
 #include "headers/Solution.h"
 #include "FLAGS.h"
+#include "headers/Sort.h"
 
 Solution * tabu_solutionInit(Instance * instance)
 {
@@ -36,10 +39,10 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 
 Solution * tabu_search(Instance * instance)
 {
-	Solution *initSolution = tabu_solutionInit(instance);
-	Solution *bestSolution = initSolution;
-	Solution *currentSolution = initSolution;
-	Solution *bestNeighbor = NULL;
+	Solution * initSolution = tabu_solutionInit(instance);
+	Solution * bestSolution = initSolution;
+	Solution * currentSolution = initSolution;
+	Solution * bestNeighbor = NULL;
 	unsigned int nbIterations = 0;
 	unsigned int nbNoBetterIterations = 0;
 	Bool diversification = False;
@@ -70,23 +73,23 @@ Solution * tabu_search(Instance * instance)
 }
 
 //TODO for these TODOs : cf python
-void tabu_searchSwap(Solution **currentSolution, Solution **bestSolution, Solution **bestNeighbor)
+void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor)
 {
 	unsigned int bestVal = 0xFFFFFFFF;
-	Solution *best
-	for(unsigned int packIndex = 0; packIndex < currentSolution->packCount; packIndex++)
+	Solution * best;
+	for(unsigned int packIndex = 0; packIndex < (*currentSolution)->packCount; packIndex++)
 	{
-		for(unsigned int taskIndex = 0; taskIndex < currentSolution->packList[packIndex]->taskCount; taskIndex++)
+		for(unsigned int taskIndex = 0; taskIndex < (*currentSolution)->packList[packIndex]->taskCount; taskIndex++)
 		{
-			task_t task1 = currentSolution->packList[packIndex]->deliveries[taskIndex];
-			for(unsigned int packIndex2 = packIndex; packIndex2 < currentSolution->packCount; packIndex2++)
+			task_t task1 = (*currentSolution)->packList[packIndex]->deliveries[taskIndex];
+			for(unsigned int packIndex2 = packIndex; packIndex2 < (*currentSolution)->packCount; packIndex2++)
 			{
-				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
+				for(unsigned int taskIndex2 = 0; taskIndex2 < (*currentSolution)->packList[packIndex2]->taskCount; taskIndex2++)
 				{
-					task_t task2 = currentSolution->packList[packIndex2]->deliveries[taskIndex2];
+					task_t task2 = (*currentSolution)->packList[packIndex2]->deliveries[taskIndex2];
 					//TODO DELTA
-					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
-					SolutionInfo *newInfo = solution_eval(newSolution);
+					Solution * newSolution = sort_swapDeliveries(*currentSolution, task1, task2);
+					SolutionInfo * newInfo = solution_eval(newSolution);
 					if(newInfo->score < bestVal) // TODO && notTabu(swap)
 					{
 						bestVal = newInfo->score;
@@ -98,14 +101,12 @@ void tabu_searchSwap(Solution **currentSolution, Solution **bestSolution, Soluti
 	}
 }
 
-void tabu_searchEBSR(Solution **currentSolution, Solution **bestSolution, Solution **bestNeighbor)
+void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor)
 {
-	
 }
 
-void tabu_searchEFSR(Solution **currentSolution, Solution **bestSolution, Solution **bestNeighbor)
+void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor)
 {
-	
 }
 
 

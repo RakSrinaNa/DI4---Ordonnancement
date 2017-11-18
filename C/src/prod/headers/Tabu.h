@@ -27,10 +27,10 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 //TODO doc
 Solution * tabu_search(Instance * instance);
 
-void tabu_searchSwap(Solution **currentSolution, Solution **bestSolution, Solution **bestNeighbor);
+void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor);
 
-void tabu_searchEBSR(Solution **currentSolution, Solution **bestSolution, Solution **bestNeighbor);
+void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor);
 
-void tabu_searchEFSR(Solution **currentSolution, Solution **bestSolution, Solution **bestNeighbor);
+void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor);
 
 #endif
