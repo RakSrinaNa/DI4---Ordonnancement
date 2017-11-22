@@ -40,10 +40,9 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 
 Solution * tabu_search(Instance * instance)
 {
-	Solution * initSolution = tabu_solutionInit(instance);
-	Solution * bestSolution = initSolution;
-	Solution * currentSolution = initSolution;
-	solution_eval(initSolution);
+	Solution * currentSolution = tabu_solutionInit(instance);
+	Solution * bestSolution = currentSolution;
+	solution_eval(currentSolution);
 	unsigned int nbIterations = 0;
 	unsigned int nbNoBetterIterations = 0;
 	Bool diversification = False;
@@ -57,6 +56,7 @@ Solution * tabu_search(Instance * instance)
 	
 	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
+		debugPrint("Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
 		Solution * iterSolution = NULL;
 		if(TABU_SEARCH_SWAP)
 			iterSolution = tabu_searchSwap(currentSolution, tabuList);
@@ -70,7 +70,8 @@ Solution * tabu_search(Instance * instance)
 			solution_eval(iterSolution);
 			if(iterSolution->info->score < bestSolution->info->score && diversification == False)
 			{
-				solution_destroy(initSolution);
+				debugPrint("Found better solution %p, replacing %p\n", iterSolution, bestSolution);
+				solution_destroy(bestSolution);
 				bestSolution = iterSolution;
 				nbNoBetterIterations = 0;
 			}
@@ -78,9 +79,14 @@ Solution * tabu_search(Instance * instance)
 				nbNoBetterIterations++;
 		}
 		else
+		{
+			diversification = True;
 			nbNoBetterIterations++;
-		
-		diversification = False;
+			warn("Found NULL solution\n");
+		}
+			
+		if(diversification == True)
+			diversification = False;
 		
 		
 		nbIterations++;
@@ -124,9 +130,7 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
 			}
 		}
 	}
-	TabuItem *item = NULL;
-	MMALLOC(item, TabuItem, 1, "tabu_searchSwap");
-	item->source = bestSwap1; item->destination = bestSwap2;
+	TabuItem *item = tabuItem_create(bestSwap1, bestSwap2);
 	tabuList_addItem(tabuList, item);
 	return bestSolution;
 }
