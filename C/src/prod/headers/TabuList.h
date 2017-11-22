@@ -1,6 +1,8 @@
 #ifndef TABOU_TABULIST_H
 #define TABOU_TABULIST_H
 
+#include "Utils.h"
+
 //!Item of the Tabu list.
 typedef struct _TabuItem
 {
@@ -16,6 +18,8 @@ typedef struct _TabuItem
 typedef struct _TabuList{
 	//!First element of the list.
 	TabuItem * next;
+	//!Last element of the list.
+	TabuItem * last;
 	//!Maximum size of the list.
 	unsigned int maxSize;
 	//!Current size of the list.
@@ -37,5 +41,21 @@ TabuList * tabuList_create(unsigned int maxSize);
  * @param list The list to destroy.
 */
 void tabuList_destroy(TabuList * list);
+
+/**
+ * Add an item to the list.
+ * If the list becomes too big, the oldest element is removed.
+ *
+ * @param item The item to add.
+ */
+void tabuList_addItem(TabuItem * item);
+
+/**
+ * Search for an item in this list.
+ *
+ * @param item The item to search for.
+ * @return True if found, False otherwise.
+ */
+Bool tabuList_contains(TabuItem * item);
 
 #endif //TABOU_TABULIST_H

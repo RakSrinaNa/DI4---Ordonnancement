@@ -8,6 +8,7 @@ TabuList * tabuList_create(unsigned int maxSize)
 	list->maxSize = maxSize;
 	list->size = 0;
 	list->next = NULL;
+	list->last = NULL;
 	return list;
 }
 
@@ -21,4 +22,14 @@ void tabuList_destroy(TabuList * list)
 		current = next;
 	}
 	free(list);
+}
+
+void tabuList_addItem(TabuItem * item)
+{
+
+}
+
+Bool tabuList_contains(TabuItem * item)
+{
+	return True;
 }
