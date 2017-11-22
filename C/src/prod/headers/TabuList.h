@@ -46,16 +46,27 @@ void tabuList_destroy(TabuList * list);
  * Add an item to the list.
  * If the list becomes too big, the oldest element is removed.
  *
+ * @param list The list to add into.
  * @param item The item to add.
  */
-void tabuList_addItem(TabuItem * item);
+void tabuList_addItem(TabuList * list, TabuItem * item);
 
 /**
  * Search for an item in this list.
  *
+ * @param list The list to search in.
  * @param item The item to search for.
  * @return True if found, False otherwise.
  */
-Bool tabuList_contains(TabuItem * item);
+Bool tabuList_contains(TabuList * list, TabuItem * item);
+
+/**
+ * Compares two items of the list.
+ *
+ * @param item1 The first item.
+ * @param item2 The second item.
+ * @return True if the same, False otherwise.
+ */
+Bool tabuList_isSame(TabuItem * item1, TabuItem * item2);
 
 #endif //TABOU_TABULIST_H
