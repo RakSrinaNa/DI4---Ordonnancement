@@ -18,7 +18,7 @@ void tabuList_destroy(TabuList * list)
 	while(current != NULL) //For each element of the list.
 	{
 		TabuItem * next = current->next;
-		free(current);
+		tabuItem_destroy(current);
 		current = next;
 	}
 	free(list);
@@ -32,6 +32,7 @@ void tabuList_addItem(TabuList * list, TabuItem * item)
 		warn("tabuList_addItem: Trying to add NULL item into list %p.\n", list);
 		return;
 	}
+	item->next = NULL;
 	if(list->size == 0)
 		list->first = item;
 	else
@@ -44,7 +45,7 @@ void tabuList_addItem(TabuList * list, TabuItem * item)
 	{
 		TabuItem * toDel = list->first;
 		list->first = toDel->next;
-		free(toDel);
+		tabuItem_destroy(toDel);
 		list->size--;
 	}
 }
@@ -57,16 +58,31 @@ Bool tabuList_contains(TabuList * list, TabuItem * item)
 	TabuItem * current = list->first;
 	while(current != NULL)
 	{
-		if(tabuList_isSame(item, current))
+		if(tabuItem_isSame(item, current))
 			return True;
 		current = current->next;
 	}
-	return True;
+	return False;
 }
 
-Bool tabuList_isSame(TabuItem * item1, TabuItem * item2)
+Bool tabuItem_isSame(TabuItem * item1, TabuItem * item2)
 {
 	if(item1 == NULL || item2 == NULL)
 		return False;
 	return (item1->destination == item2->destination && item1->source == item2->source) || (item1->destination == item2->source && item1->source == item2->destination) ? True : False;
+}
+
+TabuItem * tabuItem_create(unsigned int source, unsigned int destination)
+{
+	TabuItem * item = NULL;
+	MMALLOC(item, TabuItem, 1, "tabuItem_create");
+	item->source = source;
+	item->destination = destination;
+	item->next = NULL;
+	return item;
+}
+
+void tabuItem_destroy(TabuItem * item)
+{
+	free(item);
 }

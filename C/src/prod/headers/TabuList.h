@@ -68,6 +68,23 @@ Bool tabuList_contains(TabuList * list, TabuItem * item);
  * @param item2 The second item.
  * @return True if the same, False otherwise.
  */
-Bool tabuList_isSame(TabuItem * item1, TabuItem * item2);
+Bool tabuItem_isSame(TabuItem * item1, TabuItem * item2);
+
+/**
+ * Create a tabu item.
+ *
+ * @param source The source of the item.
+ * @param destination The destination of the item.
+ * @return The item.
+ * @remark Needs to be freed with tabuItem_destroy.
+ */
+TabuItem * tabuItem_create(unsigned int source, unsigned int destination);
+
+/**
+ * Frees a tabu item.
+ *
+ * @param item The item to destroy.
+*/
+void tabuItem_destroy(TabuItem * item);
 
 #endif //TABOU_TABULIST_H
