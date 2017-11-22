@@ -6,6 +6,16 @@
 #include "Solution.h"
 #include "Instance.h"
 
+//!Item of the Tabu list.
+typedef struct _TabuItem
+{
+	//!Swap : one of the two swapped elements ; EBSR / EFSR : the moved task.
+	unsigned int source;
+	//!Swap : one of the two swapped elements ; EBSR / EFSR : the destination batch.
+	unsigned int destination;
+} TabuItem;
+
+
 /**
  * Initializes the first solution.
  *
@@ -27,10 +37,10 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 //TODO doc
 Solution * tabu_search(Instance * instance);
 
-void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor);
+void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList);
 
-void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor);
+void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList);
 
-void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor);
+void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList);
 
 #endif

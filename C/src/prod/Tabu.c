@@ -73,7 +73,7 @@ Solution * tabu_search(Instance * instance)
 }
 
 //TODO for these TODOs : cf python
-void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor)
+void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList)
 {
 	unsigned int bestVal = 0xFFFFFFFF;
 	Solution * best;
@@ -99,14 +99,23 @@ void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solu
 			}
 		}
 	}
+	UNUSED(tabuList);
 }
 
-void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor)
+void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList)
 {
+	UNUSED(currentSolution);
+	UNUSED(bestSolution);
+	UNUSED(bestNeighbor);
+	UNUSED(tabuList);
 }
 
-void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor)
+void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList)
 {
+	UNUSED(currentSolution);
+	UNUSED(bestSolution);
+	UNUSED(bestNeighbor);
+	UNUSED(tabuList);
 }
 
 

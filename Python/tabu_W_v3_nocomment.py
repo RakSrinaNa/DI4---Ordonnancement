@@ -554,32 +554,22 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     # voisinage = swap
     if(FLAG_SWAP):
         nb_batches = len(sol_cour)
-        #print(sol_cour)
         batch_i=0
-        #for batch_i in range(0,nb_batches-1):
-        while batch_i <= nb_batches-2:
+        while batch_i <= nb_batches-2:#for batch_i in range(0,nb_batches-1):
             index_i = 0
-            while index_i <= len(sol_cour[batch_i])-1:
-            #for job_i in sol_cour[batch_i]:
+            while index_i <= len(sol_cour[batch_i])-1:#for job_i in sol_cour[batch_i]:
                 job_i = sol_cour[batch_i][index_i]
                 batch_j = batch_i+1
-                while batch_j <= nb_batches-1:
-                #for batch_j in range(batch_i+1,nb_batches):
+                while batch_j <= nb_batches-1:#for batch_j in range(batch_i+1,nb_batches):
                     index_j = 0
-                    while index_j <= len(sol_cour[batch_j])-1:
-                    #for job_j in sol_cour[batch_j]:
+                    while index_j <= len(sol_cour[batch_j])-1:#for job_j in sol_cour[batch_j]:
                         job_j = sol_cour[batch_j][index_j]
                         if index_j-index_i <= DELTA:
-                            #print('SWAP job_i=',job_i,'job_j=',job_j)
                             save_sol_cour = copy.deepcopy(sol_cour)
-                            #print('SWAP sol_cour avant swap',sol_cour)
                             val_voisin = swap2(batch_i,index_i,batch_j,index_j,sol_cour,diversification)
-                            #print('SWAP sol_cour apres swap',sol_cour,val_voisin)
-                            # si on est le meilleur voisin
-                            if (val_voisin < val_best_vois) and PasTabou('s',job_i,job_j) :
+                            if (val_voisin < val_best_vois) and PasTabou('s',job_i,job_j) :# si on est le meilleur voisin
                                 val_best_vois = val_voisin
                                 Best_vois = copy.deepcopy(sol_cour)
-                                #print('SWAP Best_vois=',Best_vois,'(',val_best_vois,')')
                                 typeBest_vois='s'
                                 if TABOU_LOGIQUE: typeIndex_i,typeIndex_j=job_j,job_i
                                 else : typeIndex_i,typeIndex_j=job_i,job_j
