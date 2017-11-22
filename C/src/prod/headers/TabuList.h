@@ -48,6 +48,7 @@ void tabuList_destroy(TabuList * list);
  *
  * @param list The list to add into. Not null.
  * @param item The item to add.
+ * @remark The item should be in the heap.
  */
 void tabuList_addItem(TabuList * list, TabuItem * item);
 
