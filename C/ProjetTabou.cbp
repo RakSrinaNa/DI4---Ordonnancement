@@ -100,6 +100,9 @@
 		<Unit filename="src/prod/Tabu.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/prod/TabuList.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/prod/Task.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -111,6 +114,7 @@
 		<Unit filename="src/prod/headers/SolutionInfo.h" />
 		<Unit filename="src/prod/headers/Sort.h" />
 		<Unit filename="src/prod/headers/Tabu.h" />
+		<Unit filename="src/prod/headers/TabuList.h" />
 		<Unit filename="src/prod/headers/Task.h" />
 		<Unit filename="src/prod/headers/Utils.h" />
 		<Unit filename="src/unit/InstanceUnit.c">
@@ -153,6 +157,11 @@
 			<Option target="Debug" />
 			<Option target="Unit" />
 		</Unit>
+		<Unit filename="src/unit/TabuListUnit.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
+		</Unit>
 		<Unit filename="src/unit/TaskUnit.c">
 			<Option compilerVar="CC" />
 			<Option target="Debug" />
@@ -171,6 +180,10 @@
 		<Unit filename="src/unit/headers/SolutionInfoUnit.h" />
 		<Unit filename="src/unit/headers/SolutionUnit.h" />
 		<Unit filename="src/unit/headers/SortUnit.h" />
+		<Unit filename="src/unit/headers/TabuListUnit.h">
+			<Option target="Debug" />
+			<Option target="Unit" />
+		</Unit>
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
 		<Extensions>

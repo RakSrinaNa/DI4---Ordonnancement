@@ -119,6 +119,7 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
 					item.source = task1; item.destination = task2;
 					if(newInfo->score < bestVal && tabuList_contains(tabuList, &item))
 					{
+						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
 						bestVal = newInfo->score;
 						if(bestSolution != NULL)
 							solution_destroy(bestSolution);
