@@ -5,6 +5,7 @@
 #include "headers/Solution.h"
 #include "FLAGS.h"
 #include "headers/Sort.h"
+#include "headers/TabuList.h"
 
 Solution * tabu_solutionInit(Instance * instance)
 {
@@ -42,80 +43,106 @@ Solution * tabu_search(Instance * instance)
 	Solution * initSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = initSolution;
 	Solution * currentSolution = initSolution;
-	Solution * bestNeighbor = NULL;
+	solution_eval(initSolution);
 	unsigned int nbIterations = 0;
 	unsigned int nbNoBetterIterations = 0;
 	Bool diversification = False;
+	TabuList *tabuList = tabuList_create(TABU_LIST_SIZE);
+	
 	struct timeb timeStart;
 	ftime(&timeStart);
 	struct timeb timeNow;
 	ftime(&timeNow);
 	unsigned int timeLimit = instance->taskCount * instance->machineCount / 4;
 	
-	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < NB_ITERATION_MAX)
+	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
+		Solution * iterSolution = NULL;
 		if(TABU_SEARCH_SWAP)
-		{
-			tabu_searchSwap(&currentSolution, &bestSolution, &bestNeighbor);
-		}
+			iterSolution = tabu_searchSwap(currentSolution, tabuList);
 		if(TABU_SEARCH_EBSR)
-		{
-			tabu_searchEBSR(&currentSolution, &bestSolution, &bestNeighbor);
-		}
+			tabu_searchEBSR(currentSolution, tabuList);
 		if(TABU_SEARCH_EFSR)
+			tabu_searchEFSR(currentSolution, tabuList);
+		
+		if(iterSolution != NULL)
 		{
-			tabu_searchEFSR(&currentSolution, &bestSolution, &bestNeighbor);
+			solution_eval(iterSolution);
+			if(iterSolution->info->score < bestSolution->info->score && diversification == False)
+			{
+				solution_destroy(initSolution);
+				bestSolution = iterSolution;
+				nbNoBetterIterations = 0;
+			}
+			else
+				nbNoBetterIterations++;
 		}
+		else
+			nbNoBetterIterations++;
+		
+		diversification = False;
+		
+		
+		nbIterations++;
 		ftime(&timeNow);
 	}
 	
 	return NULL;
 }
 
-//TODO for these TODOs : cf python
-void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList)
+Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
 {
 	unsigned int bestVal = 0xFFFFFFFF;
-	Solution * best;
-	for(unsigned int packIndex = 0; packIndex < (*currentSolution)->packCount; packIndex++)
+	Solution * bestSolution = NULL;
+	task_t bestSwap1, bestSwap2;
+	for(unsigned int packIndex = 0; packIndex < currentSolution->packCount; packIndex++)
 	{
-		for(unsigned int taskIndex = 0; taskIndex < (*currentSolution)->packList[packIndex]->taskCount; taskIndex++)
+		for(unsigned int taskIndex = 0; taskIndex < currentSolution->packList[packIndex]->taskCount; taskIndex++)
 		{
-			task_t task1 = (*currentSolution)->packList[packIndex]->deliveries[taskIndex];
-			for(unsigned int packIndex2 = packIndex; packIndex2 < (*currentSolution)->packCount; packIndex2++)
+			task_t task1 = currentSolution->packList[packIndex]->deliveries[taskIndex];
+			for(unsigned int packIndex2 = packIndex; packIndex2 < currentSolution->packCount; packIndex2++)
 			{
-				for(unsigned int taskIndex2 = 0; taskIndex2 < (*currentSolution)->packList[packIndex2]->taskCount; taskIndex2++)
+				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
-					task_t task2 = (*currentSolution)->packList[packIndex2]->deliveries[taskIndex2];
-					//TODO DELTA
-					Solution * newSolution = sort_swapDeliveries(*currentSolution, task1, task2);
+					task_t task2 = currentSolution->packList[packIndex2]->deliveries[taskIndex2];
+					if(taskIndex2 - taskIndex < TABU_DELTA)
+						continue;
+					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
 					SolutionInfo * newInfo = solution_eval(newSolution);
-					if(newInfo->score < bestVal) // TODO && notTabu(swap)
+					TabuItem item; 
+					item.source = task1; item.destination = task2;
+					if(newInfo->score < bestVal && tabuList_contains(tabuList, &item))
 					{
 						bestVal = newInfo->score;
-						//TODO HERE
+						if(bestSolution != NULL)
+							solution_destroy(bestSolution);
+						bestSolution = newSolution;
+						bestSwap1 = task1;
+						bestSwap2 = task2;
 					}
 				}
 			}
 		}
 	}
-	UNUSED(tabuList);
+	TabuItem *item = NULL;
+	MMALLOC(item, TabuItem, 1, "tabu_searchSwap");
+	item->source = bestSwap1; item->destination = bestSwap2;
+	tabuList_addItem(tabuList, item);
+	return bestSolution;
 }
 
-void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList)
+Solution * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList)
 {
 	UNUSED(currentSolution);
-	UNUSED(bestSolution);
-	UNUSED(bestNeighbor);
 	UNUSED(tabuList);
+	return NULL;
 }
 
-void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList)
+Solution * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList)
 {
 	UNUSED(currentSolution);
-	UNUSED(bestSolution);
-	UNUSED(bestNeighbor);
 	UNUSED(tabuList);
+	return NULL;
 }
 
 

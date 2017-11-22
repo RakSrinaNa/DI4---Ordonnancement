@@ -5,6 +5,7 @@
 
 #include "Solution.h"
 #include "Instance.h"
+#include "TabuList.h"
 
 /**
  * Initializes the first solution.
@@ -27,10 +28,10 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 //TODO doc
 Solution * tabu_search(Instance * instance);
 
-void tabu_searchSwap(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList);
+Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList);
 
-void tabu_searchEBSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList);
+Solution * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList);
 
-void tabu_searchEFSR(Solution ** currentSolution, Solution ** bestSolution, Solution ** bestNeighbor, TabuItem ** tabuList);
+Solution * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList);
 
 #endif

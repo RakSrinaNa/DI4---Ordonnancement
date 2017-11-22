@@ -23,12 +23,12 @@ void tabuListUnit()
 	
 	item2->source = 1;
 	item2->destination = 2;
-	if(tabuList_isSame(item1, item2))
+	if(!tabuList_isSame(item1, item2))
 		unit_error("TabuList 4: Tabu items should match");
 	
 	item2->source = 2;
 	item2->destination = 1;
-	if(tabuList_isSame(item1, item2))
+	if(!tabuList_isSame(item1, item2))
 		unit_error("TabuList 5: Tabu items should match");
 	
 	TabuList * list = tabuList_create(2);
