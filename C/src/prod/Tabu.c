@@ -100,7 +100,7 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
 {
 	unsigned int bestVal = 0xFFFFFFFF;
 	Solution * bestSolution = NULL;
-	task_t bestSwap1, bestSwap2;
+	task_t bestSwap1 = 0, bestSwap2 = 0;
 	for(unsigned int packIndex = 0; packIndex < currentSolution->packCount; packIndex++)
 	{
 		for(unsigned int taskIndex = 0; taskIndex < currentSolution->packList[packIndex]->taskCount; taskIndex++)
