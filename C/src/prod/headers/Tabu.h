@@ -6,16 +6,6 @@
 #include "Solution.h"
 #include "Instance.h"
 
-//!Item of the Tabu list.
-typedef struct _TabuItem
-{
-	//!Swap : one of the two swapped elements ; EBSR / EFSR : the moved task.
-	unsigned int source;
-	//!Swap : one of the two swapped elements ; EBSR / EFSR : the destination batch.
-	unsigned int destination;
-} TabuItem;
-
-
 /**
  * Initializes the first solution.
  *
