@@ -42,7 +42,7 @@ SolutionInfo * solutionInfo_productionOrder(Solution * solution)
 	for(unsigned int i = 0; i < solution->packCount; i++)
 	{
 		debugPrint("\tProcessing pack %d\n", i);
-		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i - 1]); // Storing information for the next production and the deliveries.
+		info->readyToDeliver[i] = (i == 0 ? 0 : info->readyToDeliver[i - 1]); // Storing information for the first production and the deliveries.
 		Pack * p = solution->packList[i];
 		sequence = sequencer_sequenceProductionPack(solution->instance, p->taskCount, p->deliveries, machineReady);
 		memcpy(&(info->productionOrder[productionIndex]), sequence, p->taskCount * sizeof(task_t)); // Copying the best sequence into the info production.

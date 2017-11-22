@@ -17,7 +17,7 @@ typedef struct _TabuItem
 //!Tabu list.
 typedef struct _TabuList{
 	//!First element of the list.
-	TabuItem * next;
+	TabuItem * first;
 	//!Last element of the list.
 	TabuItem * last;
 	//!Maximum size of the list.
@@ -46,7 +46,7 @@ void tabuList_destroy(TabuList * list);
  * Add an item to the list.
  * If the list becomes too big, the oldest element is removed.
  *
- * @param list The list to add into.
+ * @param list The list to add into. Not null.
  * @param item The item to add.
  */
 void tabuList_addItem(TabuList * list, TabuItem * item);
