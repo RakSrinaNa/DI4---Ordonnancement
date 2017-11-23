@@ -112,8 +112,7 @@ Solution * tabu_search(Instance * instance)
 		nbIterations++;
 		ftime(&timeNow);
 	}
-	
-	return NULL;
+	return bestSolution;
 }
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
