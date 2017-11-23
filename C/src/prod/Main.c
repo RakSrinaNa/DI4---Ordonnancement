@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
 	if(instance != NULL)
 	{
 		Solution * solution = tabu_search(instance);
-		printf("Tabu found best:");
+		printf("Tabu found best:\n");
 		solution_print(solution);
 		solution_destroy(solution);
 	}
