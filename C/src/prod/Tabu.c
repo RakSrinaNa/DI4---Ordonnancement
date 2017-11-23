@@ -172,6 +172,8 @@ TabuSolution * tabu_search(Instance * instance)
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
+	if(currentSolution == NULL)
+		return NULL;
 	unsigned int bestVal = (diversification ? 0 : 0xFFFFFFFF);
 	Solution * bestSolution = NULL;
 	task_t bestSwap1 = 0, bestSwap2 = 0;
