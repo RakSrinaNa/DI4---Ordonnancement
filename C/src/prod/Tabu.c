@@ -53,6 +53,10 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 
 TabuSolution * tabu_search(Instance * instance)
 {
+#ifdef DEV_LOG_SCORE
+	FILE * logScoreFile = fopen("./logScores.csv", "w");
+	fprintf(logScoreFile, "%s;%s\n", "BestEver", "BestIter");
+#endif
 	Solution * currentSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = currentSolution;
 	solution_eval(currentSolution);
@@ -148,10 +152,15 @@ TabuSolution * tabu_search(Instance * instance)
 		
 		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
-		
+#ifdef DEV_LOG_SCORE
+		fprintf(logScoreFile, "%d;%d\n", (bestSolution == NULL) ? 0xFFFFFFFF : bestSolution->info->score, (bestMethodSolution == NULL) ? 0xFFFFFFFF : bestMethodSolution->info->score);
+#endif
 		nbIterations++;
 		ftime(&timeNow);
 	}
+#ifdef DEV_LOG_SCORE
+	fclose(logScoreFile);
+#endif
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
 	return tabuSolution_create(bestSolution, nbIterations, currentTime);
 }
