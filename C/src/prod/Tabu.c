@@ -52,8 +52,8 @@ Solution * tabu_search(Instance * instance)
 	ftime(&timeStart);
 	struct timeb timeNow;
 	ftime(&timeNow);
-	unsigned int timeLimit = instance->taskCount * instance->machineCount / 4;
-	
+	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
+	debugPrint("Time : start at %d, now %d\n", timeStart.time, timeNow.time);
 	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
@@ -112,6 +112,7 @@ Solution * tabu_search(Instance * instance)
 		nbIterations++;
 		ftime(&timeNow);
 	}
+	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
 	return bestSolution;
 }
 

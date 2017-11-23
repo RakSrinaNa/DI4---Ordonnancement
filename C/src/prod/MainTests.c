@@ -6,6 +6,7 @@
 #include "../unit/headers/MainUnit.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "headers/Tabu.h"
 #include "FLAGS.h"
 
 Bool DEBUG = False;
@@ -33,7 +34,7 @@ int main(int argc, char * argv[])
 			}
 			else if(strcmp(method, "temp") == 0) // For internal testing.
 			{
-				filepath = "../Inputs/input.txt";
+				filepath = "./unitResources/Instance1.txt";
 			}
 		}
 	}
@@ -42,12 +43,10 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
-		//instance_print(instance);
-		Solution * solution = solution_create(instance);
-		solution_eval(solution);
+		Solution * solution = tabu_search(instance);
+		printf("Tabu found best : \n");
 		solution_print(solution);
-		solution_save(solution, "../Inputs/output1.txt", 14.25);
-		instance_destroy(instance);
+		solution_destroy(solution);
 	}
 	return 0;
 }
