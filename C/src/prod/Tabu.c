@@ -199,6 +199,8 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool
 						bestSwap1 = task1;
 						bestSwap2 = task2;
 					}
+					else
+						solution_destroy(newSolution);
 				}
 			}
 		}
