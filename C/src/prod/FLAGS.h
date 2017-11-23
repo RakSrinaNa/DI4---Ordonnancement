@@ -14,7 +14,7 @@
 #define TABU_2OPT 0
 #define TABU_FIRST_IMPROVE 1
 #define TABU_LOGIC 0
-#define TABU_DELTA 8
+#define TABU_DELTA 0
 #define TABU_DELTA_BATCH 4
 
 #define CACHED_SCORE 1 //Use the score cache system.

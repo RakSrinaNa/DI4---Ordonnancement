@@ -52,7 +52,7 @@ Solution * tabu_search(Instance * instance)
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
 	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
-		debugPrint("Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
+		debugPrint("----- Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
 		Solution * bestMethodSolution = NULL;
 		if(TABU_SEARCH_SWAP)
 		{
@@ -153,14 +153,14 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
 					task_t task2 = currentSolution->packList[packIndex2]->deliveries[taskIndex2];
-					if(taskIndex2 - taskIndex < TABU_DELTA)
-						continue;
+					/*if(taskIndex2 - taskIndex <= TABU_DELTA)
+						continue;*/
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
 					SolutionInfo * newInfo = solution_eval(newSolution);
 					TabuItem item;
 					item.source = task1;
 					item.destination = task2;
-					if((diversification == True ? (newInfo->score < bestVal) : (newInfo->score > bestVal)) && tabuList_contains(tabuList, &item))
+					if((diversification == True ? (newInfo->score > bestVal) : (newInfo->score < bestVal)) && !tabuList_contains(tabuList, &item))
 					{
 						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
 						bestVal = newInfo->score;
