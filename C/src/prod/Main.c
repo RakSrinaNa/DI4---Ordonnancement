@@ -30,8 +30,7 @@ int main(int argc, char * argv[])
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found best in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
-		solution_destroy(solution->solution);
-		free(solution);
+		tabuSolution_destroy(solution);
 	}
 	return 0;
 }

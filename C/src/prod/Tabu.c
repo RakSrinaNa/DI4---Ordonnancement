@@ -4,6 +4,18 @@
 #include "FLAGS.h"
 #include "headers/Sort.h"
 
+TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time)
+{
+	TabuSolution * tabuSolution = NULL;
+	MMALLOC(tabuSolution, TabuSolution, 1, "tabu_search");
+	tabuSolution->solution = solution;
+	tabuSolution->iterations = iterations;
+	tabuSolution->time = time;
+	return tabuSolution;
+}
+
+TabuSolution * tabuSolution_destroy(TabuSolution * solution);
+
 Solution * tabu_solutionInit(Instance * instance)
 {
 	debugPrint("Creating initial solution for instance %p\n", instance);
@@ -136,12 +148,7 @@ TabuSolution * tabu_search(Instance * instance)
 		ftime(&timeNow);
 	}
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
-	TabuSolution * tabuSolution = NULL;
-	MMALLOC(tabuSolution, TabuSolution, 1, "tabu_search");
-	tabuSolution->solution = bestSolution;
-	tabuSolution->iterations = nbIterations;
-	tabuSolution->time = currentTime;
-	return tabuSolution;
+	return tabuSolution_create(bestSolution, nbIterations, currentTime);
 }
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)

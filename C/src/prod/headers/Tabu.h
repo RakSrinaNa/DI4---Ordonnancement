@@ -18,6 +18,25 @@ typedef struct _TabuSolution {
 } TabuSolution;
 
 /**
+ * Creates a tabu solution.
+ *
+ * @param solution The solution found.
+ * @param iterations The number of iterations done.
+ * @param time The time taken.
+ * @return A new tabu solution.
+ * @remark Needs to be freed with tabuSolution_destroy.
+ */
+TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time);
+
+
+/**
+ * Frees a tabu solution.
+ *
+ * @param solution The solution to destroy.
+*/
+TabuSolution * tabuSolution_destroy(TabuSolution * solution);
+
+/**
  * Initializes the first solution.
  *
  * @param instance The instance to build the solution for. Not null.
