@@ -5,6 +5,7 @@
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 #include "FLAGS.h"
+#include "headers/Tabu.h"
 
 Bool DEBUG = False;
 
@@ -26,12 +27,10 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
-		//instance_print(instance);
-		Solution * solution = solution_create(instance);
-		solution_eval(solution);
+		Solution * solution = tabu_search(instance);
+		printf("Tabu found best:");
 		solution_print(solution);
-		solution_save(solution, "./Inputs/output1.txt", 14.25);
-		instance_destroy(instance);
+		solution_destroy(solution);
 	}
 	return 0;
 }
