@@ -19,7 +19,7 @@ Solution * solution_create(Instance * instance)
 		pack_addTask(solution->packList[0], i);
 	solution->packCount++;
 	
-	debugPrint("Created solution : %p\n", solution);
+	debugPrint("Solution created : %p\n", solution);
 	return solution;
 }
 
@@ -35,7 +35,7 @@ void solution_destroy(Solution * solution)
 	free(solution->packList);
 	solutionInfo_destroy(solution, solution->info);
 	free(solution);
-	debugPrint("Destroyed solution : %p\n", solution);
+	debugPrint("Solution destroyed : %p\n", solution);
 }
 
 Solution * solution_copy(Solution * solution)
@@ -48,7 +48,7 @@ Solution * solution_copy(Solution * solution)
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			solution_moveTaskPack(copy, solution->packList[i]->deliveries[j], i);
-	debugPrint("Copied solution %p to %p\n", solution, copy);
+	debugPrint("Solution %p copied to %p\n", solution, copy);
 	return copy;
 }
 

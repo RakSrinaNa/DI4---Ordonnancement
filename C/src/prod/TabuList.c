@@ -45,6 +45,7 @@ void tabuList_addItem(TabuList * list, TabuItem * item)
 	{
 		TabuItem * toDel = list->first;
 		list->first = toDel->next;
+		debugPrint("Removing tabu item %p in list %p\n", toDel, list);
 		tabuItem_destroy(toDel);
 		list->size--;
 	}
