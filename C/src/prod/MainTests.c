@@ -67,8 +67,8 @@ void warn(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, "\nWARNING: ");
-	vfprintf(stderr, format, args);
+	fprintf(stdout, "\nWARNING: ");
+	vfprintf(stdout, format, args);
 	va_end(args);
 }
 
@@ -76,8 +76,8 @@ void fatalError(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, "FATAL ERROR!\n |-\t");
-	vfprintf(stderr, format, args);
+	fprintf(stdout, "FATAL ERROR!\n |-\t");
+	vfprintf(stdout, format, args);
 	va_end(args);
 	exit(EXIT_FAILURE);
 }

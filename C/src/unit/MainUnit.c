@@ -17,6 +17,9 @@ extern Bool DEBUG;
 
 int mainUnit()
 {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+	
 	char * startTest = "\nUNIT: -------------------------------------------------------------------------\n";
 	char * endTest = "UNIT: -------------------------------------------------------------------------\n";
 	
