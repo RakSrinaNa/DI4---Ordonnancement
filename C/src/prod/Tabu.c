@@ -50,7 +50,6 @@ Solution * tabu_search(Instance * instance)
 	struct timeb timeNow;
 	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
-	debugPrint("Time : start at %d, now %d\n", timeStart.time, timeNow.time);
 	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
@@ -58,7 +57,6 @@ Solution * tabu_search(Instance * instance)
 		if(TABU_SEARCH_SWAP)
 		{
 			Solution * iterSolutionSwap = tabu_searchSwap(currentSolution, tabuList, diversification);
-			solution_eval(iterSolutionSwap);
 			if(iterSolutionSwap != NULL)
 			{
 				solution_eval(iterSolutionSwap);
@@ -68,7 +66,6 @@ Solution * tabu_search(Instance * instance)
 		if(TABU_SEARCH_EBSR)
 		{
 			Solution * iterSolutionEBSR = tabu_searchEBSR(currentSolution, tabuList, diversification);
-			solution_eval(iterSolutionEBSR);
 			if(iterSolutionEBSR != NULL)
 			{
 				solution_eval(iterSolutionEBSR);
