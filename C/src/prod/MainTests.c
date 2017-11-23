@@ -43,10 +43,11 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
-		Solution * solution = tabu_search(instance);
-		printf("Tabu found best : \n");
-		solution_print(solution);
-		solution_destroy(solution);
+		TabuSolution * solution = tabu_search(instance);
+		printf("Tabu found best in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
+		solution_print(solution->solution);
+		solution_destroy(solution->solution);
+		free(solution);
 	}
 	return 0;
 }

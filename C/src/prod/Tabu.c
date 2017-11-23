@@ -35,7 +35,7 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 	return end.time - start.time + (end.millitm - start.millitm) / 1000.0f;
 }
 
-Solution * tabu_search(Instance * instance)
+TabuSolution * tabu_search(Instance * instance)
 {
 	Solution * currentSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = currentSolution;
@@ -50,7 +50,8 @@ Solution * tabu_search(Instance * instance)
 	struct timeb timeNow;
 	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
-	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
+	long double currentTime = 0;
+	while((currentTime = tabu_getTimeDiff(timeStart, timeNow)) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
 		Solution * bestMethodSolution = NULL;
@@ -135,7 +136,12 @@ Solution * tabu_search(Instance * instance)
 		ftime(&timeNow);
 	}
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
-	return bestSolution;
+	TabuSolution * tabuSolution = NULL;
+	MMALLOC(tabuSolution, TabuSolution, 1, "tabu_search");
+	tabuSolution->solution = bestSolution;
+	tabuSolution->iterations = nbIterations;
+	tabuSolution->time = currentTime;
+	return tabuSolution;
 }
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
