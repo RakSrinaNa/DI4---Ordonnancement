@@ -93,7 +93,8 @@ void pack_moveDelivery(Pack * pack, task_t delivery, task_t position);
  * Prints a pack.
  *
  * @param pack The pack.
+ * @param packID The pack id.
  */
-void pack_print(Pack * pack);
+void pack_print(Pack * pack, unsigned int packID);
 
 #endif
