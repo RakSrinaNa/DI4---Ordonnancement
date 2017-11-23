@@ -61,7 +61,7 @@ void warn(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stdout, "\nWARNING: ");
+	fprintf(stdout, "WARNING: ");
 	vfprintf(stdout, format, args);
 	va_end(args);
 }
