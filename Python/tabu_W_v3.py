@@ -17,7 +17,7 @@
 # Importation de packages
 # ########################################################
 
-from tkinter import *
+#from tkinter import *
 import os
 import math
 import time # pour avoir le temsp de calcul cpu
@@ -36,7 +36,7 @@ dd = dates dues
 tt = temps de trajet
 """
 
-mesdonnees = open("../Inputs/input.txt","r")
+mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
 ligne1 = mesdonnees.readline()
 indice=0
 j=0
@@ -118,8 +118,8 @@ else: NB_ITE_SANS_AMEL_MAX = 15
 
 AVEC_DIVERSIFICATION = 1
 
-FLAG_EBSR = 1
-FLAG_EFSR = 1
+FLAG_EBSR = 0
+FLAG_EFSR = 0
 FLAG_SWAP = 1
 FLAG_2OPT = 0
 FLAG_FIRST_IMPROVE = 1

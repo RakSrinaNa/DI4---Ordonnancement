@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="temp --debug" />
+				<Option parameters="./unitResources/Instance6.txt --debug" />
 				<Compiler>
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
@@ -28,6 +28,7 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="../Inputs/I_1_5_100_1.txt" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-pedantic-errors" />
