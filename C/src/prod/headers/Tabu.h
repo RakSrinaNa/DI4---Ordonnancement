@@ -7,6 +7,35 @@
 #include "Instance.h"
 #include "TabuList.h"
 
+//!Contains the solution the tabu found, with the time take and iterations.
+typedef struct _TabuSolution {
+	//!The solution found.
+	Solution * solution;
+	//!The number of iterations done.
+	unsigned int iterations;
+	//!The time taken.
+	long double time;
+} TabuSolution;
+
+/**
+ * Creates a tabu solution.
+ *
+ * @param solution The solution found.
+ * @param iterations The number of iterations done.
+ * @param time The time taken.
+ * @return A new tabu solution.
+ * @remark Needs to be freed with tabuSolution_destroy.
+ */
+TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time);
+
+
+/**
+ * Frees a tabu solution.
+ *
+ * @param solution The solution to destroy.
+*/
+TabuSolution * tabuSolution_destroy(TabuSolution * solution);
+
 /**
  * Initializes the first solution.
  *
@@ -26,7 +55,7 @@ Solution * tabu_solutionInit(Instance * instance);
 long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 
 //TODO doc
-Solution * tabu_search(Instance * instance);
+TabuSolution * tabu_search(Instance * instance);
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
