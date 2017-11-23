@@ -83,7 +83,7 @@ void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info
 		printf("\n\t\tDeliveries :\n");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			printf("\t\t\tBatch %d : (", i);
+			printf("\t\t\tBatch #%d : (", i);
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 				printf(" T%d", info->deliveries[i][j] + 1);
 			printf(" )\n");

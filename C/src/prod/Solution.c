@@ -145,7 +145,7 @@ void solution_print(Solution * solution)
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
 			printf("\t\t");
-			pack_print(solution->packList[i]);
+			pack_print(solution->packList[i], i);
 			printf("\n");
 		}
 		solutionInfo_print(solution, solution->info);
