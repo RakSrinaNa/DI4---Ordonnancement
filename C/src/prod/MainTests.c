@@ -14,28 +14,23 @@ Bool DEBUG = False;
 int main(int argc, char * argv[])
 {
 	srand((unsigned long) SEED);
-	char * filepath = "./Input.txt";
+	char * filepath = "./unitResources/Instance1.txt";
 	if(argc >= 2) //Testings and stuff.
 	{
-		char * method = NULL;
+		Bool test = False;
 		for(int i = 1; i < argc; i++)
 		{
 			if(strcmp(argv[i], "--debug") == 0)
 				DEBUG = True;
+			else if(strcmp(argv[i], "--test") == 0)
+				test = True;
 			else
-				method = argv[i];
+				filepath = argv[i];
 		}
-		if(method != NULL)
+		if(test)
 		{
-			if(strcmp(method, "test") == 0) // Used to start unit tests.
-			{
-				mainUnit();
-				exit(EXIT_SUCCESS);
-			}
-			else if(strcmp(method, "temp") == 0) // For internal testing.
-			{
-				filepath = "./unitResources/Instance1.txt";
-			}
+			mainUnit();
+			exit(EXIT_SUCCESS);
 		}
 	}
 	
