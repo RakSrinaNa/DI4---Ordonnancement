@@ -34,7 +34,7 @@ TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations,
  *
  * @param solution The solution to destroy.
 */
-TabuSolution * tabuSolution_destroy(TabuSolution * solution);
+void tabuSolution_destroy(TabuSolution * solution);
 
 /**
  * Initializes the first solution.

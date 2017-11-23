@@ -14,7 +14,7 @@ TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations,
 	return tabuSolution;
 }
 
-TabuSolution * tabuSolution_destroy(TabuSolution * solution)
+void tabuSolution_destroy(TabuSolution * solution)
 {
 	solution_destroy(solution->solution);
 	free(solution);
