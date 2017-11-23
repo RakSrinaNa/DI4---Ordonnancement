@@ -57,22 +57,43 @@ Solution * tabu_search(Instance * instance)
 	while(tabu_getTimeDiff(timeStart, timeNow) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
-		Solution * iterSolution = NULL;
+		Solution * iterSolutionSwap = NULL;
+		Solution * iterSolutionEBSR = NULL;
+		Solution * iterSolutionEFSR = NULL;
 		if(TABU_SEARCH_SWAP)
-			iterSolution = tabu_searchSwap(currentSolution, tabuList);
+			iterSolutionSwap = tabu_searchSwap(currentSolution, tabuList, diversification);
 		if(TABU_SEARCH_EBSR)
-			tabu_searchEBSR(currentSolution, tabuList);
+			iterSolutionEBSR = tabu_searchEBSR(currentSolution, tabuList, diversification);
 		if(TABU_SEARCH_EFSR)
-			tabu_searchEFSR(currentSolution, tabuList);
-		
-		if(iterSolution != NULL)
+			iterSolutionEFSR = tabu_searchEFSR(currentSolution, tabuList, diversification);
+		if(diversification == True)
 		{
-			solution_eval(iterSolution);
-			if(iterSolution->info->score < bestSolution->info->score && diversification == False)
+			diversification = False;
+			nbNoBetterIterations = 0;
+		}
+		
+		if(iterSolutionSwap != NULL && iterSolutionEBSR != NULL && iterSolutionEFSR != NULL)
+		{
+			solution_eval(iterSolutionSwap);
+			solution_eval(iterSolutionEBSR);
+			solution_eval(iterSolutionEFSR);
+			Solution *bestMethodSolution = iterSolutionSwap;
+			if(iterSolutionSwap->info->score > iterSolutionEBSR->info->score)
+				bestMethodSolution = iterSolutionSwap;
+			if(bestMethodSolution->info->score > iterSolutionEFSR->info->score)
+				bestMethodSolution = iterSolutionEFSR;
+			
+			if(bestMethodSolution->info->score < bestSolution->info->score)
 			{
-				debugPrint("Found better solution %p, replacing %p\n", iterSolution, bestSolution);
+				debugPrint("Found better solution %p, replacing %p\n", bestMethodSolution, bestSolution);
 				solution_destroy(bestSolution);
-				bestSolution = iterSolution;
+				bestSolution = bestMethodSolution;
+				if(bestMethodSolution != iterSolutionSwap)
+					solution_destroy(iterSolutionSwap);
+				if(bestMethodSolution != iterSolutionEBSR)
+					solution_destroy(iterSolutionEBSR);
+				if(bestMethodSolution != iterSolutionEFSR)
+					solution_destroy(iterSolutionEFSR);
 				nbNoBetterIterations = 0;
 			}
 			else
@@ -84,10 +105,9 @@ Solution * tabu_search(Instance * instance)
 			nbNoBetterIterations++;
 			warn("Found NULL solution\n");
 		}
-			
-		if(diversification == True)
-			diversification = False;
 		
+		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
+			diversification = True;
 		
 		nbIterations++;
 		ftime(&timeNow);
@@ -96,7 +116,7 @@ Solution * tabu_search(Instance * instance)
 	return NULL;
 }
 
-Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
+Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
 	unsigned int bestVal = 0xFFFFFFFF;
 	Solution * bestSolution = NULL;
@@ -117,7 +137,7 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
 					SolutionInfo * newInfo = solution_eval(newSolution);
 					TabuItem item; 
 					item.source = task1; item.destination = task2;
-					if(newInfo->score < bestVal && tabuList_contains(tabuList, &item))
+					if((diversification == True ? (newInfo->score < bestVal) : (newInfo->score > bestVal)) && tabuList_contains(tabuList, &item))
 					{
 						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
 						bestVal = newInfo->score;
@@ -136,17 +156,19 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList)
 	return bestSolution;
 }
 
-Solution * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList)
+Solution * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
 	UNUSED(currentSolution);
 	UNUSED(tabuList);
+	UNUSED(diversification);
 	return NULL;
 }
 
-Solution * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList)
+Solution * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
 	UNUSED(currentSolution);
 	UNUSED(tabuList);
+	UNUSED(diversification);
 	return NULL;
 }
 
