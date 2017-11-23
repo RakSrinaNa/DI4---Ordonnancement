@@ -11,6 +11,9 @@ Bool DEBUG = False;
 
 int main(int argc, char * argv[])
 {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+	
 	char * filepath = "./Input.txt";
 	if(argc >= 2)
 	{
