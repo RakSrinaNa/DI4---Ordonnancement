@@ -137,6 +137,7 @@ TabuSolution * tabu_search(Instance * instance)
 			if(bestMethodSolution->info->score < bestSolution->info->score)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodSolution, bestSolution);
+				solution_print(bestMethodSolution);
 				solution_destroy(bestSolution);
 				bestSolution = bestMethodSolution;
 				nbNoBetterIterations = 0;
@@ -153,15 +154,15 @@ TabuSolution * tabu_search(Instance * instance)
 		
 		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
-#ifdef DEV_LOG_SCORE
-		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? 0xFFFFFFFF : bestSolution->info->score, (bestMethodSolution == NULL) ? 0xFFFFFFFF : bestMethodSolution->info->score);
-#endif
+		#ifdef DEV_LOG_SCORE
+			fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? 0xFFFFFFFF : bestSolution->info->score, (bestMethodSolution == NULL) ? 0xFFFFFFFF : bestMethodSolution->info->score);
+		#endif
 		nbIterations++;
 		ftime(&timeNow);
 	}
-#ifdef DEV_LOG_SCORE
-	fclose(logScoreFile);
-#endif
+	#ifdef DEV_LOG_SCORE
+		fclose(logScoreFile);
+	#endif
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
 	return tabuSolution_create(bestSolution, nbIterations, currentTime);
 }

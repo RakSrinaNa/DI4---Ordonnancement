@@ -38,6 +38,7 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
+		instance_print(instance);
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found best in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
