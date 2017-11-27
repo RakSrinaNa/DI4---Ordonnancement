@@ -36,7 +36,7 @@ dd = dates dues
 tt = temps de trajet
 """
 
-mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
+mesdonnees = open("../Inputs/I_1_5_100_1.txt","r")
 ligne1 = mesdonnees.readline()
 indice=0
 j=0

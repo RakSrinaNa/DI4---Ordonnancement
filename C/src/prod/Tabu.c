@@ -137,13 +137,16 @@ TabuSolution * tabu_search(Instance * instance)
 			if(bestMethodSolution->info->score < bestSolution->info->score)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodSolution, bestSolution);
-				//solution_print(bestMethodSolution);
+				solution_print(bestMethodSolution);
 				solution_destroy(bestSolution);
 				bestSolution = bestMethodSolution;
 				nbNoBetterIterations = 0;
 			}
 			else
+			{
+				solution_destroy(bestMethodSolution);
 				nbNoBetterIterations++;
+			}
 		}
 		else
 		{
@@ -169,6 +172,8 @@ TabuSolution * tabu_search(Instance * instance)
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
+	if(currentSolution == NULL)
+		return NULL;
 	unsigned int bestVal = (diversification ? 0 : 0xFFFFFFFF);
 	Solution * bestSolution = NULL;
 	task_t bestSwap1 = 0, bestSwap2 = 0;
