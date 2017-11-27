@@ -139,14 +139,11 @@ TabuSolution * tabu_search(Instance * instance)
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodSolution, bestSolution);
 				solution_print(bestMethodSolution);
 				solution_destroy(bestSolution);
-				bestSolution = bestMethodSolution;
+				bestSolution = solution_copy(bestMethodSolution);
 				nbNoBetterIterations = 0;
 			}
 			else
-			{
-				solution_destroy(bestMethodSolution);
 				nbNoBetterIterations++;
-			}
 		}
 		else
 		{
@@ -154,6 +151,7 @@ TabuSolution * tabu_search(Instance * instance)
 			nbNoBetterIterations++;
 			warn("Found NULL solution\n");
 		}
+		solution_destroy(bestMethodSolution);
 		
 		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
