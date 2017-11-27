@@ -18,4 +18,4 @@ $(EXEC_PROD):
 .PHONY: clean
 
 doTest: all
-	cd C && ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) ../Inputs/I_1_5_20_2.txt --debug && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC_PROD) ../Inputs/I_1_5_20_2.txt --debug && cd ..
+	cd C && ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) ../Inputs/I_1_5_20_2.txt && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC_PROD) ../Inputs/I_1_5_20_2.txt && cd ..
