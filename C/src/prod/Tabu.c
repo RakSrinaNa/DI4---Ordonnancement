@@ -126,24 +126,29 @@ TabuSolution * tabu_search(Instance * instance)
 		}
 		if(diversification == True)
 		{
+			printf("DIVERSIFICATION\n");
 			diversification = False;
 			nbNoBetterIterations = 0;
 		}
 		
-		solution_destroy(currentSolution);
-		currentSolution = solution_copy(bestMethodSolution);
 		if(bestMethodSolution != NULL)
 		{
-			if(bestMethodSolution->info->score < bestSolution->info->score)
+			if(solution_eval(bestMethodSolution)->score < solution_eval(bestSolution)->score)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodSolution, bestSolution);
 				solution_print(bestMethodSolution);
-				solution_destroy(bestSolution);
-				bestSolution = solution_copy(bestMethodSolution);
+				if(bestSolution != currentSolution)
+					solution_destroy(bestSolution);
+				bestSolution = currentSolution;
 				nbNoBetterIterations = 0;
 			}
 			else
+			{
+				if(currentSolution != bestSolution)
+					solution_destroy(currentSolution);
 				nbNoBetterIterations++;
+			}
+			currentSolution = bestMethodSolution;
 		}
 		else
 		{
@@ -151,7 +156,6 @@ TabuSolution * tabu_search(Instance * instance)
 			nbNoBetterIterations++;
 			warn("Found NULL solution\n");
 		}
-		solution_destroy(bestMethodSolution);
 		
 		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
