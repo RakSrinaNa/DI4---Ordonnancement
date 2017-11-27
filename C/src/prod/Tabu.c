@@ -137,7 +137,10 @@ TabuSolution * tabu_search(Instance * instance)
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodSolution, bestSolution);
 				solution_print(bestMethodSolution);
 				if(bestSolution != currentSolution)
+				{
+					solution_destroy(currentSolution);
 					solution_destroy(bestSolution);
+				}
 				bestSolution = bestMethodSolution;
 				nbNoBetterIterations = 0;
 			}
