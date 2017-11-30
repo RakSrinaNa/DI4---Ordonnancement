@@ -185,6 +185,14 @@ TabuSolution * tabu_search(Instance * instance)
 
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
+	if(TABU_RANDOM)
+	{
+		task_t t1 = 0;//TODO
+		
+		Solution *newSolution = sort_swapDeliveries(currentSolution, t1, 0);
+		
+		return newSolution;
+	}
 	if(currentSolution == NULL)
 		return NULL;
 	unsigned int bestVal = (diversification ? 0 : 0xFFFFFFFF);
@@ -200,7 +208,7 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
 					task_t task2 = currentSolution->packList[packIndex2]->deliveries[taskIndex2];
-					/*if(taskIndex2 - taskIndex <= TABU_DELTA)
+					/*if(taskIndex2 - taskIndex <= TABU_DELTA) //TODO implement that
 						continue;*/
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
 					SolutionInfo * newInfo = solution_eval(newSolution);
