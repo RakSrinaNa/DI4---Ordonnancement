@@ -146,7 +146,7 @@ TabuSolution * tabu_search(Instance * instance)
 				bestSolution = bestMethodSolution;
 				nbNoBetterIterations = 0;
 #ifdef DEV_LOG_SCORE
-				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations, bestSolution->info->score);
+				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations + 1, bestSolution->info->score);
 #endif
 			}
 			else
