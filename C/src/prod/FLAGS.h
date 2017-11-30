@@ -5,7 +5,7 @@
 #define DEV_LOG_SCORE
 
 //!Maximum iterations for the Tabu algorithm.
-#define TABU_ITERATIONS 20000
+#define TABU_ITERATIONS 0xFFFFFFFF
 //!Maximum iterations with no improvement before diversification.
 #define TABU_ITERATIONS_NOIMPROVE 50
 //!If no improvement was found, try a new, different solution.
@@ -33,7 +33,7 @@
 //!Sort deliveries using the nearest neighbor, else sort by lowest due date first.
 #define DELIVERY_NEAREST_NEIGHBOR 1
 //!Random swap, EBSR, EFSR instead of trying all the cases.
-#define TABU_RANDOM 1
+#define TABU_RANDOM 0
 
 //!Seed for random number generation. Value can be fixed for tests.
 #define SEED 42
