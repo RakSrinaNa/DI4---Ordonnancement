@@ -55,7 +55,7 @@ TabuSolution * tabu_search(Instance * instance)
 {
 #ifdef DEV_LOG_SCORE
 	FILE * logScoreFile = fopen("./logScores.csv", "w");
-	fprintf(logScoreFile, "%s;%s\n", "C_BestEver", "C_BestIter");
+	fprintf(logScoreFile, "%s;%s\n", "BestEver", "BestIter");
 #endif
 	Solution * currentSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = currentSolution;
@@ -172,6 +172,8 @@ TabuSolution * tabu_search(Instance * instance)
 	#endif
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
 	tabuList_destroy(tabuList);
+	if(currentSolution != bestSolution)
+		solution_destroy(currentSolution);
 	return tabuSolution_create(bestSolution, nbIterations, currentTime);
 }
 
