@@ -57,7 +57,7 @@ TabuSolution * tabu_search(Instance * instance)
 	FILE * logScoreFile = fopen("./logScores.csv", "w");
 	fprintf(logScoreFile, "%s;%s\n", "C_BestEver", "C_BestIter");
 	FILE * logScoreCompactFile = fopen("./logScoresCompact.csv", "w");
-	fprintf(logScoreFile, "%s;%s\n", "C_BestIter", "C_BestEver");
+	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 #endif
 	Solution * currentSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = currentSolution;
