@@ -162,7 +162,7 @@ void solution_save(Solution * solution, const char * filename, double time)
 	FILE * file = fopen(filename, "w");
 	if(file != NULL)
 	{
-		fprintf(file, "%d\t%f\t{ production:[ ", solution->info->score, time);
+		fprintf(file, "%d\t%f\t{ production:[ ", solution_eval(solution)->score, time);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount-1)?' ':',');
 		fprintf(file, "], deliveries:[ ");

@@ -4,7 +4,7 @@
 #define DEV_LOG_SCORE
 
 #define TABU_ITERATIONS 20000
-#define TABU_ITERATIONS_NOIMPROVE 10
+#define TABU_ITERATIONS_NOIMPROVE 50
 #define TABU_DIVERSIFICATION 1
 #define TABU_LIST_SIZE 5
 
@@ -19,6 +19,7 @@
 
 #define CACHED_SCORE 1 //Use the score cache system.
 #define DELIVERY_NEAREST_NEIGHBOR 1 //Sort deliveries using the nearest neighbor, else sort by lowest due date first.
+#define TABU_RANDOM 1
 
 #define SEED 42
 #ifndef SEED
