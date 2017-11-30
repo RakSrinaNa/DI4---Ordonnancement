@@ -183,7 +183,7 @@ int parser_getLine(char ** linePtr, size_t * lineSize, FILE * file)
 			bufferPtr[writingHead++] = (char) charRead; //Write the char read into out buffer.
 		if(charRead == '\n') //If it's the end of the line, get out of the while.
 			break;
-		charRead = fgetc(file); //Read next char.
+		charRead = fgetc(file); //Read first char.
 	}
 	
 	bufferPtr[writingHead++] = '\0'; //Write the terminating byte.

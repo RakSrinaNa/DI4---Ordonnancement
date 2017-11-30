@@ -10,6 +10,7 @@
 #include "headers/SolutionInfoUnit.h"
 #include "../prod/headers/Utils.h"
 #include "headers/SortUnit.h"
+#include "headers/TabuListUnit.h"
 
 extern Bool UNIT_FAILED;
 extern Bool DEBUG;
@@ -18,6 +19,7 @@ int mainUnit()
 {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	setvbuf(stderr, NULL, _IONBF, 0);
+	
 	char * startTest = "\nUNIT: -------------------------------------------------------------------------\n";
 	char * endTest = "UNIT: -------------------------------------------------------------------------\n";
 	
@@ -61,6 +63,11 @@ int mainUnit()
 	printf("%s", startTest);
 	printf("UNIT: Executing Sort tests...\n");
 	sortUnit();
+	printf("UNIT: OK\n");
+	printf("%s", endTest);
+	
+	printf("UNIT: Executing TabuList tests...\n");
+	tabuListUnit();
 	printf("UNIT: OK\n");
 	printf("%s", endTest);
 	

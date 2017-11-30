@@ -247,7 +247,7 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 		task_t * best = NULL;
 		unsigned int bestTime = 0xFFFFFFFF; // Infinity
 		unsigned int tempDate;
-		unsigned int bestDate;
+		unsigned int bestDate = 0xFFFFFFFF;
 		for(unsigned int i = 0; i < 6; i++)
 		{
 			tempDate = *initialDate;

@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="temp --debug" />
+				<Option parameters="../Inputs/I_1_5_20_2.txt" />
 				<Compiler>
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
@@ -28,6 +28,7 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="../Inputs/I_1_5_100_1.txt" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-pedantic-errors" />
@@ -47,7 +48,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test --debug" />
+				<Option parameters="--test --debug" />
 				<Compiler>
 					<Add option="-pedantic-errors" />
 					<Add option="-pedantic" />
@@ -100,6 +101,9 @@
 		<Unit filename="src/prod/Tabu.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/prod/TabuList.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/prod/Task.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -111,6 +115,7 @@
 		<Unit filename="src/prod/headers/SolutionInfo.h" />
 		<Unit filename="src/prod/headers/Sort.h" />
 		<Unit filename="src/prod/headers/Tabu.h" />
+		<Unit filename="src/prod/headers/TabuList.h" />
 		<Unit filename="src/prod/headers/Task.h" />
 		<Unit filename="src/prod/headers/Utils.h" />
 		<Unit filename="src/unit/InstanceUnit.c">
@@ -153,6 +158,11 @@
 			<Option target="Debug" />
 			<Option target="Unit" />
 		</Unit>
+		<Unit filename="src/unit/TabuListUnit.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
+		</Unit>
 		<Unit filename="src/unit/TaskUnit.c">
 			<Option compilerVar="CC" />
 			<Option target="Debug" />
@@ -171,6 +181,10 @@
 		<Unit filename="src/unit/headers/SolutionInfoUnit.h" />
 		<Unit filename="src/unit/headers/SolutionUnit.h" />
 		<Unit filename="src/unit/headers/SortUnit.h" />
+		<Unit filename="src/unit/headers/TabuListUnit.h">
+			<Option target="Debug" />
+			<Option target="Unit" />
+		</Unit>
 		<Unit filename="src/unit/headers/TaskUnit.h" />
 		<Unit filename="src/unit/headers/UnitUtils.h" />
 		<Extensions>

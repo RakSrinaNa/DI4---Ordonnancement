@@ -6,6 +6,7 @@
 #include "../unit/headers/MainUnit.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
+#include "headers/Tabu.h"
 #include "FLAGS.h"
 
 Bool DEBUG = False;
@@ -13,28 +14,23 @@ Bool DEBUG = False;
 int main(int argc, char * argv[])
 {
 	srand((unsigned long) SEED);
-	char * filepath = "./Input.txt";
+	char * filepath = "./unitResources/Instance1.txt";
 	if(argc >= 2) //Testings and stuff.
 	{
-		char * method = NULL;
+		Bool test = False;
 		for(int i = 1; i < argc; i++)
 		{
 			if(strcmp(argv[i], "--debug") == 0)
 				DEBUG = True;
+			else if(strcmp(argv[i], "--test") == 0)
+				test = True;
 			else
-				method = argv[i];
+				filepath = argv[i];
 		}
-		if(method != NULL)
+		if(test)
 		{
-			if(strcmp(method, "test") == 0) // Used to start unit tests.
-			{
-				mainUnit();
-				exit(EXIT_SUCCESS);
-			}
-			else if(strcmp(method, "temp") == 0) // For internal testing.
-			{
-				filepath = "../Inputs/input.txt";
-			}
+			mainUnit();
+			exit(EXIT_SUCCESS);
 		}
 	}
 	
@@ -42,11 +38,11 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
-		//instance_print(instance);
-		Solution * solution = solution_create(instance);
-		solution_eval(solution);
-		solution_print(solution);
-		solution_save(solution, "../Inputs/output1.txt", 14.25);
+		instance_print(instance);
+		TabuSolution * solution = tabu_search(instance);
+		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
+		solution_print(solution->solution);
+		tabuSolution_destroy(solution);
 		instance_destroy(instance);
 	}
 	return 0;
@@ -67,8 +63,8 @@ void warn(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, "\nWARNING: ");
-	vfprintf(stderr, format, args);
+	fprintf(stdout, "WARNING: ");
+	vfprintf(stdout, format, args);
 	va_end(args);
 }
 
@@ -76,8 +72,8 @@ void fatalError(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, "FATAL ERROR!\n |-\t");
-	vfprintf(stderr, format, args);
+	fprintf(stdout, "FATAL ERROR!\n |-\t");
+	vfprintf(stdout, format, args);
 	va_end(args);
 	exit(EXIT_FAILURE);
 }

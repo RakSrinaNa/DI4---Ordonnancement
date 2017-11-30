@@ -113,11 +113,11 @@ void pack_moveDelivery(Pack * pack, task_t delivery, unsigned int position)
 		warn("pack_moveDelivery : Missing task %d.\n", delivery);
 }
 
-void pack_print(Pack * pack)
+void pack_print(Pack * pack, unsigned int packID)
 {
 	if(pack != NULL)
 	{
-		printf("Pack : %d (", pack->taskCount);
+		printf("Pack #%d : %d elements (", packID, pack->taskCount);
 		for(task_t i = 0; i < pack->taskCount; i++)
 			printf(" T%d", pack->deliveries[i] + 1);
 		printf(" )");

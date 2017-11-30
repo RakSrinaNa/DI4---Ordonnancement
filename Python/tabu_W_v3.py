@@ -17,7 +17,7 @@
 # Importation de packages
 # ########################################################
 
-from tkinter import *
+#from tkinter import *
 import os
 import math
 import time # pour avoir le temsp de calcul cpu
@@ -36,7 +36,7 @@ dd = dates dues
 tt = temps de trajet
 """
 
-mesdonnees = open("../Inputs/input.txt","r")
+mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
 ligne1 = mesdonnees.readline()
 indice=0
 j=0
@@ -118,8 +118,8 @@ else: NB_ITE_SANS_AMEL_MAX = 15
 
 AVEC_DIVERSIFICATION = 1
 
-FLAG_EBSR = 1
-FLAG_EFSR = 1
+FLAG_EBSR = 0
+FLAG_EFSR = 0
 FLAG_SWAP = 1
 FLAG_2OPT = 0
 FLAG_FIRST_IMPROVE = 1
@@ -543,6 +543,7 @@ nb_ite = 0
 nb_ite_sans_amel = 0
 diversification = False
 
+scoreLog = open("./scoreLogPython.txt", "w")
 # BOUCLE GENERALE
 while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     amelioration = False
@@ -697,11 +698,13 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
             ListeTabou = []
             print('*** on diversifie ***')
 
+    scoreLog.write(str(Best_val))
+    scoreLog.write("\n")
     time_end = time.clock()
     cpu = time_end-time_start
     nb_ite = nb_ite + 1
 
-
+scoreLog.close()
 print('temps de calcul =',cpu,'(',nb_ite,') ite')
 
 print('**************************')

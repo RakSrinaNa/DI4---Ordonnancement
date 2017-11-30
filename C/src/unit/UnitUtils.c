@@ -9,9 +9,9 @@ void unit_error(char * str, ...)
 {
 	va_list args;
 	va_start(args, str);
-	fprintf(stderr, "\nFATAL UNIT: ");
-	vfprintf(stderr, str, args);
-	fprintf(stderr, "\n");
+	fprintf(stdout, "\nFATAL UNIT: ");
+	vfprintf(stdout, str, args);
+	fprintf(stdout, "\n");
 	va_end(args);
 	unit_breakpoint();
 	UNIT_FAILED = True;
