@@ -122,7 +122,7 @@ FLAG_EBSR = 0
 FLAG_EFSR = 0
 FLAG_SWAP = 1
 FLAG_2OPT = 0
-FLAG_FIRST_IMPROVE = 1
+FLAG_FIRST_IMPROVE = 0
 TABOU_LOGIQUE = 0 # 1 = je swappe(i,j) donc (j,i) est tabou
 
 def InsereTabou(voisinage,indi,indj):
@@ -543,7 +543,10 @@ nb_ite = 0
 nb_ite_sans_amel = 0
 diversification = False
 
-scoreLog = open("./scoreLogPython.txt", "w")
+scoreLog = open("./scoreLogPython.csv", "w")
+scoreLogCompact = open("./scoreLogPythonCompact.csv", "w")
+scoreLog.write("P_BestEver;P_BestIter\n")
+scoreLogCompact.write("P_BestIter;P_BestEver\n")
 # BOUCLE GENERALE
 while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     amelioration = False
@@ -683,6 +686,10 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
         print ('\t',Best_val)
         amelioration = True
         nb_ite_sans_amel = 0
+        scoreLogCompact.write(str(nb_ite + 1))
+        scoreLogCompact.write(";")
+        scoreLogCompact.write(str(Best_val))
+        scoreLogCompact.write("\n")
 
     if(diversification):
         diversification = False
@@ -699,6 +706,8 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
             print('*** on diversifie ***')
 
     scoreLog.write(str(Best_val))
+    scoreLog.write(";")
+    scoreLog.write(str(val_best_vois))
     scoreLog.write("\n")
     time_end = time.clock()
     cpu = time_end-time_start

@@ -40,3 +40,5 @@ TabouTest
 C/logScores.csv
 Python/output.txt
 scoreLogPython.txt
+scoreLogPython.csv
+scoreLogPythonCompact.csv
