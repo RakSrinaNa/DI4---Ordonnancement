@@ -71,7 +71,7 @@ TabuSolution * tabu_search(Instance * instance)
 	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
 	long double currentTime = 0;
-	while((currentTime = tabu_getTimeDiff(timeStart, timeNow)) < timeLimit && nbIterations < TABU_ITERATIONS)
+	while((currentTime = tabu_getTimeDiff(timeStart, timeNow)) < timeLimit || nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("----- Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
 		Solution * bestMethodSolution = NULL;
@@ -138,9 +138,9 @@ TabuSolution * tabu_search(Instance * instance)
 				solution_print(bestMethodSolution);
 				if(bestSolution != currentSolution)
 				{
-					solution_destroy(currentSolution);
 					solution_destroy(bestSolution);
 				}
+				solution_destroy(currentSolution);
 				bestSolution = bestMethodSolution;
 				nbNoBetterIterations = 0;
 			}
