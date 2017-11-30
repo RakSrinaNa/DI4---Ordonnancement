@@ -40,9 +40,10 @@ int main(int argc, char * argv[])
 	{
 		instance_print(instance);
 		TabuSolution * solution = tabu_search(instance);
-		printf("Tabu found best in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
+		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
 		tabuSolution_destroy(solution);
+		instance_destroy(instance);
 	}
 	return 0;
 }
