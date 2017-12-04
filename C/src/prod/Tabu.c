@@ -1,10 +1,8 @@
 #include <sys/timeb.h>
-#include <limits.h>
 
 #include "headers/Tabu.h"
 #include "FLAGS.h"
 #include "headers/Sort.h"
-#include "headers/SearchResult.h"
 
 TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time)
 {
@@ -276,7 +274,7 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 					task_t jobJ = currentSolution->packList[packJ]->deliveries[packElemIndex];
 					Solution * neighbor = sort_moveDeliveriesEBSR(currentSolution, jobJ, packJ - packI);
 					TabuItem * tabuItem = tabuItem_create(packI, jobJ);
-					if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) > 0)
+					if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
 					{
 						solution_destroy(bestSol);
 						tabuItem_destroy(bestTabuItem);
@@ -302,10 +300,39 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 
 SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
-	UNUSED(currentSolution);
-	UNUSED(tabuList);
-	UNUSED(diversification);
-	return NULL;
+	Bool stop = False;
+	unsigned int packI = 0;
+	Solution * bestSol = solution_copy(currentSolution);
+	TabuItem * bestTabuItem = NULL;
+	while(packI < currentSolution->packCount - 1 && !stop)
+	{
+		for(unsigned int packElemIndex = 0; packElemIndex < currentSolution->packList[packI]->taskCount; packElemIndex++)
+		{
+			task_t jobI = currentSolution->packList[packI]->deliveries[packElemIndex];
+			unsigned int packJ = packI + 1;
+			while(packJ < currentSolution->packCount && packJ <= packI + TABU_DELTA_BATCH && !stop)
+			{
+				Solution * neighbor = sort_moveDeliveriesEFSR(currentSolution, jobI, packJ - packI);
+				TabuItem * tabuItem = tabuItem_create(jobI, packJ);
+				if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
+				{
+					solution_destroy(bestSol);
+					tabuItem_destroy(bestTabuItem);
+					bestSol = neighbor;
+					bestTabuItem = tabuItem;
+#if TABU_FIRST_IMPROVE
+					stop = True;
+#endif
+				}
+				else
+				{
+					solution_destroy(neighbor);
+					tabuItem_destroy(tabuItem);
+				}
+				packJ++;
+			}
+		}
+		packI++;
+	}
+	return searchResult_create(bestSol, bestTabuItem, EBSR);
 }
-
-
