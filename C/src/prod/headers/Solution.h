@@ -102,4 +102,14 @@ void solution_print(Solution * solution);
  */
 void solution_save(Solution * solution, const char * filename, double time);
 
+/**
+ * Compare two solutions based on their score.
+ *
+ * @param solution1 The first solution to compare.
+ * @param solution2 The second to compare.
+ * @param diversification Equivalent of doing (*-1) to the output.
+ * @return Positive if S1 have a bigger score than S2.
+ */
+long solutionCompare(Solution * solution1, Solution * solution2, Bool diversification);
+
 #endif //TABOU_SOLUTION_H

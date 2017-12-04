@@ -6,6 +6,7 @@
 #include "Solution.h"
 #include "Instance.h"
 #include "TabuList.h"
+#include "SearchResult.h"
 
 //!Contains the solution the tabu found, with the time take and iterations.
 typedef struct _TabuSolution {
@@ -57,10 +58,13 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 //TODO doc
 TabuSolution * tabu_search(Instance * instance);
 
+//TODO doc
 Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
-Solution * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
+//TODO doc
+SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
+//TODO doc
 Solution * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
 #endif
