@@ -1,3 +1,4 @@
+#include "FLAGS.h"
 #include "headers/TabuList.h"
 
 TabuList * tabuList_create(unsigned int maxSize)
@@ -70,7 +71,7 @@ Bool tabuItem_isSame(TabuItem * item1, TabuItem * item2)
 {
 	if(item1 == NULL || item2 == NULL)
 		return False;
-	return (item1->destination == item2->destination && item1->source == item2->source) || (item1->destination == item2->source && item1->source == item2->destination) ? True : False;
+	return (item1->destination == item2->destination && item1->source == item2->source) || (TABU_LOGIC && (item1->destination == item2->source && item1->source == item2->destination)) ? True : False;
 }
 
 TabuItem * tabuItem_create(unsigned int source, unsigned int destination)

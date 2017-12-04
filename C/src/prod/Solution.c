@@ -27,7 +27,6 @@ void solution_destroy(Solution * solution)
 {
 	if(solution == NULL)
 		return;
-	
 	//Destroy every pack.
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		pack_destroy(solution->packList[i]);

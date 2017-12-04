@@ -1,4 +1,5 @@
 #include <sys/timeb.h>
+#include <limits.h>
 
 #include "headers/Tabu.h"
 #include "FLAGS.h"
@@ -128,6 +129,7 @@ TabuSolution * tabu_search(Instance * instance)
 		}
 		if(diversification == True)
 		{
+			printf("DIV\n");
 			diversification = False;
 			nbNoBetterIterations = 0;
 		}
@@ -188,48 +190,54 @@ Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool
 	if(TABU_RANDOM)
 	{
 		task_t t1 = 0;//TODO
-		
 		Solution *newSolution = sort_swapDeliveries(currentSolution, t1, 0);
-		
 		return newSolution;
 	}
 	if(currentSolution == NULL)
 		return NULL;
-	unsigned int bestVal = (diversification ? 0 : 0xFFFFFFFF);
-	Solution * bestSolution = NULL;
+	Solution * bestSolution = solution_copy(currentSolution);
 	task_t bestSwap1 = 0, bestSwap2 = 0;
-	for(unsigned int packIndex = 0; packIndex < currentSolution->packCount; packIndex++)
+	Bool first_done = False;
+	for(unsigned int packIndex1 = 0; packIndex1 < currentSolution->packCount; packIndex1++)
 	{
-		for(unsigned int taskIndex = 0; taskIndex < currentSolution->packList[packIndex]->taskCount; taskIndex++)
+		for(unsigned int taskIndex1 = 0; taskIndex1 < currentSolution->packList[packIndex1]->taskCount; taskIndex1++)
 		{
-			task_t task1 = currentSolution->packList[packIndex]->deliveries[taskIndex];
-			for(unsigned int packIndex2 = packIndex; packIndex2 < currentSolution->packCount; packIndex2++)
+			task_t task1 = currentSolution->packList[packIndex1]->deliveries[taskIndex1];
+			for(unsigned int packIndex2 = packIndex1; packIndex2 < currentSolution->packCount; packIndex2++)
 			{
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
 					task_t task2 = currentSolution->packList[packIndex2]->deliveries[taskIndex2];
-					/*if(taskIndex2 - taskIndex <= TABU_DELTA) //TODO implement that
-						continue;*/
+					if((taskIndex2 > taskIndex1 ? taskIndex2 - taskIndex1 + 1 : taskIndex1 - taskIndex2 + 1) <= TABU_DELTA)
+						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
-					SolutionInfo * newInfo = solution_eval(newSolution);
 					TabuItem item;
 					item.source = task1;
 					item.destination = task2;
-					if((diversification == True ? (newInfo->score > bestVal) : (newInfo->score < bestVal)) && !tabuList_contains(tabuList, &item))
+					if((diversification == True ? (solution_eval(newSolution)->score > solution_eval(bestSolution)->score) : (solution_eval(newSolution)->score < solution_eval(bestSolution)->score)) && !tabuList_contains(tabuList, &item))
 					{
 						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
-						bestVal = newInfo->score;
 						if(bestSolution != NULL)
 							solution_destroy(bestSolution);
 						bestSolution = newSolution;
 						bestSwap1 = task1;
 						bestSwap2 = task2;
+						if(TABU_FIRST_IMPROVE)
+							first_done = True;
 					}
 					else
 						solution_destroy(newSolution);
+					if(TABU_FIRST_IMPROVE && first_done == True)
+						break;
 				}
+				if(TABU_FIRST_IMPROVE && first_done == True)
+					break;
 			}
+			if(TABU_FIRST_IMPROVE && first_done == True)
+				break;
 		}
+		if(TABU_FIRST_IMPROVE && first_done == True)
+			break;
 	}
 	TabuItem * item = tabuItem_create(bestSwap1, bestSwap2);
 	tabuList_addItem(tabuList, item);
