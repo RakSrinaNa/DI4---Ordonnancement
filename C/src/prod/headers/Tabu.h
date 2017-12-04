@@ -59,12 +59,12 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 TabuSolution * tabu_search(Instance * instance);
 
 //TODO doc
-Solution * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification);
+SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
 //TODO doc
 SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
 //TODO doc
-Solution * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
+SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
 #endif
