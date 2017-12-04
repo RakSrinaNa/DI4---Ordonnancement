@@ -14,7 +14,7 @@
 #define TABU_LIST_SIZE 50
 
 //!Use EBSR for Tabu.
-#define TABU_SEARCH_EBSR 0
+#define TABU_SEARCH_EBSR 1
 //!Use EFSR for Tabu.
 #define TABU_SEARCH_EFSR 0
 //!Use swap for Tabu.
@@ -23,13 +23,15 @@
 //!2-OPT
 #define TABU_2OPT 0
 //!Selects the first better solution instead of the best solution.
-#define TABU_FIRST_IMPROVE 0
+#define TABU_FIRST_IMPROVE 1
 //!Prevents swapping if already swapped the inverse
 #define TABU_LOGIC 1
 //!Minimum gap between swaps, EBSRs, EFSRs
 #define TABU_DELTA 0
 //!Minimum batch gap between swaps, EBSRs, EFSRs
 #define TABU_DELTA_BATCH 4
+//!EOJZRHt
+#define TABU_PROPAGATE 1
 
 //!Use the score cache system.
 #define CACHED_SCORE 1

@@ -1,4 +1,5 @@
 #include <sys/timeb.h>
+#include <limits.h>
 
 #include "headers/Tabu.h"
 #include "FLAGS.h"
@@ -85,6 +86,11 @@ TabuSolution * tabu_search(Instance * instance)
 			if(iterSolutionSwap != NULL && iterSolutionSwap->tabuItem != NULL)
 			{
 				bestMethodResult = iterSolutionSwap;
+				if(TABU_PROPAGATE)
+				{
+					solution_destroy(currentSolution);
+					currentSolution = solution_copy(bestMethodResult->solution);
+				}
 			}
 		}
 		if(TABU_SEARCH_EBSR)
@@ -104,6 +110,11 @@ TabuSolution * tabu_search(Instance * instance)
 				}
 				else
 					bestMethodResult = iterSolutionEBSR;
+				if(TABU_PROPAGATE)
+				{
+					solution_destroy(currentSolution);
+					currentSolution = solution_copy(bestMethodResult->solution);
+				}
 			}
 		}
 		if(TABU_SEARCH_EFSR)
@@ -120,9 +131,15 @@ TabuSolution * tabu_search(Instance * instance)
 					}
 					else
 						searchResult_destroy(iterSolutionEFSR);
+					
 				}
 				else
 					bestMethodResult = iterSolutionEFSR;
+				if(TABU_PROPAGATE)
+				{
+					solution_destroy(currentSolution);
+					currentSolution = solution_copy(bestMethodResult->solution);
+				}
 			}
 		}
 		if(diversification == True)
@@ -312,7 +329,7 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 			unsigned int packJ = packI + 1;
 			while(packJ < currentSolution->packCount && packJ <= packI + TABU_DELTA_BATCH && !stop)
 			{
-				Solution * neighbor = sort_moveDeliveriesEFSR(currentSolution, jobI, packJ - packI);
+				Solution * neighbor = sort_moveDeliveriesEFSR(currentSolution, jobI, packI - packJ);
 				TabuItem * tabuItem = tabuItem_create(jobI, packJ);
 				if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
 				{
