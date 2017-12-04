@@ -262,7 +262,10 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 							first_done = True;
 					}
 					else
+					{
 						solution_destroy(newSolution);
+						tabuItem_destroy(item);
+					}
 					if(TABU_FIRST_IMPROVE && first_done == True)
 						break;
 				}
