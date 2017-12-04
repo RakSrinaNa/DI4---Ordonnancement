@@ -20,9 +20,12 @@
 //!Use swap for Tabu.
 #define TABU_SEARCH_SWAP 1
 
+//!2-OPT
 #define TABU_2OPT 0
-#define TABU_FIRST_IMPROVE 1
-#define TABU_LOGIC 0
+//!Selects the first better solution instead of the best solution.
+#define TABU_FIRST_IMPROVE 0
+//!Prevents swapping if already swapped the inverse
+#define TABU_LOGIC 1
 //!Minimum gap between swaps, EBSRs, EFSRs
 #define TABU_DELTA 0
 //!Minimum batch gap between swaps, EBSRs, EFSRs

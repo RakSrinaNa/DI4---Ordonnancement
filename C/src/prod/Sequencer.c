@@ -1,4 +1,6 @@
 #include <string.h>
+#include <limits.h>
+
 #include "FLAGS.h"
 #include "headers/Sequencer.h"
 #include "headers/Instance.h"
@@ -86,7 +88,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		//Identify the best sequence.
 		task_t * bestSequence = NULL;
 		machine_t * bestMachineTime = NULL;
-		unsigned int bestTime = 0xFFFFFFFF;
+		unsigned int bestTime = UINT_MAX;
 		for(unsigned int sequenceIndex = 0; sequenceIndex < 6; sequenceIndex++)
 		{
 			for(unsigned int machineIndex = 0; machineIndex < instance->machineCount; machineIndex++)
@@ -133,7 +135,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		
 		for(unsigned int taskID = 2; taskID < taskCount; taskID++) //Try to insert every task.
 		{
-			unsigned int bestScore = 0xFFFFFFFF; // Infinity
+			unsigned int bestScore = UINT_MAX; // Infinity
 			unsigned int bestPos = 0;
 			for(unsigned int insertPos = 0; insertPos <= taskID; insertPos++) //Try to insert at every position.
 			{
@@ -245,9 +247,9 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 				seqID++;
 			}
 		task_t * best = NULL;
-		unsigned int bestTime = 0xFFFFFFFF; // Infinity
+		unsigned int bestTime = UINT_MAX; // Infinity
 		unsigned int tempDate;
-		unsigned int bestDate = 0xFFFFFFFF;
+		unsigned int bestDate = UINT_MAX;
 		for(unsigned int i = 0; i < 6; i++)
 		{
 			tempDate = *initialDate;
@@ -289,10 +291,10 @@ task_t * sequencer_sequenceDeliveriesNearestNeighbor(Instance * instance, unsign
 	for(unsigned int i = 0; i < taskCount; i++)
 	{
 		// Finding the nearest neighbor at each step.
-		unsigned int nearestIndex = 0xFFFFFFFF; // Infinity
+		unsigned int nearestIndex = UINT_MAX; // Infinity
 		for(unsigned int j = 0; j < taskCount; j++)
 		{
-			if(!explored[j] && (nearestIndex == 0xFFFFFFFF || instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex])))
+			if(!explored[j] && (nearestIndex == UINT_MAX || instance_getDistance(instance, departure, tasks[j]) < instance_getDistance(instance, departure, tasks[nearestIndex])))
 			{
 				nearestIndex = j;
 			}
