@@ -92,6 +92,8 @@ TabuSolution * tabu_search(Instance * instance)
 					currentSolution = solution_copy(bestMethodResult->solution);
 				}
 			}
+			else
+				searchResult_destroy(iterSolutionSwap);
 		}
 		if(TABU_SEARCH_EBSR)
 		{
@@ -116,6 +118,8 @@ TabuSolution * tabu_search(Instance * instance)
 					currentSolution = solution_copy(bestMethodResult->solution);
 				}
 			}
+			else
+				searchResult_destroy(iterSolutionEBSR);
 		}
 		if(TABU_SEARCH_EFSR)
 		{
@@ -131,7 +135,6 @@ TabuSolution * tabu_search(Instance * instance)
 					}
 					else
 						searchResult_destroy(iterSolutionEFSR);
-					
 				}
 				else
 					bestMethodResult = iterSolutionEFSR;
@@ -141,6 +144,8 @@ TabuSolution * tabu_search(Instance * instance)
 					currentSolution = solution_copy(bestMethodResult->solution);
 				}
 			}
+			else
+				searchResult_destroy(iterSolutionEFSR);
 		}
 		if(diversification == True)
 		{
@@ -155,15 +160,15 @@ TabuSolution * tabu_search(Instance * instance)
 			{
 				switch(bestMethodResult->method)
 				{
-				case SWAP:
-					tabuList_addItem(tabuListSwap, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
-					break;
-				case EBSR:
-					tabuList_addItem(tabuListEBSR, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
-					break;
-				case EFSR:
-					tabuList_addItem(tabuListEFSR, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
-					break;
+					case SWAP:
+						tabuList_addItem(tabuListSwap, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
+						break;
+					case EBSR:
+						tabuList_addItem(tabuListEBSR, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
+						break;
+					case EFSR:
+						tabuList_addItem(tabuListEFSR, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
+						break;
 				}
 			}
 			if(solution_eval(bestMethodResult->solution)->score < solution_eval(bestSolution)->score)
