@@ -61,7 +61,7 @@ TabuSolution * tabu_search(Instance * instance)
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 #endif
 	Solution * currentSolution = tabu_solutionInit(instance);
-	Solution * bestSolution = currentSolution;
+	Solution * bestSolution = solution_copy(currentSolution);
 	solution_eval(currentSolution);
 	unsigned int nbIterations = 0;
 	unsigned int nbNoBetterIterations = 0;
