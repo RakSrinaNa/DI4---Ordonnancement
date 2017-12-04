@@ -144,7 +144,7 @@ TabuSolution * tabu_search(Instance * instance)
 				bestSolution = solution_copy(bestMethodResult->solution);
 				nbNoBetterIterations = 0;
 #ifdef DEV_LOG_SCORE
-				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations + 1, bestSolution->info->score);
+				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations + 1, solution_eval(bestSolution)->score);
 #endif
 			}
 			else
@@ -159,13 +159,12 @@ TabuSolution * tabu_search(Instance * instance)
 		{
 			diversification = True;
 			nbNoBetterIterations++;
-			warn("Found NULL solution\n");
 		}
 		
 		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
 #ifdef DEV_LOG_SCORE
-		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? 0xFFFFFFFF : bestSolution->info->score, (bestMethodResult == NULL && bestMethodResult->solution != NULL) ? 0xFFFFFFFF : solution_eval(bestMethodResult->solution)->score);
+		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? UINT_MAX : solution_eval(bestSolution)->score, (bestMethodResult == NULL || bestMethodResult->solution == NULL) ? UINT_MAX : solution_eval(bestMethodResult->solution)->score);
 #endif
 		searchResult_destroy(bestMethodResult);
 		nbIterations++;

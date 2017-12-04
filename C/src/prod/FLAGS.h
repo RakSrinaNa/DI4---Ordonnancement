@@ -14,9 +14,9 @@
 #define TABU_LIST_SIZE 50
 
 //!Use EBSR for Tabu.
-#define TABU_SEARCH_EBSR 1
+#define TABU_SEARCH_EBSR 0
 //!Use EFSR for Tabu.
-#define TABU_SEARCH_EFSR 1
+#define TABU_SEARCH_EFSR 0
 //!Use swap for Tabu.
 #define TABU_SEARCH_SWAP 1
 
