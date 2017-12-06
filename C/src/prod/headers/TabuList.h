@@ -3,6 +3,13 @@
 
 #include "Utils.h"
 
+//!Search methods.
+typedef enum _SearchMethod{
+	SWAP,
+	EBSR,
+	EFSR
+} SearchMethod;
+
 //!Item of the Tabu list.
 typedef struct _TabuItem
 {
@@ -12,6 +19,8 @@ typedef struct _TabuItem
 	unsigned int destination;
 	//!The next element in the chained list.
 	struct _TabuItem * next;
+	//!The method used for this item.
+	SearchMethod method;
 } TabuItem;
 
 //!Tabu list.
@@ -75,10 +84,11 @@ Bool tabuItem_isSame(TabuItem * item1, TabuItem * item2);
  *
  * @param source The source of the item.
  * @param destination The destination of the item.
+ * @param method The method used for this item.
  * @return The item.
  * @remark Needs to be freed with tabuItem_destroy.
  */
-TabuItem * tabuItem_create(unsigned int source, unsigned int destination);
+TabuItem * tabuItem_create(unsigned int source, unsigned int destination, SearchMethod method);
 
 /**
  * Frees a tabu item.
@@ -86,5 +96,15 @@ TabuItem * tabuItem_create(unsigned int source, unsigned int destination);
  * @param item The item to destroy.
 */
 void tabuItem_destroy(TabuItem * item);
+
+/**
+ * Copy a tabu item.
+ * Its position in a potential list is lost.
+ *
+ * @param item The item to copy.
+ * @return The copy.
+ * @remark Needs to be freed with tabuItem_destroy.
+ */
+TabuItem * tabuItem_copy(TabuItem * item);
 
 #endif //TABOU_TABULIST_H

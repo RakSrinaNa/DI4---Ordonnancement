@@ -61,19 +61,17 @@ TabuSolution * tabu_search(Instance * instance)
 	FILE * logScoreCompactFile = fopen("./logScoresCompact.csv", "w");
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 	FILE * logScoreFullFile = fopen("./logScoresFull.csv", "w");
-	fprintf(logScoreFullFile, "%s;%s\n", "C_Iter", "C_Current");
+	fprintf(logScoreFullFile, "%s;%s;%s\n", "C_Iter", "C_Current", "C_Score");
 	fprintf(logScoreFullFile, "0;");
 	solution_printCSV(currentSolution, logScoreFullFile);
-	fprintf(logScoreFullFile, "\n");
+	fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
 #endif
 	Solution * bestSolution = solution_copy(currentSolution);
 	solution_eval(currentSolution);
 	unsigned int nbIterations = 0;
 	unsigned int nbNoBetterIterations = 0;
 	Bool diversification = False;
-	TabuList * tabuListSwap = tabuList_create(TABU_LIST_SIZE);
-	TabuList * tabuListEBSR = tabuList_create(TABU_LIST_SIZE);
-	TabuList * tabuListEFSR = tabuList_create(TABU_LIST_SIZE);
+	TabuList * tabuList = tabuList_create(TABU_LIST_SIZE);
 	
 	struct timeb timeStart;
 	ftime(&timeStart);
@@ -87,7 +85,7 @@ TabuSolution * tabu_search(Instance * instance)
 		SearchResult * bestMethodResult = NULL;
 		if(TABU_SEARCH_SWAP)
 		{
-			SearchResult * iterSolutionSwap = tabu_searchSwap(currentSolution, tabuListSwap, diversification);
+			SearchResult * iterSolutionSwap = tabu_searchSwap(currentSolution, tabuList, diversification);
 			if(iterSolutionSwap != NULL && iterSolutionSwap->tabuItem != NULL)
 			{
 				bestMethodResult = iterSolutionSwap;
@@ -102,7 +100,7 @@ TabuSolution * tabu_search(Instance * instance)
 		}
 		if(TABU_SEARCH_EBSR)
 		{
-			SearchResult * iterSolutionEBSR = tabu_searchEBSR(currentSolution, tabuListEBSR, diversification);
+			SearchResult * iterSolutionEBSR = tabu_searchEBSR(currentSolution, tabuList, diversification);
 			if(iterSolutionEBSR != NULL && iterSolutionEBSR->tabuItem != NULL)
 			{
 				if(bestMethodResult != NULL)
@@ -128,7 +126,7 @@ TabuSolution * tabu_search(Instance * instance)
 		}
 		if(TABU_SEARCH_EFSR)
 		{
-			SearchResult * iterSolutionEFSR = tabu_searchEFSR(currentSolution, tabuListEFSR, diversification);
+			SearchResult * iterSolutionEFSR = tabu_searchEFSR(currentSolution, tabuList, diversification);
 			if(iterSolutionEFSR != NULL)
 			{
 				if(bestMethodResult != NULL)
@@ -163,18 +161,7 @@ TabuSolution * tabu_search(Instance * instance)
 		{
 			if(bestMethodResult->tabuItem != NULL)
 			{
-				switch(bestMethodResult->method)
-				{
-					case SWAP:
-						tabuList_addItem(tabuListSwap, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
-						break;
-					case EBSR:
-						tabuList_addItem(tabuListEBSR, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
-						break;
-					case EFSR:
-						tabuList_addItem(tabuListEFSR, tabuItem_create(bestMethodResult->tabuItem->source, bestMethodResult->tabuItem->destination));
-						break;
-				}
+				tabuList_addItem(tabuList, tabuItem_copy(bestMethodResult->tabuItem));
 			}
 			if(solution_eval(bestMethodResult->solution)->score < solution_eval(bestSolution)->score)
 			{
@@ -211,21 +198,20 @@ TabuSolution * tabu_search(Instance * instance)
 		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? UINT_MAX : solution_eval(bestSolution)->score, (bestMethodResult == NULL || bestMethodResult->solution == NULL) ? UINT_MAX : solution_eval(bestMethodResult->solution)->score);
 		fprintf(logScoreFullFile, "%u;", nbIterations + 1);
 		solution_printCSV(currentSolution, logScoreFullFile);
-		fprintf(logScoreFullFile, "\n");
+		fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
 #endif
 		searchResult_destroy(bestMethodResult);
 		nbIterations++;
 		ftime(&timeNow);
 	}
+
 #ifdef DEV_LOG_SCORE
 	fclose(logScoreFile);
 	fclose(logScoreCompactFile);
 	fclose(logScoreFullFile);
 #endif
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
-	tabuList_destroy(tabuListSwap);
-	tabuList_destroy(tabuListEBSR);
-	tabuList_destroy(tabuListEFSR);
+	tabuList_destroy(tabuList);
 	if(currentSolution != bestSolution)
 		solution_destroy(currentSolution);
 	return tabuSolution_create(bestSolution, nbIterations, currentTime);
@@ -238,7 +224,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 		task_t t1 = 0;//TODO
 		task_t t2 = 0;//TODO
 		Solution * newSolution = sort_swapDeliveries(currentSolution, t1, t2);
-		return searchResult_create(newSolution, tabuItem_create(t1, t2), SWAP);
+		return searchResult_create(newSolution, tabuItem_create(t1, t2, SWAP), SWAP);
 	}
 	if(currentSolution == NULL)
 		return searchResult_create(solution_copy(currentSolution), NULL, SWAP);
@@ -258,7 +244,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 					if((taskIndex2 > taskIndex1 ? taskIndex2 - taskIndex1 + 1 : taskIndex1 - taskIndex2 + 1) <= TABU_DELTA)
 						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
-					TabuItem * item = tabuItem_create(task1, task2);
+					TabuItem * item = tabuItem_create(task1, task2, SWAP);
 					if(solutionCompare(bestSolution, newSolution, diversification) < 0 && !tabuList_contains(tabuList, item))
 					{
 						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
@@ -307,7 +293,7 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 				{
 					task_t jobJ = currentSolution->packList[packJ]->tasks[packElemIndex];
 					Solution * neighbor = sort_moveDeliveriesEBSR(currentSolution, jobJ, packJ - packI);
-					TabuItem * tabuItem = tabuItem_create(packI, jobJ);
+					TabuItem * tabuItem = tabuItem_create(packI, jobJ, EBSR);
 					if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
 					{
 						solution_destroy(bestSol);
@@ -347,7 +333,7 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 			while(packJ < currentSolution->packCount && packJ <= packI + TABU_DELTA_BATCH && !stop)
 			{
 				Solution * neighbor = sort_moveDeliveriesEFSR(currentSolution, jobI, packI - packJ);
-				TabuItem * tabuItem = tabuItem_create(jobI, packJ);
+				TabuItem * tabuItem = tabuItem_create(jobI, packJ, EFSR);
 				if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
 				{
 					solution_destroy(bestSol);

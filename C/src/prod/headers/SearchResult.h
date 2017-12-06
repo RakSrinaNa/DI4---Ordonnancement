@@ -4,12 +4,6 @@
 #include "TabuList.h"
 #include "Solution.h"
 
-typedef enum _SearchMethod{
-	SWAP,
-	EBSR,
-	EFSR
-} SearchMethod;
-
 typedef struct _SearchResult{
 	Solution * solution;
 	TabuItem * tabuItem;

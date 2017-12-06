@@ -5,8 +5,8 @@
 
 void tabuListUnit()
 {
-	TabuItem * item1 = tabuItem_create(1, 2);
-	TabuItem * item2 = tabuItem_create(10, 11);
+	TabuItem * item1 = tabuItem_create(1, 2, SWAP);
+	TabuItem * item2 = tabuItem_create(10, 11, SWAP);
 	
 	if(tabuItem_isSame(item1, item2))
 		unit_error("TabuList 1: Tabu items should not match");
@@ -48,7 +48,7 @@ void tabuListUnit()
 	if(!tabuList_contains(list, item2))
 		unit_error("TabuList 12: Tabu list should contain the item2");
 	
-	TabuItem * item3 = tabuItem_create(99, 11);
+	TabuItem * item3 = tabuItem_create(99, 11, SWAP);
 	tabuList_addItem(list, item3);
 	if(list->size != 2)
 		unit_error("TabuList 13: Tabu list should have size 2");

@@ -69,22 +69,34 @@ Bool tabuList_contains(TabuList * list, TabuItem * item)
 
 Bool tabuItem_isSame(TabuItem * item1, TabuItem * item2)
 {
-	if(item1 == NULL || item2 == NULL)
+	if(item1 == NULL || item2 == NULL || item1->method != item2->method)
 		return False;
 	return (item1->destination == item2->destination && item1->source == item2->source) || (TABU_LOGIC && (item1->destination == item2->source && item1->source == item2->destination)) ? True : False;
 }
 
-TabuItem * tabuItem_create(unsigned int source, unsigned int destination)
+TabuItem * tabuItem_create(unsigned int source, unsigned int destination, SearchMethod method)
 {
 	TabuItem * item = NULL;
 	MMALLOC(item, TabuItem, 1, "tabuItem_create");
 	item->source = source;
 	item->destination = destination;
 	item->next = NULL;
+	item->method = method;
 	return item;
 }
 
 void tabuItem_destroy(TabuItem * item)
 {
 	free(item);
+}
+
+TabuItem * tabuItem_copy(TabuItem * item)
+{
+	TabuItem * itemCopy = NULL;
+	MMALLOC(itemCopy, TabuItem, 1, "tabuItem_copy");
+	itemCopy->method = item->method;
+	itemCopy->destination = item->method;
+	itemCopy->source = item->method;
+	itemCopy->next = NULL;
+	return itemCopy;
 }
