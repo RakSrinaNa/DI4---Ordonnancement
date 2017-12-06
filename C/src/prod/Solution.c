@@ -167,16 +167,16 @@ void solution_save(Solution * solution, const char * filename, double time)
 	{
 		fprintf(file, "%d\t%f\t{ production:[ ", solution_eval(solution)->score, time);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount-1)?' ':',');
+			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount - 1) ? ' ' : ',');
 		fprintf(file, "], deliveries:[ ");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
 			fprintf(file, "[ ");
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
-				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount-1)?' ':',');
+				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount - 1) ? ' ' : ',');
 			}
-			fprintf(file, "]%c", (i == solution->packCount-1)?' ':',');
+			fprintf(file, "]%c", (i == solution->packCount - 1) ? ' ' : ',');
 		}
 		fprintf(file, "] }\n");
 		fclose(file);
@@ -188,4 +188,28 @@ long solutionCompare(Solution * solution1, Solution * solution2, Bool diversific
 	if(diversification)
 		return solution_eval(solution1)->score - solution_eval(solution2)->score;
 	return solution_eval(solution2)->score - solution_eval(solution1)->score;
+}
+
+void solution_printCSV(Solution * solution, FILE * file)
+{
+	if(solution == NULL)
+		fprintf(file, "NULL");
+	else
+	{
+		fprintf(file, "[");
+		for(unsigned int packID = 0; packID < solution->packCount; packID++)
+		{
+			fprintf(file, "[");
+			for(unsigned int taskIndex = 0; taskIndex < solution->packList[packID]->taskCount; taskIndex++)
+			{
+				fprintf(file, "%u", solution->packList[packID]->deliveries[taskIndex]);
+				if(taskIndex < solution->packList[packID]->taskCount - 1)
+					fprintf(file, ", ");
+			}
+			fprintf(file, "]");
+			if(packID < solution->packCount - 1)
+				fprintf(file, ", ");
+		}
+		fprintf(file, "]");
+	}
 }

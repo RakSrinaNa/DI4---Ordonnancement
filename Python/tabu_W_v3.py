@@ -116,7 +116,7 @@ if nbjobs == 100: NB_ITE_SANS_AMEL_MAX = 5
 elif nbjobs == 50: NB_ITE_SANS_AMEL_MAX = 10
 else: NB_ITE_SANS_AMEL_MAX = 15
 
-AVEC_DIVERSIFICATION = 1
+AVEC_DIVERSIFICATION = 0
 
 FLAG_EBSR = 0
 FLAG_EFSR = 0
@@ -545,8 +545,10 @@ diversification = False
 
 scoreLog = open("./scoreLogPython.csv", "w")
 scoreLogCompact = open("./scoreLogPythonCompact.csv", "w")
+scoreLogFull = open("./scoreLogPythonFull.csv", "w")
 scoreLog.write("P_BestEver;P_BestIter\n")
 scoreLogCompact.write("P_BestIter;P_BestEver\n")
+scoreLogFull.write("P_Iter;P_BestEver\n")
 # BOUCLE GENERALE
 while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     amelioration = False
@@ -709,11 +711,16 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     scoreLog.write(";")
     scoreLog.write(str(val_best_vois))
     scoreLog.write("\n")
+    scoreLogFull.write(str(nb_ite + 1))
+    scoreLogFull.write(";")
+    scoreLogFull.write(str(sol_cour))
+    scoreLogFull.write("\n")
     time_end = time.clock()
     cpu = time_end-time_start
     nb_ite = nb_ite + 1
 
 scoreLog.close()
+scoreLogFull.close()
 print('temps de calcul =',cpu,'(',nb_ite,') ite')
 
 print('**************************')

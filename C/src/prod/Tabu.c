@@ -59,6 +59,8 @@ TabuSolution * tabu_search(Instance * instance)
 	fprintf(logScoreFile, "%s;%s\n", "C_BestEver", "C_BestIter");
 	FILE * logScoreCompactFile = fopen("./logScoresCompact.csv", "w");
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
+	FILE * logScoreFullFile = fopen("./logScoresFull.csv", "w");
+	fprintf(logScoreCompactFile, "%s;%s\n", "C_Iter", "C_Current");
 #endif
 	Solution * currentSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = solution_copy(currentSolution);
@@ -194,16 +196,19 @@ TabuSolution * tabu_search(Instance * instance)
 			}
 			currentSolution = solution_copy(bestMethodResult->solution);
 		}
-		else
+		else if(TABU_DIVERSIFICATION)
 		{
 			diversification = True;
 			nbNoBetterIterations++;
 		}
 		
-		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
+		if(TABU_DIVERSIFICATION && nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
 #ifdef DEV_LOG_SCORE
 		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? UINT_MAX : solution_eval(bestSolution)->score, (bestMethodResult == NULL || bestMethodResult->solution == NULL) ? UINT_MAX : solution_eval(bestMethodResult->solution)->score);
+		fprintf(logScoreFullFile, "%u;", nbIterations + 1);
+		solution_printCSV(currentSolution, logScoreFullFile);
+		fprintf(logScoreFullFile, "\n");
 #endif
 		searchResult_destroy(bestMethodResult);
 		nbIterations++;
@@ -212,6 +217,7 @@ TabuSolution * tabu_search(Instance * instance)
 #ifdef DEV_LOG_SCORE
 	fclose(logScoreFile);
 	fclose(logScoreCompactFile);
+	fclose(logScoreFullFile);
 #endif
 	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
 	tabuList_destroy(tabuListSwap);
