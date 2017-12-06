@@ -119,7 +119,7 @@ void pack_print(Pack * pack, unsigned int packID)
 	{
 		printf("Pack #%d : %d elements (", packID, pack->taskCount);
 		for(task_t i = 0; i < pack->taskCount; i++)
-			printf(" T%d", pack->tasks[i] + 1);
+			printf(" T%d", pack->tasks[i]);
 		printf(" )");
 	}
 	else
