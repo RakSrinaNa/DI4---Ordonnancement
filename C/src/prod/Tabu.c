@@ -201,6 +201,7 @@ TabuSolution * tabu_search(Instance * instance)
 			diversification = True;
 			nbNoBetterIterations++;
 		}
+		printf("%d\n",solution_eval(currentSolution)->score);
 		
 		if(TABU_DIVERSIFICATION && nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 			diversification = True;
