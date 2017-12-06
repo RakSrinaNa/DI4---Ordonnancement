@@ -549,6 +549,10 @@ scoreLogFull = open("./scoreLogPythonFull.csv", "w")
 scoreLog.write("P_BestEver;P_BestIter\n")
 scoreLogCompact.write("P_BestIter;P_BestEver\n")
 scoreLogFull.write("P_Iter;P_BestEver\n")
+scoreLogFull.write(str(0))
+scoreLogFull.write(";")
+scoreLogFull.write(str(sol_cour))
+scoreLogFull.write("\n")
 # BOUCLE GENERALE
 while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     amelioration = False

@@ -54,6 +54,7 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 
 TabuSolution * tabu_search(Instance * instance)
 {
+	Solution * currentSolution = tabu_solutionInit(instance);
 #ifdef DEV_LOG_SCORE
 	FILE * logScoreFile = fopen("./logScores.csv", "w");
 	fprintf(logScoreFile, "%s;%s\n", "C_BestEver", "C_BestIter");
@@ -61,8 +62,10 @@ TabuSolution * tabu_search(Instance * instance)
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 	FILE * logScoreFullFile = fopen("./logScoresFull.csv", "w");
 	fprintf(logScoreFullFile, "%s;%s\n", "C_Iter", "C_Current");
+	fprintf(logScoreFullFile, "0;");
+	solution_printCSV(currentSolution, logScoreFullFile);
+	fprintf(logScoreFullFile, "\n");
 #endif
-	Solution * currentSolution = tabu_solutionInit(instance);
 	Solution * bestSolution = solution_copy(currentSolution);
 	solution_eval(currentSolution);
 	unsigned int nbIterations = 0;

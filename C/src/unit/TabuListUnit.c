@@ -1,6 +1,7 @@
 #include "headers/TabuListUnit.h"
 #include "../prod/headers/TabuList.h"
 #include "headers/UnitUtils.h"
+#include "../prod/FLAGS.h"
 
 void tabuListUnit()
 {
@@ -21,7 +22,7 @@ void tabuListUnit()
 	
 	item2->source = 2;
 	item2->destination = 1;
-	if(!tabuItem_isSame(item1, item2))
+	if(TABU_LOGIC && !tabuItem_isSame(item1, item2))
 		unit_error("TabuList 5: Tabu items should match");
 	
 	item2->destination = 99;
