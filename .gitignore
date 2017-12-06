@@ -43,3 +43,5 @@ scoreLogPython.txt
 scoreLogPython.csv
 scoreLogPythonCompact.csv
 logScoresCompact.csv
+logScoresFull.csv
+scoreLogPythonFull.csv

@@ -195,7 +195,7 @@ unsigned int sequencer_deliveryDelay(Instance * instance, unsigned int count, ta
 
 task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int taskCount, task_t * tasks, unsigned int * initialDate)
 {
-	debugPrint("Ordering deliveries for %d tasks at %d\n", taskCount, *initialDate);
+	debugPrint("Ordering tasks for %d tasks at %d\n", taskCount, *initialDate);
 	unsigned int * sequence = NULL;
 	if(taskCount == 1)
 	{

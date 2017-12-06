@@ -246,12 +246,12 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 	{
 		for(unsigned int taskIndex1 = 0; taskIndex1 < currentSolution->packList[packIndex1]->taskCount; taskIndex1++)
 		{
-			task_t task1 = currentSolution->packList[packIndex1]->deliveries[taskIndex1];
+			task_t task1 = currentSolution->packList[packIndex1]->tasks[taskIndex1];
 			for(unsigned int packIndex2 = packIndex1; packIndex2 < currentSolution->packCount; packIndex2++)
 			{
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
-					task_t task2 = currentSolution->packList[packIndex2]->deliveries[taskIndex2];
+					task_t task2 = currentSolution->packList[packIndex2]->tasks[taskIndex2];
 					if((taskIndex2 > taskIndex1 ? taskIndex2 - taskIndex1 + 1 : taskIndex1 - taskIndex2 + 1) <= TABU_DELTA)
 						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
@@ -302,7 +302,7 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 			{
 				if(!stop)
 				{
-					task_t jobJ = currentSolution->packList[packJ]->deliveries[packElemIndex];
+					task_t jobJ = currentSolution->packList[packJ]->tasks[packElemIndex];
 					Solution * neighbor = sort_moveDeliveriesEBSR(currentSolution, jobJ, packJ - packI);
 					TabuItem * tabuItem = tabuItem_create(packI, jobJ);
 					if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
@@ -339,7 +339,7 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 	{
 		for(unsigned int packElemIndex = 0; packElemIndex < currentSolution->packList[packI]->taskCount; packElemIndex++)
 		{
-			task_t jobI = currentSolution->packList[packI]->deliveries[packElemIndex];
+			task_t jobI = currentSolution->packList[packI]->tasks[packElemIndex];
 			unsigned int packJ = packI + 1;
 			while(packJ < currentSolution->packCount && packJ <= packI + TABU_DELTA_BATCH && !stop)
 			{
