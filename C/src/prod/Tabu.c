@@ -256,7 +256,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
 					task_t task2 = currentSolution->packList[packIndex2]->tasks[taskIndex2];
-					if((taskIndex2 > taskIndex1 ? taskIndex2 - taskIndex1 + 1 : taskIndex1 - taskIndex2 + 1) <= TABU_DELTA)
+					if((taskIndex2 > taskIndex1 ? taskIndex2 - taskIndex1 + 1 : taskIndex1 - taskIndex2 + 1) > TABU_DELTA)
 						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
 					TabuItem * item = tabuItem_create(task1, task2);
