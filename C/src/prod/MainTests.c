@@ -64,7 +64,8 @@ int main(int argc, char * argv[])
 		
 		solution_eval(sol);
 		solution_print(sol);
-		free(sol);
+		solution_destroy(sol);
+		instance_destroy(instance);
 		exit(EXIT_SUCCESS);
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
