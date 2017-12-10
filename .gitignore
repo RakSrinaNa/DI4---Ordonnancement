@@ -45,3 +45,7 @@ scoreLogPythonCompact.csv
 logScoresCompact.csv
 logScoresFull.csv
 scoreLogPythonFull.csv
+solution.txt
+SolutionCalculator.iml
+Java/SolutionCalculator/.idea
+Java/SolutionCalculator/target
