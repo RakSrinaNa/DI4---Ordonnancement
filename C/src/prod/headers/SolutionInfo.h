@@ -63,4 +63,6 @@ void solutionInfo_deliveryOrder(struct _Solution * solution, struct _SolutionInf
  */
 void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info);
 
+void solutionInfo_printForVerification(FILE * file, struct _Solution * solution, struct _SolutionInfo * info);
+
 #endif // SOLUTIONINFO_H_INCLUDED

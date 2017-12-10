@@ -63,6 +63,9 @@ int main(int argc, char * argv[])
 		solution_moveTaskPack(sol, 13, 9);
 		
 		solution_eval(sol);
+		FILE * file = fopen("solution.txt", "w");
+		solutionInfo_printForVerification(file, sol, sol->info);
+		fclose(file);
 		solution_print(sol);
 		solution_destroy(sol);
 		instance_destroy(instance);

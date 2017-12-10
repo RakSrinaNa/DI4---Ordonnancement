@@ -435,21 +435,28 @@ def evalue(sol,diversification,Final):
     Cjm=[[0 for i in range(m)] for i in range (nbjobs)]
     #print('nbbatches=',nb_batches)
     # for each batch
+    sssss = open("solution.txt", "w")
+    sssss.write("P\n")
     for one_batch in sol:
         nb_jobs_batch = len(one_batch)
         the_jobs = one_batch
         #print(nb_jobs_batch,the_jobs)
         seq_schedule = sequence_the_jobs (the_jobs,diversification)
         update_Cjm_Cm(seq_schedule)
-        if Final: print('sched=',seq_schedule)
+        if Final:
+            print('sched=',seq_schedule)
+            sssss.write('sched= ' + str(seq_schedule) + "\n")
         min_departure_batch =Cjm[seq_schedule[nb_jobs_batch-1]][m-1]
         #print('date de fin dernier job=',Cjm[seq_schedule[nb_jobs_batch-1]][m-1])
         departure_batch = max(min_departure_batch,vehicle_back)
         #print('departure_batch=',departure_batch)
         seq_routing = route_the_jobs (the_jobs,departure_batch,diversification)
-        if Final: print('route=',seq_routing)
+        if Final:
+            print('route=',seq_routing)
+            sssss.write('route= '+str(seq_routing) + "\n")
         tardiness = compute_tardiness(seq_routing,departure_batch,True,diversification)
         TotalTj = TotalTj + tardiness
+    sssss.close()
         #print(tardiness,TotalTj)
     return(TotalTj)
 

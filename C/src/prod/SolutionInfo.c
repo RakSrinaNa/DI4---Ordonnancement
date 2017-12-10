@@ -94,3 +94,20 @@ void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info
 		printf("\tInfo : NULL\n");
 }
 
+void solutionInfo_printForVerification(FILE * file, struct _Solution * solution, struct _SolutionInfo * info)
+{
+	if(info != NULL)
+	{
+		fprintf(file, "C\n");
+		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+			fprintf(file, "%d\t", info->productionOrder[i]);
+		fprintf(file, "\n");
+		for(unsigned int i = 0; i < solution->packCount; i++)
+		{
+			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
+				fprintf(file, "%d\t", info->deliveries[i][j]);
+			fprintf(file, "\n");
+		}
+	}
+}
+
