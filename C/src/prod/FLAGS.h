@@ -30,7 +30,7 @@
 #define TABU_DELTA 5
 //!Minimum batch gap between swaps, EBSRs, EFSRs
 #define TABU_DELTA_BATCH 4
-//!EOJZRHt
+//!EOJZRHt //TODO Wut?
 #define TABU_PROPAGATE 0
 
 //!Use the score cache system.

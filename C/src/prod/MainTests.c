@@ -39,6 +39,33 @@ int main(int argc, char * argv[])
 	if(instance != NULL)
 	{
 		instance_print(instance);
+		Solution * sol = solution_create(instance);
+		
+		solution_moveTaskPack(sol, 8, 0);
+		solution_moveTaskPack(sol, 12, 0);
+		solution_moveTaskPack(sol, 16, 1);
+		solution_moveTaskPack(sol, 11, 1);
+		solution_moveTaskPack(sol, 19, 2);
+		solution_moveTaskPack(sol, 6, 2);
+		solution_moveTaskPack(sol, 7, 3);
+		solution_moveTaskPack(sol, 5, 3);
+		solution_moveTaskPack(sol, 10, 4);
+		solution_moveTaskPack(sol, 15, 4);
+		solution_moveTaskPack(sol, 0, 5);
+		solution_moveTaskPack(sol, 14, 5);
+		solution_moveTaskPack(sol, 9, 6);
+		solution_moveTaskPack(sol, 17, 6);
+		solution_moveTaskPack(sol, 3, 7);
+		solution_moveTaskPack(sol, 18, 7);
+		solution_moveTaskPack(sol, 4, 8);
+		solution_moveTaskPack(sol, 2, 8);
+		solution_moveTaskPack(sol, 1, 9);
+		solution_moveTaskPack(sol, 13, 9);
+		
+		solution_eval(sol);
+		solution_print(sol);
+		free(sol);
+		exit(EXIT_SUCCESS);
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
