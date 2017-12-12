@@ -191,12 +191,16 @@ TabuSolution * tabu_search(Instance * instance)
 		else if(TABU_DIVERSIFICATION)
 		{
 			diversification = True;
+			tabuList_clear(tabuList);
 			nbNoBetterIterations++;
 		}
 		printf("%d\n",solution_eval(currentSolution)->score);
 		
 		if(TABU_DIVERSIFICATION && nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
+		{
 			diversification = True;
+			tabuList_clear(tabuList);
+		}
 #ifdef DEV_LOG_SCORE
 		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? UINT_MAX : solution_eval(bestSolution)->score, (bestMethodResult == NULL || bestMethodResult->solution == NULL) ? UINT_MAX : solution_eval(bestMethodResult->solution)->score);
 		fprintf(logScoreFullFile, "%u;", nbIterations + 1);
@@ -266,6 +270,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 					}
 					else
 					{
+						solution_print(newSolution);
 						solution_destroy(newSolution);
 						tabuItem_destroy(item);
 					}
