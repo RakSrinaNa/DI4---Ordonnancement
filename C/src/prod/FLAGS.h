@@ -5,7 +5,7 @@
 #define DEV_LOG_SCORE 1
 
 //!Maximum iterations for the Tabu algorithm.
-#define TABU_ITERATIONS 2000
+#define TABU_ITERATIONS 25
 //!Maximum iterations with no improvement before diversification.
 #define TABU_ITERATIONS_NOIMPROVE 15
 //!If no improvement was found, try a new, different solution.

@@ -95,8 +95,8 @@ TabuItem * tabuItem_copy(TabuItem * item)
 	TabuItem * itemCopy = NULL;
 	MMALLOC(itemCopy, TabuItem, 1, "tabuItem_copy");
 	itemCopy->method = item->method;
-	itemCopy->destination = item->method;
-	itemCopy->source = item->method;
+	itemCopy->destination = item->destination;
+	itemCopy->source = item->source;
 	itemCopy->next = NULL;
 	return itemCopy;
 }
@@ -128,4 +128,5 @@ const char* searchMethod_getName(SearchMethod method)
 		case EBSR: return "EBSR";
 		case EFSR: return "EFSR";
 	}
+	return NULL;
 }
