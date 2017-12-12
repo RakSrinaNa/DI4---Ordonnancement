@@ -729,6 +729,7 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     time_end = time.clock()
     cpu = time_end-time_start
     nb_ite = nb_ite + 1
+    print("IT {}, tabu = {}".format(nb_ite, ListeTabou))
 
 scoreLog.close()
 scoreLogFull.close()
