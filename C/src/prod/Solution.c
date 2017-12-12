@@ -187,7 +187,7 @@ long solutionCompare(Solution * solution1, Solution * solution2, Bool diversific
 {
 	if(diversification)
 		return solution_eval(solution1)->score - solution_eval(solution2)->score;
-	return solution_eval(solution2)->score - solution_eval(solution1)->score;
+	return ((long)solution_eval(solution2)->score) - solution_eval(solution1)->score;
 }
 
 void solution_printCSV(Solution * solution, FILE * file)
