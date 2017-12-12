@@ -242,11 +242,13 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 		for(unsigned int taskIndex1 = 0; taskIndex1 < currentSolution->packList[packIndex1]->taskCount; taskIndex1++)
 		{
 			task_t task1 = currentSolution->packList[packIndex1]->tasks[taskIndex1];
-			for(unsigned int packIndex2 = packIndex1; packIndex2 < currentSolution->packCount; packIndex2++)
+			for(unsigned int packIndex2 = (TABU_LOGIC ? packIndex1 : 0); packIndex2 < currentSolution->packCount; packIndex2++)
 			{
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
 				{
 					task_t task2 = currentSolution->packList[packIndex2]->tasks[taskIndex2];
+					if(task1 == task2)
+						continue;
 					if((taskIndex2 > taskIndex1 ? taskIndex2 - taskIndex1 + 1 : taskIndex1 - taskIndex2 + 1) > TABU_DELTA)
 						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
