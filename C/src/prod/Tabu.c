@@ -202,6 +202,9 @@ TabuSolution * tabu_search(Instance * instance)
 		fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
 #endif
 		searchResult_destroy(bestMethodResult);
+		printf("%d: ", nbIterations);
+		tabuList_print(tabuList);
+		printf("\n");
 		nbIterations++;
 		ftime(&timeNow);
 	}

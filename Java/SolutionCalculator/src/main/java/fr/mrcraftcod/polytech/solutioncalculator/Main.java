@@ -90,7 +90,7 @@ public class Main
 		{
 			default:
 			case "DUE":
-				for(Task t : integers.stream().map(instance::getTask).sorted(Comparator.comparingInt(Task::getDue)).collect(Collectors.toList()))
+				for(Task t : integers.stream().map(instance::getTask).collect(Collectors.toList()))
 				{
 					duration += instance.getDistance(currTruck, t.getID());
 					delay += Math.max(0, (startTime + duration) - t.getDue());
@@ -117,6 +117,7 @@ public class Main
 				t.setReadyTime(endTime);
 				machines.put(machine, endTime);
 			}
+			System.out.println(t.getID() + " --> " + machines.toString());
 		}
 	}
 }
