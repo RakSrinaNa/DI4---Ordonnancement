@@ -55,6 +55,8 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 TabuSolution * tabu_search(Instance * instance)
 {
 	Solution * currentSolution = tabu_solutionInit(instance);
+	printf("Initial solution:\n");
+	solution_print(currentSolution);
 #ifdef DEV_LOG_SCORE
 	FILE * logScoreFile = fopen("./logScores.csv", "w");
 	fprintf(logScoreFile, "%s;%s\n", "C_BestEver", "C_BestIter");
