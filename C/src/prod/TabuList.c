@@ -100,3 +100,32 @@ TabuItem * tabuItem_copy(TabuItem * item)
 	itemCopy->next = NULL;
 	return itemCopy;
 }
+
+void tabuItem_print(TabuItem * item)
+{
+	if(item == NULL)
+		return;
+	printf("[%s, %d, %d]", searchMethod_getName(item->method), item->source, item->destination);
+}
+
+void tabuList_print(TabuList * list)
+{
+	TabuItem * item = list->first;
+	printf("[");
+	while(item != NULL)
+	{
+		tabuItem_print(item);
+		item = item->next;
+	}
+	printf("]");
+}
+
+const char* searchMethod_getName(SearchMethod method)
+{
+	switch (method)
+	{
+		case SWAP: return "SWAP";
+		case EBSR: return "EBSR";
+		case EFSR: return "EFSR";
+	}
+}
