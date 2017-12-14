@@ -1,0 +1,6 @@
+#ifndef TABOU_SEARCHRESULTUNIT_H
+#define TABOU_SEARCHRESULTUNIT_H
+
+void searchResultUnit();
+
+#endif //TABOU_SEARCHRESULTUNIT_H

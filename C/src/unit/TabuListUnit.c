@@ -7,6 +7,7 @@ void tabuListUnit()
 {
 	TabuItem * item1 = tabuItem_create(1, 2, SWAP);
 	TabuItem * item2 = tabuItem_create(10, 11, SWAP);
+	TabuItem * item4 = tabuItem_create(1, 2, EBSR);
 	
 	if(tabuItem_isSame(item1, item2))
 		unit_error("TabuList 1: Tabu items should not match");
@@ -14,6 +15,9 @@ void tabuListUnit()
 		unit_error("TabuList 2: Tabu items should not match");
 	if(tabuItem_isSame(NULL, NULL))
 		unit_error("TabuList 3: Tabu items should not match");
+	if(tabuItem_isSame(item1, item4))
+		unit_error("TabuList 3.5: Tabu items should not match");
+	tabuItem_destroy(item4);
 	
 	item2->source = 1;
 	item2->destination = 2;
@@ -56,6 +60,10 @@ void tabuListUnit()
 		unit_error("TabuList 14: Tabu list should contain the item2");
 	if(!tabuList_contains(list, item2))
 		unit_error("TabuList 15: Tabu list should contain the item3");
+	
+	tabuList_clear(list);
+	if(list->size != 0)
+		unit_error("TabuList 16: Tabu list should be empty");
 	
 	tabuList_destroy(list);
 }
