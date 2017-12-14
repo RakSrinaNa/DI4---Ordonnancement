@@ -20,16 +20,18 @@ public class Instance
 	private int taskCount;
 	private ArrayList<Task> tasks;
 	private HashMap<Integer, HashMap<Integer, Integer>> times;
+	private final File source;
 	
-	private Instance()
+	private Instance(File source)
 	{
 		tasks = new ArrayList<>();
 		times = new HashMap<>();
+		this.source = source;
 	}
 	
 	public static Instance parse(File file) throws IOException
 	{
-		Instance instance = new Instance();
+		Instance instance = new Instance(file);
 		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(Paths.get(file.toURI())));
 		
 		String[] infos = lines.poll().split(" {2}");
@@ -96,6 +98,11 @@ public class Instance
 		return machineCount;
 	}
 	
+	public File getSource()
+	{
+		return source;
+	}
+	
 	public int getTaskCount()
 	{
 		return taskCount;
@@ -109,5 +116,11 @@ public class Instance
 	public void setTaskCount(int taskCount)
 	{
 		this.taskCount = taskCount;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Instance{" + "machineCount=" + machineCount + ", taskCount=" + taskCount + ", source=" + source.getAbsolutePath() + '}';
 	}
 }
