@@ -23,6 +23,7 @@ import math
 import time # pour avoir le temsp de calcul cpu
 ##from numpy import *
 import copy
+import sys
 
 # ########################################################
 # Lecture du fichier
@@ -36,7 +37,11 @@ dd = dates dues
 tt = temps de trajet
 """
 
-mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
+if len(sys.argv) == 2:
+    mesdonnees = open(sys.argv[1],"r")
+else:
+    mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
+
 ligne1 = mesdonnees.readline()
 indice=0
 j=0
