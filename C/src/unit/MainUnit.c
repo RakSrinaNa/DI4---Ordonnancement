@@ -11,6 +11,7 @@
 #include "../prod/headers/Utils.h"
 #include "headers/SortUnit.h"
 #include "headers/TabuListUnit.h"
+#include "headers/SearchResultUnit.h"
 
 extern Bool UNIT_FAILED;
 extern Bool DEBUG;
@@ -68,6 +69,10 @@ int mainUnit()
 	
 	printf("UNIT: Executing TabuList tests...\n");
 	tabuListUnit();
+	printf("UNIT: OK\n");
+	printf("%s", endTest);
+	printf("UNIT: Executing SearchResult tests...\n");
+	searchResultUnit();
 	printf("UNIT: OK\n");
 	printf("%s", endTest);
 	
