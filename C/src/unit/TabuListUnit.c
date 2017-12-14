@@ -61,9 +61,15 @@ void tabuListUnit()
 	if(!tabuList_contains(list, item3))
 		unit_error("TabuList 15: Tabu list should contain the item3");
 	
+	if(tabuList_pop(list) != item2)
+		unit_error("TabuList 16: Wrong pop");
+	if(list->size != 1)
+		unit_error("TabuList 17: Wrong pop size");
+	tabuList_addItem(list, item2);
+	
 	tabuList_clear(list);
 	if(list->size != 0)
-		unit_error("TabuList 16: Tabu list should be empty");
+		unit_error("TabuList 18: Tabu list should be empty");
 	
 	tabuList_destroy(list);
 }

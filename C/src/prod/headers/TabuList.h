@@ -4,10 +4,9 @@
 #include "Utils.h"
 
 //!Search methods.
-typedef enum _SearchMethod{
-	SWAP,
-	EBSR,
-	EFSR
+typedef enum _SearchMethod
+{
+	SWAP, EBSR, EFSR
 } SearchMethod;
 
 //!Item of the Tabu list.
@@ -24,7 +23,8 @@ typedef struct _TabuItem
 } TabuItem;
 
 //!Tabu list.
-typedef struct _TabuList{
+typedef struct _TabuList
+{
 	//!First element of the list.
 	TabuItem * first;
 	//!Last element of the list.
@@ -131,6 +131,13 @@ void tabuList_clear(TabuList * list);
  * @param method The method to get the name for.
  * @return Its name.
  */
-const char* searchMethod_getName(SearchMethod method);
+const char * searchMethod_getName(SearchMethod method);
+
+/**
+ * Pop the fist item of the list.
+ * @param list The list to pop.
+ * @return The popped item.
+ */
+TabuItem * tabuList_pop(TabuList * list);
 
 #endif //TABOU_TABULIST_H

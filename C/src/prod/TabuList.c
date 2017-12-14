@@ -43,13 +43,20 @@ void tabuList_addItem(TabuList * list, TabuItem * item)
 	debugPrint("Added tabu item %p in list %p, now have a size of %d/%d\n", item, list, list->size, list->maxSize);
 	
 	if(list->size > list->maxSize)
+		tabuItem_destroy(tabuList_pop(list));
+}
+
+TabuItem * tabuList_pop(TabuList * list)
+{
+	if(list != NULL && list->first != NULL)
 	{
 		TabuItem * toDel = list->first;
 		list->first = toDel->next;
 		debugPrint("Removing tabu item %p in list %p\n", toDel, list);
-		tabuItem_destroy(toDel);
 		list->size--;
+		return toDel;
 	}
+	return NULL;
 }
 
 Bool tabuList_contains(TabuList * list, TabuItem * item)
@@ -120,13 +127,16 @@ void tabuList_print(TabuList * list)
 	printf("]");
 }
 
-const char* searchMethod_getName(SearchMethod method)
+const char * searchMethod_getName(SearchMethod method)
 {
-	switch (method)
+	switch(method)
 	{
-		case SWAP: return "SWAP";
-		case EBSR: return "EBSR";
-		case EFSR: return "EFSR";
+		case SWAP:
+			return "SWAP";
+		case EBSR:
+			return "EBSR";
+		case EFSR:
+			return "EFSR";
 	}
 	return NULL;
 }
