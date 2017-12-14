@@ -15,7 +15,17 @@ $(EXEC):
 $(EXEC_PROD):
 	cd $(SRC_DIR) && cmake . && make TabouTest && cd ..
 
-.PHONY: clean
+.PHONY: all
+
+doTestUnit: $(EXEC)
+	cd C && ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) --test && cd ..
+
+doTestValgrind: all
+	cd C && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) ../Inputs/I_1_5_20_2.txt && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC_PROD) ../Inputs/I_1_5_20_2.txt && cd ..
+
+doTestSuite: $(EXEC_PROD)
+	java -jar ./Java/SolutionCalculator/solutionCalculator.jar --c "./C/$(EXEC_PROD)" --p "./Python/tabu_W_v3.py" --i "./Inputs/I_1_5_20_2.txt" --i "./Inputs/I_1_5_100_2.txt"
 
 doTest: all
-	cd C && ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) --test && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) ../Inputs/I_1_5_20_2.txt && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC_PROD) ../Inputs/I_1_5_20_2.txt && cd ..
+	doTestUnit && doTestValgrind && doTestSuite
+	 

@@ -1,8 +1,11 @@
 package fr.mrcraftcod.polytech.solutioncalculator;
 
 import javafx.util.Pair;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -15,11 +18,16 @@ import java.util.stream.Collectors;
  */
 public class Main
 {
+	private static final String OS = System.getProperty("os.name").toLowerCase();
 	private static final String distanceType = "DUE";
 	
 	public static void main(String[] args) throws IOException
 	{
-		Instance instance = null;
+		boolean calculate = false;
+		
+		File cExecutable = null;
+		File pythonExecutable = null;
+		List<Instance> instances = new ArrayList<>();
 		List<Solution> solutions = new ArrayList<>();
 		
 		LinkedList<String> arguments = new LinkedList<>(Arrays.asList(args));
@@ -28,50 +36,169 @@ public class Main
 		{
 			switch(arg)
 			{
+				case "--calc":
+					calculate = true;
+					break;
+				case "--c":
+					if((arg = arguments.poll()) == null)
+					{
+						System.out.println("Invalid options format for `c`!");
+						System.out.flush();
+						System.exit(1);
+					}
+					cExecutable = new File(".", arg);
+					break;
+				case "--p":
+					if((arg = arguments.poll()) == null)
+					{
+						System.out.println("Invalid options format for `p`!");
+						System.out.flush();
+						System.exit(1);
+					}
+					pythonExecutable = new File(".", arg);
+					break;
 				case "--instance":
 				case "--i":
 					if((arg = arguments.poll()) == null)
 					{
-						System.out.println("Invalid options format!");
+						System.out.println("Invalid options format for `i`!");
+						System.out.flush();
 						System.exit(1);
 					}
-					instance = Instance.parse(new File(".", arg));
+					instances.add(Instance.parse(new File(".", arg)));
 					break;
 				case "--solution":
 				case "--s":
 					if((arg = arguments.poll()) == null)
 					{
-						System.out.println("Invalid options format!");
+						System.out.println("Invalid options format for `s`!");
+						System.out.flush();
 						System.exit(1);
 					}
 					solutions.add(Solution.parse(new File(".", arg)));
 					break;
 				default:
-					System.out.println("Invalid options format!");
+					System.out.format("Unknown command `%s`!\n", arg);
+					System.out.flush();
 					System.exit(1);
 			}
 		}
 		
-		if(instance == null)
-		{
-			System.out.println("Invalid options format!");
-			System.exit(1);
-		}
-		
-		Instance finalInstance = instance;
-		switch(solutions.size())
+		switch(instances.size())
 		{
 			case 0:
-				System.out.println("Please give at least a solution.");
-				break;
-			case 2:
-				Map<Solution, Integer> results = solutions.stream().collect(Collectors.toMap(Function.identity(), s -> calculate(finalInstance, s)));
-				if(results.get(solutions.get(0)) > results.get(solutions.get(1)))
-					System.exit(42);
+				System.out.println("Invalid options format, no instances!");
+				System.out.flush();
+				System.exit(1);
 				break;
 			default:
-				solutions.forEach(s -> calculate(finalInstance, s));
+				if(calculate)
+				{
+					Instance finalInstance = instances.get(0);
+					switch(solutions.size())
+					{
+						case 0:
+							System.out.println("Please give at least a solution.");
+							break;
+						case 2:
+							Map<Solution, Integer> results = solutions.stream().collect(Collectors.toMap(Function.identity(), s -> calculate(finalInstance, s)));
+							if(results.get(solutions.get(0)) > results.get(solutions.get(1)))
+							{
+								System.out.flush();
+								System.exit(42);
+							}
+							break;
+						default:
+							solutions.forEach(s -> calculate(finalInstance, s));
+					}
+				}
+				else
+				{
+					if(cExecutable != null && pythonExecutable != null)
+					{
+						File finalCExecutable = cExecutable;
+						File finalPythonExecutable = pythonExecutable;
+						instances.forEach(i -> {
+							try
+							{
+								compareInstance(i, finalCExecutable, finalPythonExecutable);
+							}
+							catch(IOException | InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+						});
+					}
+					else
+					{
+						System.out.println("Please give executables path.");
+						System.out.flush();
+						System.exit(1);
+					}
+				}
 		}
+	}
+	
+	private static void compareInstance(Instance instance, File cExecutable, File pythonExecutable) throws IOException, InterruptedException
+	{
+		System.out.println("Comparing instance " + instance);
+		startPython(instance, pythonExecutable);
+		startC(instance, cExecutable);
+		Solution solutionP = Solution.parse(new File(pythonExecutable.getParentFile(), "solution.txt"));
+		Solution solutionC = Solution.parse(new File(cExecutable.getParentFile(), "solution.txt"));
+		int rC = calculate(instance, solutionC);
+		int rP = calculate(instance, solutionP);
+		if(rC > rP)
+		{
+			System.out.printf("C: %d vs %d :P\n", rC, rP);
+			System.out.flush();
+			System.exit(43);
+		}
+		else
+			System.out.println("OK");
+	}
+	
+	private static void startC(Instance instance, File executable) throws InterruptedException, IOException
+	{
+		startCommand(executable.getParentFile(), Paths.get(executable.toURI()).normalize().toString() + " " + Paths.get(instance.getSource().toURI()).normalize().toString());
+	}
+	
+	private static void startPython(Instance instance, File executable) throws InterruptedException, IOException
+	{
+		startCommand(executable.getParentFile(), "python3 " + Paths.get(executable.toURI()).normalize().toString() + " " + Paths.get(instance.getSource().toURI()).normalize().toString());
+	}
+	
+	private static void startCommand(File workingDir, String command) throws InterruptedException, IOException
+	{
+		String beginning = "";
+		String ending = "";
+		if(OS.contains("win"))
+		{
+			beginning = "cmd /c start /wait ";
+		}
+		else
+		{
+			ending = "";
+		}
+		command = beginning + command + ending;
+		System.out.println("Starting " + command);
+		Process proc = Runtime.getRuntime().exec(command, null, workingDir);
+		System.out.println("Waiting for " + command);
+		
+		boolean print = false;
+		
+		BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+		BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+		
+		String s;
+		while((s = stdInput.readLine()) != null)
+			if(print)
+				System.out.println(s);
+		
+		while((s = stdError.readLine()) != null)
+			System.out.println(s);
+		
+		System.out.format("Waiting done with code %d.\n", proc.waitFor());
 	}
 	
 	private static int calculate(Instance instance, Solution solution)
