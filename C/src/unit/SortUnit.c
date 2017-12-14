@@ -80,7 +80,6 @@ void sortUnit()
 	result = sort_moveDeliveriesEFSR(solution, 3, 0);
 	if(result == solution)
 		unit_error("Sort 17: EFSR - Solution is not duplicated");
-	solution_print(solution);
 	if(solution_getTaskPack(result, 0) != 2 || solution_getTaskPack(result, 1) != 0 || solution_getTaskPack(result, 2) != 0 || solution_getTaskPack(result, 3) != 0 || solution_getTaskPack(result, 4) != 1)
 		unit_error("Sort 18: Wrong EFSR");
 	solution_destroy(result);
