@@ -81,7 +81,7 @@ void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 	if(pack == solution->packCount) //If we need to put it in a new pack, create it.
 	{
 		solution->packCount++;
-		RREALLOC(solution->packList, Pack*, solution->packCount, "solution_setTaskPackIndex");
+		RREALLOC(solution->packList, Pack*, solution->packCount, "solution_moveTaskPack");
 		solution->packList[solution->packCount - 1] = pack_create(solution->instance);
 	}
 	if(pack < solution->packCount)
@@ -101,7 +101,7 @@ void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 		}
 	}
 	else
-		warn("solution_setTaskPackIndex : Pack %d does not exist.\n", pack);
+		warn("solution_moveTaskPack : Pack %d does not exist.\n", pack);
 }
 
 void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)

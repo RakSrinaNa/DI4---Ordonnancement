@@ -237,7 +237,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 		return searchResult_create(newSolution, tabuItem_create(t1, t2, SWAP), SWAP);
 	}
 	if(currentSolution == NULL)
-		return searchResult_create(solution_copy(currentSolution), NULL, SWAP);
+		return searchResult_create(NULL, NULL, SWAP);
 	Solution * bestSolution = solution_copy(currentSolution);
 	TabuItem * bestItem = NULL;
 	Bool first_done = False;
@@ -290,6 +290,8 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 
 SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
+	if(currentSolution == NULL)
+		return searchResult_create(NULL, NULL, EBSR);
 	Bool stop = False;
 	unsigned int packIndex1 = 0;
 	Solution * bestSol = solution_copy(currentSolution);
@@ -306,7 +308,7 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 					task_t taskID = currentSolution->packList[packIndex2]->tasks[packElemIndex];
 					Solution * neighbor = sort_moveDeliveriesEBSR(currentSolution, taskID, packIndex2 - packIndex1);
 					TabuItem * tabuItem = tabuItem_create(packIndex1, taskID, EBSR);
-					if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
+					if(!tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
 					{
 						solution_destroy(bestSol);
 						tabuItem_destroy(bestTabuItem);
@@ -332,6 +334,8 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 
 SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification)
 {
+	if(currentSolution == NULL)
+		return searchResult_create(NULL, NULL, EFSR);
 	Bool stop = False;
 	unsigned int packIndex1 = 0;
 	Solution * bestSol = solution_copy(currentSolution);
@@ -344,9 +348,9 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 			unsigned int packIndex2 = packIndex1 + 1;
 			while(packIndex2 < currentSolution->packCount && packIndex2 <= packIndex1 + TABU_DELTA_BATCH && !stop)
 			{
-				Solution * neighbor = sort_moveDeliveriesEFSR(currentSolution, taskID, packIndex1 - packIndex2);
+				Solution * neighbor = sort_moveDeliveriesEFSR(currentSolution, taskID, packIndex2 - packIndex1);
 				TabuItem * tabuItem = tabuItem_create(taskID, packIndex2, EFSR);
-				if(tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
+				if(!tabuList_contains(tabuList, tabuItem) && solutionCompare(bestSol, neighbor, diversification) < 0)
 				{
 					solution_destroy(bestSol);
 					tabuItem_destroy(bestTabuItem);
@@ -366,5 +370,6 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 		}
 		packIndex1++;
 	}
-	return searchResult_create(bestSol, bestTabuItem, EBSR);
+	printf("%d\n", bestSol->info->score);
+	return searchResult_create(bestSol, bestTabuItem, EFSR);
 }
