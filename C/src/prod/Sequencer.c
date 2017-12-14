@@ -48,7 +48,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 		
 		unsigned int score01 = sequencer_productionFinalTime(instance, taskCount, sequence01, machineReady01);
 		unsigned int score10 = sequencer_productionFinalTime(instance, taskCount, sequence10, machineReady10);
-		if(score01 <= score10)
+		if(score01 < score10)
 		{
 			finalSequence = sequence01;
 			free(sequence10);
