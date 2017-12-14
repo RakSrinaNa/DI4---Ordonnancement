@@ -14,4 +14,5 @@ void searchResultUnit()
 		unit_error("SearchResult 1: Wrong result.");
 	
 	searchResult_destroy(result);
+	instance_destroy(instance);
 }
