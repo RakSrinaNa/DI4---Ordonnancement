@@ -24,13 +24,13 @@
 #define TABU_2OPT 0
 //!Selects the first better solution instead of the best solution.
 #define TABU_FIRST_IMPROVE 0
-//!Prevents swapping if already swapped the inverse
+//!Prevents swapping if already swapped the inverse.
 #define TABU_LOGIC 0
-//!Minimum gap between swaps, EBSRs, EFSRs
+//!Minimum gap between swaps, EBSRs, EFSRs.
 #define TABU_DELTA 5
-//!Minimum batch gap between swaps, EBSRs, EFSRs
+//!Minimum batch gap between swaps, EBSRs, EFSRs.
 #define TABU_DELTA_BATCH 4
-//!EOJZRHt //TODO Wut?
+//!Change the current solution after each method used.
 #define TABU_PROPAGATE 0
 
 //!Use the score cache system.

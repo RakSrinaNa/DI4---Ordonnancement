@@ -107,16 +107,30 @@ void tabuItem_destroy(TabuItem * item);
  */
 TabuItem * tabuItem_copy(TabuItem * item);
 
-//TODO Doc
+/**
+ * Print a tabu item to the console.
+ * @param item The item to print.
+ */
 void tabuItem_print(TabuItem * item);
 
-//TODO Doc
+/**
+ * Print a tabu list to the console.
+ * @param list The list to print. Not null.
+ */
 void tabuList_print(TabuList * list);
 
-//TODO Doc
+/**
+ * Clear the tabu list freeing all the items contained.
+ * @param list The list to clear. Not null.
+ */
 void tabuList_clear(TabuList * list);
 
-//TODO Doc
+/**
+ * Get the name of the method.
+ *
+ * @param method The method to get the name for.
+ * @return Its name.
+ */
 const char* searchMethod_getName(SearchMethod method);
 
 #endif //TABOU_TABULIST_H

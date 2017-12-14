@@ -9,7 +9,8 @@
 #include "SearchResult.h"
 
 //!Contains the solution the tabu found, with the time take and iterations.
-typedef struct _TabuSolution {
+typedef struct _TabuSolution
+{
 	//!The solution found.
 	Solution * solution;
 	//!The number of iterations done.
@@ -28,7 +29,6 @@ typedef struct _TabuSolution {
  * @remark Needs to be freed with tabuSolution_destroy.
  */
 TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time);
-
 
 /**
  * Frees a tabu solution.
@@ -55,16 +55,38 @@ Solution * tabu_solutionInit(Instance * instance);
  */
 long double tabu_getTimeDiff(struct timeb start, struct timeb end);
 
-//TODO doc
+/**
+ * Starts the tabu search on the given instance.
+ * @param instance The instance to use.
+ * @return The result of the tabu search.
+ */
 TabuSolution * tabu_search(Instance * instance);
 
-//TODO doc
+/**
+ * Apply the swap search method.
+ * @param currentSolution The solution to start with.
+ * @param tabuList The tabu list.
+ * @param diversification If we diversify or not.
+ * @return The result of this search.
+ */
 SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
-//TODO doc
+/**
+ * Apply the EBSR search method.
+ * @param currentSolution The solution to start with.
+ * @param tabuList The tabu list.
+ * @param diversification If we diversify or not.
+ * @return The result of this search.
+ */
 SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
-//TODO doc
+/**
+ * Apply the EFSR search method.
+ * @param currentSolution The solution to start with.
+ * @param tabuList The tabu list.
+ * @param diversification If we diversify or not.
+ * @return The result of this search.
+ */
 SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
 #endif
