@@ -26,6 +26,5 @@ doTestValgrind: all
 doTestSuite: $(EXEC_PROD)
 	java -jar ./Java/SolutionCalculator/solutionCalculator.jar --c "./C/$(EXEC_PROD)" --p "./Python/tabu_W_v3.py" --i "./Inputs/I_1_5_20_2.txt" --i "./Inputs/I_1_5_100_2.txt"
 
-doTest: all
-	doTestUnit && doTestValgrind && doTestSuite
+doTest: all doTestUnit doTestValgrind doTestSuite
 	 
