@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -19,7 +20,7 @@ public class Main
 	public static void main(String[] args) throws IOException
 	{
 		Instance instance = null;
-		Solution solution = null;
+		List<Solution> solutions = new ArrayList<>();
 		
 		LinkedList<String> arguments = new LinkedList<>(Arrays.asList(args));
 		String arg;
@@ -43,7 +44,7 @@ public class Main
 						System.out.println("Invalid options format!");
 						System.exit(1);
 					}
-					solution = Solution.parse(new File(".", arg));
+					solutions.add(Solution.parse(new File(".", arg)));
 					break;
 				default:
 					System.out.println("Invalid options format!");
@@ -51,17 +52,31 @@ public class Main
 			}
 		}
 		
-		if(solution == null || instance == null)
+		if(instance == null)
 		{
 			System.out.println("Invalid options format!");
 			System.exit(1);
 		}
 		
-		System.out.println(calculate(instance, solution));
+		Instance finalInstance = instance;
+		switch(solutions.size())
+		{
+			case 0:
+				System.out.println("Please give at least a solution.");
+				break;
+			case 2:
+				Map<Solution, Integer> results = solutions.stream().collect(Collectors.toMap(Function.identity(), s -> calculate(finalInstance, s)));
+				if(results.get(solutions.get(0)) > results.get(solutions.get(1)))
+					System.exit(42);
+				break;
+			default:
+				solutions.forEach(s -> calculate(finalInstance, s));
+		}
 	}
 	
 	private static int calculate(Instance instance, Solution solution)
 	{
+		System.out.println("Processing solution " + solution);
 		updateReadyTasks(instance, solution);
 		return calculateDelay(instance, solution);
 	}

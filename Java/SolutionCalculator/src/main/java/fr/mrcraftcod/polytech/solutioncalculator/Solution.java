@@ -15,24 +15,33 @@ import java.util.stream.Collectors;
  */
 public class Solution
 {
+	public enum SolutionType{
+		PYTHON,
+		C
+	}
+	
 	private final ArrayList<Integer> production;
 	private HashMap<Integer, List<Integer>> deliveries;
+	private final File source;
+	private SolutionType type;
 	
-	private Solution()
+	private Solution(File source)
 	{
 		production = new ArrayList<>();
 		deliveries = new HashMap<>();
+		this.source = source;
 	}
 	
 	public static Solution parse(File file) throws IOException
 	{
-		Solution solution = new Solution();
+		Solution solution = new Solution(file);
 		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(Paths.get(file.toURI())));
 		
 		String line;
 		switch(lines.poll())
 		{
 			case "P":
+				solution.setType(SolutionType.PYTHON);
 				while((line = lines.poll()) != null)
 				{
 					String[] infos = line.split(" ", 2);
@@ -51,6 +60,7 @@ public class Solution
 				}
 				break;
 			case "C":
+				solution.setType(SolutionType.C);
 				solution.setProduction(Arrays.stream(lines.poll().split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
 				
 				int i = 0;
@@ -94,5 +104,16 @@ public class Solution
 	{
 		this.production.clear();
 		this.production.addAll(production);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Solution{" + "source=" + source.getAbsolutePath() + ", type=" + type + '}';
+	}
+	
+	public void setType(SolutionType type)
+	{
+		this.type = type;
 	}
 }
