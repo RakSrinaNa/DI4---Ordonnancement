@@ -56,9 +56,11 @@ void tabuListUnit()
 	tabuList_addItem(list, item3);
 	if(list->size != 2)
 		unit_error("TabuList 13: Tabu list should have size 2");
+	if(tabuList_contains(list, item1))
+		unit_error("TabuList 13.5: Tabu list should not contain the item1");
 	if(!tabuList_contains(list, item2))
 		unit_error("TabuList 14: Tabu list should contain the item2");
-	if(!tabuList_contains(list, item2))
+	if(!tabuList_contains(list, item3))
 		unit_error("TabuList 15: Tabu list should contain the item3");
 	
 	tabuList_clear(list);
