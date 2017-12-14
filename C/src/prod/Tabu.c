@@ -270,7 +270,6 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 					}
 					else
 					{
-						solution_print(newSolution);
 						solution_destroy(newSolution);
 						tabuItem_destroy(item);
 					}
