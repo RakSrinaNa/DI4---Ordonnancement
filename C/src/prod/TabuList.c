@@ -130,3 +130,17 @@ const char* searchMethod_getName(SearchMethod method)
 	}
 	return NULL;
 }
+
+void tabuList_clear(TabuList * list)
+{
+	TabuItem * item = list->first;
+	while(item != NULL)
+	{
+		TabuItem * next = item = item->next;
+		tabuItem_destroy(item);
+		item = next;
+	}
+	list->first = NULL;
+	list->last = NULL;
+	list->size = 0;
+}

@@ -86,21 +86,25 @@ public class Main
 		int duration = 0;
 		int delay = 0;
 		int currTruck = instance.getTaskCount();
+		System.out.printf("(B: %3d | T: %4d | D: %4d)|--", currTruck, startTime, delay);
 		switch(distanceType)
 		{
 			default:
 			case "DUE":
 				for(Task t : integers.stream().map(instance::getTask).collect(Collectors.toList()))
 				{
-					duration += instance.getDistance(currTruck, t.getID());
+					int travelTime = instance.getDistance(currTruck, t.getID());
+					duration += travelTime;
 					delay += Math.max(0, (startTime + duration) - t.getDue());
 					currTruck = t.getID();
+					System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)|--", travelTime, currTruck, startTime + duration, delay);
 				}
 				duration += instance.getDistance(currTruck, instance.getTaskCount());
 				break;
 			case "CLOSEST":
 				break;
 		}
+		System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)\n", instance.getDistance(currTruck, instance.getTaskCount()), instance.getTaskCount(), startTime + duration, delay);
 		return new Pair<>(duration, delay);
 	}
 	

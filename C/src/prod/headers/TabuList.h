@@ -107,10 +107,16 @@ void tabuItem_destroy(TabuItem * item);
  */
 TabuItem * tabuItem_copy(TabuItem * item);
 
+//TODO Doc
 void tabuItem_print(TabuItem * item);
 
+//TODO Doc
 void tabuList_print(TabuList * list);
 
+//TODO Doc
+void tabuList_clear(TabuList * list);
+
+//TODO Doc
 const char* searchMethod_getName(SearchMethod method);
 
 #endif //TABOU_TABULIST_H
