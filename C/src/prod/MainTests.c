@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
 		FILE * file = fopen("solution.txt", "w");
-		solutionInfo_printForVerification(stdout, solution->solution, solution->solution->info);
+		solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
 		fclose(file);
 		tabuSolution_destroy(solution);
 		instance_destroy(instance);
