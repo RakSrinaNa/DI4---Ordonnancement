@@ -38,10 +38,13 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
-		instance_print(instance);
+		instance_print(instance);		
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
+		FILE * file = fopen("solution.txt", "w");
+		solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
+		fclose(file);
 		tabuSolution_destroy(solution);
 		instance_destroy(instance);
 	}

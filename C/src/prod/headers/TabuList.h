@@ -3,6 +3,12 @@
 
 #include "Utils.h"
 
+//!Search methods.
+typedef enum _SearchMethod
+{
+	SWAP, EBSR, EFSR
+} SearchMethod;
+
 //!Item of the Tabu list.
 typedef struct _TabuItem
 {
@@ -12,10 +18,13 @@ typedef struct _TabuItem
 	unsigned int destination;
 	//!The next element in the chained list.
 	struct _TabuItem * next;
+	//!The method used for this item.
+	SearchMethod method;
 } TabuItem;
 
 //!Tabu list.
-typedef struct _TabuList{
+typedef struct _TabuList
+{
 	//!First element of the list.
 	TabuItem * first;
 	//!Last element of the list.
@@ -75,10 +84,11 @@ Bool tabuItem_isSame(TabuItem * item1, TabuItem * item2);
  *
  * @param source The source of the item.
  * @param destination The destination of the item.
+ * @param method The method used for this item.
  * @return The item.
  * @remark Needs to be freed with tabuItem_destroy.
  */
-TabuItem * tabuItem_create(unsigned int source, unsigned int destination);
+TabuItem * tabuItem_create(unsigned int source, unsigned int destination, SearchMethod method);
 
 /**
  * Frees a tabu item.
@@ -86,5 +96,48 @@ TabuItem * tabuItem_create(unsigned int source, unsigned int destination);
  * @param item The item to destroy.
 */
 void tabuItem_destroy(TabuItem * item);
+
+/**
+ * Copy a tabu item.
+ * Its position in a potential list is lost.
+ *
+ * @param item The item to copy.
+ * @return The copy.
+ * @remark Needs to be freed with tabuItem_destroy.
+ */
+TabuItem * tabuItem_copy(TabuItem * item);
+
+/**
+ * Print a tabu item to the console.
+ * @param item The item to print.
+ */
+void tabuItem_print(TabuItem * item);
+
+/**
+ * Print a tabu list to the console.
+ * @param list The list to print. Not null.
+ */
+void tabuList_print(TabuList * list);
+
+/**
+ * Clear the tabu list freeing all the items contained.
+ * @param list The list to clear. Not null.
+ */
+void tabuList_clear(TabuList * list);
+
+/**
+ * Get the name of the method.
+ *
+ * @param method The method to get the name for.
+ * @return Its name.
+ */
+const char * searchMethod_getName(SearchMethod method);
+
+/**
+ * Pop the fist item of the list.
+ * @param list The list to pop.
+ * @return The popped item.
+ */
+TabuItem * tabuList_pop(TabuList * list);
 
 #endif //TABOU_TABULIST_H

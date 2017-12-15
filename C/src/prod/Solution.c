@@ -27,7 +27,6 @@ void solution_destroy(Solution * solution)
 {
 	if(solution == NULL)
 		return;
-	
 	//Destroy every pack.
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		pack_destroy(solution->packList[i]);
@@ -47,7 +46,7 @@ Solution * solution_copy(Solution * solution)
 	//Copy packs
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-			solution_moveTaskPack(copy, solution->packList[i]->deliveries[j], i);
+			solution_moveTaskPack(copy, solution->packList[i]->tasks[j], i);
 	debugPrint("Solution %p copied to %p\n", solution, copy);
 	return copy;
 }
@@ -61,7 +60,7 @@ int solution_getTaskPack(Solution * solution, task_t task)
 	}
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-			if(solution->packList[i]->deliveries[j] == task)
+			if(solution->packList[i]->tasks[j] == task)
 				return i;
 	fatalError("solution_getTask : Task %d exists, but is not in any pack.\n", task);
 	return -1;
@@ -82,7 +81,7 @@ void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 	if(pack == solution->packCount) //If we need to put it in a new pack, create it.
 	{
 		solution->packCount++;
-		RREALLOC(solution->packList, Pack*, solution->packCount, "solution_setTaskPackIndex");
+		RREALLOC(solution->packList, Pack*, solution->packCount, "solution_moveTaskPack");
 		solution->packList[solution->packCount - 1] = pack_create(solution->instance);
 	}
 	if(pack < solution->packCount)
@@ -102,7 +101,7 @@ void solution_moveTaskPack(Solution * solution, task_t task, unsigned int pack)
 		}
 	}
 	else
-		warn("solution_setTaskPackIndex : Pack %d does not exist.\n", pack);
+		warn("solution_moveTaskPack : Pack %d does not exist.\n", pack);
 }
 
 void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
@@ -168,18 +167,49 @@ void solution_save(Solution * solution, const char * filename, double time)
 	{
 		fprintf(file, "%d\t%f\t{ production:[ ", solution_eval(solution)->score, time);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
-			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount-1)?' ':',');
-		fprintf(file, "], deliveries:[ ");
+			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount - 1) ? ' ' : ',');
+		fprintf(file, "], tasks:[ ");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
 			fprintf(file, "[ ");
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
-				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount-1)?' ':',');
+				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount - 1) ? ' ' : ',');
 			}
-			fprintf(file, "]%c", (i == solution->packCount-1)?' ':',');
+			fprintf(file, "]%c", (i == solution->packCount - 1) ? ' ' : ',');
 		}
 		fprintf(file, "] }\n");
 		fclose(file);
+	}
+}
+
+long solutionCompare(Solution * solution1, Solution * solution2, Bool diversification)
+{
+	if(diversification)
+		return solution_eval(solution1)->score - solution_eval(solution2)->score;
+	return ((long)solution_eval(solution2)->score) - solution_eval(solution1)->score;
+}
+
+void solution_printCSV(Solution * solution, FILE * file)
+{
+	if(solution == NULL)
+		fprintf(file, "NULL");
+	else
+	{
+		fprintf(file, "[");
+		for(unsigned int packID = 0; packID < solution->packCount; packID++)
+		{
+			fprintf(file, "[");
+			for(unsigned int taskIndex = 0; taskIndex < solution->packList[packID]->taskCount; taskIndex++)
+			{
+				fprintf(file, "%u", solution->packList[packID]->tasks[taskIndex]);
+				if(taskIndex < solution->packList[packID]->taskCount - 1)
+					fprintf(file, ", ");
+			}
+			fprintf(file, "]");
+			if(packID < solution->packCount - 1)
+				fprintf(file, ", ");
+		}
+		fprintf(file, "]");
 	}
 }

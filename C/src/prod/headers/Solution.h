@@ -93,6 +93,15 @@ struct _SolutionInfo * solution_eval(Solution * solution);
 void solution_print(Solution * solution);
 
 /**
+ * Create a string to save the solution in a csv.
+ *
+ * @param solution The solution.
+ * @param file The file to write to.
+ * @remark The file must be open.
+ */
+void solution_printCSV(Solution * solution, FILE * file);
+
+/**
  * Saves the solution to a file.
  *
  * @param solution The solution. Not null.
@@ -101,5 +110,15 @@ void solution_print(Solution * solution);
  * @remark Does nothing if the solution hasn't been computed.
  */
 void solution_save(Solution * solution, const char * filename, double time);
+
+/**
+ * Compare two solutions based on their score.
+ *
+ * @param solution1 The first solution to compare.
+ * @param solution2 The second to compare.
+ * @param diversification Equivalent of doing (*-1) to the output.
+ * @return Positive if S1 have a bigger score than S2.
+ */
+long solutionCompare(Solution * solution1, Solution * solution2, Bool diversification);
 
 #endif //TABOU_SOLUTION_H

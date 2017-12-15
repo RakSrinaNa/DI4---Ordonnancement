@@ -14,7 +14,7 @@ typedef struct _Pack
 	//!Number of tasks in this pack.
 	unsigned int taskCount;
 	//!Ordered list of the IDs of the task representing the delivery order.
-	task_t * deliveries;
+	task_t * tasks;
 } Pack;
 
 /**

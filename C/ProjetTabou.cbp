@@ -48,7 +48,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--test --debug" />
+				<Option parameters="--test" />
 				<Compiler>
 					<Add option="-pedantic-errors" />
 					<Add option="-pedantic" />
@@ -86,6 +86,9 @@
 		<Unit filename="src/prod/Parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/prod/SearchResult.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/prod/Sequencer.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -110,6 +113,7 @@
 		<Unit filename="src/prod/headers/Instance.h" />
 		<Unit filename="src/prod/headers/Pack.h" />
 		<Unit filename="src/prod/headers/Parser.h" />
+		<Unit filename="src/prod/headers/SearchResult.h" />
 		<Unit filename="src/prod/headers/Sequencer.h" />
 		<Unit filename="src/prod/headers/Solution.h" />
 		<Unit filename="src/prod/headers/SolutionInfo.h" />
@@ -134,6 +138,11 @@
 			<Option target="Unit" />
 		</Unit>
 		<Unit filename="src/unit/ParserUnit.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Unit" />
+		</Unit>
+		<Unit filename="src/unit/SearchResultUnit.c">
 			<Option compilerVar="CC" />
 			<Option target="Debug" />
 			<Option target="Unit" />

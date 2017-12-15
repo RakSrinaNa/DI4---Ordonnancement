@@ -20,7 +20,7 @@ Solution * sort_moveDeliveriesEBSR(Solution * solution, task_t task, unsigned in
 	}
 	if(shift == 0)
 		return sol;
-	solution_moveTaskPack(sol, task, MMIN((shift > solution->packCount) ? solution->packCount : packIndex + shift, solution->packCount)); // Fix to avoid overflow
+	solution_moveTaskPack(sol, task, MMAX((shift > solution->packCount) ? 0 : packIndex - (int)shift, 0)); // Fix to avoid underflow
 	return sol;
 }
 
@@ -36,6 +36,6 @@ Solution * sort_moveDeliveriesEFSR(Solution * solution, task_t task, unsigned in
 	}
 	if(shift == 0)
 		return sol;
-	solution_moveTaskPack(sol, task, MMAX((shift > solution->packCount) ? 0 : packIndex - shift, 0)); // Fix to avoid underflow
+	solution_moveTaskPack(sol, task, MMIN((shift > solution->packCount) ? solution->packCount : packIndex + shift, solution->packCount)); // Fix to avoid overflow
 	return sol;
 }

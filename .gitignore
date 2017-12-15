@@ -40,3 +40,12 @@ TabouTest
 C/logScores.csv
 Python/output.txt
 scoreLogPython.txt
+scoreLogPython.csv
+scoreLogPythonCompact.csv
+logScoresCompact.csv
+logScoresFull.csv
+scoreLogPythonFull.csv
+solution.txt
+SolutionCalculator.iml
+Java/SolutionCalculator/.idea
+Java/SolutionCalculator/target

@@ -23,6 +23,7 @@ import math
 import time # pour avoir le temsp de calcul cpu
 ##from numpy import *
 import copy
+import sys
 
 # ########################################################
 # Lecture du fichier
@@ -36,7 +37,11 @@ dd = dates dues
 tt = temps de trajet
 """
 
-mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
+if len(sys.argv) == 2:
+    mesdonnees = open(sys.argv[1],"r")
+else:
+    mesdonnees = open("../Inputs/I_1_5_20_2.txt","r")
+
 ligne1 = mesdonnees.readline()
 indice=0
 j=0
@@ -116,13 +121,13 @@ if nbjobs == 100: NB_ITE_SANS_AMEL_MAX = 5
 elif nbjobs == 50: NB_ITE_SANS_AMEL_MAX = 10
 else: NB_ITE_SANS_AMEL_MAX = 15
 
-AVEC_DIVERSIFICATION = 1
+AVEC_DIVERSIFICATION = 0
 
 FLAG_EBSR = 0
 FLAG_EFSR = 0
 FLAG_SWAP = 1
 FLAG_2OPT = 0
-FLAG_FIRST_IMPROVE = 1
+FLAG_FIRST_IMPROVE = 0
 TABOU_LOGIQUE = 0 # 1 = je swappe(i,j) donc (j,i) est tabou
 
 def InsereTabou(voisinage,indi,indj):
@@ -435,21 +440,28 @@ def evalue(sol,diversification,Final):
     Cjm=[[0 for i in range(m)] for i in range (nbjobs)]
     #print('nbbatches=',nb_batches)
     # for each batch
+    sssss = open("solution.txt", "w")
+    sssss.write("P\n")
     for one_batch in sol:
         nb_jobs_batch = len(one_batch)
         the_jobs = one_batch
         #print(nb_jobs_batch,the_jobs)
         seq_schedule = sequence_the_jobs (the_jobs,diversification)
         update_Cjm_Cm(seq_schedule)
-        if Final: print('sched=',seq_schedule)
+        if Final:
+            print('sched=',seq_schedule)
+            sssss.write('sched= ' + str(seq_schedule) + "\n")
         min_departure_batch =Cjm[seq_schedule[nb_jobs_batch-1]][m-1]
         #print('date de fin dernier job=',Cjm[seq_schedule[nb_jobs_batch-1]][m-1])
         departure_batch = max(min_departure_batch,vehicle_back)
         #print('departure_batch=',departure_batch)
         seq_routing = route_the_jobs (the_jobs,departure_batch,diversification)
-        if Final: print('route=',seq_routing)
+        if Final:
+            print('route=',seq_routing)
+            sssss.write('route= '+str(seq_routing) + "\n")
         tardiness = compute_tardiness(seq_routing,departure_batch,True,diversification)
         TotalTj = TotalTj + tardiness
+    sssss.close()
         #print(tardiness,TotalTj)
     return(TotalTj)
 
@@ -543,7 +555,16 @@ nb_ite = 0
 nb_ite_sans_amel = 0
 diversification = False
 
-scoreLog = open("./scoreLogPython.txt", "w")
+scoreLog = open("./scoreLogPython.csv", "w")
+scoreLogCompact = open("./scoreLogPythonCompact.csv", "w")
+scoreLogFull = open("./scoreLogPythonFull.csv", "w")
+scoreLog.write("P_BestEver;P_BestIter\n")
+scoreLogCompact.write("P_BestIter;P_BestEver\n")
+scoreLogFull.write("P_Iter;P_BestEver\n")
+scoreLogFull.write(str(0))
+scoreLogFull.write(";")
+scoreLogFull.write(str(sol_cour))
+scoreLogFull.write("\n")
 # BOUCLE GENERALE
 while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
     amelioration = False
@@ -577,9 +598,14 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
                             val_voisin = swap2(batch_i,index_i,batch_j,index_j,sol_cour,diversification)
                             #print('SWAP sol_cour apres swap',sol_cour,val_voisin)
                             # si on est le meilleur voisin
+                            if(job_i == 3 and job_j == 13 and nb_ite == 10):
+                                #evalue(sol_cour, False, True)
+                                #raise SystemExit
+                                pass
                             if (val_voisin < val_best_vois) and PasTabou('s',job_i,job_j) :
                                 val_best_vois = val_voisin
                                 Best_vois = copy.deepcopy(sol_cour)
+
                                 #print('SWAP Best_vois=',Best_vois,'(',val_best_vois,')')
                                 typeBest_vois='s'
                                 if TABOU_LOGIQUE: typeIndex_i,typeIndex_j=job_j,job_i
@@ -683,6 +709,10 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
         print ('\t',Best_val)
         amelioration = True
         nb_ite_sans_amel = 0
+        scoreLogCompact.write(str(nb_ite + 1))
+        scoreLogCompact.write(";")
+        scoreLogCompact.write(str(Best_val))
+        scoreLogCompact.write("\n")
 
     if(diversification):
         diversification = False
@@ -699,12 +729,22 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
             print('*** on diversifie ***')
 
     scoreLog.write(str(Best_val))
+    scoreLog.write(";")
+    scoreLog.write(str(val_best_vois))
     scoreLog.write("\n")
+    scoreLogFull.write(str(nb_ite + 1))
+    scoreLogFull.write(";")
+    scoreLogFull.write(str(sol_cour))
+    scoreLogFull.write("\n")
     time_end = time.clock()
     cpu = time_end-time_start
+    evalue(sol_cour, False, True)
+    print("IT {}, tabu = {}".format(nb_ite, ListeTabou))
     nb_ite = nb_ite + 1
+    print("-------------------------------------------")
 
 scoreLog.close()
+scoreLogFull.close()
 print('temps de calcul =',cpu,'(',nb_ite,') ite')
 
 print('**************************')
