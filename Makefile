@@ -10,10 +10,10 @@ test: $(EXEC)
 prod: $(EXEC_PROD)
 
 $(EXEC):
-	cd $(SRC_DIR) && cmake . && make TabouProd && cd ..
+	cd $(SRC_DIR) && cmake . && make TabouTest && cd ..
 
 $(EXEC_PROD):
-	cd $(SRC_DIR) && cmake . && make TabouTest && cd ..
+	cd $(SRC_DIR) && cmake . && make TabouProd && cd ..
 
 .PHONY: all
 
