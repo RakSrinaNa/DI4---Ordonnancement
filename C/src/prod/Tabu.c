@@ -154,7 +154,7 @@ TabuSolution * tabu_search(Instance * instance)
 		}
 		if(diversification == True)
 		{
-			printf("DIV\n");
+			printf("Diversification !\n");
 			diversification = False;
 			nbNoBetterIterations = 0;
 		}
@@ -168,7 +168,7 @@ TabuSolution * tabu_search(Instance * instance)
 			if(solution_eval(bestMethodResult->solution)->score < solution_eval(bestSolution)->score)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodResult, bestSolution);
-				solution_print(bestMethodResult->solution);
+				//solution_print(bestMethodResult->solution);
 				if(bestSolution != currentSolution)
 				{
 					solution_destroy(bestSolution);
@@ -194,7 +194,6 @@ TabuSolution * tabu_search(Instance * instance)
 			tabuList_clear(tabuList);
 			nbNoBetterIterations++;
 		}
-		printf("%d\n",solution_eval(currentSolution)->score);
 		
 		if(TABU_DIVERSIFICATION && nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 		{
@@ -208,9 +207,6 @@ TabuSolution * tabu_search(Instance * instance)
 		fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
 #endif
 		searchResult_destroy(bestMethodResult);
-		printf("%d: ", nbIterations);
-		tabuList_print(tabuList);
-		printf("\n");
 		nbIterations++;
 		ftime(&timeNow);
 	}
@@ -370,6 +366,5 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 		}
 		packIndex1++;
 	}
-	printf("%d\n", bestSol->info->score);
 	return searchResult_create(bestSol, bestTabuItem, EFSR);
 }
