@@ -148,9 +148,9 @@ public class Main
 		Solution solutionC = Solution.parse(new File(cExecutable.getParentFile(), "solution.txt"));
 		int rC = calculate(instance, solutionC);
 		int rP = calculate(instance, solutionP);
+		System.out.printf("C: %d vs %d :P\n", rC, rP);
 		if(rC > rP)
 		{
-			System.out.printf("C: %d vs %d :P\n", rC, rP);
 			System.out.flush();
 			System.exit(43);
 		}
