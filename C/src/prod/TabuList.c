@@ -146,7 +146,7 @@ void tabuList_clear(TabuList * list)
 	TabuItem * item = list->first;
 	while(item != NULL)
 	{
-		TabuItem * next = item = item->next;
+		TabuItem * next = item->next;
 		tabuItem_destroy(item);
 		item = next;
 	}
