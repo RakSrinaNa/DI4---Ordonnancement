@@ -88,6 +88,7 @@ TabuSolution * tabu_search(Instance * instance)
 	int flags = 0;
 	sprintf(filenameCompact, "./log/logScoresCCompact_%s_%d.csv", instance->origin, *tabu_flagsFingerprint(&flags));
 	FILE * logScoreCompactFile = fopen(filenameCompact, "w");
+	printf("%p -- %s\n", logScoreCompactFile, filenameCompact);
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 #endif
 	Solution * bestSolution = solution_copy(currentSolution);
