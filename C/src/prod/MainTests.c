@@ -52,7 +52,11 @@ int main(int argc, char * argv[])
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
 		char filenameSolution[512];
+		#ifdef __WIN32__
 		mkdir("log");
+		#else
+		mkdir("log", 0777);
+		#endif
 		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
 		FILE * file = fopen(filenameSolution, "w");
 		solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
