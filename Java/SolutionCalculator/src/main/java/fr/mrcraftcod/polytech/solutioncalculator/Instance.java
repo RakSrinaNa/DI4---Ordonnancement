@@ -30,6 +30,9 @@ public class Instance
 	
 	public static Instance parse(Path file) throws IOException
 	{
+		if(file == null || !file.toFile().exists())
+			return null;
+		
 		Instance instance = new Instance(file);
 		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(file));
 		

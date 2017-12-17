@@ -5,8 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -67,7 +66,27 @@ public class Main
 						System.out.flush();
 						System.exit(1);
 					}
-					instances.add(Instance.parse(Paths.get(arg)));
+					if(arg.contains("*"))
+					{
+						PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + Paths.get(arg).toAbsolutePath().normalize());
+						Files.walk(Paths.get(arg).getParent()).forEach((path) -> {
+							path = path.toAbsolutePath().normalize();
+							if(pathMatcher.matches(path))
+							{
+								try
+								{
+									instances.add(Instance.parse(path));
+									System.out.println("Added instance " + path);
+								}
+								catch(IOException e)
+								{
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+					else
+						instances.add(Instance.parse(Paths.get(arg)));
 					break;
 				case "--solution":
 				case "--s":
@@ -120,7 +139,7 @@ public class Main
 					{
 						Path finalCExecutable = cExecutable;
 						Path finalPythonExecutable = pythonExecutable;
-						instances.forEach(i -> {
+						instances.stream().sorted(Comparator.comparing(i -> i.getSource().toFile().getName())).forEach(i -> {
 							try
 							{
 								compareInstance(i, finalCExecutable, finalPythonExecutable);
