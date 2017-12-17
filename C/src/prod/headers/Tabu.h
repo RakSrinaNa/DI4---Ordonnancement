@@ -90,6 +90,6 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
 SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
 //TODO Doc
-int * tabu_flagsFingerprint(int * result);
+int tabu_flagsFingerprint();
 
 #endif

@@ -52,19 +52,19 @@ long double tabu_getTimeDiff(struct timeb start, struct timeb end)
 	return end.time - start.time + (end.millitm - start.millitm) / 1000.0f;
 }
 
-int * tabu_flagsFingerprint(int * result)
+int tabu_flagsFingerprint()
 {
-	*result = 0;
+	int result = 0;
 	if(TABU_SEARCH_SWAP)
-		*result += 1;
+		result += 1;
 	if(TABU_SEARCH_EBSR)
-		*result += 10;
+		result += 10;
 	if(TABU_SEARCH_EFSR)
-		*result += 100;
+		result += 100;
 	if(TABU_DIVERSIFICATION)
-		*result += 1000;
+		result += 1000;
 	if(TABU_FIRST_IMPROVE)
-		*result += 10000;
+		result += 10000;
 	return result;
 }
 
@@ -85,10 +85,8 @@ TabuSolution * tabu_search(Instance * instance)
 	fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
 #endif
 	char filenameCompact[512];
-	int flags = 0;
-	sprintf(filenameCompact, "./log/logScoresCCompact_%s_%d.csv", instance->origin, *tabu_flagsFingerprint(&flags));
+	sprintf(filenameCompact, "./log/logScoresCCompact_%s_%d.csv", instance->origin, tabu_flagsFingerprint());
 	FILE * logScoreCompactFile = fopen(filenameCompact, "w");
-	printf("%p -- %s\n", (void *)logScoreCompactFile, filenameCompact);
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 #endif
 	Solution * bestSolution = solution_copy(currentSolution);
