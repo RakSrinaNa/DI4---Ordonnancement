@@ -1,9 +1,8 @@
 package fr.mrcraftcod.polytech.solutioncalculator;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,20 +21,20 @@ public class Solution
 	
 	private final ArrayList<Integer> production;
 	private HashMap<Integer, List<Integer>> deliveries;
-	private final File source;
+	private final Path source;
 	private SolutionType type;
 	
-	private Solution(File source)
+	private Solution(Path source)
 	{
 		production = new ArrayList<>();
 		deliveries = new HashMap<>();
 		this.source = source;
 	}
 	
-	public static Solution parse(File file) throws IOException
+	public static Solution parse(Path file) throws IOException
 	{
 		Solution solution = new Solution(file);
-		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(Paths.get(file.toURI())));
+		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(file));
 		
 		String line;
 		switch(lines.poll())
@@ -109,7 +108,7 @@ public class Solution
 	@Override
 	public String toString()
 	{
-		return "Solution{" + "source=" + source.getAbsolutePath() + ", type=" + type + '}';
+		return "Solution{" + "source=" + source.toAbsolutePath().toString() + ", type=" + type + '}';
 	}
 	
 	public void setType(SolutionType type)

@@ -1,9 +1,8 @@
 package fr.mrcraftcod.polytech.solutioncalculator;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,19 +19,22 @@ public class Instance
 	private int taskCount;
 	private ArrayList<Task> tasks;
 	private HashMap<Integer, HashMap<Integer, Integer>> times;
-	private final File source;
+	private final Path source;
 	
-	private Instance(File source)
+	private Instance(Path source)
 	{
 		tasks = new ArrayList<>();
 		times = new HashMap<>();
 		this.source = source;
 	}
 	
-	public static Instance parse(File file) throws IOException
+	public static Instance parse(Path file) throws IOException
 	{
+		if(file == null || !file.toFile().exists())
+			return null;
+		
 		Instance instance = new Instance(file);
-		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(Paths.get(file.toURI())));
+		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(file));
 		
 		String[] infos = lines.poll().split(" {2}");
 		instance.setMachineCount(Integer.parseInt(infos[0]));
@@ -98,7 +100,7 @@ public class Instance
 		return machineCount;
 	}
 	
-	public File getSource()
+	public Path getSource()
 	{
 		return source;
 	}
@@ -121,6 +123,6 @@ public class Instance
 	@Override
 	public String toString()
 	{
-		return "Instance{" + "machineCount=" + machineCount + ", taskCount=" + taskCount + ", source=" + source.getAbsolutePath() + '}';
+		return "Instance{" + "machineCount=" + machineCount + ", taskCount=" + taskCount + ", source=" + source.toAbsolutePath().toString() + '}';
 	}
 }

@@ -5,9 +5,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -25,8 +26,8 @@ public class Main
 	{
 		boolean calculate = false;
 		
-		File cExecutable = null;
-		File pythonExecutable = null;
+		Path cExecutable = null;
+		Path pythonExecutable = null;
 		List<Instance> instances = new ArrayList<>();
 		List<Solution> solutions = new ArrayList<>();
 		
@@ -46,7 +47,7 @@ public class Main
 						System.out.flush();
 						System.exit(1);
 					}
-					cExecutable = new File(".", arg);
+					cExecutable = Paths.get(arg);
 					break;
 				case "--p":
 					if((arg = arguments.poll()) == null)
@@ -55,7 +56,7 @@ public class Main
 						System.out.flush();
 						System.exit(1);
 					}
-					pythonExecutable = new File(".", arg);
+					pythonExecutable = Paths.get(arg);
 					break;
 				case "--instance":
 				case "--i":
@@ -65,7 +66,27 @@ public class Main
 						System.out.flush();
 						System.exit(1);
 					}
-					instances.add(Instance.parse(new File(".", arg)));
+					if(arg.contains("*"))
+					{
+						PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + Paths.get(arg).toAbsolutePath().normalize());
+						Files.walk(Paths.get(arg).getParent()).forEach((path) -> {
+							path = path.toAbsolutePath().normalize();
+							if(pathMatcher.matches(path))
+							{
+								try
+								{
+									instances.add(Instance.parse(path));
+									System.out.println("Added instance " + path);
+								}
+								catch(IOException e)
+								{
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+					else
+						instances.add(Instance.parse(Paths.get(arg)));
 					break;
 				case "--solution":
 				case "--s":
@@ -75,7 +96,7 @@ public class Main
 						System.out.flush();
 						System.exit(1);
 					}
-					solutions.add(Solution.parse(new File(".", arg)));
+					solutions.add(Solution.parse(Paths.get(arg)));
 					break;
 				default:
 					System.out.format("Unknown command `%s`!\n", arg);
@@ -114,11 +135,11 @@ public class Main
 				}
 				else
 				{
-					if(cExecutable != null && pythonExecutable != null)
+					if(cExecutable != null && cExecutable.toFile().exists() && pythonExecutable != null && pythonExecutable.toFile().exists())
 					{
-						File finalCExecutable = cExecutable;
-						File finalPythonExecutable = pythonExecutable;
-						instances.forEach(i -> {
+						Path finalCExecutable = cExecutable;
+						Path finalPythonExecutable = pythonExecutable;
+						instances.stream().sorted(Comparator.comparing(i -> i.getSource().toFile().getName())).forEach(i -> {
 							try
 							{
 								compareInstance(i, finalCExecutable, finalPythonExecutable);
@@ -139,15 +160,15 @@ public class Main
 		}
 	}
 	
-	private static void compareInstance(Instance instance, File cExecutable, File pythonExecutable) throws IOException, InterruptedException
+	private static void compareInstance(Instance instance, Path cExecutable, Path pythonExecutable) throws IOException, InterruptedException
 	{
 		System.out.println("Comparing instance " + instance);
 		startPython(instance, pythonExecutable);
-		startC(instance, cExecutable);
-		Solution solutionP = Solution.parse(new File(pythonExecutable.getParentFile(), "solution.txt"));
-		Solution solutionC = Solution.parse(new File(cExecutable.getParentFile(), "solution.txt"));
-		int rC = calculate(instance, solutionC);
+		Solution solutionP = Solution.parse(findLog(pythonExecutable.getParent().resolve("log"), instance));
 		int rP = calculate(instance, solutionP);
+		startC(instance, cExecutable);
+		Solution solutionC = Solution.parse(findLog(cExecutable.getParent().resolve("log"), instance));
+		int rC = calculate(instance, solutionC);
 		System.out.printf("C: %d vs %d :P\n", rC, rP);
 		if(rC > rP)
 		{
@@ -158,21 +179,30 @@ public class Main
 			System.out.println("OK");
 	}
 	
-	private static void startC(Instance instance, File executable) throws InterruptedException, IOException
+	private static Path findLog(Path folder, Instance instance)
 	{
-		startCommand(executable.getParentFile(), Paths.get(executable.toURI()).normalize().toString() + " " + Paths.get(instance.getSource().toURI()).normalize().toString());
+		Pattern p = Pattern.compile("solution_" + instance.getSource().toFile().getName().replace(".", "\\.") + "_\\d+\\.txt");
+		for(File f : folder.toFile().listFiles())
+			if(f.isFile() && p.matcher(f.getName()).matches())
+				return folder.resolve(f.getName());
+		return null;
 	}
 	
-	private static void startPython(Instance instance, File executable) throws InterruptedException, IOException
+	private static void startC(Instance instance, Path executable) throws InterruptedException, IOException
 	{
-		startCommand(executable.getParentFile(), "python3 " + Paths.get(executable.toURI()).normalize().toString() + " " + Paths.get(instance.getSource().toURI()).normalize().toString());
+		startCommand(executable.getParent(), executable.toAbsolutePath().normalize().toString().replace("/", isWindows() ? "\\" : "/") + " " + instance.getSource().toAbsolutePath().normalize().toString().replace("\\", "/"));
 	}
 	
-	private static void startCommand(File workingDir, String command) throws InterruptedException, IOException
+	private static void startPython(Instance instance, Path executable) throws InterruptedException, IOException
+	{
+		startCommand(executable.getParent(), "python3 " + executable.toAbsolutePath().normalize().toString().replace("/", isWindows() ? "\\" : "/") + " " + instance.getSource().toAbsolutePath().normalize().toString().replace("\\", "/"));
+	}
+	
+	private static void startCommand(Path workingDir, String command) throws InterruptedException, IOException
 	{
 		String beginning = "";
 		String ending = "";
-		if(OS.contains("win"))
+		if(isWindows())
 		{
 			beginning = "cmd /c start /wait ";
 		}
@@ -182,7 +212,7 @@ public class Main
 		}
 		command = beginning + command + ending;
 		System.out.println("Starting " + command);
-		Process proc = Runtime.getRuntime().exec(command, null, workingDir);
+		Process proc = Runtime.getRuntime().exec(command, null, workingDir.toFile());
 		System.out.println("Waiting for " + command);
 		
 		boolean print = false;
@@ -201,11 +231,18 @@ public class Main
 		System.out.format("Waiting done with code %d.\n", proc.waitFor());
 	}
 	
+	private static boolean isWindows()
+	{
+		return OS.contains("win");
+	}
+	
 	private static int calculate(Instance instance, Solution solution)
 	{
 		System.out.println("Processing solution " + solution);
 		updateReadyTasks(instance, solution);
-		return calculateDelay(instance, solution);
+		int delay = calculateDelay(instance, solution);
+		System.out.printf("Score %d for %s\n", delay, solution);
+		return delay;
 	}
 	
 	private static int calculateDelay(Instance instance, Solution solution)

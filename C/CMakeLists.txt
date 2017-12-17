@@ -18,7 +18,6 @@ cmake_minimum_required(VERSION 3.2.2)
 project(Tabou)
 
 set_property(TARGET PROPERTY C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 11)
 
 file(GLOB base_SRC "src/prod/headers/*.h" "src/prod/*.c")
 file(GLOB test_SRC "src/unit/headers/*.h" "src/unit/*.c")

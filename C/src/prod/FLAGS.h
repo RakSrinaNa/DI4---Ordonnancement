@@ -2,10 +2,11 @@
 #define TABOU_FLAGS_H
 
 //!Logs the score of each iteration.
-#define DEV_LOG_SCORE 0
+#define DEV_LOG_SCORE 1
+#define DEV_LOG_SCORE_FULL 0
 
 //!Maximum iterations for the Tabu algorithm.
-#define TABU_ITERATIONS 20000
+#define TABU_ITERATIONS 0xFFFFFF
 //!Maximum iterations with no improvement before diversification.
 #define TABU_ITERATIONS_NOIMPROVE 15
 //!If no improvement was found, try a new, different solution.
