@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
+#ifdef __WIN32__
 #include <mem.h>
+#endif
 #include "headers/Parser.h"
 
 extern Bool DEBUG;

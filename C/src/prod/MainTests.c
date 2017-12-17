@@ -1,14 +1,18 @@
 #include <string.h>
 #include <stdlib.h>
+
+#ifdef __WIN32__
 #include <io.h>
+#else
+#include <sys/stat.h>
+#endif
 
 #include "headers/Utils.h"
-#include "headers/Instance.h"
-#include "../unit/headers/MainUnit.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
-#include "headers/Tabu.h"
 #include "FLAGS.h"
+#include "headers/Tabu.h"
+#include "../unit/headers/MainUnit.h"
 
 #ifdef __MINGW32__
 #define printf __mingw_printf

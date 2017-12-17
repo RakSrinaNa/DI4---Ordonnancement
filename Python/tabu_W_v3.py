@@ -42,7 +42,8 @@ if len(sys.argv) == 2:
 else:
 	instanceName = "../Inputs/I_1_5_20_2.txt"
 
-os.mkdir("log");
+if not os.path.exists("log"):
+	os.mkdir("log");
 mesdonnees = open(instanceName, "r")
 instanceName = instanceName[instanceName.rfind("/") + 1:]
 ligne1 = mesdonnees.readline()

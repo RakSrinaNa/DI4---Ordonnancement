@@ -1,12 +1,16 @@
 #include <string.h>
 #include <stdlib.h>
+
+#ifdef __WIN32__
 #include <io.h>
+#else
+#include <sys/stat.h>
+#endif
 
 #include "headers/Utils.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
 #include "FLAGS.h"
-#include "inttypes.h"
 #include "headers/Tabu.h"
 
 #ifdef __MINGW32__
@@ -39,7 +43,11 @@ int main(int argc, char * argv[])
 		solution_print(solution->solution);
 		char filenameSolution[512];
 		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
+#ifdef __WIN32__
 		mkdir("log");
+#else
+		mkdir("log", 0777);
+#endif
         FILE * file = fopen(filenameSolution, "w");
         solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
         fclose(file);
