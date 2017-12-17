@@ -57,7 +57,8 @@ int main(int argc, char * argv[])
 		#else
 		mkdir("log", 0777);
 		#endif
-		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
+		int flags = 0;
+		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, *tabu_flagsFingerprint(&flags));
 		FILE * file = fopen(filenameSolution, "w");
 		solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
 		fclose(file);
