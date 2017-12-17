@@ -2,9 +2,8 @@
 #include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
+#include <mem.h>
 #include "headers/Parser.h"
-#include "headers/Utils.h"
-#include "headers/Instance.h"
 
 extern Bool DEBUG;
 
@@ -19,6 +18,7 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	}
 	
 	Instance * instance = instance_create();
+	instance->origin = last_strstr(filepath, "/") + 1;
 	instance = parser_fillInstance(file, instance);
 	
 	fclose(file);
@@ -30,6 +30,25 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	}
 	
 	return instance;
+}
+
+//TODO Redo
+const char * last_strstr(const char * haystack, const char * needle)
+{
+	if(*needle == '\0')
+		return (char *) haystack;
+	
+	const char * result = haystack;
+	for(;;)
+	{
+		char * p = strstr(haystack, needle);
+		if(p == NULL)
+			break;
+		result = p;
+		haystack = p + 1;
+	}
+	
+	return result;
 }
 
 Instance * parser_fillInstance(FILE * file, Instance * instance)

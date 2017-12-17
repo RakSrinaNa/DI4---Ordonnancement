@@ -57,4 +57,7 @@ int * parser_lineToIntArray(char * line, int valuesNumber);
  */
 int parser_getLine(char ** linePtr, size_t * lineSize, FILE * file);
 
+//TODO Doc
+const char * last_strstr(const char * haystack, const char * needle);
+
 #endif

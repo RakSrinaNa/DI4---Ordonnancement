@@ -11,6 +11,7 @@ Instance * instance_create()
 	instance->taskCount = 0;
 	instance->distancesMatrix = NULL;
 	instance->tasks = NULL;
+	instance->origin = NULL;
 	debugPrint("Instance created : %p\n", instance);
 	return instance;
 }
@@ -65,7 +66,7 @@ unsigned int * instance_sortByDueDate(Instance * instance)
 
 void instance_print(Instance * instance)
 {
-	printf("Instance :\n\tMachine count : %d\n\tTask count : %d\n\tTasks :\n\t\t     ", instance->machineCount, instance->taskCount);
+	printf("Instance %s:\n\tMachine count : %d\n\tTask count : %d\n\tTasks :\n\t\t     ", instance->origin, instance->machineCount, instance->taskCount);
 	// Tasks
 	for(task_t i = 0; i < instance->taskCount; i++)
 		printf("T%-3d", i);

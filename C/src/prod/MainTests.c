@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <io.h>
 
 #include "headers/Utils.h"
 #include "headers/Instance.h"
@@ -8,6 +9,10 @@
 #include "headers/Solution.h"
 #include "headers/Tabu.h"
 #include "FLAGS.h"
+
+#ifdef __MINGW32__
+#define printf __mingw_printf
+#endif
 
 Bool DEBUG = False;
 
@@ -42,7 +47,10 @@ int main(int argc, char * argv[])
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
-		FILE * file = fopen("solution.txt", "w");
+		char filenameSolution[512];
+		mkdir("log");
+		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
+		FILE * file = fopen(filenameSolution, "w");
 		solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
 		fclose(file);
 		tabuSolution_destroy(solution);
