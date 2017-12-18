@@ -163,18 +163,20 @@ public class Main
 	private static void compareInstance(Instance instance, Path cExecutable, Path pythonExecutable) throws IOException, InterruptedException
 	{
 		System.out.println("Comparing instance " + instance);
+		
 		startPython(instance, pythonExecutable);
 		Solution solutionP = Solution.parse(findLog(pythonExecutable.getParent().resolve("log"), instance));
-		int rP = calculate(instance, solutionP);
+		int scorePython = calculate(instance, solutionP);
+		
 		startC(instance, cExecutable);
 		Solution solutionC = Solution.parse(findLog(cExecutable.getParent().resolve("log"), instance));
-		int rC = calculate(instance, solutionC);
+		int scoreC = calculate(instance, solutionC);
 		System.out.printf("C: %d vs %d :P\n", solutionC.getExpected(), solutionP.getExpected());
 		
-		if(rC != solutionC.getExpected())
-			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), rC);
-		if(rP != solutionP.getExpected())
-			System.out.format("WARN: P - Expected %d but got %d\n", solutionC.getExpected(), rC);
+		if(scoreC != solutionC.getExpected())
+			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), scoreC);
+		if(scorePython != solutionP.getExpected())
+			System.out.format("WARN: P - Expected %d but got %d\n", solutionC.getExpected(), scoreC);
 		
 		//if(rC > rP)
 		if(solutionC.getExpected() > solutionP.getExpected())
@@ -182,8 +184,7 @@ public class Main
 			System.out.flush();
 			System.exit(43);
 		}
-		else
-			System.out.println("OK");
+		System.out.println("Instance OK");
 	}
 	
 	private static Path findLog(Path folder, Instance instance)
