@@ -188,7 +188,7 @@ TabuSolution * tabu_search(Instance * instance)
 			if(solution_eval(bestMethodResult->solution)->score < solution_eval(bestSolution)->score)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodResult, bestSolution);
-				printf("New better: %d (%d : %p)\n", solution_eval(bestMethodResult->solution)->score, solution_eval(bestSolution)->score, bestSolution);
+				//printf("New better: %d (%d : %p)\n", solution_eval(bestMethodResult->solution)->score, solution_eval(bestSolution)->score, bestSolution);
 				//solution_print(bestMethodResult->solution);
 				if(bestSolution != currentSolution)
 				{
@@ -196,7 +196,7 @@ TabuSolution * tabu_search(Instance * instance)
 				}
 				solution_destroy(currentSolution);
 				bestSolution = solution_copy(bestMethodResult->solution);
-				printf("ptr B %p, S %d\n", bestSolution, solution_eval(bestSolution)->score);
+				//printf("ptr B %p, S %d\n", bestSolution, solution_eval(bestSolution)->score);
 				nbNoBetterIterations = 0;
 #if DEV_LOG_SCORE
 				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations + 1, solution_eval(bestSolution)->score);
@@ -204,7 +204,7 @@ TabuSolution * tabu_search(Instance * instance)
 			}
 			else
 			{
-				printf("No better : (C %d : %p - B %d : %p)\n", solution_eval(currentSolution)->score, currentSolution, solution_eval(bestSolution)->score, bestSolution);
+				//printf("No better : (C %d : %p - B %d : %p)\n", solution_eval(currentSolution)->score, currentSolution, solution_eval(bestSolution)->score, bestSolution);
 				if(currentSolution != bestSolution)
 					solution_destroy(currentSolution);
 				nbNoBetterIterations++;
@@ -213,7 +213,7 @@ TabuSolution * tabu_search(Instance * instance)
 		}
 		else
 		{
-			printf("No better : (C %d : %p - B %d : %p)\n", solution_eval(currentSolution)->score, currentSolution, solution_eval(bestSolution)->score, bestSolution);
+			//printf("No better : (C %d : %p - B %d : %p)\n", solution_eval(currentSolution)->score, currentSolution, solution_eval(bestSolution)->score, bestSolution);
 #if TABU_DIVERSIFICATION
 			diversification = True;
 			tabuList_clear(tabuList);
