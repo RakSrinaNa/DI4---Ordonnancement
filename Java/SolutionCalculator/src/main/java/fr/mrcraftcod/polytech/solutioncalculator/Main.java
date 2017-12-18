@@ -139,7 +139,7 @@ public class Main
 					{
 						Path finalCExecutable = cExecutable;
 						Path finalPythonExecutable = pythonExecutable;
-						instances.stream().sorted(Comparator.comparing(i -> i.getSource().toFile().getName())).forEach(i -> {
+						instances.stream().sorted(Instance::compareTo).forEach(i -> {
 							try
 							{
 								compareInstance(i, finalCExecutable, finalPythonExecutable);
@@ -169,7 +169,7 @@ public class Main
 		startC(instance, cExecutable);
 		Solution solutionC = Solution.parse(findLog(cExecutable.getParent().resolve("log"), instance));
 		int rC = calculate(instance, solutionC);
-		System.out.printf("C: %d vs %d :P\n", rC, rP);
+		System.out.printf("C: %d vs %d :P\n", solutionC.getExpected(), solutionP.getExpected());
 		
 		if(rC != solutionC.getExpected())
 			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), rC);
@@ -272,7 +272,7 @@ public class Main
 		int duration = 0;
 		int delay = 0;
 		int currTruck = instance.getTaskCount();
-		System.out.printf("(B: %3d | T: %4d | D: %4d)|--", currTruck, startTime, delay);
+		System.out.printf("(B: %3d | T: %4d | D: %4d)--", currTruck, startTime, delay);
 		switch(distanceType)
 		{
 			default:
@@ -283,7 +283,7 @@ public class Main
 					duration += travelTime;
 					delay += Math.max(0, (startTime + duration) - t.getDue());
 					currTruck = t.getID();
-					System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)|--", travelTime, currTruck, startTime + duration, delay);
+					System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)--", travelTime, currTruck, startTime + duration, delay);
 				}
 				duration += instance.getDistance(currTruck, instance.getTaskCount());
 				break;
@@ -307,7 +307,7 @@ public class Main
 				t.setReadyTime(endTime);
 				machines.put(machine, endTime);
 			}
-			System.out.println(t.getID() + " --> " + machines.toString());
+			System.out.format("%3d --> %s\n", t.getID(), machines.toString());
 		}
 	}
 }
