@@ -3,29 +3,35 @@ __MACOSX
 cmake_install.cmake
 CMakeCache.txt
 Makefile
-Tabou.cbp
-Tabou
-TabouFull
-TabouProd
-Tabou.dSYM
-output1.txt
 
 *.orig
 *.o
 *.plist
 *~
+*.csv
 
 C/.idea
 C/bin
 C/make-build-debug
 C/obj
+C/log
 C/CMakeFiles
 C/Tabou
 C/cmake-build-debug
 C/ProjetTabou.depend
 C/ProjetTabou.layout
+C/Tabou.cbp
+C/TabouProd
+C/tabouFull.dSYM/
+Tabou.dSYM
 
 Python/.idea
+Python/log
+Python/output.txt
+
+Java/SolutionCalculator/.idea
+Java/SolutionCalculator/target
+Java/SolutionCalculator/SolutionCalculator.iml
 
 Rapport/Projet_S7_COUCHOUD_GRODECŒUR.aux
 Rapport/Projet_S7_COUCHOUD_GRODECŒUR.log
@@ -33,21 +39,3 @@ Rapport/Projet_S7_COUCHOUD_GRODECŒUR.out
 Rapport/Projet_S7_COUCHOUD_GRODECŒUR.synctex.gz
 Rapport/Projet_S7_COUCHOUD_GRODECŒUR.toc
 Rapport/.texpadtmp
-
-
-
-TabouTest
-C/logScores.csv
-Python/output.txt
-scoreLogPython.txt
-scoreLogPython.csv
-scoreLogPythonCompact.csv
-logScoresCompact.csv
-logScoresFull.csv
-scoreLogPythonFull.csv
-solution.txt
-SolutionCalculator.iml
-Java/SolutionCalculator/.idea
-Java/SolutionCalculator/target
-C/log
-Python/log
