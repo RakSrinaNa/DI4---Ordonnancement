@@ -46,7 +46,7 @@ Solution * solution_copy(Solution * solution)
 	//Copy packs
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-			solution_moveTaskPack(copy, solution->packList[i]->tasks[j], i);
+			solution_moveTaskPack(copy, solution->packList[i]->tasks[j], i+1);
 	debugPrint("Solution %p copied to %p\n", solution, copy);
 	return copy;
 }
