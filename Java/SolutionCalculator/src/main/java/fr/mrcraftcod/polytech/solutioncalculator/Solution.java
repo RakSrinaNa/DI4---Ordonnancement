@@ -14,9 +14,11 @@ import java.util.stream.Collectors;
  */
 public class Solution
 {
-	public enum SolutionType{
-		PYTHON,
-		C
+	private int expected;
+	
+	public enum SolutionType
+	{
+		PYTHON, C
 	}
 	
 	private final ArrayList<Integer> production;
@@ -55,13 +57,15 @@ public class Solution
 							for(String s : infos[1].substring(1, infos[1].length() - 1).split(", "))
 								solution.addDelivery(pack, Integer.parseInt(s));
 							break;
+						default:
+							solution.setExpected(Integer.parseInt(infos[0]));
 					}
 				}
 				break;
 			case "C":
 				solution.setType(SolutionType.C);
 				solution.setProduction(Arrays.stream(lines.poll().split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
-				
+				solution.setExpected(Integer.parseInt(lines.poll()));
 				int i = 0;
 				while((line = lines.poll()) != null)
 					solution.setDeliveries(i++, Arrays.stream(line.split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
@@ -94,9 +98,19 @@ public class Solution
 		return deliveries;
 	}
 	
+	public int getExpected()
+	{
+		return expected;
+	}
+	
 	public ArrayList<Integer> getProduction()
 	{
 		return production;
+	}
+	
+	public void setExpected(int expected)
+	{
+		this.expected = expected;
 	}
 	
 	public void setProduction(Collection<Integer> production)
@@ -108,7 +122,7 @@ public class Solution
 	@Override
 	public String toString()
 	{
-		return "Solution{" + "source=" + source.toAbsolutePath().toString() + ", type=" + type + '}';
+		return "Solution{" + "source=" + source.toAbsolutePath().toString() + ", type=" + type + ", expected=" + getExpected() + '}';
 	}
 	
 	public void setType(SolutionType type)
