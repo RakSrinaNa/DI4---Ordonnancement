@@ -246,7 +246,8 @@ public class Main
 	
 	private static int calculate(Instance instance, Solution solution)
 	{
-		System.out.println("Processing solution " + solution);
+		System.out.println("Processing solution " + solution + " with instance " + instance);
+		instance.reset();
 		updateReadyTasks(instance, solution);
 		int delay = calculateDelay(instance, solution);
 		System.out.printf("Score %d for %s\n", delay, solution);

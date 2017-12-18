@@ -105,6 +105,11 @@ public class Instance implements Comparable<Instance>
 		return 0;
 	}
 	
+	public void reset()
+	{
+		tasks.forEach(t -> t.setReadyTime(0));
+	}
+	
 	public int getMachineCount()
 	{
 		return machineCount;
