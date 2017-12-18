@@ -76,19 +76,19 @@ void solutionInfo_print(struct _Solution * solution, struct _SolutionInfo * info
 	if(info != NULL)
 	{
 		// Production
-		printf("\tInfo :\n\t\tProduction :\n\t\t\t");
+		printf("\tProduction :\n\t\t");
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 			printf(" %d", info->productionOrder[i]);
 		// Deliveries
-		printf("\n\t\tDeliveries :\n");
+		printf("\n\tDeliveries :\n");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
-			printf("\t\t\tBatch #%d : (", i);
+			printf("\t\tBatch #%d : (", i);
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 				printf(" T%d", info->deliveries[i][j]);
 			printf(" )\n");
 		}
-		printf("\t\tScore : %d\n", info->score);
+		printf("\tScore : %d\n", info->score);
 	}
 	else
 		printf("\tInfo : NULL\n");

@@ -189,7 +189,6 @@ TabuSolution * tabu_search(Instance * instance)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodResult, bestSolution);
 				printf("New better: %d (%d : %p)\n", solution_eval(bestMethodResult->solution)->score, solution_eval(bestSolution)->score, bestSolution);
-				solution_print(bestMethodResult->solution);
 				//solution_print(bestMethodResult->solution);
 				if(bestSolution != currentSolution)
 				{
@@ -198,7 +197,6 @@ TabuSolution * tabu_search(Instance * instance)
 				solution_destroy(currentSolution);
 				bestSolution = solution_copy(bestMethodResult->solution);
 				printf("ptr B %p, S %d\n", bestSolution, solution_eval(bestSolution)->score);
-				solution_print(bestSolution);
 				nbNoBetterIterations = 0;
 #if DEV_LOG_SCORE
 				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations + 1, solution_eval(bestSolution)->score);

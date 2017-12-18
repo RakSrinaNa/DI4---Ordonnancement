@@ -163,7 +163,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 			
 			//Set the task at the best found position.
 			memmove(bestSequence + bestPos + 1, bestSequence + bestPos, sizeof(task_t) * (inside - bestPos));
-			bestSequence[bestPos] = taskID;
+			bestSequence[bestPos] = tasks[taskID];
 			inside++;
 		}
 		finalSequence = bestSequence;
