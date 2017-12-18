@@ -10,14 +10,14 @@
 //!Maximum iterations with no improvement before diversification.
 #define TABU_ITERATIONS_NOIMPROVE 15
 //!If no improvement was found, try a new, different solution.
-#define TABU_DIVERSIFICATION 1
+#define TABU_DIVERSIFICATION 0
 //!Maximum size of the Tabu list.
 #define TABU_LIST_SIZE 5
 
 //!Use EBSR for Tabu.
-#define TABU_SEARCH_EBSR 1
+#define TABU_SEARCH_EBSR 0
 //!Use EFSR for Tabu.
-#define TABU_SEARCH_EFSR 1
+#define TABU_SEARCH_EFSR 0
 //!Use swap for Tabu.
 #define TABU_SEARCH_SWAP 1
 
