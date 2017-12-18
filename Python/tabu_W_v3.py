@@ -490,7 +490,7 @@ def evalue(sol, diversification, Final):
 			logSolutionEnd.write('route= ' + str(seq_routing) + "\n")
 		tardiness = compute_tardiness(seq_routing, departure_batch, True, diversification)
 		TotalTj = TotalTj + tardiness
-	logSolutionEnd.write(TotalTj + "\n")
+	logSolutionEnd.write(str(TotalTj) + "\n")
 	logSolutionEnd.close()
 	# print(tardiness,TotalTj)
 	return (TotalTj)
