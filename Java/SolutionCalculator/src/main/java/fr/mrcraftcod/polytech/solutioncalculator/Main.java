@@ -215,7 +215,7 @@ public class Main
 		Process proc = Runtime.getRuntime().exec(command, null, workingDir.toFile());
 		System.out.println("Waiting for " + command);
 		
-		boolean print = false;
+		boolean print = true;
 		
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
