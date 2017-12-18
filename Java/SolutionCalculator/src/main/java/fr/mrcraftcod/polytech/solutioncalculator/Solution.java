@@ -64,8 +64,8 @@ public class Solution
 				break;
 			case "C":
 				solution.setType(SolutionType.C);
-				solution.setProduction(Arrays.stream(lines.poll().split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
 				solution.setExpected(Integer.parseInt(lines.poll()));
+				solution.setProduction(Arrays.stream(lines.poll().split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
 				int i = 0;
 				while((line = lines.poll()) != null)
 					solution.setDeliveries(i++, Arrays.stream(line.split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));

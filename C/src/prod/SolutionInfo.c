@@ -98,10 +98,10 @@ void solutionInfo_printForVerification(FILE * file, struct _Solution * solution,
 {
 	if(info != NULL)
 	{
-		fprintf(file, "C\n");
+		fprintf(file, "C\n%d\n", info->score);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 			fprintf(file, "%d\t", info->productionOrder[i]);
-		fprintf(file, "\n%d\n", info->score);
+		fprintf(file, "\n");
 		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
 			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)

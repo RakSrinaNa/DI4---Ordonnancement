@@ -170,7 +170,14 @@ public class Main
 		Solution solutionC = Solution.parse(findLog(cExecutable.getParent().resolve("log"), instance));
 		int rC = calculate(instance, solutionC);
 		System.out.printf("C: %d vs %d :P\n", rC, rP);
-		if(rC > rP)
+		
+		if(rC != solutionC.getExpected())
+			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), rC);
+		if(rP != solutionP.getExpected())
+			System.out.format("WARN: P - Expected %d but got %d\n", solutionC.getExpected(), rC);
+		
+		//if(rC > rP)
+		if(solutionC.getExpected() > solutionP.getExpected())
 		{
 			System.out.flush();
 			System.exit(43);
@@ -215,7 +222,7 @@ public class Main
 		Process proc = Runtime.getRuntime().exec(command, null, workingDir.toFile());
 		System.out.println("Waiting for " + command);
 		
-		boolean print = true;
+		boolean print = false;
 		
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
