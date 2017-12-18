@@ -52,7 +52,7 @@ int main(int argc, char * argv[])
 #else
 		mkdir("log", 0777);
 #endif
-		instance_print(instance);		
+		//instance_print(instance);		
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
@@ -91,7 +91,7 @@ void fatalError(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stdout, "FATAL ERROR!\n |-\t");
+	fprintf(stdout, "FATAL ERROR!\n\t");
 	vfprintf(stdout, format, args);
 	va_end(args);
 	exit(EXIT_FAILURE);

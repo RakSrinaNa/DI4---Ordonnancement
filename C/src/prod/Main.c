@@ -42,7 +42,7 @@ int main(int argc, char * argv[])
 #else
 		mkdir("log", 0777);
 #endif
-		instance_print(instance);
+		//instance_print(instance);
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%ud iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
