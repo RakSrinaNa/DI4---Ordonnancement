@@ -6,18 +6,16 @@
 #define DEV_LOG_SCORE_FULL 0
 
 //!Maximum iterations for the Tabu algorithm.
-#define TABU_ITERATIONS 0xFFFFFF
-//!Maximum iterations with no improvement before diversification.
-#define TABU_ITERATIONS_NOIMPROVE 15
+#define TABU_ITERATIONS 0xFFFFFFFF
 //!If no improvement was found, try a new, different solution.
-#define TABU_DIVERSIFICATION 0
+#define TABU_DIVERSIFICATION 1
 //!Maximum size of the Tabu list.
 #define TABU_LIST_SIZE 5
 
 //!Use EBSR for Tabu.
-#define TABU_SEARCH_EBSR 0
+#define TABU_SEARCH_EBSR 1
 //!Use EFSR for Tabu.
-#define TABU_SEARCH_EFSR 0
+#define TABU_SEARCH_EFSR 1
 //!Use swap for Tabu.
 #define TABU_SEARCH_SWAP 1
 
@@ -26,24 +24,23 @@
 //!Selects the first better solution instead of the best solution.
 #define TABU_FIRST_IMPROVE 0
 //!Prevents swapping if already swapped the inverse.
-#define TABU_LOGIC 0
-//!Minimum gap between swaps, EBSRs, EFSRs.
-#define TABU_DELTA 5
+#define TABU_LOGIC 1
 //!Minimum batch gap between swaps, EBSRs, EFSRs.
 #define TABU_DELTA_BATCH 4
 //!Change the current solution after each method used.
-#define TABU_PROPAGATE 0
+#define TABU_PROPAGATE 1
 
 //!Use the score cache system.
 #define CACHED_SCORE 1
 //!Sort deliveries using the nearest neighbor, else sort by lowest due date first.
 #define DELIVERY_NEAREST_NEIGHBOR 0
-//!Random swap, EBSR, EFSR instead of trying all the cases.
-#define TABU_RANDOM 0
+//!Random diversification.
+#define TABU_RANDOM 1
 
 //!Seed for random number generation. Value can be fixed for tests.
 #define SEED 42
-#ifndef SEED
+#if SEED
+#else
 	#define SEED time(NULL)
 #endif
 

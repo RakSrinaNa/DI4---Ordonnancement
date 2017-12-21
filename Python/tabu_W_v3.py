@@ -133,14 +133,14 @@ elif nbjobs == 50:
 else:
 	NB_ITE_SANS_AMEL_MAX = 15
 
-AVEC_DIVERSIFICATION = 0
+AVEC_DIVERSIFICATION = 1
 
-FLAG_EBSR = 0
-FLAG_EFSR = 0
+FLAG_EBSR = 1
+FLAG_EFSR = 1
 FLAG_SWAP = 1
 FLAG_2OPT = 0
 FLAG_FIRST_IMPROVE = 0
-TABOU_LOGIQUE = 0  # 1 = je swappe(i,j) donc (j,i) est tabou
+TABOU_LOGIQUE = 1  # 1 = je swappe(i,j) donc (j,i) est tabou
 
 
 def flagsFingerprint():
