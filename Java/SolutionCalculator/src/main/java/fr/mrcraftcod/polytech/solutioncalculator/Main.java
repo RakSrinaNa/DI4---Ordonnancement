@@ -150,7 +150,7 @@ public class Main
 							}
 							return null;
 						}).filter(Objects::nonNull).filter(InstanceResult::isCBetter).collect(Collectors.toList());
-						System.out.format("Failed tests: %s\n", failed);
+						System.out.format("Failed tests: \n%s\n", failed.stream().map(InstanceResult::toString).collect(Collectors.joining("\n")));
 						if(failed.size() > 0)
 							System.exit(43);
 					}
@@ -175,7 +175,7 @@ public class Main
 		startC(instance, cExecutable);
 		Solution solutionC = Solution.parse(findLog(cExecutable.getParent().resolve("log"), instance));
 		int scoreC = calculate(instance, solutionC, false);
-		System.out.printf("C: %d vs %d :P\n", solutionC.getExpected(), solutionP.getExpected());
+		System.out.printf("==> C: %d vs %d :P\n", solutionC.getExpected(), solutionP.getExpected());
 		
 		if(scoreC != solutionC.getExpected())
 			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), scoreC);

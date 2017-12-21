@@ -21,6 +21,6 @@ class InstanceResult
 	@Override
 	public String toString()
 	{
-		return "InstanceResult{" + "instance=" + instance + ", scoreC=" + scoreC + ", scorePython=" + scorePython + '}';
+		return "InstanceResult{" + "instance=" + instance.getSource().toFile().getName() + ", scoreC=" + scoreC + ", scorePython=" + scorePython + '}';
 	}
 }
