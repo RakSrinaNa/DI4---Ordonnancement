@@ -149,7 +149,7 @@ public class Main
 								e.printStackTrace();
 							}
 							return null;
-						}).filter(Objects::nonNull).filter(InstanceResult::isCBetter).collect(Collectors.toList());
+						}).filter(Objects::nonNull).filter(InstanceResult::isPythonBetter).collect(Collectors.toList());
 						System.out.format("Failed tests: \n%s\n", failed.stream().map(InstanceResult::toString).collect(Collectors.joining("\n")));
 						if(failed.size() > 0)
 							System.exit(43);

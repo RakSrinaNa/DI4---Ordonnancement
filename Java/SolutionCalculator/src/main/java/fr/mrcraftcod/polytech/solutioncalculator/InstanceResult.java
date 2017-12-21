@@ -12,10 +12,15 @@ class InstanceResult
 		this.scoreC = scoreC;
 		this.scorePython = scorePython;
 	}
-
+	
 	public boolean isCBetter()
 	{
 		return scoreC <= scorePython;
+	}
+	
+	public boolean isPythonBetter()
+	{
+		return scoreC > scorePython;
 	}
 	
 	@Override
