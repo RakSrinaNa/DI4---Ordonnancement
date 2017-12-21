@@ -92,4 +92,7 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 //TODO Doc
 int tabu_flagsFingerprint();
 
+//TODO doc
+void tabu_randomize(Solution *solution);
+
 #endif

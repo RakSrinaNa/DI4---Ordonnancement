@@ -243,7 +243,12 @@ TabuSolution * tabu_search(Instance * instance)
 #if TABU_DIVERSIFICATION
 		if(nbNoBetterIterations > TABU_ITERATIONS_NOIMPROVE)
 		{
+#if TABU_RANDOM
+			tabu_randomize(currentSolution);
+			nbNoBetterIterations = 0;
+#else
 			diversification = True;
+#endif
 			tabuList_clear(tabuList);
 		}
 #endif
@@ -423,4 +428,17 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 		packIndex1++;
 	}
 	return searchResult_create((bestSol == NULL ? solution_copy(currentSolution) : bestSol), bestTabuItem, EFSR);
+}
+
+void tabu_randomize(Solution *solution)
+{
+#if TABU_SEARCH_SWAP
+	unsigned int nbSwaps = RRAND(3, solution->packCount * 3);
+	for(unsigned int i = 0; i < nbSwaps; i++)
+	{
+		task_t task1 = RRAND(0, solution->instance->taskCount);
+		task_t task2 = RRAND(0, solution->instance->taskCount);
+		solution_switchTaskPack(solution, task1, task2);
+	}
+#endif
 }
