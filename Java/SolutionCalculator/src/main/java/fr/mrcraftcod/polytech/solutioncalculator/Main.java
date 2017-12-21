@@ -217,9 +217,9 @@ public class Main
 			ending = "";
 		}
 		command = beginning + command + ending;
-		System.out.println("Starting " + command);
+		//System.out.println("Starting " + command);
 		Process proc = Runtime.getRuntime().exec(command, null, workingDir.toFile());
-		System.out.println("Waiting for " + command);
+		//System.out.println("Waiting for " + command);
 		
 		boolean print = false;
 		
@@ -234,7 +234,7 @@ public class Main
 		while((s = stdError.readLine()) != null)
 			System.out.println(s);
 		
-		System.out.format("Waiting done with code %d.\n", proc.waitFor());
+		//System.out.format("Waiting done with code %d.\n", proc.waitFor());
 	}
 	
 	private static boolean isWindows()
