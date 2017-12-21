@@ -189,7 +189,7 @@ TabuSolution * tabu_search(Instance * instance)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodResult, bestSolution);
 				printf("New better: %d\n", solution_eval(bestMethodResult->solution)->score);
-				solution_print(bestMethodResult->solution);
+				//solution_print(bestMethodResult->solution);
 				if(bestSolution != currentSolution)
 				{
 					solution_destroy(bestSolution);
@@ -271,7 +271,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 #if TABU_LOGIC
 			for(unsigned int packIndex2 = packIndex1; packIndex2 < currentSolution->packCount; packIndex2++)
 #else
-			for(unsigned int packIndex2 = 0; packIndex2 < currentSolution->packCount; packIndex2++)
+			for(unsigned int packIndex2 = packIndex1 + 1; packIndex2 < currentSolution->packCount; packIndex2++)
 #endif
 			{
 				for(unsigned int taskIndex2 = 0; taskIndex2 < currentSolution->packList[packIndex2]->taskCount; taskIndex2++)
@@ -283,7 +283,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
 					TabuItem * item = tabuItem_create(task1, task2, SWAP);
-					if(bestSolution == NULL || (solutionCompare(bestSolution, newSolution, diversification) < 0 && !tabuList_contains(tabuList, item)))
+					if((bestSolution == NULL || solutionCompare(bestSolution, newSolution, diversification) < 0) && !tabuList_contains(tabuList, item))
 					{
 						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
 						if(bestSolution != NULL)
