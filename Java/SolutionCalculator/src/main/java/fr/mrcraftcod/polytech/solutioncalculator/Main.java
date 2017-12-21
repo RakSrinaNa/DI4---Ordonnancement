@@ -122,7 +122,7 @@ public class Main
 							System.out.println("Please give at least a solution.");
 							break;
 						case 2:
-							Map<Solution, Integer> results = solutions.stream().collect(Collectors.toMap(Function.identity(), s -> calculate(finalInstance, s)));
+							Map<Solution, Integer> results = solutions.stream().collect(Collectors.toMap(Function.identity(), s -> calculate(finalInstance, s, true)));
 							if(results.get(solutions.get(0)) > results.get(solutions.get(1)))
 							{
 								System.out.flush();
@@ -130,7 +130,7 @@ public class Main
 							}
 							break;
 						default:
-							solutions.forEach(s -> calculate(finalInstance, s));
+							solutions.forEach(s -> calculate(finalInstance, s, true));
 					}
 				}
 				else
@@ -139,16 +139,20 @@ public class Main
 					{
 						Path finalCExecutable = cExecutable;
 						Path finalPythonExecutable = pythonExecutable;
-						instances.stream().sorted(Comparator.comparing(i -> i.getSource().toFile().getName())).forEach(i -> {
+						List<InstanceResult> failed = instances.stream().sorted(Instance::compareTo).map(i -> {
 							try
 							{
-								compareInstance(i, finalCExecutable, finalPythonExecutable);
+								return compareInstance(i, finalCExecutable, finalPythonExecutable);
 							}
 							catch(IOException | InterruptedException e)
 							{
 								e.printStackTrace();
 							}
-						});
+							return null;
+						}).filter(Objects::nonNull).filter(InstanceResult::isPythonBetter).collect(Collectors.toList());
+						System.out.format("Failed tests: \n%s\n", failed.stream().map(InstanceResult::toString).collect(Collectors.joining("\n")));
+						if(failed.size() > 0)
+							System.exit(43);
 					}
 					else
 					{
@@ -160,29 +164,31 @@ public class Main
 		}
 	}
 	
-	private static void compareInstance(Instance instance, Path cExecutable, Path pythonExecutable) throws IOException, InterruptedException
+	private static InstanceResult compareInstance(Instance instance, Path cExecutable, Path pythonExecutable) throws IOException, InterruptedException
 	{
 		System.out.println("Comparing instance " + instance);
+		
 		startPython(instance, pythonExecutable);
 		Solution solutionP = Solution.parse(findLog(pythonExecutable.getParent().resolve("log"), instance));
-		int rP = calculate(instance, solutionP);
+		int scorePython = calculate(instance, solutionP, false);
+		
 		startC(instance, cExecutable);
 		Solution solutionC = Solution.parse(findLog(cExecutable.getParent().resolve("log"), instance));
-		int rC = calculate(instance, solutionC);
-		System.out.printf("C: %d vs %d :P\n", rC, rP);
-		if(rC > rP)
-		{
-			System.out.flush();
-			System.exit(43);
-		}
-		else
-			System.out.println("OK");
+		int scoreC = calculate(instance, solutionC, false);
+		System.out.printf("==> C: %d vs %d :P\n", solutionC.getExpected(), solutionP.getExpected());
+		
+		if(scoreC != solutionC.getExpected())
+			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), scoreC);
+		if(scorePython != solutionP.getExpected())
+			System.out.format("WARN: P - Expected %d but got %d\n", solutionC.getExpected(), scoreC);
+
+		return new InstanceResult(instance, scoreC, scorePython);
 	}
 	
 	private static Path findLog(Path folder, Instance instance)
 	{
 		Pattern p = Pattern.compile("solution_" + instance.getSource().toFile().getName().replace(".", "\\.") + "_\\d+\\.txt");
-		for(File f : folder.toFile().listFiles())
+		for(File f : Objects.requireNonNull(folder.toFile().listFiles()))
 			if(f.isFile() && p.matcher(f.getName()).matches())
 				return folder.resolve(f.getName());
 		return null;
@@ -211,9 +217,9 @@ public class Main
 			ending = "";
 		}
 		command = beginning + command + ending;
-		System.out.println("Starting " + command);
+		//System.out.println("Starting " + command);
 		Process proc = Runtime.getRuntime().exec(command, null, workingDir.toFile());
-		System.out.println("Waiting for " + command);
+		//System.out.println("Waiting for " + command);
 		
 		boolean print = false;
 		
@@ -228,7 +234,7 @@ public class Main
 		while((s = stdError.readLine()) != null)
 			System.out.println(s);
 		
-		System.out.format("Waiting done with code %d.\n", proc.waitFor());
+		//System.out.format("Waiting done with code %d.\n", proc.waitFor());
 	}
 	
 	private static boolean isWindows()
@@ -236,16 +242,19 @@ public class Main
 		return OS.contains("win");
 	}
 	
-	private static int calculate(Instance instance, Solution solution)
+	private static int calculate(Instance instance, Solution solution, boolean prints)
 	{
-		System.out.println("Processing solution " + solution);
-		updateReadyTasks(instance, solution);
-		int delay = calculateDelay(instance, solution);
+		if(prints)
+		System.out.println("Processing solution " + solution + " with instance " + instance);
+		instance.reset();
+		updateReadyTasks(instance, solution, prints);
+		int delay = calculateDelay(instance, solution, prints);
+		if(prints)
 		System.out.printf("Score %d for %s\n", delay, solution);
 		return delay;
 	}
 	
-	private static int calculateDelay(Instance instance, Solution solution)
+	private static int calculateDelay(Instance instance, Solution solution, boolean prints)
 	{
 		int delay = 0;
 		int readyTruck = 0;
@@ -253,19 +262,20 @@ public class Main
 		{
 			int readyPack = solution.getDeliveries().get(pack).stream().map(instance::getTask).mapToInt(Task::getReadyTime).max().orElse(0);
 			readyTruck = Math.max(readyTruck, readyPack);
-			Pair<Integer, Integer> res = calculateDeliveryTime(instance, solution.getDeliveries().get(pack), readyTruck);
+			Pair<Integer, Integer> res = calculateDeliveryTime(instance, solution.getDeliveries().get(pack), readyTruck, prints);
 			readyTruck += res.getKey();
 			delay += res.getValue();
 		}
 		return delay;
 	}
 	
-	private static Pair<Integer, Integer> calculateDeliveryTime(Instance instance, List<Integer> integers, int startTime)
+	private static Pair<Integer, Integer> calculateDeliveryTime(Instance instance, List<Integer> integers, int startTime, boolean prints)
 	{
 		int duration = 0;
 		int delay = 0;
 		int currTruck = instance.getTaskCount();
-		System.out.printf("(B: %3d | T: %4d | D: %4d)|--", currTruck, startTime, delay);
+		if(prints)
+		System.out.printf("(B: %3d | T: %4d | D: %4d)--", currTruck, startTime, delay);
 		switch(distanceType)
 		{
 			default:
@@ -276,18 +286,20 @@ public class Main
 					duration += travelTime;
 					delay += Math.max(0, (startTime + duration) - t.getDue());
 					currTruck = t.getID();
-					System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)|--", travelTime, currTruck, startTime + duration, delay);
+					if(prints)
+					System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)--", travelTime, currTruck, startTime + duration, delay);
 				}
 				duration += instance.getDistance(currTruck, instance.getTaskCount());
 				break;
 			case "CLOSEST":
 				break;
 		}
+		if(prints)
 		System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)\n", instance.getDistance(currTruck, instance.getTaskCount()), instance.getTaskCount(), startTime + duration, delay);
 		return new Pair<>(duration, delay);
 	}
 	
-	private static void updateReadyTasks(Instance instance, Solution solution)
+	private static void updateReadyTasks(Instance instance, Solution solution, boolean prints)
 	{
 		HashMap<Integer, Integer> machines = new HashMap<>();
 		
@@ -300,7 +312,8 @@ public class Main
 				t.setReadyTime(endTime);
 				machines.put(machine, endTime);
 			}
-			System.out.println(t.getID() + " --> " + machines.toString());
+			if(prints)
+			System.out.format("%3d --> %s\n", t.getID(), machines.toString());
 		}
 	}
 }

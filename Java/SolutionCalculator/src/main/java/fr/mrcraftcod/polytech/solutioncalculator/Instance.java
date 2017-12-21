@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * @author Thomas Couchoud
  * @since 2017-12-10
  */
-public class Instance
+public class Instance implements Comparable<Instance>
 {
 	private int machineCount;
 	private int taskCount;
@@ -93,6 +93,21 @@ public class Instance
 	public int getDistance(int i, int j)
 	{
 		return times.get(i).get(j);
+	}
+	
+	@Override
+	public int compareTo(Instance o)
+	{
+		if(getMachineCount() != o.getMachineCount())
+			return getMachineCount() - o.getMachineCount();
+		if(getTaskCount() != o.getTaskCount())
+			return getTaskCount() - o.getTaskCount();
+		return 0;
+	}
+	
+	public void reset()
+	{
+		tasks.forEach(t -> t.setReadyTime(0));
 	}
 	
 	public int getMachineCount()
