@@ -261,7 +261,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 {
 	if(currentSolution == NULL)
 		return searchResult_create(NULL, NULL, SWAP);
-	Solution * bestSolution = solution_copy(currentSolution);
+	Solution * bestSolution = NULL;
 	TabuItem * bestItem = NULL;
 #if TABU_FIRST_IMPROVE
 	Bool first_done = False;
@@ -286,7 +286,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 						continue;
 					Solution * newSolution = sort_swapDeliveries(currentSolution, task1, task2);
 					TabuItem * item = tabuItem_create(task1, task2, SWAP);
-					if(solutionCompare(bestSolution, newSolution, diversification) < 0 && !tabuList_contains(tabuList, item))
+					if(bestSolution == NULL || (solutionCompare(bestSolution, newSolution, diversification) < 0 && !tabuList_contains(tabuList, item)))
 					{
 						debugPrint("Solution %p is better than %p with swapped values %d and %d\n", currentSolution, newSolution, task1, task2);
 						if(bestSolution != NULL)
