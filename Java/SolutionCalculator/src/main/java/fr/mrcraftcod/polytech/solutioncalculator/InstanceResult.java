@@ -17,4 +17,10 @@ class InstanceResult
 	{
 		return scoreC <= scorePython;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "InstanceResult{" + "instance=" + instance + ", scoreC=" + scoreC + ", scorePython=" + scorePython + '}';
+	}
 }
