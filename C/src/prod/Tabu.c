@@ -1,5 +1,4 @@
 #include <sys/timeb.h>
-#include <limits.h>
 
 #include "headers/Tabu.h"
 #include "FLAGS.h"
@@ -71,19 +70,19 @@ int tabu_flagsFingerprint()
 	return result;
 }
 
-void tabu_setConstants(Instance *instance)
+void tabu_setConstants(Instance * instance)
 {
 	switch(instance->taskCount)
 	{
-	case 100:
-		TABU_DELTA = 8;
-		TABU_ITERATIONS_NOIMPROVE = 5;
-	case 50:
-		TABU_DELTA = 10;
-		TABU_ITERATIONS_NOIMPROVE = 10;
-	default:
-		TABU_DELTA = instance->taskCount / 4;
-		TABU_ITERATIONS_NOIMPROVE = 15;
+		case 100:
+			TABU_DELTA = 8;
+			TABU_ITERATIONS_NOIMPROVE = 5;
+		case 50:
+			TABU_DELTA = 10;
+			TABU_ITERATIONS_NOIMPROVE = 10;
+		default:
+			TABU_DELTA = instance->taskCount / 4;
+			TABU_ITERATIONS_NOIMPROVE = 15;
 	}
 }
 
@@ -124,74 +123,65 @@ TabuSolution * tabu_search(Instance * instance)
 	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
 	long double currentTime = 0;
+	
+	int searchFunctionAvailable = 3;
+	searchFunction searchFunctions[searchFunctionAvailable];
+	searchFunctions[0] =
+#if TABU_SEARCH_SWAP
+			tabu_searchSwap
+#else
+			NULL
+#endif
+			;
+	
+	searchFunctions[1] =
+#if TABU_SEARCH_EBSR
+			tabu_searchEBSR
+#else
+			NULL
+#endif
+			;
+	
+	searchFunctions[2] =
+#if TABU_SEARCH_EFSR
+			tabu_searchEFSR
+#else
+			NULL
+#endif
+	;
+	
 	while((currentTime = tabu_getTimeDiff(timeStart, timeNow)) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("----- Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
 		SearchResult * bestMethodResult = NULL;
-#if TABU_SEARCH_SWAP
-		SearchResult * iterSolutionSwap = tabu_searchSwap(currentSolution, tabuList, diversification);
-		if(iterSolutionSwap != NULL)
+		for(int i = 0; i < searchFunctionAvailable; i++)
 		{
-			bestMethodResult = iterSolutionSwap;
-#if TABU_PROPAGATE
-			solution_destroy(currentSolution);
-			currentSolution = solution_copy(bestMethodResult->solution);
-#endif
-		}
-		else
-			searchResult_destroy(iterSolutionSwap);
-#endif
-
-#if TABU_SEARCH_EBSR
-		SearchResult * iterSolutionEBSR = tabu_searchEBSR(currentSolution, tabuList, diversification);
-		if(iterSolutionEBSR != NULL && iterSolutionEBSR->tabuItem != NULL)
-		{
-			if(bestMethodResult != NULL)
+			if(searchFunctions[i] == NULL)
+				continue;
+			SearchResult * iterSolution = searchFunctions[i](currentSolution, tabuList, diversification);
+			if(iterSolution != NULL && iterSolution->tabuItem != NULL)
 			{
-				if(solution_eval(bestMethodResult->solution)->score > solution_eval(iterSolutionEBSR->solution)->score)
+				if(bestMethodResult != NULL)
 				{
-					searchResult_destroy(bestMethodResult);
-					bestMethodResult = iterSolutionEBSR;
+					if(solution_eval(bestMethodResult->solution)->score > solution_eval(iterSolution->solution)->score)
+					{
+						searchResult_destroy(bestMethodResult);
+						bestMethodResult = iterSolution;
+					}
+					else
+						searchResult_destroy(iterSolution);
 				}
 				else
-					searchResult_destroy(iterSolutionEBSR);
+					bestMethodResult = iterSolution;
+#if TABU_PROPAGATE
+				solution_destroy(currentSolution);
+				currentSolution = solution_copy(bestMethodResult->solution);
+#endif
 			}
 			else
-				bestMethodResult = iterSolutionEBSR;
-#if TABU_PROPAGATE
-			solution_destroy(currentSolution);
-			currentSolution = solution_copy(bestMethodResult->solution);
-#endif
+				searchResult_destroy(iterSolution);
 		}
-		else
-			searchResult_destroy(iterSolutionEBSR);
-#endif
-
-#if TABU_SEARCH_EFSR
-		SearchResult * iterSolutionEFSR = tabu_searchEFSR(currentSolution, tabuList, diversification);
-		if(iterSolutionEFSR != NULL)
-		{
-			if(bestMethodResult != NULL)
-			{
-				if(solution_eval(bestMethodResult->solution)->score > solution_eval(iterSolutionEFSR->solution)->score)
-				{
-					searchResult_destroy(bestMethodResult);
-					bestMethodResult = iterSolutionEFSR;
-				}
-				else
-					searchResult_destroy(iterSolutionEFSR);
-			}
-			else
-				bestMethodResult = iterSolutionEFSR;
-#if TABU_PROPAGATE
-			solution_destroy(currentSolution);
-			currentSolution = solution_copy(bestMethodResult->solution);
-#endif
-		}
-		else
-			searchResult_destroy(iterSolutionEFSR);
-#endif
-
+		
 #if TABU_DIVERSIFICATION
 		if(diversification == True)
 		{
@@ -282,7 +272,6 @@ TabuSolution * tabu_search(Instance * instance)
 	}
 	else
 		solution_destroy(bestSolution);
-	
 
 #if DEV_LOG_SCORE
 #if DEV_LOG_SCORE_FULL
@@ -332,7 +321,7 @@ SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, 
 						bestItem = item;
 						bestSolution = newSolution;
 #if TABU_FIRST_IMPROVE
-							first_done = True;
+						first_done = True;
 #endif
 					}
 					else
@@ -448,7 +437,7 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 	return searchResult_create((bestSol == NULL ? solution_copy(currentSolution) : bestSol), bestTabuItem, EFSR);
 }
 
-void tabu_randomize(Solution *solution)
+void tabu_randomize(Solution * solution)
 {
 #if TABU_SEARCH_SWAP
 	unsigned int nbSwaps = RRAND(3, solution->packCount * 3);

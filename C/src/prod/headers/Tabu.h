@@ -19,6 +19,8 @@ typedef struct _TabuSolution
 	long double time;
 } TabuSolution;
 
+typedef SearchResult * (*searchFunction)(Solution *, TabuList *, Bool);
+
 /**
  * Creates a tabu solution.
  *
