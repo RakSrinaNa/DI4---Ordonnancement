@@ -628,10 +628,6 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 							val_voisin = swap2(batch_i, index_i, batch_j, index_j, sol_cour, diversification)
 							# print('SWAP sol_cour apres swap',sol_cour,val_voisin)
 							# si on est le meilleur voisin
-							if (job_i == 3 and job_j == 13 and nb_ite == 10):
-								# evalue(sol_cour, False, True)
-								# raise SystemExit
-								pass
 							if (val_voisin < val_best_vois) and PasTabou('s', job_i, job_j):
 								val_best_vois = val_voisin
 								Best_vois = copy.deepcopy(sol_cour)
