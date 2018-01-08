@@ -254,13 +254,11 @@ TabuSolution * tabu_search(Instance * instance)
 			if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
 			{
 				bestBestSolution = bestSolution;
-				bestSolution = NULL;
+				printf("New best best : %d\n", solution_eval(bestBestSolution)->score);
 			}
 			else
-			{
 				solution_destroy(bestSolution);
-				bestSolution = NULL;
-			}
+			bestSolution = NULL;
 		}
 #endif
 

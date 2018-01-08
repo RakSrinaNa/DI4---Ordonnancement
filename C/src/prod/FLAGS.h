@@ -31,7 +31,7 @@
 #define TABU_PROPAGATE 1
 
 //!Use the score cache system.
-#define CACHED_SCORE 0
+#define CACHED_SCORE 1
 //!Sort deliveries using the nearest neighbor, else sort by lowest due date first.
 #define DELIVERY_NEAREST_NEIGHBOR 0
 //!Random diversification.
