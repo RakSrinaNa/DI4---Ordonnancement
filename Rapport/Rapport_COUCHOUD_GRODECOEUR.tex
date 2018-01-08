@@ -45,8 +45,14 @@
 	\chapter{Spécifications du logiciel} %TODO
 		%Etude python
 		
-	\chapter{Modélisation du logiciel}
-		\section{Structure générale — UML} %TODO: Thomas
+	\chapter{Modélisation du logiciel} %TODO: Clément
+		\section{Structure générale — UML}
+			Le projet est séparé en deux grosses parties: production et tests.
+			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
+			
+			Chacun d'entre eux contiennent les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
+			
+			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
 		\section{Rôles des différents fichiers} %TODO: Clément
 		
 	\chapter{Implémentation \& tests} %TODO: Clément
@@ -55,6 +61,9 @@
 			\subsection{Implémentation d'un système de cache des solutions} %TODO: Thomas
 			\subsection{Diversification aléatoire} %TODO: Clément
 			\subsection{Calcul différent de l'itinéraire} %TODO: Thomas
+			
+			\subsection{Simplification de l'implémentation des méthodes de recherche}%TODO: Thomas
+		
 		\section{Tests}
 			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentés ailleurs, nous nous sommes concentrés dessus.
 			
@@ -81,7 +90,7 @@
 				
 			\subsection{Pack}
 				\begin{itemize}
-					\item Vérification du constructeur/destructeur.
+					\item Vérification du constructeur/destructeur.
 					\item Add/Remove/Has tâche.
 					\item Switch tâche.
 					\item Move tâche.
@@ -96,7 +105,7 @@
 				
 			\subsection{Solution}
 				\begin{itemize}
-					\item Vérification du constructeur/destructeur.
+					\item Vérification du constructeur/destructeur.
 					\item Copie.
 					\item Add/Remove/Has tâche.
 					\item Switch tâche.
@@ -120,7 +129,7 @@
 				
 			\subsection{TabuList}
 				\begin{itemize}
-					\item Vérification du constructeur/destructeur.
+					\item Vérification du constructeur/destructeur.
 					\item Test de l'ajout/suppression items tabou.
 					\item Test si un élément est dans la liste tabou.
 					\item Test de clear.
@@ -128,7 +137,7 @@
 				
 			\subsection{SearchResult}
 				\begin{itemize}
-					\item Vérification du constructeur/destructeur.
+					\item Vérification du constructeur/destructeur.
 				\end{itemize}
 		
 	\chapter{Résultats obtenus}
@@ -137,11 +146,6 @@
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
-		
-		\section{Simplification de l'implémentation des méthodes de recherche}
-			De la même manière que l'implémentation des différentes méthodes de calcul de l'itinéraire de livraison, il serait intéressant de simplifier le code appelant les différentes méthodes de modification de la solution courante. Nous pouvons par exemple déclarer un tableau contenant des pointeurs sur les fonctions à utiliser.
-			
-			De cette manière il est très facile d'en ajouter une nouvelle sans beaucoup de modification du code original.
 		
 		\section{Parallélisme} %TODO: Clément
 		
@@ -157,7 +161,7 @@
 			
 			Enfin, nous avons ajouté en plus du VCS un outil d'intégration continue (CI) afin de vérifier nos tests, lancer Valgrind, et effectuer des comparaisons au Python. De cette manière nous pouvions nous concentrer plus efficacement sur le développement. Les tests ne sont pas oubliés de cette manière et le feedback sur les tests était fait de manière transparente.
 			\img{TravisAll.png}{Aperçu général des builds}{0.5}
-			\img{TravisCompare.png}{Résultats des comparaisons}{0.5}
+			\img{TravisCompare.png}{Résultats des comparaisons}{0.575}
 			
 			Afin de pouvoir lancer ces comparaisons, un utilitaire en JAVA a été créé. Ce dernier prend une liste d'instance en paramètres et effectue les actions suivantes:
 			\begin{itemize}
