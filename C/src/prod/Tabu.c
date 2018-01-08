@@ -108,7 +108,8 @@ TabuSolution * tabu_search(Instance * instance)
 	FILE * logScoreCompactFile = fopen(filenameCompact, "w");
 	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
 #endif
-	Solution * bestSolution = solution_copy(currentSolution);
+	Solution * bestSolution = NULL;
+	Solution * bestBestSolution = solution_copy(currentSolution);
 	solution_eval(currentSolution);
 	unsigned int nbIterations = 0;
 	unsigned int nbNoBetterIterations = 0;
@@ -206,7 +207,7 @@ TabuSolution * tabu_search(Instance * instance)
 			{
 				tabuList_addItem(tabuList, tabuItem_copy(bestMethodResult->tabuItem));
 			}
-			if(solution_eval(bestMethodResult->solution)->score < solution_eval(bestSolution)->score)
+			if(solutionCompare(bestSolution, bestMethodResult->solution, diversification) < 0)
 			{
 				debugPrint("Found better solution %p, replacing %p\n", bestMethodResult, bestSolution);
 				printf("New better: %d\n", solution_eval(bestMethodResult->solution)->score);
@@ -250,6 +251,16 @@ TabuSolution * tabu_search(Instance * instance)
 			diversification = True;
 #endif
 			tabuList_clear(tabuList);
+			if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
+			{
+				bestBestSolution = bestSolution;
+				bestSolution = NULL;
+			}
+			else
+			{
+				solution_destroy(bestSolution);
+				bestSolution = NULL;
+			}
 		}
 #endif
 
@@ -265,6 +276,13 @@ TabuSolution * tabu_search(Instance * instance)
 		nbIterations++;
 		ftime(&timeNow);
 	}
+	if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
+	{
+		bestBestSolution = bestSolution;
+	}
+	else
+		solution_destroy(bestSolution);
+	
 
 #if DEV_LOG_SCORE
 #if DEV_LOG_SCORE_FULL
@@ -274,11 +292,11 @@ TabuSolution * tabu_search(Instance * instance)
 #endif
 	fclose(logScoreCompactFile);
 #endif
-	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestSolution);
+	debugPrint("Iterated %d times, with best solution %p\n", nbIterations, bestBestSolution);
 	tabuList_destroy(tabuList);
 	if(currentSolution != bestSolution)
 		solution_destroy(currentSolution);
-	return tabuSolution_create(bestSolution, nbIterations, currentTime);
+	return tabuSolution_create(bestBestSolution, nbIterations, currentTime);
 }
 
 SearchResult * tabu_searchSwap(Solution * currentSolution, TabuList * tabuList, Bool diversification)
