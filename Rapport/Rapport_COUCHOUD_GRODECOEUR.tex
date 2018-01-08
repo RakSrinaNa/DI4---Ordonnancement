@@ -1,5 +1,26 @@
 \documentclass[hideweeklyreports]{polytech/polytech}
 \usepackage{lmodern}
+\usepackage{textcomp}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{pict2e}
+\usepackage[justification=centering]{caption}
+
+\newcommand{\img}[3]{%
+	\begin{figure}[H]
+		\centering
+   		\includegraphics[scale=#3]{Images/#1}
+  	 	\caption{#2}
+	\end{figure}
+}
+\newcommand{\imgr}[4]{%
+   \begin{figure}[H]
+      \centering
+         \includegraphics[scale=#3,rotate=#4]{Images/#1}
+         \caption{#2}
+   \end{figure}
+}
 
 \schooldepartment{di}
 \typereport{ppgldi4}
@@ -10,6 +31,8 @@
 \student{Clément}{Grodecoeur}{clement.grodecoeur@etu.univ-tours.fr}
 \academicsupervisor{Jean-Charles}{Billaut}{jean-charles.billaut@univ-tours.fr}
 
+
+%TODO
 \resume{Résumé FR}
 \motcle{Mots clé}
 
@@ -17,9 +40,9 @@
 \keyword{Keywords}
 
 \begin{document}
-	\chapter{Contexte de la réalisation}
+	\chapter{Contexte de la réalisation} %TODO
 		
-	\chapter{Spécifications du logiciel}
+	\chapter{Spécifications du logiciel} %TODO
 		%Etude python
 		
 	\chapter{Modélisation du logiciel}
@@ -32,14 +55,116 @@
 			\subsection{Implémentation d'un système de cache des solutions} %TODO: Thomas
 			\subsection{Diversification aléatoire} %TODO: Clément
 			\subsection{Calcul différent de l'itinéraire} %TODO: Thomas
-		\section{Tests} %TODO: Thomas
+		\section{Tests}
+			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentés ailleurs, nous nous sommes concentrés dessus.
+			
+			Ces derniers restent assez simplistes et ne couvrent sûrement pas tout les cas mais ils permettent d'identifier des erreurs contraignantes pour la suite de manière rapide.
+			
+			Nous allons maintenant détailler un peu plus les tests effectués. Par la suite nous appellerons constructeur les fonctions xxx\_create(), et destructeur les fonctions xxx\_destroy().
+			\subsection{Task}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+					\item Get/Set des dates dues.
+					\item Get/Set des temps machines.
+				\end{itemize}
+				
+			\subsection{Instance}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+					\item Obtention des tâches par date due.
+				\end{itemize}
+				
+			\subsection{Parser}
+				\begin{itemize}
+					\item Test des valeurs des instances parsées depuis plusieurs fichiers.
+				\end{itemize}
+				
+			\subsection{Pack}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+					\item Add/Remove/Has tâche.
+					\item Switch tâche.
+					\item Move tâche.
+				\end{itemize}
+				
+			\subsection{SolutionInfo}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+					\item Test de l'ordonnancement de production.
+					\item Test de l'ordonnancement de livraison.
+				\end{itemize}
+				
+			\subsection{Solution}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+					\item Copie.
+					\item Add/Remove/Has tâche.
+					\item Switch tâche.
+					\item Move tâche.
+				\end{itemize}
+				
+			\subsection{Sequencer}
+				\begin{itemize}
+					\item Test des dates de fin de production pour des pack avec des tâches dans un ordre donné.
+					\item Test de l'ordonnancement de production pour un pack.
+					\item Test du retard de livraison pour des pack avec des tâches dans un ordre donné.
+					\item Test de l'ordonnancement de livraison pour un pack.
+				\end{itemize}
+				
+			\subsection{Sort}
+				\begin{itemize}
+					\item Test du SWAP.
+					\item Test d'EBSR.
+					\item Test d'EFSR.
+				\end{itemize}
+				
+			\subsection{TabuList}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+					\item Test de l'ajout/suppression items tabou.
+					\item Test si un élément est dans la liste tabou.
+					\item Test de clear.
+				\end{itemize}
+				
+			\subsection{SearchResult}
+				\begin{itemize}
+					\item Vérification du constructeur/destructeur.
+				\end{itemize}
 		
 	\chapter{Résultats obtenus}
-		\subsection{Comparaison avec le python} %TODO: Thomas
-		\subsection{Comparaison avec l'implémentation en codage direct}
+		\section{Comparaison avec le python} %TODO: Thomas
+		\section{Comparaison avec l'implémentation en codage direct} %TODO
 	
 	\chapter{Autres}
-		\section{Simplification de l'implémentation des méthodes de recherche} %TODO: Thomas
+		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
+		
+		\section{Simplification de l'implémentation des méthodes de recherche}
+			De la même manière que l'implémentation des différentes méthodes de calcul de l'itinéraire de livraison, il serait intéressant de simplifier le code appelant les différentes méthodes de modification de la solution courante. Nous pouvons par exemple déclarer un tableau contenant des pointeurs sur les fonctions à utiliser.
+			
+			De cette manière il est très facile d'en ajouter une nouvelle sans beaucoup de modification du code original.
+		
 		\section{Parallélisme} %TODO: Clément
-		\section{Github — Travis} %TODO: Thomas
+		
+		\section{Fichier de configuration}
+			La mise en place d'un fichier de configuration serait une grande avancée. En effet, cela permettrai d'éviter la recompilation du projet après la modification d'un paramètre.
+			
+			Cependant cela nous empêcherai d'utiliser des commandes pré-processeur ce qui nous forcerai à faire un bon nombre de conditions if qui auraient toujours la même valeur tout au long de l'exécution.
+		
+		\section{Github — Travis}
+			Nous avons tout au long du projet utilisé un gestionnaire de version (VCS): Git. Ce dernier nous a permit de pouvoir travailler de manière collaborative de manière simplifiée. En effet chacun pouvait se focuser sur une partie précise du projet et ainsi paralléliser un peu le développement.
+			
+			La gestion des branches sur ce dernier était très simple. Nous faisions notre développement sur une branche dev, et lorsque ce qui avait été réalisé marchait, nous le mergions dans la branche master afin d'avoir une sorte de point de sauvegarde.
+			
+			Enfin, nous avons ajouté en plus du VCS un outil d'intégration continue (CI) afin de vérifier nos tests, lancer Valgrind, et effectuer des comparaisons au Python. De cette manière nous pouvions nous concentrer plus efficacement sur le développement. Les tests ne sont pas oubliés de cette manière et le feedback sur les tests était fait de manière transparente.
+			\img{TravisAll.png}{Aperçu général des builds}{0.5}
+			\img{TravisCompare.png}{Résultats des comparaisons}{0.5}
+			
+			Afin de pouvoir lancer ces comparaisons, un utilitaire en JAVA a été créé. Ce dernier prend une liste d'instance en paramètres et effectue les actions suivantes:
+			\begin{itemize}
+				\item Execution des instances sur le programme en C et en Python.
+				\item Récupération des résultats.
+				\item Vérification de la cohérence du score avec la solution fournie.
+				\item Comparaison des deux scores.
+			\end{itemize}
+			
 \end{document}
