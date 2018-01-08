@@ -159,7 +159,7 @@ public class Main
 								e.printStackTrace();
 							}
 							return null;
-						}).collect(Collectors.groupingBy(SolutionCalc::getInstance, Collectors.mapping(Function.identity(), Collectors.toList()))).forEach((inst, sols) -> System.out.printf("Instance %s \t==> %s\n", inst, sols.stream().map(Object::toString).collect(Collectors.joining(","))));
+						}).collect(Collectors.groupingBy(SolutionCalc::getInstance, Collectors.mapping(Function.identity(), Collectors.toList()))).forEach((inst, sols) -> System.out.printf("%s \t==> %s\n", inst, sols.stream().map(Object::toString).collect(Collectors.joining(",\t"))));
 						executor.shutdownNow();
 						//if(failed.size() > 0)
 						//	System.exit(43);
