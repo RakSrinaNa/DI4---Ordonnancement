@@ -187,6 +187,12 @@ void solution_save(Solution * solution, const char * filename, double time)
 
 long solutionCompare(Solution * solution1, Solution * solution2, Bool diversification)
 {
+	if(solution1 == NULL && solution2 == NULL)
+		return 0;
+	if(solution1 == NULL)
+		return -1;
+	if(solution2 == NULL)
+		return 1;
 	if(diversification)
 		return solution_eval(solution1)->score - solution_eval(solution2)->score;
 	return ((long)solution_eval(solution2)->score) - solution_eval(solution1)->score;
