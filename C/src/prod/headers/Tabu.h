@@ -89,10 +89,16 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
  */
 SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
 
-//TODO Doc
+/**
+ * Get the fingerprint of the flags activated.
+ * @return An int formed of 0s or 1s.
+ */
 int tabu_flagsFingerprint();
 
-//TODO doc
+/**
+ * Randomize a solution.
+ * @param solution The solution to randomize.
+ */
 void tabu_randomize(Solution *solution);
 
 #endif

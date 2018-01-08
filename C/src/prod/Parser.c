@@ -34,7 +34,6 @@ Instance * parser_readInstanceFromFile(char * filepath)
 	return instance;
 }
 
-//TODO Redo
 const char * last_strstr(const char * haystack, const char * needle)
 {
 	if(*needle == '\0')

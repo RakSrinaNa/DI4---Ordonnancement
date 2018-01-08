@@ -99,6 +99,8 @@ Macros</h2></td></tr>
 <tr class="separator:a608bc6ef2f0d23215a53924af90d6815"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa292923193da9da78f290bc1fd2a10c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_utils_8h.html#aa292923193da9da78f290bc1fd2a10c2">RREALLOC</a>(p,  t,  n,  m)&#160;&#160;&#160;{if((n) == 0){free(p);(p)=NULL;}else{(p) = <a class="el" href="_utils_8h.html#ab04cb067c814a73ad85a80d8d8bd363b">REALLOC</a>(t, p, n); <a class="el" href="_utils_8h.html#aa643e37b99532a43bf6ca08652434ab7">RCHECK</a>(p, m)}};</td></tr>
 <tr class="separator:aa292923193da9da78f290bc1fd2a10c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4f76b10aa525341367f6b7b92a60218"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_utils_8h.html#ab4f76b10aa525341367f6b7b92a60218">RRAND</a>(min,  max)&#160;&#160;&#160;min + (rand() / ((long double) RAND_MAX)) * ((max) - (min))</td></tr>
+<tr class="separator:ab4f76b10aa525341367f6b7b92a60218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -341,6 +343,34 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td>&#160;&#160;&#160;(t *) realloc(p, (n) * sizeof(t))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab4f76b10aa525341367f6b7b92a60218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4f76b10aa525341367f6b7b92a60218">&#9670;&nbsp;</a></span>RRAND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RRAND</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">min, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">max&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;min + (rand() / ((long double) RAND_MAX)) * ((max) - (min))</td>
         </tr>
       </table>
 </div><div class="memdoc">

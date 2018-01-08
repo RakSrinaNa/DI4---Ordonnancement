@@ -87,8 +87,47 @@ Functions</h2></td></tr>
 <tr class="separator:a03e8bb897c231dfc56a6fcd40f117e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c6902117a86668ad88661af9cf0868e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8h.html#a4c6902117a86668ad88661af9cf0868e">parser_getLine</a> (char **linePtr, size_t *lineSize, FILE *file)</td></tr>
 <tr class="separator:a4c6902117a86668ad88661af9cf0868e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb203288c74b1138d0b047585a8e2880"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8h.html#adb203288c74b1138d0b047585a8e2880">last_strstr</a> (const char *haystack, const char *needle)</td></tr>
+<tr class="separator:adb203288c74b1138d0b047585a8e2880"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="adb203288c74b1138d0b047585a8e2880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb203288c74b1138d0b047585a8e2880">&#9670;&nbsp;</a></span>last_strstr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* last_strstr </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>haystack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>needle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>get the last appearance of a substring.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">haystack</td><td>The string to search in. </td></tr>
+    <tr><td class="paramname">needle</td><td>The substring to look for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last appearance of the needle. </dd></dl>
+
+</div>
+</div>
 <a id="a14ce322670da591f6512cc7bf8efc5ce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14ce322670da591f6512cc7bf8efc5ce">&#9670;&nbsp;</a></span>parser_fillInstance()</h2>
 
@@ -259,7 +298,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A string on the heap being the first non empty line in the file. If it couldn't read any, NULL is returned. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string on the heap being the next non empty line in the file. If it couldn't read any, NULL is returned. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The user is in charge of freeing the returned value. </dd></dl>
 
 </div>

@@ -57,7 +57,13 @@ int * parser_lineToIntArray(char * line, int valuesNumber);
  */
 int parser_getLine(char ** linePtr, size_t * lineSize, FILE * file);
 
-//TODO Doc
+/**
+ * get the last appearance of a substring.
+ *
+ * @param haystack The string to search in.
+ * @param needle The substring to look for.
+ * @return The last appearance of the needle.
+ */
 const char * last_strstr(const char * haystack, const char * needle);
 
 #endif

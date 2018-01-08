@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['score',['score',['../struct___solution_info.html#a451adf8ceb4af2f1be2f0b1c37a2279e',1,'_SolutionInfo']]]
+  ['next',['next',['../struct___tabu_item.html#a3e0300a058eb6c2617d3d4fbe8b6611a',1,'_TabuItem']]]
 ];
