@@ -253,6 +253,7 @@ TabuSolution * tabu_search(Instance * instance)
 			tabuList_clear(tabuList);
 			if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
 			{
+				solution_destroy(bestBestSolution);
 				bestBestSolution = bestSolution;
 				printf("New best best : %d\n", solution_eval(bestBestSolution)->score);
 			}
