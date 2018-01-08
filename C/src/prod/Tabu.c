@@ -277,6 +277,7 @@ TabuSolution * tabu_search(Instance * instance)
 	}
 	if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
 	{
+		solution_destroy(bestBestSolution);
 		bestBestSolution = bestSolution;
 	}
 	else
