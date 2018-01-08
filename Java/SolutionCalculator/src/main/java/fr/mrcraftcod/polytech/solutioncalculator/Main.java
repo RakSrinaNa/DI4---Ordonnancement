@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public class Main
 {
-	private static final String OS = System.getProperty("os.name").toLowerCase();
+	public static final String OS = System.getProperty("os.name").toLowerCase();
 	private static final String distanceType = "DUE";
 	
 	public static void main(String[] args) throws IOException
@@ -137,22 +141,28 @@ public class Main
 				{
 					if(cExecutable != null && cExecutable.toFile().exists() && pythonExecutable != null && pythonExecutable.toFile().exists())
 					{
+						ExecutorService executor = Executors.newFixedThreadPool(2);
 						Path finalCExecutable = cExecutable;
 						Path finalPythonExecutable = pythonExecutable;
-						List<InstanceResult> failed = instances.stream().sorted(Instance::compareTo).map(i -> {
+						instances.stream().flatMap(instance -> {
+							List<Future<SolutionCalc>> futures = new ArrayList<>();
+							futures.add(executor.submit(new ProgCall(finalCExecutable, SolutionCalc.Program.C, instance)));
+							futures.add(executor.submit(new ProgCall(finalPythonExecutable, SolutionCalc.Program.PYTHON, instance)));
+							return futures.stream();
+						}).map(future -> {
 							try
 							{
-								return compareInstance(i, finalCExecutable, finalPythonExecutable);
+								return future.get();
 							}
-							catch(IOException | InterruptedException e)
+							catch(InterruptedException | ExecutionException e)
 							{
 								e.printStackTrace();
 							}
 							return null;
-						}).filter(Objects::nonNull).filter(InstanceResult::isPythonBetter).collect(Collectors.toList());
-						System.out.format("Failed tests: \n%s\n", failed.stream().map(InstanceResult::toString).collect(Collectors.joining("\n")));
-						if(failed.size() > 0)
-							System.exit(43);
+						}).collect(Collectors.groupingBy(SolutionCalc::getInstance, Collectors.mapping(Function.identity(), Collectors.toList()))).forEach((inst, sols) -> System.out.printf("Instance %s \t==> %s\n", inst, sols.stream().map(Object::toString).collect(Collectors.joining(","))));
+						executor.shutdownNow();
+						//if(failed.size() > 0)
+						//	System.exit(43);
 					}
 					else
 					{
@@ -181,7 +191,7 @@ public class Main
 			System.out.format("WARN: C - Expected %d but got %d\n", solutionC.getExpected(), scoreC);
 		if(scorePython != solutionP.getExpected())
 			System.out.format("WARN: P - Expected %d but got %d\n", solutionC.getExpected(), scoreC);
-
+		
 		return new InstanceResult(instance, scoreC, scorePython);
 	}
 	
@@ -204,7 +214,7 @@ public class Main
 		startCommand(executable.getParent(), "python3 " + executable.toAbsolutePath().normalize().toString().replace("/", isWindows() ? "\\" : "/") + " " + instance.getSource().toAbsolutePath().normalize().toString().replace("\\", "/"));
 	}
 	
-	private static void startCommand(Path workingDir, String command) throws InterruptedException, IOException
+	public static void startCommand(Path workingDir, String command) throws InterruptedException, IOException
 	{
 		String beginning = "";
 		String ending = "";
@@ -242,15 +252,15 @@ public class Main
 		return OS.contains("win");
 	}
 	
-	private static int calculate(Instance instance, Solution solution, boolean prints)
+	public static int calculate(Instance instance, Solution solution, boolean prints)
 	{
 		if(prints)
-		System.out.println("Processing solution " + solution + " with instance " + instance);
+			System.out.println("Processing solution " + solution + " with instance " + instance);
 		instance.reset();
 		updateReadyTasks(instance, solution, prints);
 		int delay = calculateDelay(instance, solution, prints);
 		if(prints)
-		System.out.printf("Score %d for %s\n", delay, solution);
+			System.out.printf("Score %d for %s\n", delay, solution);
 		return delay;
 	}
 	
@@ -275,7 +285,7 @@ public class Main
 		int delay = 0;
 		int currTruck = instance.getTaskCount();
 		if(prints)
-		System.out.printf("(B: %3d | T: %4d | D: %4d)--", currTruck, startTime, delay);
+			System.out.printf("(B: %3d | T: %4d | D: %4d)--", currTruck, startTime, delay);
 		switch(distanceType)
 		{
 			default:
@@ -287,7 +297,7 @@ public class Main
 					delay += Math.max(0, (startTime + duration) - t.getDue());
 					currTruck = t.getID();
 					if(prints)
-					System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)--", travelTime, currTruck, startTime + duration, delay);
+						System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)--", travelTime, currTruck, startTime + duration, delay);
 				}
 				duration += instance.getDistance(currTruck, instance.getTaskCount());
 				break;
@@ -295,7 +305,7 @@ public class Main
 				break;
 		}
 		if(prints)
-		System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)\n", instance.getDistance(currTruck, instance.getTaskCount()), instance.getTaskCount(), startTime + duration, delay);
+			System.out.printf("[%3d]-->(B: %3d | T: %4d | D: %4d)\n", instance.getDistance(currTruck, instance.getTaskCount()), instance.getTaskCount(), startTime + duration, delay);
 		return new Pair<>(duration, delay);
 	}
 	
@@ -313,7 +323,7 @@ public class Main
 				machines.put(machine, endTime);
 			}
 			if(prints)
-			System.out.format("%3d --> %s\n", t.getID(), machines.toString());
+				System.out.format("%3d --> %s\n", t.getID(), machines.toString());
 		}
 	}
 }
