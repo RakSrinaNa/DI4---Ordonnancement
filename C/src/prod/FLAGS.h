@@ -6,7 +6,7 @@
 #define DEV_LOG_SCORE_FULL 0
 
 //!Maximum iterations for the Tabu algorithm.
-#define TABU_ITERATIONS 0xFFFFFFFF
+#define TABU_ITERATIONS 2000
 //!If no improvement was found, try a new, different solution.
 #define TABU_DIVERSIFICATION 1
 //!Maximum size of the Tabu list.
