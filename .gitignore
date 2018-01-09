@@ -3,27 +3,28 @@ __MACOSX
 cmake_install.cmake
 CMakeCache.txt
 Makefile
+Tabou.dSYM
 
 *.orig
 *.o
 *.plist
 *~
 *.csv
+*.gz
 
 C/.idea
 C/bin
-C/make-build-debug
+C/cmake-build-debug
+C/cmake-build-release
 C/obj
 C/log
 C/CMakeFiles
 C/Tabou
-C/cmake-build-debug
 C/ProjetTabou.depend
 C/ProjetTabou.layout
 C/Tabou.cbp
 C/TabouProd
 C/tabouFull.dSYM/
-Tabou.dSYM
 
 Python/.idea
 Python/log
