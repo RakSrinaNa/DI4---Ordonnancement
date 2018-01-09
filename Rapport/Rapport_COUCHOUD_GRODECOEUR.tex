@@ -45,7 +45,7 @@
 	\chapter{Spécifications du logiciel} %TODO
 		%Etude python
 		
-	\chapter{Modélisation du logiciel} %TODO: Clément
+	\chapter{Modélisation du logiciel} %TODO : Clément
 		\section{Structure générale — UML}
 			Le projet est séparé en deux grosses parties: production et tests.
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
@@ -53,11 +53,11 @@
 			Chacun d'entre eux contiennent les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
 			
 			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
-		\section{Rôles des différents fichiers} %TODO: Clément
+		\section{Rôles des différents fichiers} %TODO : Clément
 		
-	\chapter{Implémentation \& tests} %TODO: Clément
-		\section{Implémentation} %TODO: Clément
-			\subsection{Transfert du Python au C} %TODO: Clément
+	\chapter{Implémentation \& tests} %TODO : Clément
+		\section{Implémentation} %TODO : Clément
+			\subsection{Transfert du Python au C} %TODO : Clément
 			\subsection{Implémentation d'un système de cache des solutions}
 				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \textbf{eval()} était très fréquent. De plus cette fonction effectue un travail assez lourd ce qui peut facilement prendre une place importante dans le temps de calcul.
 				
@@ -69,8 +69,8 @@
 				
 				Cela est surement du au fait que les packs traités pour cette instance sont de taille $\leq 3$ donc le calcul de l'ordonnancement reste assez simple. Faire les tests sur une instance plus grande serait sûrement plus intéressant. %TODO : Test bigger instance?
 			
-			\subsection{Diversification aléatoire} %TODO: Clément
-			\subsection{Calcul différent de l'itinéraire} %TODO: Thomas
+			\subsection{Diversification aléatoire} %TODO : Clément
+			\subsection{Calcul différent de l'itinéraire}
 				Le calcul de l'ordre de production joue un rôle important mais l'ordre de livraison aussi. Afin de pouvoir tester différents résultats nous avons décider 2 façons de calculer l'ordre de livraison.
 				
 				La première méthode est celui transposé depuis le Python, et consiste à livrer dans l'ordre des dates dues. On peut se dire que cette méthode est optimale. Cependant il ne faut pas oublier les temps de voyage entre les points de livraison. Par exemple si on a deux zones A et B qui sont très très loin l'une de l'autre et que les dates dues nous font livrer par alternance A et B, on va passer la plus part du temps sur la route. De manière instinctive on aurait plus tendance à livrer zone par zone.
@@ -81,7 +81,7 @@
 				
 				On peut envisager de faire un algorithme qui ferai le mixe des deux: limiter les trajets tout en tenant compte des dates dues. Cependant on peut se poser la question si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au count d'un algorithme plus complexe et qui par conséquent sera moins rapide. 
 				
-			\subsection{Simplification de l'implémentation des méthodes de recherche}%TODO: Thomas
+			\subsection{Simplification de l'implémentation des méthodes de recherche}%TODO : Thomas
 		
 		\section{Tests}
 			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentés ailleurs, nous nous sommes concentrés dessus.
@@ -160,13 +160,13 @@
 				\end{itemize}
 		
 	\chapter{Résultats obtenus}
-		\section{Comparaison avec le python} %TODO: Thomas
+		\section{Comparaison avec le python} %TODO : Thomas
 		\section{Comparaison avec l'implémentation en codage direct} %TODO
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
 		
-		\section{Parallélisme} %TODO: Clément
+		\section{Parallélisme} %TODO : Clément
 		
 		\section{Fichier de configuration}
 			La mise en place d'un fichier de configuration serait une grande avancée. En effet, cela permettrai d'éviter la recompilation du projet après la modification d'un paramètre.
