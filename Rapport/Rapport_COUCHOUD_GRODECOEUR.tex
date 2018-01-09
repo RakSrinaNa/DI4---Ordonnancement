@@ -58,7 +58,17 @@
 	\chapter{Implémentation \& tests} %TODO: Clément
 		\section{Implémentation} %TODO: Clément
 			\subsection{Transfert du Python au C} %TODO: Clément
-			\subsection{Implémentation d'un système de cache des solutions} %TODO: Thomas
+			\subsection{Implémentation d'un système de cache des solutions}
+				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \textbf{eval()} était très fréquent. De plus cette fonction effectue un travail assez lourd ce qui peut facilement prendre une place importante dans le temps de calcul.
+				
+				Nous avons donc imaginé un système de cache qui garde une solution calculée (\textbf{SolutionInfo}) en mémoire. De cette manière nous évitons des temps de calculs inutiles.
+				
+				\img{PythonProfilerTop.png}{Profiler exécuté sur le python}{0.3}
+				
+				Après l'implémentation du cache, et avec un test sur une petite instance, on a pu remarquer que le temps passé sur le calcul du score est le même avec ou sans cache, à savoir environ $43\%$.
+				
+				Cela est surement du au fait que les packs traités pour cette instance sont de taille $\leq 3$ donc le calcul de l'ordonnancement reste assez simple. Faire les tests sur une instance plus grande serait sûrement plus intéressant. %TODO : Test bigger instance?
+			
 			\subsection{Diversification aléatoire} %TODO: Clément
 			\subsection{Calcul différent de l'itinéraire} %TODO: Thomas
 				Le calcul de l'ordre de production joue un rôle important mais l'ordre de livraison aussi. Afin de pouvoir tester différents résultats nous avons décider 2 façons de calculer l'ordre de livraison.
