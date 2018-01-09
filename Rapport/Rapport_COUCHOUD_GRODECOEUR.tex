@@ -53,7 +53,19 @@
 			Chacun d'entre eux contiennent les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
 			
 			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
-		\section{Rôles des différents fichiers} %TODO: Clément
+		\section{Rôles des différents éléments} %TODO : Clément
+			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou.
+			
+			\subsection{Instance}
+				Une instance d'un problème à résoudre est représentée par la structure Instance. Cette dernière contient le nombre de tâches et de machines, une liste de tâches ainsi qu'une matrice des distances entre chaque tâche (pour la livraison). Les tâches sont, elles, représentées par la structure Task contenant une liste des temps de production par machine, ainsi qu'une date de livraison. On se réfère ensuite aux différentes tâches en utilisant leur indice dans la liste.
+				
+			\subsection{Solution}
+				Chaque solution admissible à notre problème est représentée par la structure Solution. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une Solution seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure SolutionInfo : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.
+				
+			\subsection{Tabou}
+				
+			\subsection{Autres}
+				
 		
 	\chapter{Implémentation \& tests} %TODO: Clément
 		\section{Implémentation} %TODO: Clément
@@ -61,16 +73,7 @@
 			\subsection{Implémentation d'un système de cache des solutions} %TODO: Thomas
 			\subsection{Diversification aléatoire} %TODO: Clément
 			\subsection{Calcul différent de l'itinéraire} %TODO: Thomas
-				Le calcul de l'ordre de production joue un rôle important mais l'ordre de livraison aussi. Afin de pouvoir tester différents résultats nous avons décider 2 façons de calculer l'ordre de livraison.
-				
-				La première méthode est celui transposé depuis le Python, et consiste à livrer dans l'ordre des dates dues. On peut se dire que cette méthode est optimale. Cependant il ne faut pas oublier les temps de voyage entre les points de livraison. Par exemple si on a deux zones A et B qui sont très très loin l'une de l'autre et que les dates dues nous font livrer par alternance A et B, on va passer la plus part du temps sur la route. De manière instinctive on aurait plus tendance à livrer zone par zone.
-				
-				C'est exactement ce que fait la seconde méthode. Cette fois-ci on livre les produits en allant toujours au plus proche voisin. Cette méthode n'est pas la plus optimale non plus: certes elle diminue les temps de trajet mais elle ne prends plus en compte du tout les dates dues.
-				
-				Il faut donc essayer les différents algorithmes afin de savoir le quel est le plus adapté au problème courant.
-				
-				On peut envisager de faire un algorithme qui ferai le mixe des deux: limiter les trajets tout en tenant compte des dates dues. Cependant on peut se poser la question si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au count d'un algorithme plus complexe et qui par conséquent sera moins rapide. 
-				
+			
 			\subsection{Simplification de l'implémentation des méthodes de recherche}%TODO: Thomas
 		
 		\section{Tests}

@@ -37,3 +37,4 @@ Rapport/.texpadtmp
 Rapport/Rapport_COUCHOUD_GRODECOEUR.pdf
 Rapport/build/
 *.gz
+C/gmon.out
