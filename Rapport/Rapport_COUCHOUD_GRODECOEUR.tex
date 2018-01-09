@@ -40,10 +40,47 @@
 \keyword{Keywords}
 
 \begin{document}
-	\chapter{Contexte de la réalisation} %TODO
+	\chapter{Contexte de la réalisation}
+		Dans le cadre de notre formation à Polytech'Tours, nous avons eu l'occasion de travailler sur un projet concret grâce au projet encadré. Ce dernier vise à traduire un algorithme tabou du language Python vers du C.
+		
+		L'unité de Biopharmacie Clinique Oncologique du CHU Trousseau de Tours prépare des traitements de chimiothérapie (médicaments anticancéreux cytotoxiques) pour des patients. Ce processus est différent pour chaque préparation mais suit les même étapes.
+		
+		Les contraintes majeures sont les suivantes:
+		\begin{itemize}
+			\item Le traitement ne peut pas être préparé trop en avance.
+			\item Les dosages sont propres à chaque patient.
+			\item La date d'administration est importante, il faut donc réduire au maximum les retards.
+		\end{itemize}
+		
+		Les traitements étant coûteux, $\approx 400$€, il est nécessaire de pouvoir planifier ces derniers de manière efficace afin d'éviter au maximum le désaccord avec les contraintes citées précédemment.
+		
+		Le processus de production d'un traitement est le suivant:
+		\begin{itemize}
+			\item Prescription du traitement pour les patients: type de chimiothérapie, dosage, horaire, etc.
+			\item Production de la chimio:
+				\begin{itemize}
+					\item Passage sur le premier isolateur.
+					\item Passage sur le deuxième isolateur.
+					\item Passage sur le troisième isolateur.
+				\end{itemize}
+			\item Livraison
+		\end{itemize}
+		
+		Des éléments important sont à noter:
+		\begin{itemize}
+			\item Le passage sur les isolateurs doit être fait dans l'ordre.
+			\item Le temps de passage sur chaque machine est unique pour chaque patient.
+			\item Un seul véhicule est disponible pour la livraison.
+		\end{itemize}
+		
+		L'outil à développer vise à aider à la décision pour la planification des traitements ainsi que leur livraison.
 		
 	\chapter{Spécifications du logiciel} %TODO
-		%Etude python
+		\section{Cahier des charges}
+			
+			
+		\section{Étude du code Python}
+			
 		
 	\chapter{Modélisation du logiciel} %TODO : Clémento
 		\section{Structure générale — UML}
