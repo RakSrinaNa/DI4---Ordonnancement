@@ -6,7 +6,6 @@ struct _Solution;
 #include "SolutionInfo.h"
 #include "Sequencer.h"
 #include "Pack.h"
-#include "Tabu.h"
 
 //!Contains the solution being computed.
 typedef struct _Solution
@@ -107,8 +106,9 @@ void solution_printCSV(Solution * solution, FILE * file);
  *
  * @param file The file to write to, opened.
  * @param solution The solution to write.
+ * @param time The time taken by the tabu algorithm.
  */
-void solution_save(FILE * file, TabuSolution * solution);
+void solution_save(FILE * file, Solution * solution, long double time);
 
 /**
  * Compare two solutions based on their score.
