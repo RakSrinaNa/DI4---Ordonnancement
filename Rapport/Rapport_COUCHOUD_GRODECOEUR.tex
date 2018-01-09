@@ -76,13 +76,60 @@
 		L'outil à développer vise à aider à la décision pour la planification des traitements ainsi que leur livraison.
 		
 	\chapter{Spécifications du logiciel} %TODO
+		Afin de généraliser l'implémentation, nous considérons le nombre de machines (isolateurs) comme étant variable pour chaque instance. Par la suite, nous désignerons les traitements par "tâches".
+		
+		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable de produire suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
 		\section{Cahier des charges}
+			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($\frac{\text{nombre de machines} \times \text{nombre de tâches}}{4}$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche : swap, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
 			
+			Comme entrées, nous disposons de fichiers représentant des situations (nous les appellerons "instances" par la suite), contenant les informations suivantes :
+			\begin{itemize}
+				\item Nombre de machines
+				\item Nombre de tâches
+				\item Temps de production par machine et par tâche
+				\item Date limite de livraison
+				\item Distances entre les points de livraison pour chaque tâche
+			\end{itemize}
 			
+			Comme sortie, on nous demande un fichier texte contenant :
+			\begin{itemize}
+				\item Le temps de calcul de la solution
+				\item Le temps de retard total (appelé "score" par la suite)
+				\item L'ordre de production et de livraison
+			\end{itemize}
+			
+			Nous devons également être en mesure de choisir les critères de recherche de la meilleure solution (par exemple, désactiver l'EBSR ou le cache, ou modifier le seuil de diversification).
+			
+		\section{Codage}
+			Dans ce problème, nous pouvons différencier deux types de codage : direct et indirect.
+			\begin{itemize}
+				\item Le codage direct s'effectue en calculant l'ordre de production et l'ordre de livraison pendant la recherche de la meilleure solution ; le calcul du score se fait donc simplement.
+				\item Le codage indirect s'effectue en calculant uniquement le regroupement en batchs de livraison : les ordres de production et de livraison sont calculés en même temps que le score.
+			\end{itemize}
+			
+			Nous devons produire une implémentation du codage indirect.
+			
+			%TODO schema
+		
 		\section{Étude du code Python}
+			Python est un langage interprété. Bien qu'ayant de multiples avantages, les performances sont fortement amoindries, et cela a un fort impact sur ce genre d'applications où le volume de calcul est important. Malgré cela, sa syntaxe proche d'un algorithme en pseudo-code le rend plus facile à prendre en main.
+			
+			Cet apriori ne s'est cependant pas appliqué à notre cas, car différents élément rendent la lecture du code difficile :
+			\begin{itemize}
+				\item Les variables globales sont utilisées à outrance. De ce fait, in est plus ardu de suivre ces variables et de comprendre de quelle façon elles doivent évoluer.
+				\item La convention de nommage consistant à utiliser un minimum de caractères, bien qu'acceptable lorsqu'utilisée avec parcimonie, entraîne une perte de clarté et d'efficacité (on oublie facilement et rapidement le sens d'une variable si l'on ne s'en sert pas assez régulièrement).
+			\end{itemize}
+			
+			Par conséquent, nous avons décidé de découper notre code en structures logiques et de les rendre les plus indépendantes possible. Cela permet de faciliter la lecture par des personnes extérieures au projet, ou simplement de rendre le code plus évolutif et maintenable.
+			
+			De plus, le code Python comporte plusieurs blocs de code fortement similaires, par exemple les appels aux fonctions de recherche. Nous détaillerons ce cas plus en détail dans \autoref{searchfunc}.
+			
+			De manière similaire, certaines fonctions sont appelées bien plus souvent que nécessaire, ce qui impacte lourdement les performances. On remarque notamment la fonction evalue() ; nous parlerons d'une solution dans \autoref{cache}.
+			
+			Enfin, le code comporte quelques erreurs qui influencent la façon dont les étapes de recherche sont effectuées. On ne peut donc pas comparer pas à pas le code Python et le code C ; et nous devons également prêter attention à ces erreurs pour ne pas les implémenter par mégarde. Cela justifie d'autant plus l'utilisation de tests unitaire (décrits dans \autoref{unit}).
 			
 		
-	\chapter{Modélisation du logiciel} %TODO : Clémento
+	\chapter{Modélisation du logiciel} %TODO : Clément
 		\section{Structure générale — UML}
 			Le projet est séparé en deux grosses parties: production et tests.
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
@@ -107,7 +154,11 @@
 	\chapter{Implémentation \& tests} %TODO : Clément
 		\section{Implémentation} %TODO : Clément
 			\subsection{Transfert du Python au C} %TODO : Clément
-			\subsection{Implémentation d'un système de cache des solutions}
+		%TODO contraintes C à la main
+		%TODO cheinemennet
+		%TODO erreyrs reoncontrér
+			\label{methR}
+			\subsection{\label{cache}Implémentation d'un système de cache des solutions}
 				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \textbf{eval()} était très fréquent. De plus cette fonction effectue un travail assez lourd ce qui peut facilement prendre une place importante dans le temps de calcul.
 				
 				Nous avons donc imaginé un système de cache qui garde une solution calculée (\textbf{SolutionInfo}) en mémoire. De cette manière nous évitons des temps de calculs inutiles.
@@ -130,9 +181,11 @@
 				
 				On peut envisager de faire un algorithme qui ferai le mixe des deux: limiter les trajets tout en tenant compte des dates dues. Cependant on peut se poser la question si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au count d'un algorithme plus complexe et qui par conséquent sera moins rapide. 
 				
-			\subsection{Simplification de l'implémentation des méthodes de recherche}%TODO : Thomas
+			\subsection{\label{searchfunc}Simplification de l'implémentation des méthodes de recherche}%TODO : Thomas
+			
+			\subsection{Manuel d'utilisation}
 		
-		\section{Tests}
+		\section{\label{unit}Tests}
 			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentés ailleurs, nous nous sommes concentrés dessus.
 			
 			Ces derniers restent assez simplistes et ne couvrent sûrement pas tout les cas mais ils permettent d'identifier des erreurs contraignantes pour la suite de manière rapide.
