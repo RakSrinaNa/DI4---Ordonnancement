@@ -32,12 +32,11 @@
 \academicsupervisor{Jean-Charles}{Billaut}{jean-charles.billaut@univ-tours.fr}
 
 
-%TODO
-\resume{Résumé FR}
-\motcle{Mots clé}
+\resume{Résumé FR} %TODO : Clément
+\motcle{CHU, Trousseau, Chimiothérapie, Ordonnancement, Production, Livraison, Tabou, Swap, EBSR, EFSR}
 
-\abstract{Abstract EN}
-\keyword{Keywords}
+\abstract{Abstract EN} %TODO: Clément
+\keyword{Hospital, Trousseau, Chemotherapy, Schedule, Production, Delivery, Tabu, Swap, EBSR, EFSR}
 
 \begin{document}
 	\chapter{Contexte de la réalisation}
@@ -109,7 +108,7 @@
 			
 			Nous devons produire une implémentation du codage indirect.
 			
-			%TODO schema
+			%TODO Schema des codages
 		
 		\section{Étude du code Python}
 			Python est un langage interprété. Bien qu'ayant de multiples avantages, les performances sont fortement amoindries, et cela a un fort impact sur ce genre d'applications où le volume de calcul est important. Malgré cela, sa syntaxe proche d'un algorithme en pseudo-code le rend plus facile à prendre en main.
@@ -129,7 +128,7 @@
 			Enfin, le code comporte quelques erreurs qui influencent la façon dont les étapes de recherche sont effectuées. On ne peut donc pas comparer pas à pas le code Python et le code C ; et nous devons également prêter attention à ces erreurs pour ne pas les implémenter par mégarde. Cela justifie d'autant plus l'utilisation de tests unitaire (décrits dans \autoref{unit}).
 			
 		
-	\chapter{Modélisation du logiciel} %TODO : Clément
+	\chapter{Modélisation du logiciel} %TODO : Clément, petite intro?
 		\section{Structure générale — UML}
 			Le projet est séparé en deux grosses parties: production et tests.
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
@@ -138,7 +137,7 @@
 			
 			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
 
-		\section{Rôles des différents éléments} %TODO : Clément
+		\section{Rôles des différents éléments}
 			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou.
 			
 			\subsection{Instance}
@@ -147,16 +146,17 @@
 			\subsection{Solution}
 				Chaque solution admissible à notre problème est représentée par la structure Solution. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une Solution seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure SolutionInfo : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.
 				
-			\subsection{Tabou}
-				
-			\subsection{Autres}
+			\subsection{Tabou} %TODO : Clément
+
+			\subsection{Autres} %TODO : Clément
+
 		
-	\chapter{Implémentation \& tests} %TODO : Clément
-		\section{Implémentation} %TODO : Clément
+	\chapter{Implémentation \& tests} %TODO : Clément, petite intro?
+		\section{Implémentation} %TODO : Clément, petite intro?
 			\subsection{Transfert du Python au C} %TODO : Clément
-		%TODO contraintes C à la main
-		%TODO cheinemennet
-		%TODO erreyrs reoncontrér
+		%TODO : Contraintes du C (gestion mémoire, tableaux non dynamiques (du moins moins facilement), ...)
+		%TODO : Chemminement, ordre de réalisation du code
+		%TODO : Problèmes rencontrés et solutions implémentés/fixes
 			\label{methR}
 			\subsection{\label{cache}Implémentation d'un système de cache des solutions}
 				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \textbf{eval()} était très fréquent. De plus cette fonction effectue un travail assez lourd ce qui peut facilement prendre une place importante dans le temps de calcul.
@@ -263,7 +263,7 @@
 		
 	\chapter{Résultats obtenus}
 		\section{Comparaison avec le python} %TODO : Thomas
-		\section{Comparaison avec l'implémentation en codage direct} %TODO
+		\section{Comparaison avec l'implémentation en codage direct} %TODO -
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
