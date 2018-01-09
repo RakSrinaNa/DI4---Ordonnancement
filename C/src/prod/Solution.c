@@ -159,25 +159,25 @@ void solution_print(Solution * solution)
 		printf("Solution : NULL\n");
 }
 
-void solution_save(FILE * file, TabuSolution * solution)
+void solution_save(FILE * file, Solution * solution, long double time)
 {
 	debugPrint("Saving solution %p", solution);
-	if(solution->solution == NULL || solution->solution->info == NULL)
+	if(solution->info == NULL)
 		return;
 	if(file != NULL)
 	{
-		fprintf(file, "%d\t%Lf\t{ production:[ ", solution_eval(solution->solution)->score, solution->time);
-		for(unsigned int i = 0; i < solution->solution->instance->taskCount; i++)
-			fprintf(file, "%d%c", solution->solution->info->productionOrder[i], (i == solution->solution->instance->taskCount - 1) ? ' ' : ',');
+		fprintf(file, "%d\t%Lf\t{ production:[ ", solution_eval(solution)->score, time);
+		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount - 1) ? ' ' : ',');
 		fprintf(file, "], tasks:[ ");
-		for(unsigned int i = 0; i < solution->solution->packCount; i++)
+		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
 			fprintf(file, "[ ");
-			for(unsigned int j = 0; j < solution->solution->packList[i]->taskCount; j++)
+			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
-				fprintf(file, "%d%c", solution->solution->info->deliveries[i][j], (j == solution->solution->packList[i]->taskCount - 1) ? ' ' : ',');
+				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount - 1) ? ' ' : ',');
 			}
-			fprintf(file, "]%c", (i == solution->solution->packCount - 1) ? ' ' : ',');
+			fprintf(file, "]%c", (i == solution->packCount - 1) ? ' ' : ',');
 		}
 		fprintf(file, "] }\n");
 		fclose(file);
