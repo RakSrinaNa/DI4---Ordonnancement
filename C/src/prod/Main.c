@@ -46,10 +46,8 @@ int main(int argc, char * argv[])
 		TabuSolution * solution = tabu_search(instance);
 		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
-		char filenameSolution[512];
-		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
-        FILE * file = fopen(filenameSolution, "w");
-        solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
+        FILE * file = fopen("./output.txt", "w");
+        solution_save(file, solution);
         fclose(file);
 		tabuSolution_destroy(solution);
 		instance_destroy(instance);

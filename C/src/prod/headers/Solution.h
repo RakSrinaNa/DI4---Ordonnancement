@@ -6,6 +6,7 @@ struct _Solution;
 #include "SolutionInfo.h"
 #include "Sequencer.h"
 #include "Pack.h"
+#include "Tabu.h"
 
 //!Contains the solution being computed.
 typedef struct _Solution
@@ -104,12 +105,10 @@ void solution_printCSV(Solution * solution, FILE * file);
 /**
  * Saves the solution to a file.
  *
- * @param solution The solution. Not null.
- * @param filename The path of the file.
- * @param time The execution time.
- * @remark Does nothing if the solution hasn't been computed.
+ * @param file The file to write to, opened.
+ * @param solution The solution to write.
  */
-void solution_save(Solution * solution, const char * filename, double time);
+void solution_save(FILE * file, TabuSolution * solution);
 
 /**
  * Compare two solutions based on their score.
