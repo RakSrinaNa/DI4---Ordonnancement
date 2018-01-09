@@ -180,7 +180,6 @@ void solution_save(FILE * file, Solution * solution, long double time)
 			fprintf(file, "]%c", (i == solution->packCount - 1) ? ' ' : ',');
 		}
 		fprintf(file, "] }\n");
-		fclose(file);
 	}
 }
 
