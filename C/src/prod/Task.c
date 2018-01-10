@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "headers/Task.h"
+#include "headers/Utils.h"
 
 Task * task_create(Instance * instance)
 {
