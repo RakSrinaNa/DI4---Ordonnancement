@@ -33,8 +33,8 @@
 
 //!Use the score cache system.
 #define CACHED_SCORE 1
-//!Sort deliveries using the nearest neighbor, else sort by lowest due date first.
-#define DELIVERY_NEAREST_NEIGHBOR 0
+//!Sort deliveries using the given method. 0 -> Due date; 1 -> Nearest neighbor.
+#define DELIVERY_METHOD 0
 //!Random diversification.
 #define TABU_RANDOM 1
 
