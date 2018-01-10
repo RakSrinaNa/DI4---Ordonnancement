@@ -75,7 +75,7 @@
 		
 		L'outil à développer vise à aider à la décision pour la planification des traitements ainsi que leur livraison.
 		
-	\chapter{Spécifications du logiciel} %TODO
+	\chapter{Spécifications du logiciel}
 		Afin de généraliser l'implémentation, nous considérons le nombre de machines (isolateurs) comme étant variable pour chaque instance. Par la suite, nous désignerons les traitements par "tâches".
 		
 		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable d'effectuer suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
@@ -155,7 +155,7 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				Nous avons également eu à implémenter une liste Tabou, grâce à la structure \codec{TabuList}, contenant une liste de \codec{TabuItem}, ceux-ci contenant la méthode utilisée ainsi que le déplacement effectué.\\
 				Les déplacements pour chaque méthode de recherche sont définis dans des fonctions sous le préfixe \codec{sort}.
 
-			\subsection{Autres} %TODO : Clément
+			\subsection{Autres}
 				Pour lire les fichiers que notre programme reçoit en entrée, nous avons élaboré une structure \codec{Parser} et ses fonctions associées.\\
 				Certaines fonctions et définitions élémentaires sont contenues dans le fichier \codec{Utils.h} : une énumération \codec{Bool}, des \codec{typedefs} pour les types les plus utilisés, des fonctions de debug, quelques macros de gestion de la mémoire...\\
 				Bien évidemment, notre code comporte aussi un fichier \codec{Main.c} et sa fonction \codec{main}.
@@ -177,7 +177,9 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				
 				Après l'implémentation du cache, et avec un test sur une petite instance, on a pu remarquer que le temps passé sur le calcul du score est le même avec ou sans cache, à savoir environ $43\%$.
 				
-				Cela est surement du au fait que les packs traités pour cette instance sont de taille $\leq 3$ donc le calcul de l'ordonnancement reste assez simple. Faire les tests sur une instance plus grande serait sûrement plus intéressant. %TODO : Test bigger instance?
+				Cela est surement du au fait que les packs traités pour cette instance sont de taille $\leq 3$ donc le calcul de l'ordonnancement reste assez simple. Faire les tests sur une instance plus grande serait sûrement plus intéressant. 
+				
+				%TODO : Test bigger instance?
 			
 			\subsection{\label{diversificationAleatoire}Diversification aléatoire} %TODO : Clément
 			\subsection{\label{deliveries}Calcul différent de l'itinéraire}
