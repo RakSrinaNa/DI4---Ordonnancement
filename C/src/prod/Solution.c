@@ -125,13 +125,13 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 SolutionInfo * solution_eval(Solution * solution)
 {
 	debugPrint("Evaluation solution %p\n", solution);
-#ifdef CACHED_SCORE
+#if CACHED_SCORE
 	if(solution->info != NULL)
 		return solution->info;
-#endif
-	
+#else
 	if(solution->info != NULL)
 		solutionInfo_destroy(solution, solution->info);
+#endif
 	solution->info = solutionInfo_productionOrder(solution);
 	solutionInfo_deliveryOrder(solution, solution->info);
 	
