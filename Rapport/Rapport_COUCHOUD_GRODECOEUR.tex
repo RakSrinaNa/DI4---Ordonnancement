@@ -21,6 +21,7 @@
          \caption{#2}
    \end{figure}
 }
+\newcommand{\codec}[1]{\texttt{#1}}
 
 \schooldepartment{di}
 \typereport{ppgldi4}
@@ -40,7 +41,7 @@
 
 \begin{document}
 	\chapter{Contexte de la réalisation}
-		Dans le cadre de notre formation à Polytech'Tours, nous avons eu l'occasion de travailler sur un projet concret grâce au projet encadré. Ce dernier vise à traduire un algorithme tabou du language Python vers du C.
+		Dans le cadre de notre formation à Polytech'Tours, nous avons eu l'occasion de travailler sur une application concrète grâce au projet encadré. Ce dernier vise à traduire un algorithme Tabou du langage Python vers du C.
 		
 		L'unité de Biopharmacie Clinique Oncologique du CHU Trousseau de Tours prépare des traitements de chimiothérapie (médicaments anticancéreux cytotoxiques) pour des patients. Ce processus est différent pour chaque préparation mais suit les même étapes.
 		
@@ -77,7 +78,7 @@
 	\chapter{Spécifications du logiciel} %TODO
 		Afin de généraliser l'implémentation, nous considérons le nombre de machines (isolateurs) comme étant variable pour chaque instance. Par la suite, nous désignerons les traitements par "tâches".
 		
-		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable de produire suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
+		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable d'effectuer suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
 		\section{Cahier des charges}
 			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($\frac{\text{nombre de machines} \times \text{nombre de tâches}}{4}$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche : swap, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
 			
@@ -121,9 +122,9 @@
 			
 			Par conséquent, nous avons décidé de découper notre code en structures logiques et de les rendre les plus indépendantes possible. Cela permet de faciliter la lecture par des personnes extérieures au projet, ou simplement de rendre le code plus évolutif et maintenable.
 			
-			De plus, le code Python comporte plusieurs blocs de code fortement similaires, par exemple les appels aux fonctions de recherche. Nous détaillerons ce cas plus en détail dans \autoref{searchfunc}.
+			Ensuite, le code Python comporte plusieurs blocs de code fortement similaires, par exemple les appels aux fonctions de recherche. Nous détaillerons ce cas plus en détail dans \autoref{searchfunc}.
 			
-			De manière similaire, certaines fonctions sont appelées bien plus souvent que nécessaire, ce qui impacte lourdement les performances. On remarque notamment la fonction evalue() ; nous parlerons d'une solution dans \autoref{cache}.
+			De plus, certaines fonctions sont appelées bien plus souvent que nécessaire, ce qui impacte lourdement les performances. On remarque notamment la fonction evalue() ; nous parlerons d'une solution dans \autoref{cache}.
 			
 			Enfin, le code comporte quelques erreurs qui influencent la façon dont les étapes de recherche sont effectuées. On ne peut donc pas comparer pas à pas le code Python et le code C ; et nous devons également prêter attention à ces erreurs pour ne pas les implémenter par mégarde. Cela justifie d'autant plus l'utilisation de tests unitaire (décrits dans \autoref{unit}).
 			
@@ -138,17 +139,26 @@
 			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
 
 		\section{Rôles des différents éléments}
-			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou.
-			
+			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou. Chaque fonction possède également un préfixe décrivant
+son rôle au sein du projet ; les fonctions se référant à une structure précise utilisent le nom de la structure en tant que préfixe.			
 			\subsection{Instance}
-				Une instance d'un problème à résoudre est représentée par la structure Instance. Cette dernière contient le nombre de tâches et de machines, une liste de tâches ainsi qu'une matrice des distances entre chaque tâche (pour la livraison). Les tâches sont, elles, représentées par la structure Task contenant une liste des temps de production par machine, ainsi qu'une date de livraison. On se réfère ensuite aux différentes tâches en utilisant leur indice dans la liste.
+				Une instance d'un problème à résoudre est représentée par la structure \codec{Instance}. Cette dernière contient le nombre de tâches et de machines, une liste de tâches ainsi qu'une matrice des distances entre chaque tâche (pour la livraison).
+				Les tâches sont, elles, représentées par la structure \codec{Task} contenant une liste des temps de production par machine, ainsi qu'une date de livraison. On se réfère ensuite aux différentes tâches en utilisant leur indice dans la liste.
 				
 			\subsection{Solution}
-				Chaque solution admissible à notre problème est représentée par la structure Solution. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une Solution seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure SolutionInfo : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.
+				Chaque solution admissible à notre problème est représentée par la structure \codec{Solution}. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une \codec{Solution} seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure \codec{SolutionInfo} : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.\\
+				Pour définir les batchs de livraison, nous utilisons la structure \codec{Pack}. Celle-ci contient uniquement une liste de tâches (sous forme d'indices dans la liste des tâches de l'instance, comme on l'a vu plus haut).\\
+				Afin d'organiser les données de ces structures, nous avons rassemblé des fonctions d'ordonnancement pour la production et la livraison, préfixées par \codec{sequencer}.
 				
-			\subsection{Tabou} %TODO : Clément
+			\subsection{Tabou}
+				L'algorithme Tabou lui-même est représenté, avec ses fonctions associées, au préfixe \codec{tabu}. Les méthodes de recherche (voir \autoref{methR}) sont listées par l'énumération \codec{SearchMethod}, et chaque résultat de recherche par chaque méthode est stocké dans un \codec{SearchResult} contenant la solution trouvée, ainsi que la méthode elle-même. Une fois l'algorithme terminé, un \codec{TabuSolution} est renvoyé, contenant la meilleure solution trouvée, le temps et le nombre d'itérations.\\
+				Nous avons également eu à implémenter une liste Tabou, grâce à la structure \codec{TabuList}, contenant une liste de \codec{TabuItem}, ceux-ci contenant la méthode utilisée ainsi que le déplacement effectué.\\
+				Les déplacements pour chaque méthode de recherche sont définis dans des fonctions sous le préfixe \codec{sort}.
 
 			\subsection{Autres} %TODO : Clément
+				Pour lire les fichiers que notre programme reçoit en entrée, nous avons élaboré une structure \codec{Parser} et ses fonctions associées.\\
+				Certaines fonctions et définitions élémentaires sont contenues dans le fichier \codec{Utils.h} : une énumération \codec{Bool}, des \codec{typedefs} pour les types les plus utilisés, des fonctions de debug, quelques macros de gestion de la mémoire...\\
+				Bien évidemment, notre code comporte aussi un fichier \codec{Main.c} et sa fonction \codec{main}.
 
 		
 	\chapter{Implémentation \& tests} %TODO : Clément, petite intro?
