@@ -270,10 +270,15 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 	}
 	else if(taskCount > 3)
 	{
-		if(DELIVERY_NEAREST_NEIGHBOR)
-			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
-		else
+		switch(DELIVERY_METHOD)
+		{
+			case 0:
 			sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate);
+			break;
+			case 1:
+			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
+			break;
+		}
 	}
 	return sequence;
 }
