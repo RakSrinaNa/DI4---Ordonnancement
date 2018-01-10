@@ -469,8 +469,9 @@ def evalue(sol, diversification, Final):
 	# print('nbbatches=',nb_batches)
 	# for each batch
 
-	logSolutionEnd = open("./log/solution_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
-	logSolutionEnd.write("P\n")
+	if Final:
+		logSolutionEnd = open("./log/solution_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
+		logSolutionEnd.write("P\n")
 	for one_batch in sol:
 		nb_jobs_batch = len(one_batch)
 		the_jobs = one_batch
@@ -490,8 +491,9 @@ def evalue(sol, diversification, Final):
 			logSolutionEnd.write('route= ' + str(seq_routing) + "\n")
 		tardiness = compute_tardiness(seq_routing, departure_batch, True, diversification)
 		TotalTj = TotalTj + tardiness
-	logSolutionEnd.write(str(TotalTj) + "\n")
-	logSolutionEnd.close()
+	if Final:
+		logSolutionEnd.write(str(TotalTj) + "\n")
+		logSolutionEnd.close()
 	# print(tardiness,TotalTj)
 	return (TotalTj)
 
@@ -585,9 +587,9 @@ nb_ite = 0
 nb_ite_sans_amel = 0
 diversification = False
 
-scoreLog = open("./log/log_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
-scoreLogCompact = open("./log/scoreLogPythonCompact_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
-scoreLogFull = open("./log/scoreLogPythonFull_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
+scoreLog = open("./log/log_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
+scoreLogCompact = open("./log/scoreLogPythonCompact_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
+scoreLogFull = open("./log/scoreLogPythonFull_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
 scoreLog.write("P_BestEver,P_BestIter\n")
 scoreLogCompact.write("P_BestIter,P_BestEver\n")
 scoreLogFull.write("P_Iter,P_BestEver\n")
