@@ -54,7 +54,7 @@ int main(int argc, char * argv[])
 #endif
 		//instance_print(instance);		
 		TabuSolution * solution = tabu_search(instance);
-		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
+		printf("Tabu found solution in %f (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
 		char filenameSolution[512];
 		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
@@ -65,17 +65,6 @@ int main(int argc, char * argv[])
 		instance_destroy(instance);
 	}
 	return 0;
-}
-
-void debugPrint(char * format, ...)
-{
-	if(DEBUG)
-	{
-		va_list args;
-		va_start(args, format);
-		vfprintf(stdout, format, args);
-		va_end(args);
-	}
 }
 
 void warn(char * format, ...)
