@@ -179,9 +179,57 @@
 				
 				Il faut donc essayer les différents algorithmes afin de savoir le quel est le plus adapté au problème courant.
 				
-				On peut envisager de faire un algorithme qui ferai le mixe des deux: limiter les trajets tout en tenant compte des dates dues. Cependant on peut se poser la question si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au count d'un algorithme plus complexe et qui par conséquent sera moins rapide. 
+				On peut envisager de faire un algorithme qui ferai le mixe des deux: limiter les trajets tout en tenant compte des dates dues. Cependant on peut se poser la question si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au count d'un algorithme plus complexe et qui par conséquent sera moins rapide.
 				
-			\subsection{\label{searchfunc}Simplification de l'implémentation des méthodes de recherche}%TODO : Thomas
+				Cette implémentation serait rapide à intégrer au code existant. Pas besoin de fortes modifications, juste écrire le code de la fonction et l'intégrer dans une condition:
+				\begin{csource}
+else if(taskCount > 3)
+{
+	if(DELIVERY_NEAREST_NEIGHBOR)
+		sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
+	else
+		sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate);
+}
+				\end{csource} 
+				
+			\subsection{\label{searchfunc}Simplification de l'implémentation des méthodes de recherche}
+				L'algorithme tabou repose sur l'utilisation de différentes méthodes pour générer un nouveau voisinage. Ces dernières ont une utilisation identique, seul leur algorithme propre change. Nous avions tout d'abord implémenté ces dernières comme dans le python, c'est a dire à la suite dans la partie tabou en recopiant le code encadrant la récupération de la solution.
+				
+				Pour des raisons de lisibilité et d'évolution, nous avons choisi de changer cette manière de procéder et utilisons maintenant des pointeurs de fonction. C'est pointeurs on un typedef associé:
+				\begin{csource}
+typedef SearchResult * (*searchFunction)(Solution *, TabuList *, Bool);
+				\end{csource}
+			
+				De cette manière il est très simple d'ajouter une nouvelle méthode de recherche à l'algorithme tabou. Il suffit de déclarer cette fonction en respectant les arguments/retour requis, puis de l'ajouter à un tableau des fonctions disponibles:
+				\begin{csource}
+int searchFunctionAvailable = 3;
+searchFunction searchFunctions[searchFunctionAvailable];
+searchFunctions[0] =
+	#if TABU_SEARCH_SWAP
+		tabu_searchSwap
+	#else
+		NULL
+	#endif
+;
+
+searchFunctions[1] =
+	#if TABU_SEARCH_EBSR
+		tabu_searchEBSR
+	#else
+		NULL
+	#endif
+;
+
+searchFunctions[2] =
+	#if TABU_SEARCH_EFSR
+		tabu_searchEFSR
+	#else
+		NULL
+	#endif
+;
+				\end{csource}
+			
+				Le résultat de la fonction sera alors automatiquement géré par le reste de l'algorithme tabou.
 			
 			\subsection{Manuel d'utilisation}
 		
