@@ -91,6 +91,9 @@ void tabu_setConstants(Instance * instance)
 
 TabuSolution * tabu_search(Instance * instance)
 {
+	struct timeb timeStart;
+	ftime(&timeStart);
+	
 	Solution * currentSolution = tabu_solutionInit(instance);
 	printf("Initial solution:\n");
 	solution_print(currentSolution);
@@ -120,8 +123,6 @@ TabuSolution * tabu_search(Instance * instance)
 	
 	tabu_setConstants(instance);
 	
-	struct timeb timeStart;
-	ftime(&timeStart);
 	struct timeb timeNow;
 	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
