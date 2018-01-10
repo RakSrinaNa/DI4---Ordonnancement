@@ -201,7 +201,6 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				\img{PythonProfilerTop.png}{Profiler exécuté sur le python}{0.3}
 				
 				Après l'implémentation du cache, et avec un test sur une petite instance, nous avons pu observer un gain de performances de l'ordre de 60\%. Cela nous permet en outre de sécuriser le code en appelant \codec{solution\_eval()} plutôt que de récupérer à la main le score, qui pourrait ne pas avoir encore été calculé.
-				
 			
 			\subsection{Diversification aléatoire}
 				Le code Python possède un mécanisme de diversification : si l'on n'améliore pas la meilleure solution pendant trop d'itérations, alors on choisit de garder le pire déplacement plutôt que le meilleur. Cette décision semble judicieuse mais a un défaut majeur : il ne s'agit que d'un déplacement, et l'on retombe très vite sur la même solution. Nous avons donc implémenté une diversification aléatoire : on échange des tâches au hasard, un nombre variable de fois (entre 3 et $3 \times \text{nombre de batchs}$). Cela permet de s'éloigner bien plus du minimum local.
