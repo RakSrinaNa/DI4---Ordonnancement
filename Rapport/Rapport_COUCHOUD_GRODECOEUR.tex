@@ -219,6 +219,46 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 			\subsection{\label{searchfunc}Simplification de l'implémentation des méthodes de recherche}%TODO : Thomas
 			
 			\subsection{Manuel d'utilisation}
+			Nous allos dans cette partie décrire comment utiliser le logiciel. La première chose à constater est le fait qu'il est plus simple d'utiliser ce dernier depuis un IDE. En effet la configuration se fait principalement avec des commandes préprocesseur ce qui implique une recompilation. Un autre choix serait de créer plusieurs executables avec différentes combinaisons de paramètres.
+			
+			Commençons par ces configurations préprocesseur. Elles se trouvent dans src/prod/FLAGS.h. Une valeur à 1 sera considéré comme activé, une valeur à 0 ou pas de déclaration sera considéré comme désactivé.
+			\begin{itemize}
+				\item \textbf{DEBUG\_ACTIVATED}: Désactive totalement ou autorise les sorties de debug.
+				\item \textbf{DEV\_LOG\_SCORE}: Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On \textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.
+				\item \textbf{DEV\_LOG\_SCORE\_FULL}: Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquent. On y trouve \textbf{logFull} qui répertorie le score de la solution corrante pour chaque itération.
+				\item \textbf{TABU\_ITERATIONS}: Nombre maximum de l'algorithme tabou.
+				\item \textbf{TABU\_DIVERSIFICATION}: Active ou désactive la diversification.
+				\item \textbf{TABU\_LIST\_SIZE}: Taille de la liste tabou.
+				\item \textbf{TABU\_SEARCH\_EBSR}: Active ou désactive l'utilisation d'EBSR.
+				\item \textbf{TABU\_SEARCH\_EFSR}: Active ou désactive l'utilisation d'EFSR.
+				\item \textbf{TABU\_SEARCH\_SWAP}: Active ou désactive l'utilisation de SWAP.
+				\item \textbf{TABU\_2OPT}: Active ou non 2OPT (non implémenté).
+				\item \textbf{TABU\_FIRST\_IMPROVE}: Si activé, les méthodes de diversification doivent retourner la première amélioration trouvée, sinon elles renvoient la meilleure trouvée.
+				\item \textbf{TABU\_LOGIC}: Gestion logique de la liste tabou, si activé $\left( a,b\right)=\left( b,a\right)$.
+				\item \textbf{TABU\_DELTA\_BATCH}: Distance minumum utilisé pour EBSR et EFSR.
+				\item \textbf{TABU\_PROPAGATE}: Si activé, la solution courrante est changé après chaque méthode de recherche de voisinage, sinon elle est changée par la meilleure solution de tout les retours de fonctions.
+				\item \textbf{CACHED\_SCORE}: Active ou non la solution de cache décrite dans \autoref{cache}.
+				\item \textbf{DELIVERY\_METHOD}: Choisi la méthode d'ordonnancement pour la livraison. Deux sont disponibles comme décrit dans \autoref{deliveries}:
+				\begin{itemize}
+					\item \textbf{0} Tri par date dues.
+					\item \textbf{1} Tri par plus proche voisin.
+				\end{itemize}
+				\item \textbf{TABU\_RANDOM}: Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.
+				\item \textbf{SEED}: Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas définit, le temps actuel sera utilisé.
+			\end{itemize}
+			
+			Parlons maintenant de la configuration qui peut être faite lors du démarrage du programme via des arguments du programme. Ces derniers dépendent de la cible compilée.
+			
+			En cible production les options sont:
+			\begin{itemize}
+				\item \textbf{- -debug}: Pour activer les sorties de debug (si le flac est activé).
+				\item \textbf{<chemin de fichier>}: Définit l'instance à lancer. Si ce paramètre est omis, l'intance lancée sera \textbf{./Input.txt}.
+			\end{itemize}
+			
+			En cible test les options sont les mêmes que la production avec en plus:
+			\begin{itemize}
+				\item \textbf{- -test}: pour lancer les tests unitaires.
+			\end{itemize}
 		
 		\section{\label{unit}Tests}
 			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentés ailleurs, nous nous sommes concentrés dessus.
