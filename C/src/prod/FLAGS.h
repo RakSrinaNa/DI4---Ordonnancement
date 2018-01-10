@@ -2,6 +2,7 @@
 #define TABOU_FLAGS_H
 
 //!Logs the score of each iteration.
+#define DEBUG_ACTIVATED 0
 #define DEV_LOG_SCORE 1
 #define DEV_LOG_SCORE_FULL 0
 

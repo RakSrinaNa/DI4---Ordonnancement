@@ -108,7 +108,7 @@ void solution_printCSV(Solution * solution, FILE * file);
  * @param solution The solution to write.
  * @param time The time taken by the tabu algorithm.
  */
-void solution_save(FILE * file, Solution * solution, long double time);
+void solution_save(FILE * file, Solution * solution, double time);
 
 /**
  * Compare two solutions based on their score.

@@ -159,14 +159,14 @@ void solution_print(Solution * solution)
 		printf("Solution : NULL\n");
 }
 
-void solution_save(FILE * file, Solution * solution, long double time)
+void solution_save(FILE * file, Solution * solution, double time)
 {
 	debugPrint("Saving solution %p", solution);
 	if(solution->info == NULL)
 		return;
 	if(file != NULL)
 	{
-		fprintf(file, "%d\t%Lf\t{ production:[ ", solution_eval(solution)->score, time);
+		fprintf(file, "%d\t%f\t{ production:[ ", solution_eval(solution)->score, time);
 		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
 			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount - 1) ? ' ' : ',');
 		fprintf(file, "], tasks:[ ");
@@ -192,8 +192,8 @@ long solutionCompare(Solution * solution1, Solution * solution2, Bool diversific
 	if(solution2 == NULL)
 		return 1;
 	if(diversification)
-		return solution_eval(solution1)->score - solution_eval(solution2)->score;
-	return ((long)solution_eval(solution2)->score) - solution_eval(solution1)->score;
+		return (long) (((long)solution_eval(solution1)->score) - solution_eval(solution2)->score);
+	return (long) (((long)solution_eval(solution2)->score) - solution_eval(solution1)->score);
 }
 
 void solution_printCSV(Solution * solution, FILE * file)

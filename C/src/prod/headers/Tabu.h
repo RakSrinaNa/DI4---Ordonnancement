@@ -16,7 +16,7 @@ typedef struct _TabuSolution
 	//!The number of iterations done.
 	unsigned int iterations;
 	//!The time taken.
-	long double time;
+	double time;
 } TabuSolution;
 
 typedef SearchResult * (*searchFunction)(Solution *, TabuList *, Bool);
@@ -30,7 +30,7 @@ typedef SearchResult * (*searchFunction)(Solution *, TabuList *, Bool);
  * @return A new tabu solution.
  * @remark Needs to be freed with tabuSolution_destroy.
  */
-TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time);
+TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, double time);
 
 /**
  * Frees a tabu solution.
@@ -55,7 +55,7 @@ Solution * tabu_solutionInit(Instance * instance);
  * @param end The ending time.
  * @return The elapsed time in seconds.
  */
-long double tabu_getTimeDiff(struct timeb start, struct timeb end);
+double tabu_getTimeDiff(struct timeb start, struct timeb end);
 
 /**
  * Starts the tabu search on the given instance.

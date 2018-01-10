@@ -3,6 +3,7 @@
 
 #ifdef __WIN32__
 #include <io.h>
+
 #else
 #include <sys/stat.h>
 #endif
@@ -44,26 +45,15 @@ int main(int argc, char * argv[])
 #endif
 		//instance_print(instance);
 		TabuSolution * solution = tabu_search(instance);
-		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
+		printf("Tabu found solution in %f (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
-        FILE * file = fopen("./output.txt", "w");
-        solution_save(file, solution->solution, solution->time);
-        fclose(file);
+		FILE * file = fopen("./output.txt", "w");
+		solution_save(file, solution->solution, solution->time);
+		fclose(file);
 		tabuSolution_destroy(solution);
 		instance_destroy(instance);
 	}
 	return 0;
-}
-
-void debugPrint(char * format, ...)
-{
-	if(DEBUG)
-	{
-		va_list args;
-		va_start(args, format);
-		vfprintf(stdout, format, args);
-		va_end(args);
-	}
 }
 
 void warn(char * format, ...)

@@ -7,7 +7,7 @@
 unsigned int TABU_DELTA;
 unsigned int TABU_ITERATIONS_NOIMPROVE;
 
-TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time)
+TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, double time)
 {
 	TabuSolution * tabuSolution = NULL;
 	MMALLOC(tabuSolution, TabuSolution, 1, "tabu_search");
@@ -49,7 +49,7 @@ Solution * tabu_solutionInit(Instance * instance)
 	return bestSolution;
 }
 
-long double tabu_getTimeDiff(struct timeb start, struct timeb end)
+double tabu_getTimeDiff(struct timeb start, struct timeb end)
 {
 	return end.time - start.time + (end.millitm - start.millitm) / 1000.0f;
 }
@@ -77,12 +77,15 @@ void tabu_setConstants(Instance * instance)
 		case 100:
 			TABU_DELTA = 8;
 			TABU_ITERATIONS_NOIMPROVE = 5;
+			break;
 		case 50:
 			TABU_DELTA = 10;
 			TABU_ITERATIONS_NOIMPROVE = 10;
+			break;
 		default:
 			TABU_DELTA = instance->taskCount / 4;
 			TABU_ITERATIONS_NOIMPROVE = 15;
+			break;
 	}
 }
 
@@ -94,18 +97,18 @@ TabuSolution * tabu_search(Instance * instance)
 #if DEV_LOG_SCORE
 #if DEV_LOG_SCORE_FULL
 	FILE * logScoreFile = fopen("./log/logScores.csv", "w");
-	fprintf(logScoreFile, "%s;%s\n", "C_BestEver", "C_BestIter");
+	fprintf(logScoreFile, "%s,%s\n", "C_BestEver", "C_BestIter");
 	
 	FILE * logScoreFullFile = fopen("./log/logScoresFull.csv", "w");
-	fprintf(logScoreFullFile, "%s;%s;%s\n", "C_Iter", "C_Current", "C_Score");
-	fprintf(logScoreFullFile, "0;");
+	fprintf(logScoreFullFile, "%s,%s,%s\n", "C_Iter", "C_Current", "C_Score");
+	fprintf(logScoreFullFile, "0,");
 	solution_printCSV(currentSolution, logScoreFullFile);
-	fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
+	fprintf(logScoreFullFile, ",%u\n", solution_eval(currentSolution)->score);
 #endif
 	char filenameCompact[512];
 	sprintf(filenameCompact, "./log/logScoresCCompact_%s_%d.csv", instance->origin, tabu_flagsFingerprint());
 	FILE * logScoreCompactFile = fopen(filenameCompact, "w");
-	fprintf(logScoreCompactFile, "%s;%s\n", "C_BestIter", "C_BestEver");
+	fprintf(logScoreCompactFile, "%s,%s\n", "C_BestIter", "C_BestEver");
 #endif
 	Solution * bestSolution = NULL;
 	Solution * bestBestSolution = solution_copy(currentSolution);
@@ -122,7 +125,7 @@ TabuSolution * tabu_search(Instance * instance)
 	struct timeb timeNow;
 	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
-	long double currentTime = 0;
+	double currentTime = 0;
 	
 	int searchFunctionAvailable = 3;
 	searchFunction searchFunctions[searchFunctionAvailable];
@@ -150,6 +153,7 @@ TabuSolution * tabu_search(Instance * instance)
 #endif
 	;
 	
+	printf("Time limit for this instance is: %f\n", timeLimit);
 	while((currentTime = tabu_getTimeDiff(timeStart, timeNow)) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
 		debugPrint("----- Tabu iteration %d on solution %p\n", nbIterations, currentSolution);
@@ -209,7 +213,8 @@ TabuSolution * tabu_search(Instance * instance)
 				bestSolution = solution_copy(bestMethodResult->solution);
 				nbNoBetterIterations = 0;
 #if DEV_LOG_SCORE
-				fprintf(logScoreCompactFile, "%u;%u\n", nbIterations + 1, solution_eval(bestSolution)->score);
+				if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
+					fprintf(logScoreCompactFile, "%u,%u\n", nbIterations + 1, solution_eval(bestSolution)->score);
 #endif
 			}
 			else
@@ -219,8 +224,8 @@ TabuSolution * tabu_search(Instance * instance)
 				nbNoBetterIterations++;
 			}
 			currentSolution = solution_copy(bestMethodResult->solution);
-			tabuList_print(tabuList);
-			printf("\n");
+			//tabuList_print(tabuList);
+			//printf("\n");
 		}
 		else
 		{
@@ -255,10 +260,10 @@ TabuSolution * tabu_search(Instance * instance)
 
 #if DEV_LOG_SCORE
 #if DEV_LOG_SCORE_FULL
-		fprintf(logScoreFile, "%u;%u\n", (bestSolution == NULL) ? UINT_MAX : solution_eval(bestSolution)->score, (bestMethodResult == NULL || bestMethodResult->solution == NULL) ? UINT_MAX : solution_eval(bestMethodResult->solution)->score);
-		fprintf(logScoreFullFile, "%u;", nbIterations + 1);
+		fprintf(logScoreFile, "%u,%u\n", (bestSolution == NULL) ? UINT_MAX : solution_eval(bestSolution)->score, (bestMethodResult == NULL || bestMethodResult->solution == NULL) ? UINT_MAX : solution_eval(bestMethodResult->solution)->score);
+		fprintf(logScoreFullFile, "%u,", nbIterations + 1);
 		solution_printCSV(currentSolution, logScoreFullFile);
-		fprintf(logScoreFullFile, ";%u\n", solution_eval(currentSolution)->score);
+		fprintf(logScoreFullFile, ",%u\n", solution_eval(currentSolution)->score);
 #endif
 #endif
 		searchResult_destroy(bestMethodResult);
@@ -274,6 +279,7 @@ TabuSolution * tabu_search(Instance * instance)
 		solution_destroy(bestSolution);
 
 #if DEV_LOG_SCORE
+	fprintf(logScoreCompactFile, "%u,%u\n", nbIterations + 1, solution_eval(bestBestSolution)->score);
 #if DEV_LOG_SCORE_FULL
 	fclose(logScoreFile);
 	

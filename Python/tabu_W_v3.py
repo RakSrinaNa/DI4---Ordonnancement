@@ -585,14 +585,14 @@ nb_ite = 0
 nb_ite_sans_amel = 0
 diversification = False
 
-scoreLog = open("./log/scoreLogPython.csv", "w")
-scoreLogCompact = open("./log/scoreLogPythonCompact_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
-scoreLogFull = open("./log/scoreLogPythonFull.csv", "w")
-scoreLog.write("P_BestEver;P_BestIter\n")
-scoreLogCompact.write("P_BestIter;P_BestEver\n")
-scoreLogFull.write("P_Iter;P_BestEver\n")
+scoreLog = open("./log/log_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
+scoreLogCompact = open("./log/scoreLogPythonCompact_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
+scoreLogFull = open("./log/scoreLogPythonFull_" + instanceName + "_" + str(flagsFingerprint()) + ".txt", "w")
+scoreLog.write("P_BestEver,P_BestIter\n")
+scoreLogCompact.write("P_BestIter,P_BestEver\n")
+scoreLogFull.write("P_Iter,P_BestEver\n")
 scoreLogFull.write(str(0))
-scoreLogFull.write(";")
+scoreLogFull.write(",")
 scoreLogFull.write(str(sol_cour))
 scoreLogFull.write("\n")
 # BOUCLE GENERALE
@@ -735,7 +735,7 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 		amelioration = True
 		nb_ite_sans_amel = 0
 		scoreLogCompact.write(str(nb_ite + 1))
-		scoreLogCompact.write(";")
+		scoreLogCompact.write(",")
 		scoreLogCompact.write(str(Best_val))
 		scoreLogCompact.write("\n")
 
@@ -753,14 +753,14 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 			ListeTabou = []
 			print('*** on diversifie ***')
 
-	scoreLog.write(str(Best_val))
-	scoreLog.write(";")
-	scoreLog.write(str(val_best_vois))
-	scoreLog.write("\n")
-	scoreLogFull.write(str(nb_ite + 1))
-	scoreLogFull.write(";")
-	scoreLogFull.write(str(sol_cour))
-	scoreLogFull.write("\n")
+	#scoreLog.write(str(Best_val))
+	#scoreLog.write(";")
+	#scoreLog.write(str(val_best_vois))
+	#scoreLog.write("\n")
+	#scoreLogFull.write(str(nb_ite + 1))
+	#scoreLogFull.write(";")
+	#scoreLogFull.write(str(sol_cour))
+	#scoreLogFull.write("\n")
 	time_end = time.clock()
 	cpu = time_end - time_start
 	# evalue(sol_cour, False, True)
@@ -768,8 +768,13 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 	nb_ite = nb_ite + 1
 	print("-------------------------------------------")
 
+scoreLogCompact.write(str(nb_ite + 1))
+scoreLogCompact.write(",")
+scoreLogCompact.write(str(Best_val))
+scoreLogCompact.write("\n")
 scoreLog.close()
 scoreLogFull.close()
+scoreLogCompact.close()
 print('temps de calcul =', cpu, '(', nb_ite, ') ite')
 
 print('**************************')
