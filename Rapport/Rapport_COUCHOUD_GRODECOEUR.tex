@@ -7,8 +7,6 @@
 \usepackage{pict2e}
 \usepackage[justification=centering]{caption}
 
-\usepackage{dirtree}
-
 \newcommand{\img}[3]{%
 	\begin{figure}[H]
 		\centering
@@ -80,7 +78,7 @@
 		
 		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable d'effectuer suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
 		\section{Cahier des charges}
-			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($(\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche : swap, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
+			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($(\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche telles que swap, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
 			
 			Comme entrées, nous disposons de fichiers représentant des situations (nous les appellerons "instances" par la suite), contenant les informations suivantes :
 			\begin{itemize}
@@ -120,7 +118,7 @@
 				\item La convention de nommage des variables consistant à utiliser un minimum de caractères, bien qu'acceptable lorsqu'utilisée avec parcimonie, entraîne une perte de clarté et d'efficacité (on oublie facilement et rapidement le sens d'une variable si l'on ne s'en sert pas assez régulièrement).
 			\end{itemize}
 			
-			Par conséquent, nous avons décidé de découper notre code en structures logiques et de les rendre les plus indépendantes possible. Cela permet de faciliter la lecture par des personnes extérieures au projet, ou simplement de rendre le code plus évolutif et maintenable.
+			Par conséquent, nous avons décidé de découper notre code en structures logiques et de les rendre les plus indépendantes possible. Cela permet de faciliter la lecture par des personnes extérieures au projet, et de rendre le code plus évolutif et maintenable.
 			
 			Ensuite, le code Python comporte plusieurs blocs de code fortement similaires, par exemple les appels aux fonctions de recherche. Nous détaillerons ce cas plus en détail dans \autoref{searchfunc}.
 			
@@ -131,25 +129,12 @@
 		
 	\chapter{Modélisation du logiciel}
 		\section{Structure générale — UML}
-			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
-		
-			Le projet est séparé en deux principales parties: production et tests. Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
-			
+			Le projet est séparé en deux principales parties: production et tests.
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
 			
-			\begin{minipage}{0.99\textwidth}
-				\dirtree{%
-					.1 C.
-					.2 doc.
-					.2 log.
-					.2 src.
-					.3 prod.
-					.4 headers.
-					.3 unit.
-					.4 headers.
-					.2 unitResources	.			
-				}
-			\end{minipage}
+			Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
+			
+			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
 
 		\section{Rôles des différents éléments}
 			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou. Chaque fonction possède également un préfixe décrivant
@@ -176,7 +161,7 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 		
 	\chapter{Implémentation \& tests}
 		\section{Implémentation}
-			La traduction d'un programme dans un langage différent implique forcément d'adapter un minimum le code et de faire certains choix.
+			La traduction d'un programme dans un langage différent implique forcément d'adapter un minimum le code et de faire certains choix. C'est aussi l'occasion de le remanier afin d'améliorer les décisions précédemment prises. Nous allons donc détailler ici le travail effectué.
 			
 			\subsection{Algorithme Tabou}
 				L'algorithme de recherche Tabou est une méthode d'optimisation utilisant une liste FIFO (dite liste tabou) des dernières solutions explorées, afin de ne pas stagner indéfiniment autour de la même solution. La taille de cette liste est fixe tout au long de l'algorithme mais peut être ajustée pour convenir le mieux possible au problème posé. Plus la liste est longue et plus l'on se souvient des précédentes solutions pour éviter de les explorer à nouveau ; cependant, la liste contenant des solutions complètes, il faut prendre en compte l'occupation mémoire, ce qui, de fait, limite sa taille.
@@ -196,15 +181,20 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				\begin{itemize}
 					\item La gestion de la mémoire n'est pas automatique en C, il faut donc allouer et libérer la mémoire à la main. Heureusement, des outils comme Valgrind permettent de se rendre compte des erreurs et des fuites.
 					\item Les listes de Python n'existent pas en C. Nous avons donc programmé nous-mêmes des fonctions permettant d'utiliser des tableaux de façon dynamique.
-					\item Le C permet de déclarer certaines fonctions comme étant \codec{inline}, ce qui --- utilisé correctement --- rend le code bien plus performant
+					\item Le C permet de déclarer certaines fonctions comme étant \codec{inline}, ce qui --- utilisé correctement --- rend le code bien plus performant. En addition à cela, nous pouvons utiliser des directives de préprocesseur pour ne compiler que le code nécessaire et ainsi gagner en performances.
 				\end{itemize}
 				
 				Pour organiser au mieux notre projet, nous avons implémenté les différentes parties en plusieurs étapes. Tout d'abord, nous avons implémenté les instances, puis les solutions. Ensuite, nous avons commencé à réaliser l'algorithme tabou avec la méthode swap, mais nous nous sommes rendus compte que l'ajout du cache et de \codec{SolutionInfo} était nécessaire. Après cela, nous avons pu ajouter les méthodes EBSR et EFSR, pour enfin ajouter une option de diversification.
 			
-				Nous avons pourtant rencontré certains problèmes lors de la réalisation du projet. Heureusement, nous avons pu les résoudre et trouver des solutions satisfaisantes.\\
-				Par exemple, il existait une erreur subtile dans le code Python : lorsque le nombre de tâches par batch était supérieur à 3, l'ordonnancement ne s'effectuait pas. Notre implémentation fonctionnait, mais nous ne trouvions pas de résultats identiques à ceux du Python pour cette raison.\\
-				Nous avions aussi implémenté différemment une partie du code de l'algorithme Tabou. Bien que très similaire, le comportement était différent lorsque deux solutions avec le même score étaient comparées. Grâce à un coup de chance, le Python obtenait à la fin un meilleur résultat.\\
-				Ces deux problèmes ont été corrigés sans souci, mais leur détection a été laborieuse.
+				Nous avons pourtant rencontré certains problèmes lors de la réalisation du projet. Heureusement, nous avons pu les résoudre et trouver des solutions satisfaisantes.
+				
+				Par exemple, lors de l'implémentation de la diversification, nous nous sommes rendus compte que l'on tournait en boucle après un certain nombre d'itérations. Nous avons résolu ce problème en ajoutant une dimension aléatoire à la diversification (voir \autoref{diversificationAleatoire}).
+				
+				Ensuite, il existait une erreur subtile dans le code Python : lorsque le nombre de tâches par batch était supérieur à 3, l'ordonnancement ne s'effectuait pas. Notre implémentation fonctionnait, mais nous ne trouvions pas de résultats identiques à ceux du Python pour cette raison. Ce problème affectait aussi la solution initiale, et donc tous les déplacements effectués après.
+				
+				Nous avions aussi implémenté différemment une partie du code de l'algorithme Tabou. Bien que très similaire, le comportement était différent lorsque deux solutions avec le même score étaient comparées. Grâce à un coup de chance, le Python obtenait à la fin un meilleur résultat.
+				
+				Ces deux derniers problèmes ont été corrigés sans souci, mais leur détection a été laborieuse.
 				
 			\subsection{\label{cache}Implémentation d'un système de cache des solutions}
 				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \codec{evalue()} étaient très fréquents. De plus, cette fonction effectue un travail assez lourd, ce qui peut facilement prendre une place importante dans le temps de calcul.
@@ -216,7 +206,7 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				Après l'implémentation du cache, et avec un test sur une petite instance, nous avons pu observer un gain de performances de l'ordre de 60\%. Cela nous permet en outre de sécuriser le code en appelant \codec{solution\_eval()} plutôt que de récupérer à la main le score, qui pourrait ne pas avoir encore été calculé.
 			
 			\subsection{\label{diversificationAleatoire}Diversification aléatoire}
-				Le code Python possède un mécanisme de diversification : si l'on n'améliore pas la meilleure solution pendant trop d'itérations, alors on choisit de garder le pire déplacement plutôt que le meilleur. Cette décision semble judicieuse mais a un défaut majeur : il ne s'agit que d'un déplacement, et l'on retombe très vite sur la même solution. Nous avons donc implémenté une diversification aléatoire : on échange des tâches au hasard, un nombre variable de fois (entre 3 et $3 \times \text{nombre de batchs}$). Cela permet de s'éloigner bien plus du minimum local.
+				Le code Python possède un mécanisme de diversification : si l'on n'améliore pas la meilleure solution pendant un certain nombre d'itérations, alors on choisit de garder le pire déplacement plutôt que le meilleur. Cette décision semble judicieuse mais a un défaut majeur : il ne s'agit que d'un déplacement, et l'on retombe très vite sur la même solution. Nous avons donc implémenté une diversification aléatoire : on échange des tâches au hasard, un nombre variable de fois (entre 3 et $3 \times \text{nombre de batchs}$). Cela permet de s'éloigner bien plus du minimum local.
 				
 			\subsection{\label{deliveries}Calcul différent de l'itinéraire}
 				Le calcul de l'ordre de production joue un rôle important, mais l'ordre de livraison aussi. Afin de pouvoir tester différents résultats nous avons décider 2 façons de calculer l'ordre de livraison.
@@ -365,8 +355,8 @@ searchFunctions[2] =
 					\item Vérification du constructeur/destructeur.
 					\item Copie.
 					\item Add/Remove/Has sur les tâches.
-					\item Switch des tâche.
-					\item Move des tâche.
+					\item Switch des tâches.
+					\item Move des tâches.
 				\end{itemize}
 				
 			\subsection{Sequencer}
