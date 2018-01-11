@@ -39,10 +39,10 @@
 \academicsupervisor{Jean-Charles}{Billaut}{jean-charles.billaut@univ-tours.fr}
 
 
-\resume{Résumé FR} %TODO : Clément
+\resume{Ce projet vise à traduire un algorithme Tabou pour un problème d'ordonnancement du langage Python vers du C afin d'en améliorer les performances. Le CHU Trousseau de Tours prépare des traitements de chimiothérapie uniques à chaque patient, et doit organiser au mieux la production et la livraison pour que les traitements arrivent en temps voulu.}
 \motcle{CHU, Chimiothérapie, Ordonnancement, Production, Livraison, Tabou, SWAP, EBSR, EFSR}
 
-\abstract{Abstract EN} %TODO : Clément
+\abstract{This project is about translating a Tabu algorithm for a scheduling problem from the Python language to the C language in order to improve performance. The Trousseau Hospital of Tours produces chemotherapy treatments, unique for each patient, and has to be able to organize at best production and delivery, for the treatments to be ready on time.}
 \keyword{Hospital, Chemotherapy, Scheduling, Production, Delivery, Tabu, SWAP, EBSR, EFSR}
 
 \begin{document}
@@ -440,7 +440,7 @@ searchFunctions[2] =
 			
 			\imgr{TravisCompare.png}{Comparaison par Travis}{0.5}{travis1}
 			
-			Travis (\autoref{travis1}) exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
+			Travis (\autoref{travis1}) exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le programme Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
 			
 			Intéressons-nous donc aux tests sur tous les types d'instance. Afin d'avoir des résultats plus précis, nous avons mis en place un log qui répertorie chaque amélioration de la solution.
 			
@@ -448,11 +448,11 @@ searchFunctions[2] =
 			
 			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.5}{instance1}
 			
-			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. En revanche, le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 74\ieme . De plus, le code Python termine son exécution en étant limité par le temps (25 secondes), alors que le code C est limité par le nombre d'itérations (2000). Enfin, notre programme trouve une solution avec un score de 4449, contre 4492 pour le Python.
+			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le programme Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. En revanche, le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 74\ieme . De plus, le code Python termine son exécution en étant limité par le temps (25 secondes), alors que le code C est limité par le nombre d'itérations (2000). Enfin, notre programme trouve une solution avec un score de 4449, contre 4492 pour le programme Python.
 			
 			\imgr{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.5}{instance2}
 			
-			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contrant par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 20 itérations avec un score de 24092 ; le C, de son côté, obtient un score de 21563 après 780 itérations.
+			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contraint par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 20 itérations avec un score de 24092 ; le C, de son côté, obtient un score de 21563 après 780 itérations.
 			
 			\imgr{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.5}{instance3}
 			
@@ -488,13 +488,16 @@ searchFunctions[2] =
 					10 & 150 & 1 & 127533 & 130038 & -2505 & -1.93\\\hline
 					10 & 200 & 1 & 196561 & 204464 & -7903 & -3.87\\\hline
 				\end{tabularx}
-				\captionof{table}{Comparaison entre le codage directe et indirecte}
+				\captionof{table}{Comparaison entre le codage direct et indirect}
 			\end{centering}
+			
+			On constate que notre implémentation est plus performante pour de petites instances, mais cet avantage s'effondre pour des instances plus importantes.
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
 		
-		\section{Parallélisme} %TODO : Clément
+		\section{Parallélisation}
+			Au vu de la complexité des calculs mis en œuvre, il pourrait être très intéressant d'effectuer certains de ces calculs en parallèle : comme l'on énumère tous les déplacements possibles, on effectue un grand nombre de calculs identiques et indépendants. Par exemple, nous pourrions imaginer tester plusieurs déplacements à la fois et ne retenir que le meilleur pendant la recherche du meilleur voisin. Nous pourrions également tester plusieurs méthodes de recherche en même temps. Sur des instances de grande taille, il serait même imaginable de déléguer ces calculs à un processeur dédié (par exemple sur une carte graphique).
 		
 		\section{Fichier de configuration}
 			La mise en place d'un fichier de configuration serait une grande avancée. En effet, cela permettrait d'éviter la recompilation du projet après la modification d'un paramètre.
