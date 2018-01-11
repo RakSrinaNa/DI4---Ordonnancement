@@ -2,10 +2,13 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{pict2e}
 \usepackage[justification=centering]{caption}
+
+\usepackage{dirtree}
 
 \newcommand{\img}[3]{%
 	\begin{figure}[H]
@@ -129,12 +132,25 @@
 		
 	\chapter{Modélisation du logiciel}
 		\section{Structure générale — UML}
-			Le projet est séparé en deux principales parties: production et tests.
+			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
+		
+			Le projet est séparé en deux principales parties: production et tests. Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
+			
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
 			
-			Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
-			
-			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
+			\begin{minipage}{0.99\textwidth}
+				\dirtree{%
+					.1 C.
+					.2 doc.
+					.2 log.
+					.2 src.
+					.3 prod.
+					.4 headers.
+					.3 unit.
+					.4 headers.
+					.2 unitResources	.			
+				}
+			\end{minipage}
 
 		\section{Rôles des différents éléments}
 			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou. Chaque fonction possède également un préfixe décrivant
@@ -144,18 +160,24 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				Les tâches sont, elles, représentées par la structure \codec{Task} contenant une liste des temps de production par machine, ainsi qu'une date de livraison. On se réfère ensuite aux différentes tâches en utilisant leur indice dans la liste.
 				
 			\subsection{Solution}
-				Chaque solution admissible à notre problème est représentée par la structure \codec{Solution}. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une \codec{Solution} seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure \codec{SolutionInfo} : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.\\
-				Pour définir les batchs de livraison, nous utilisons la structure \codec{Pack}. Celle-ci contient uniquement une liste de tâches (sous forme d'indices dans la liste des tâches de l'instance, comme on l'a vu plus haut).\\
+				Chaque solution admissible à notre problème est représentée par la structure \codec{Solution}. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une \codec{Solution} seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure \codec{SolutionInfo} : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.
+				
+				Pour définir les batchs de livraison, nous utilisons la structure \codec{Pack}. Celle-ci contient uniquement une liste de tâches (sous forme d'indices dans la liste des tâches de l'instance, comme on l'a vu plus haut).
+				
 				Afin d'organiser les données de ces structures, nous avons rassemblé des fonctions d'ordonnancement pour la production et la livraison, préfixées par \codec{sequencer}.
 				
 			\subsection{Tabou}
-				L'algorithme Tabou lui-même est représenté, avec ses fonctions associées, au préfixe \codec{tabu}. Les méthodes de recherche (voir \autoref{methR}) sont listées par l'énumération \codec{SearchMethod}, et chaque résultat de recherche par chaque méthode est stocké dans un \codec{SearchResult} contenant la solution trouvée, ainsi que la méthode elle-même. Une fois l'algorithme terminé, un \codec{TabuSolution} est renvoyé, contenant la meilleure solution trouvée, le temps et le nombre d'itérations.\\
-				Nous avons également eu à implémenter une liste Tabou, grâce à la structure \codec{TabuList}, contenant une liste de \codec{TabuItem}, ceux-ci contenant la méthode utilisée ainsi que le déplacement effectué.\\
+				L'algorithme Tabou lui-même est représenté, avec ses fonctions associées, au préfixe \codec{tabu}. Les méthodes de recherche (voir \autoref{methR}) sont listées par l'énumération \codec{SearchMethod}, et chaque résultat de recherche par chaque méthode est stocké dans un \codec{SearchResult} contenant la solution trouvée, ainsi que la méthode elle-même. Une fois l'algorithme terminé, un \codec{TabuSolution} est renvoyé, contenant la meilleure solution trouvée, le temps et le nombre d'itérations.
+				
+				Nous avons également eu à implémenter une liste Tabou, grâce à la structure \codec{TabuList}, contenant une liste de \codec{TabuItem}, ceux-ci contenant la méthode utilisée ainsi que le déplacement effectué.
+				
 				Les déplacements pour chaque méthode de recherche sont définis dans des fonctions sous le préfixe \codec{sort}.
 
 			\subsection{Autres}
-				Pour lire les fichiers que notre programme reçoit en entrée, nous avons élaboré une structure \codec{Parser} et ses fonctions associées.\\
-				Certaines fonctions et définitions élémentaires sont contenues dans le fichier \codec{Utils.h} : une énumération \codec{Bool}, des \codec{typedefs} pour les types les plus utilisés, des fonctions de debug, quelques macros de gestion de la mémoire...\\
+				Pour lire les fichiers que notre programme reçoit en entrée, nous avons élaboré une structure \codec{Parser} et ses fonctions associées.
+				
+				Certaines fonctions et définitions élémentaires sont contenues dans le fichier \codec{Utils.h} : une énumération \codec{Bool}, des \codec{typedefs} pour les types les plus utilisés, des fonctions de debug, quelques macros de gestion de la mémoire...
+				
 				Bien évidemment, notre code comporte aussi un fichier \codec{Main.c} et sa fonction \codec{main}.
 
 		
@@ -273,30 +295,32 @@ searchFunctions[2] =
 				Nous allons dans cette partie décrire comment utiliser le logiciel. La première chose à constater est le fait qu'il est plus simple d'utiliser ce dernier depuis un IDE. En effet, la configuration se fait principalement avec des commandes préprocesseur ce qui implique une recompilation. Un autre choix serait de créer plusieurs exécutables avec différentes combinaisons de paramètres.
 				
 				Commençons par ces configurations préprocesseur. Elles se trouvent dans src/prod/FLAGS.h. Un flag à 1 sera considéré comme activé, un flag à 0 ou pas de déclaration sera considéré comme désactivé.
-				\begin{itemize}
-					\item \textbf{DEBUG\_ACTIVATED}: Désactive totalement ou autorise les sorties de debug.
-					\item \textbf{DEV\_LOG\_SCORE}: Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On trouve notamment\textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.
-					\item \textbf{DEV\_LOG\_SCORE\_FULL}: Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquents. On y trouve \textbf{logFull} qui répertorie le score de la solution courante pour chaque itération.
-					\item \textbf{TABU\_ITERATIONS}: Nombre maximum d'itérations de l'algorithme tabou.
-					\item \textbf{TABU\_DIVERSIFICATION}: Active ou désactive la diversification.
-					\item \textbf{TABU\_LIST\_SIZE}: Taille de la liste tabou.
-					\item \textbf{TABU\_SEARCH\_EBSR}: Active ou désactive l'utilisation d'EBSR.
-					\item \textbf{TABU\_SEARCH\_EFSR}: Active ou désactive l'utilisation d'EFSR.
-					\item \textbf{TABU\_SEARCH\_SWAP}: Active ou désactive l'utilisation de SWAP.
-					\item \textbf{TABU\_2OPT}: Active ou non 2OPT (non implémenté).
-					\item \textbf{TABU\_FIRST\_IMPROVE}: Si activé, les méthodes de diversification doivent retourner la première amélioration trouvée, sinon elles renvoient la meilleure trouvée.
-					\item \textbf{TABU\_LOGIC}: Gestion logique de la liste tabou, si activé $\left( a,b\right)=\left( b,a\right)$.
-					\item \textbf{TABU\_DELTA\_BATCH}: Distance maximum utilisée pour EBSR et EFSR.
-					\item \textbf{TABU\_PROPAGATE}: Si activé, la solution courante est changée après chaque méthode de recherche de voisinage, sinon elle est changée par la meilleure solution de tout les retours de fonctions.
-					\item \textbf{CACHED\_SCORE}: Active ou non le cache pour les solutions, décrit dans \autoref{cache}.
-					\item \textbf{DELIVERY\_METHOD}: Définit la méthode d'ordonnancement pour la livraison. Deux sont disponibles comme décrit dans \autoref{deliveries}:
-					\begin{itemize}
-						\item \textbf{0} Tri par date dues.
-						\item \textbf{1} Tri par plus proche voisin.
-					\end{itemize}
-					\item \textbf{TABU\_RANDOM}: Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.
-					\item \textbf{SEED}: Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas défini, le temps actuel sera utilisé.
-				\end{itemize}
+				
+				\begin{tabularx}{\textwidth}{|l|X|}
+					\hline
+					Nom du paramètre & Description\\\hline\hline
+					\textbf{DEBUG\_ACTIVATED} & Désactive totalement ou autorise les sorties de debug.\\\hline
+					\textbf{DEV\_LOG\_SCORE} & Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On trouve notamment \textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.\\\hline
+					\textbf{DEV\_LOG\_SCORE\_FULL}&  Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquents. On y trouve \textbf{logFull} qui répertorie le score de la solution courante pour chaque itération.\\\hline
+					\textbf{TABU\_ITERATIONS} & Nombre maximum d'itérations de l'algorithme tabou.\\\hline
+					\textbf{TABU\_DIVERSIFICATION} & Active ou désactive la diversification.\\\hline
+					\textbf{TABU\_LIST\_SIZE} & Taille de la liste tabou.\\\hline
+					\textbf{TABU\_SEARCH\_EBSR} & Active ou désactive l'utilisation d'EBSR.\\\hline
+					\textbf{TABU\_SEARCH\_EFSR} & Active ou désactive l'utilisation d'EFSR.\\\hline
+					\textbf{TABU\_SEARCH\_SWAP} & Active ou désactive l'utilisation de SWAP.\\\hline
+					\textbf{TABU\_2OPT} & Active ou non 2OPT (non implémenté).\\\hline
+					\textbf{TABU\_FIRST\_IMPROVE} & Si activé, les méthodes de diversification doivent retourner la première amélioration trouvée, sinon elles renvoient la meilleure trouvée.\\\hline
+					\textbf{TABU\_LOGIC} & Gestion logique de la liste tabou, si activé $\left( a,b\right)=\left( b,a\right)$.\\\hline
+					\textbf{TABU\_DELTA\_BATCH} & Distance maximum utilisée pour EBSR et EFSR.\\\hline
+					\textbf{TABU\_PROPAGATE} & Si activé, la solution courante est changée après chaque méthode de recherche de voisinage, sinon elle est changée par la meilleure solution de tout les retours de fonctions.\\\hline
+					\textbf{CACHED\_SCORE} & Active ou non le cache pour les solutions, décrit dans \autoref{cache}.\\\hline
+					\textbf{DELIVERY\_METHOD} & Définit la méthode d'ordonnancement pour la livraison. Deux sont disponibles comme décrit dans \autoref{deliveries}:
+						0 $\rightarrow$ Tri par date dues, 
+						1 $\rightarrow$ Tri par plus proche voisin.
+						\\\hline
+					\textbf{TABU\_RANDOM} & Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.\\\hline
+					\textbf{SEED} & Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas défini, le temps actuel sera utilisé.\\\hline
+				\end{tabularx}		
 				
 				Parlons maintenant de la configuration qui peut être faite lors du démarrage du programme via des arguments de la ligne de commande. Ces derniers dépendent de la cible compilée.
 				
