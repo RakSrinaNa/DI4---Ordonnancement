@@ -430,7 +430,7 @@ searchFunctions[2] =
 			\item Graine 42 (pour initialiser la génération de nombres aléatoires)
 		\end{itemize}
 		
-		\section{Comparaison avec le Python} %TODO fix graphiques sol init ?
+		\section{Comparaison avec le Python} %TODO fix graphiques ?
 			Le but du projet étant de traduire un programme du Python vers le C en vue d'améliorer ses performances, il est judicieux de comparer les résultats obtenus par les deux implémentations. Dû au nombre d'instances et aux temps d'exécution sur chacune d'entre elles, nous n'allons détailler que les résultats les plus parlants. Nous avons effectué des tests sur toutes les instances de petite dimension, et une instance de chaque type pour les instances plus grandes. Commençons donc par les petites instances.
 			
 			\img{TravisCompare.png}{Comparaison par Travis}{0.575}
@@ -466,7 +466,7 @@ searchFunctions[2] =
 			À présent, nous allons comparer deux implémentations en C : la première encodage direct, puis la nôtre en codage indirect. Concernant les options, nous garderons les mêmes que précédemment et nous prendrons la meilleure solution parmi les tests effectués par le codage direct pour chaque instance.
 			
 			Nous avons rassemblé ces données dans le tableau suivant. Une différence positive représente un meilleur résultat pour notre implémentation.
-			
+			%TODO pas beau
 			\begin{tabularx}{\textwidth}{|c|c|c||c|c||c|c|}
 				\hline
 				Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline
