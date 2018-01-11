@@ -422,7 +422,7 @@ searchFunctions[2] =
 		
 		Par manque de temps, nous n'avons pas effectué de tests avec plusieurs configurations différentes. Nos paramètres étaient les suivants :
 		\begin{itemize}
-			\item Maximum de 2000 itérations
+			\item Maximum de 20000 itérations
 			\item Diversification aléatoire
 			\item Liste tabou de taille 5
 			\item SWAP, EFSR et EBSR activés
@@ -448,11 +448,13 @@ searchFunctions[2] =
 			
 			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.5}{instance1}
 			
-			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le programme Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. En revanche, le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 74\ieme . De plus, le code Python termine son exécution en étant limité par le temps (25 secondes), alors que le code C est limité par le nombre d'itérations (2000). Enfin, notre programme trouve une solution avec un score de 4449, contre 4492 pour le programme Python.
+			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. 
+			
+			Le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 115\ieme. De plus, le code Python termine son exécution en ayant réalisé 74 itérations, alors que le code C a eu le temps d'en faire 4492. Enfin, notre programme trouve une solution avec un score de 4449, contre 4485 pour le Python.
 			
 			\imgr{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.5}{instance2}
 			
-			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contraint par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 20 itérations avec un score de 24092 ; le C, de son côté, obtient un score de 21563 après 780 itérations.
+			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contrant par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 17 itérations avec un score de 24376 ; le C, de son côté, obtient un score de 21563 après 718 itérations.
 			
 			\imgr{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.5}{instance3}
 			
@@ -488,7 +490,7 @@ searchFunctions[2] =
 					10 & 150 & 1 & 127533 & 130038 & -2505 & -1.93\\\hline
 					10 & 200 & 1 & 196561 & 204464 & -7903 & -3.87\\\hline
 				\end{tabularx}
-				\captionof{table}{Comparaison entre le codage direct et indirect}
+				\captionof{table}{Comparaison entre le codage directe et indirecte}
 			\end{centering}
 			
 			On constate que notre implémentation est plus performante pour de petites instances, mais cet avantage s'effondre pour des instances plus importantes. Cela s'explique probablement par le fait que nous avons à calculer l'ordonnancement à chaque itération, contrairement au codage direct ; cela implique une forte perte de temps.
