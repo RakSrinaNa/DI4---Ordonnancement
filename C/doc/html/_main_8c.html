@@ -73,16 +73,17 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;string.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_utils_8h_source.html">headers/Utils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_parser_8h_source.html">headers/Parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_solution_8h_source.html">headers/Solution.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_f_l_a_g_s_8h_source.html">FLAGS.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_tabu_8h_source.html">headers/Tabu.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_main_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f07eed1c4d22ace99bb22637cec4754"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_main_8c.html#a8f07eed1c4d22ace99bb22637cec4754">debugPrint</a> (char *format,...)</td></tr>
-<tr class="separator:a8f07eed1c4d22ace99bb22637cec4754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46dfc5ca7a382875e14b6762c51a32e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_main_8c.html#a46dfc5ca7a382875e14b6762c51a32e9">warn</a> (char *format,...)</td></tr>
 <tr class="separator:a46dfc5ca7a382875e14b6762c51a32e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42f0be9333d1662828b57a953ca0b568"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_main_8c.html#a42f0be9333d1662828b57a953ca0b568">fatalError</a> (char *format,...)</td></tr>
@@ -94,42 +95,6 @@ Variables</h2></td></tr>
 <tr class="separator:a3d7911d58e17de4509ecbd0eea1a4513"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a8f07eed1c4d22ace99bb22637cec4754"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f07eed1c4d22ace99bb22637cec4754">&#9670;&nbsp;</a></span>debugPrint()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void debugPrint </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Print in the console if debug mode is set.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">format</td><td>The message format. </td></tr>
-    <tr><td class="paramname">...</td><td>Message parameters. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a42f0be9333d1662828b57a953ca0b568"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a42f0be9333d1662828b57a953ca0b568">&#9670;&nbsp;</a></span>fatalError()</h2>
 

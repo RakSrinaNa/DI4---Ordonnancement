@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['searchresult_2ec',['SearchResult.c',['../_search_result_8c.html',1,'']]],
+  ['searchresult_2eh',['SearchResult.h',['../_search_result_8h.html',1,'']]],
   ['sequencer_2ec',['Sequencer.c',['../_sequencer_8c.html',1,'']]],
   ['sequencer_2eh',['Sequencer.h',['../_sequencer_8h.html',1,'']]],
   ['solution_2ec',['Solution.c',['../_solution_8c.html',1,'']]],

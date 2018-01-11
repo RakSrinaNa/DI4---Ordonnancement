@@ -1,9 +1,8 @@
 package fr.mrcraftcod.polytech.solutioncalculator;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,27 +14,29 @@ import java.util.stream.Collectors;
  */
 public class Solution
 {
-	public enum SolutionType{
-		PYTHON,
-		C
+	private int expected;
+	
+	public enum SolutionType
+	{
+		PYTHON, C
 	}
 	
 	private final ArrayList<Integer> production;
 	private HashMap<Integer, List<Integer>> deliveries;
-	private final File source;
+	private final Path source;
 	private SolutionType type;
 	
-	private Solution(File source)
+	private Solution(Path source)
 	{
 		production = new ArrayList<>();
 		deliveries = new HashMap<>();
 		this.source = source;
 	}
 	
-	public static Solution parse(File file) throws IOException
+	public static Solution parse(Path file) throws IOException
 	{
 		Solution solution = new Solution(file);
-		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(Paths.get(file.toURI())));
+		LinkedList<String> lines = new LinkedList<>(Files.readAllLines(file));
 		
 		String line;
 		switch(lines.poll())
@@ -56,13 +57,15 @@ public class Solution
 							for(String s : infos[1].substring(1, infos[1].length() - 1).split(", "))
 								solution.addDelivery(pack, Integer.parseInt(s));
 							break;
+						default:
+							solution.setExpected(Integer.parseInt(infos[0]));
 					}
 				}
 				break;
 			case "C":
 				solution.setType(SolutionType.C);
+				solution.setExpected(Integer.parseInt(lines.poll()));
 				solution.setProduction(Arrays.stream(lines.poll().split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
-				
 				int i = 0;
 				while((line = lines.poll()) != null)
 					solution.setDeliveries(i++, Arrays.stream(line.split("\t")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
@@ -95,9 +98,19 @@ public class Solution
 		return deliveries;
 	}
 	
+	public int getExpected()
+	{
+		return expected;
+	}
+	
 	public ArrayList<Integer> getProduction()
 	{
 		return production;
+	}
+	
+	public void setExpected(int expected)
+	{
+		this.expected = expected;
 	}
 	
 	public void setProduction(Collection<Integer> production)
@@ -109,7 +122,7 @@ public class Solution
 	@Override
 	public String toString()
 	{
-		return "Solution{" + "source=" + source.getAbsolutePath() + ", type=" + type + '}';
+		return "Solution{" + "source=" + source.toAbsolutePath().toString() + ", type=" + type + ", expected=" + getExpected() + '}';
 	}
 	
 	public void setType(SolutionType type)

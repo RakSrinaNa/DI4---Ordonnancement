@@ -16,8 +16,10 @@ typedef struct _TabuSolution
 	//!The number of iterations done.
 	unsigned int iterations;
 	//!The time taken.
-	long double time;
+	double time;
 } TabuSolution;
+
+typedef SearchResult * (*searchFunction)(Solution *, TabuList *, Bool);
 
 /**
  * Creates a tabu solution.
@@ -28,7 +30,7 @@ typedef struct _TabuSolution
  * @return A new tabu solution.
  * @remark Needs to be freed with tabuSolution_destroy.
  */
-TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, long double time);
+TabuSolution * tabuSolution_create(Solution * solution, unsigned int iterations, double time);
 
 /**
  * Frees a tabu solution.
@@ -53,7 +55,7 @@ Solution * tabu_solutionInit(Instance * instance);
  * @param end The ending time.
  * @return The elapsed time in seconds.
  */
-long double tabu_getTimeDiff(struct timeb start, struct timeb end);
+double tabu_getTimeDiff(struct timeb start, struct timeb end);
 
 /**
  * Starts the tabu search on the given instance.
@@ -88,5 +90,17 @@ SearchResult * tabu_searchEBSR(Solution * currentSolution, TabuList * tabuList, 
  * @return The result of this search.
  */
 SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, Bool diversification);
+
+/**
+ * Get the fingerprint of the flags activated.
+ * @return An int formed of 0s or 1s.
+ */
+int tabu_flagsFingerprint();
+
+/**
+ * Randomize a solution.
+ * @param solution The solution to randomize.
+ */
+void tabu_randomize(Solution *solution);
 
 #endif

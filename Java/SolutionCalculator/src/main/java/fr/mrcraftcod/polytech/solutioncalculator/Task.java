@@ -18,6 +18,7 @@ public class Task
 	public Task(int task)
 	{
 		this.ID = task;
+		this.readyTime = 0;
 		durations = new HashMap<>();
 	}
 	

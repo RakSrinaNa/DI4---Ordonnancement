@@ -23,8 +23,8 @@ doTestUnit: $(EXEC)
 doTestValgrind: all
 	cd C && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC) ../Inputs/I_1_5_20_2.txt && valgrind --track-origins=yes --leak-check=full --error-exitcode=50 ./$(EXEC_PROD) ../Inputs/I_1_5_20_2.txt && cd ..
 
-doTestSuite: $(EXEC_PROD)
-	java -jar ./Java/SolutionCalculator/solutionCalculator.jar --c "./C/$(EXEC_PROD)" --p "./Python/tabu_W_v3.py" --i "./Inputs/I_1_5_20_2.txt" --i "./Inputs/I_1_5_100_2.txt"
+doTestSuite: $(EXEC)
+	java -jar ./Java/SolutionCalculator/solutionCalculator.jar --c "./C/$(EXEC)" --p "./Python/tabu_W_v3.py" --i "./Inputs/I_1_5_20_*.txt" --i "./Inputs/I_1_5_50_*.txt"
 
 doTest: all doTestUnit doTestValgrind doTestSuite
 	 

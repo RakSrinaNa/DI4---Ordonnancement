@@ -65,22 +65,323 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Tabu.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_solution_8h_source.html">Solution.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;sys/timeb.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="_solution_8h_source.html">Solution.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_instance_8h_source.html">Instance.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_tabu_list_8h_source.html">TabuList.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_search_result_8h_source.html">SearchResult.h</a>&quot;</code><br />
 </div>
 <p><a href="_tabu_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct___tabu_solution.html">_TabuSolution</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the solution the tabu found, with the time take and iterations.  <a href="struct___tabu_solution.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a9953896af32a21c8ad820fe5667e0d98"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct___tabu_solution.html">_TabuSolution</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a></td></tr>
+<tr class="memdesc:a9953896af32a21c8ad820fe5667e0d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the solution the tabu found, with the time take and iterations.  <a href="#a9953896af32a21c8ad820fe5667e0d98">More...</a><br /></td></tr>
+<tr class="separator:a9953896af32a21c8ad820fe5667e0d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d0597a127dfa5b37233da49efe0bf3e"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a> *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a8d0597a127dfa5b37233da49efe0bf3e">searchFunction</a>) (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>)</td></tr>
+<tr class="separator:a8d0597a127dfa5b37233da49efe0bf3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a475617559248b66dc3a592d213cc3569"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a475617559248b66dc3a592d213cc3569">tabuSolution_create</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, unsigned int iterations, double time)</td></tr>
+<tr class="separator:a475617559248b66dc3a592d213cc3569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8da34a8a7510093fb38a5bba13ee53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#ace8da34a8a7510093fb38a5bba13ee53">tabuSolution_destroy</a> (<a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *solution)</td></tr>
+<tr class="separator:ace8da34a8a7510093fb38a5bba13ee53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac94a1d608bb4b2dc8e36b1d45bad4001"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#ac94a1d608bb4b2dc8e36b1d45bad4001">tabu_solutionInit</a> (<a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
 <tr class="separator:ac94a1d608bb4b2dc8e36b1d45bad4001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a540e04d80706b5bd3b4e2f8463b0766a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a540e04d80706b5bd3b4e2f8463b0766a">tabu_getTimeDiff</a> (struct timeb start, struct timeb end)</td></tr>
+<tr class="separator:a540e04d80706b5bd3b4e2f8463b0766a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd070f2ca8ca2b22021b4b6c61c2928"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#affd070f2ca8ca2b22021b4b6c61c2928">tabu_search</a> (<a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
+<tr class="separator:affd070f2ca8ca2b22021b4b6c61c2928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87a9ce215ca84160056e7787d861da18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a87a9ce215ca84160056e7787d861da18">tabu_searchSwap</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *currentSolution, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *tabuList, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a> diversification)</td></tr>
+<tr class="separator:a87a9ce215ca84160056e7787d861da18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa66b5def342a33c58c9a3afed7fce86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#aaa66b5def342a33c58c9a3afed7fce86">tabu_searchEBSR</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *currentSolution, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *tabuList, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a> diversification)</td></tr>
+<tr class="separator:aaa66b5def342a33c58c9a3afed7fce86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a2ed6d351f59ec62e7d43a35057d9c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a6a2ed6d351f59ec62e7d43a35057d9c9">tabu_searchEFSR</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *currentSolution, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *tabuList, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a> diversification)</td></tr>
+<tr class="separator:a6a2ed6d351f59ec62e7d43a35057d9c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8662e8c13a315455505640e4241cb69"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#ac8662e8c13a315455505640e4241cb69">tabu_flagsFingerprint</a> ()</td></tr>
+<tr class="separator:ac8662e8c13a315455505640e4241cb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47ca201597c5fe50791df125477717e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a47ca201597c5fe50791df125477717e7">tabu_randomize</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution)</td></tr>
+<tr class="separator:a47ca201597c5fe50791df125477717e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a8d0597a127dfa5b37233da49efe0bf3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d0597a127dfa5b37233da49efe0bf3e">&#9670;&nbsp;</a></span>searchFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a>*(* searchFunction) (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9953896af32a21c8ad820fe5667e0d98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9953896af32a21c8ad820fe5667e0d98">&#9670;&nbsp;</a></span>TabuSolution</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="struct___tabu_solution.html">_TabuSolution</a>  <a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contains the solution the tabu found, with the time take and iterations. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ac8662e8c13a315455505640e4241cb69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8662e8c13a315455505640e4241cb69">&#9670;&nbsp;</a></span>tabu_flagsFingerprint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tabu_flagsFingerprint </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the fingerprint of the flags activated. </p><dl class="section return"><dt>Returns</dt><dd>An int formed of 0s or 1s. </dd></dl>
+
+</div>
+</div>
+<a id="a540e04d80706b5bd3b4e2f8463b0766a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a540e04d80706b5bd3b4e2f8463b0766a">&#9670;&nbsp;</a></span>tabu_getTimeDiff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tabu_getTimeDiff </td>
+          <td>(</td>
+          <td class="paramtype">struct timeb&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct timeb&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the difference between two times in seconds.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>The starting time. </td></tr>
+    <tr><td class="paramname">end</td><td>The ending time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The elapsed time in seconds. </dd></dl>
+
+</div>
+</div>
+<a id="a47ca201597c5fe50791df125477717e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47ca201597c5fe50791df125477717e7">&#9670;&nbsp;</a></span>tabu_randomize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tabu_randomize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
+          <td class="paramname"><em>solution</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Randomize a solution. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solution</td><td>The solution to randomize. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="affd070f2ca8ca2b22021b4b6c61c2928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affd070f2ca8ca2b22021b4b6c61c2928">&#9670;&nbsp;</a></span>tabu_search()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a>* tabu_search </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *&#160;</td>
+          <td class="paramname"><em>instance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts the tabu search on the given instance. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>The instance to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of the tabu search. </dd></dl>
+
+</div>
+</div>
+<a id="aaa66b5def342a33c58c9a3afed7fce86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa66b5def342a33c58c9a3afed7fce86">&#9670;&nbsp;</a></span>tabu_searchEBSR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a>* tabu_searchEBSR </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
+          <td class="paramname"><em>currentSolution</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *&#160;</td>
+          <td class="paramname"><em>tabuList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>&#160;</td>
+          <td class="paramname"><em>diversification</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apply the EBSR search method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentSolution</td><td>The solution to start with. </td></tr>
+    <tr><td class="paramname">tabuList</td><td>The tabu list. </td></tr>
+    <tr><td class="paramname">diversification</td><td>If we diversify or not. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of this search. </dd></dl>
+
+</div>
+</div>
+<a id="a6a2ed6d351f59ec62e7d43a35057d9c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a2ed6d351f59ec62e7d43a35057d9c9">&#9670;&nbsp;</a></span>tabu_searchEFSR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a>* tabu_searchEFSR </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
+          <td class="paramname"><em>currentSolution</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *&#160;</td>
+          <td class="paramname"><em>tabuList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>&#160;</td>
+          <td class="paramname"><em>diversification</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apply the EFSR search method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentSolution</td><td>The solution to start with. </td></tr>
+    <tr><td class="paramname">tabuList</td><td>The tabu list. </td></tr>
+    <tr><td class="paramname">diversification</td><td>If we diversify or not. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of this search. </dd></dl>
+
+</div>
+</div>
+<a id="a87a9ce215ca84160056e7787d861da18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87a9ce215ca84160056e7787d861da18">&#9670;&nbsp;</a></span>tabu_searchSwap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a>* tabu_searchSwap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
+          <td class="paramname"><em>currentSolution</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *&#160;</td>
+          <td class="paramname"><em>tabuList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>&#160;</td>
+          <td class="paramname"><em>diversification</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apply the swap search method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentSolution</td><td>The solution to start with. </td></tr>
+    <tr><td class="paramname">tabuList</td><td>The tabu list. </td></tr>
+    <tr><td class="paramname">diversification</td><td>If we diversify or not. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of this search. </dd></dl>
+
+</div>
+</div>
 <a id="ac94a1d608bb4b2dc8e36b1d45bad4001"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac94a1d608bb4b2dc8e36b1d45bad4001">&#9670;&nbsp;</a></span>tabu_solutionInit()</h2>
 
@@ -105,6 +406,76 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The initialized solution. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The user is in charge of freeing the returned value. </dd></dl>
+
+</div>
+</div>
+<a id="a475617559248b66dc3a592d213cc3569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a475617559248b66dc3a592d213cc3569">&#9670;&nbsp;</a></span>tabuSolution_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a>* tabuSolution_create </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
+          <td class="paramname"><em>solution</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>iterations</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a tabu solution.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solution</td><td>The solution found. </td></tr>
+    <tr><td class="paramname">iterations</td><td>The number of iterations done. </td></tr>
+    <tr><td class="paramname">time</td><td>The time taken. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new tabu solution. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Needs to be freed with tabuSolution_destroy. </dd></dl>
+
+</div>
+</div>
+<a id="ace8da34a8a7510093fb38a5bba13ee53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace8da34a8a7510093fb38a5bba13ee53">&#9670;&nbsp;</a></span>tabuSolution_destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tabuSolution_destroy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td>
+          <td class="paramname"><em>solution</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Frees a tabu solution.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solution</td><td>The solution to destroy. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

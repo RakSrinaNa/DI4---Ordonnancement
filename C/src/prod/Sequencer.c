@@ -163,7 +163,7 @@ task_t * sequencer_sequenceProductionPack(Instance * instance, unsigned int task
 			
 			//Set the task at the best found position.
 			memmove(bestSequence + bestPos + 1, bestSequence + bestPos, sizeof(task_t) * (inside - bestPos));
-			bestSequence[bestPos] = taskID;
+			bestSequence[bestPos] = tasks[taskID];
 			inside++;
 		}
 		finalSequence = bestSequence;
@@ -270,10 +270,15 @@ task_t * sequencer_sequenceDeliveriesPack(Instance * instance, unsigned int task
 	}
 	else if(taskCount > 3)
 	{
-		if(DELIVERY_NEAREST_NEIGHBOR)
-			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
-		else
+		switch(DELIVERY_METHOD)
+		{
+			case 0:
 			sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate);
+			break;
+			case 1:
+			sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
+			break;
+		}
 	}
 	return sequence;
 }

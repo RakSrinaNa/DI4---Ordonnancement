@@ -104,12 +104,11 @@ void solution_printCSV(Solution * solution, FILE * file);
 /**
  * Saves the solution to a file.
  *
- * @param solution The solution. Not null.
- * @param filename The path of the file.
- * @param time The execution time.
- * @remark Does nothing if the solution hasn't been computed.
+ * @param file The file to write to, opened.
+ * @param solution The solution to write.
+ * @param time The time taken by the tabu algorithm.
  */
-void solution_save(Solution * solution, const char * filename, double time);
+void solution_save(FILE * file, Solution * solution, double time);
 
 /**
  * Compare two solutions based on their score.

@@ -97,10 +97,12 @@ Functions</h2></td></tr>
 <tr class="separator:afb0c9b45e3200b04e9f64fcde07164fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58cf2d7340422446e612fe75e4176f3a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_info_8h.html#a58cf2d7340422446e612fe75e4176f3a">solutionInfo_productionOrder</a> (struct <a class="el" href="struct___solution.html">_Solution</a> *solution)</td></tr>
 <tr class="separator:a58cf2d7340422446e612fe75e4176f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adab57018bd61f3e3894f980bf225ffcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_info_8h.html#adab57018bd61f3e3894f980bf225ffcf">solutionInfo_deliveryOrder</a> (struct <a class="el" href="struct___solution.html">_Solution</a> *solution, struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *info, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a> diversification)</td></tr>
-<tr class="separator:adab57018bd61f3e3894f980bf225ffcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ccf64b46399f6c1a70ab7d23aa7d831"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_info_8h.html#a4ccf64b46399f6c1a70ab7d23aa7d831">solutionInfo_deliveryOrder</a> (struct <a class="el" href="struct___solution.html">_Solution</a> *solution, struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *info)</td></tr>
+<tr class="separator:a4ccf64b46399f6c1a70ab7d23aa7d831"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab77dee09cc0170ec8050cf2814dc3efb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_info_8h.html#ab77dee09cc0170ec8050cf2814dc3efb">solutionInfo_print</a> (struct <a class="el" href="struct___solution.html">_Solution</a> *solution, struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *info)</td></tr>
 <tr class="separator:ab77dee09cc0170ec8050cf2814dc3efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5543bcd82df4e1e9c4be0b70f040b87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_info_8h.html#aa5543bcd82df4e1e9c4be0b70f040b87">solutionInfo_printForVerification</a> (FILE *file, struct <a class="el" href="struct___solution.html">_Solution</a> *solution, struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *info)</td></tr>
+<tr class="separator:aa5543bcd82df4e1e9c4be0b70f040b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="af416b5e28ed7348ec3da169d4a04ba09"></a>
@@ -145,12 +147,12 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A new info. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Needs to be freed with solutionInfo_destroy. </dd>
 <dd>
-Doesn't initialize info.deliveries ; needing to use <a class="el" href="_solution_info_8h.html#adab57018bd61f3e3894f980bf225ffcf">solutionInfo_deliveryOrder()</a> before freeing or printing. </dd></dl>
+Doesn't initialize info.deliveries ; needing to use <a class="el" href="_solution_info_8h.html#a4ccf64b46399f6c1a70ab7d23aa7d831">solutionInfo_deliveryOrder()</a> before freeing or printing. </dd></dl>
 
 </div>
 </div>
-<a id="adab57018bd61f3e3894f980bf225ffcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adab57018bd61f3e3894f980bf225ffcf">&#9670;&nbsp;</a></span>solutionInfo_deliveryOrder()</h2>
+<a id="a4ccf64b46399f6c1a70ab7d23aa7d831"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ccf64b46399f6c1a70ab7d23aa7d831">&#9670;&nbsp;</a></span>solutionInfo_deliveryOrder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,13 +167,7 @@ Doesn't initialize info.deliveries ; needing to use <a class="el" href="_solutio
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *&#160;</td>
-          <td class="paramname"><em>info</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>&#160;</td>
-          <td class="paramname"><em>diversification</em>&#160;</td>
+          <td class="paramname"><em>info</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -185,7 +181,6 @@ Doesn't initialize info.deliveries ; needing to use <a class="el" href="_solutio
   <table class="params">
     <tr><td class="paramname">solution</td><td>The solution. Not null. </td></tr>
     <tr><td class="paramname">info</td><td>The info to fill. Not null. </td></tr>
-    <tr><td class="paramname">diversification</td><td>True if we want to generate a really different solution, False otherwise. </td></tr>
   </table>
   </dd>
 </dl>
@@ -261,6 +256,40 @@ Doesn't initialize info.deliveries ; needing to use <a class="el" href="_solutio
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa5543bcd82df4e1e9c4be0b70f040b87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5543bcd82df4e1e9c4be0b70f040b87">&#9670;&nbsp;</a></span>solutionInfo_printForVerification()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void solutionInfo_printForVerification </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="struct___solution.html">_Solution</a> *&#160;</td>
+          <td class="paramname"><em>solution</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="struct___solution_info.html">_SolutionInfo</a> *&#160;</td>
+          <td class="paramname"><em>info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

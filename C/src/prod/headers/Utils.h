@@ -61,12 +61,26 @@ void warn(char * format, ...);
  */
 void fatalError(char * format, ...);
 
+extern Bool DEBUG;
 /**
  * Print in the console if debug mode is set.
  *
  * @param format The message format.
  * @param ... Message parameters.
  */
-void debugPrint(char * format, ...);
+static inline void debugPrint(char * format, ...)
+{
+#if DEBUG_ACTIVATED
+	if(DEBUG)
+	{
+		va_list args;
+		va_start(args, format);
+		vfprintf(stdout, format, args);
+		va_end(args);
+	}
+#else
+	UNUSED(format);
+#endif
+}
 
 #endif

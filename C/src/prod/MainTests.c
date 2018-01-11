@@ -1,13 +1,22 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef __WIN32__
+#include <io.h>
+#else
+#include <sys/stat.h>
+#endif
+
 #include "headers/Utils.h"
-#include "headers/Instance.h"
-#include "../unit/headers/MainUnit.h"
 #include "headers/Parser.h"
 #include "headers/Solution.h"
-#include "headers/Tabu.h"
 #include "FLAGS.h"
+#include "headers/Tabu.h"
+#include "../unit/headers/MainUnit.h"
+
+#ifdef __MINGW32__
+#define printf __mingw_printf
+#endif
 
 Bool DEBUG = False;
 
@@ -38,28 +47,24 @@ int main(int argc, char * argv[])
 	Instance * instance = parser_readInstanceFromFile(filepath);
 	if(instance != NULL)
 	{
-		instance_print(instance);		
+#ifdef __WIN32__
+		mkdir("log");
+#else
+		mkdir("log", 0777);
+#endif
+		//instance_print(instance);		
 		TabuSolution * solution = tabu_search(instance);
-		printf("Tabu found solution in %Lfs (%d iterations) : \n", solution->time, solution->iterations);
+		printf("Tabu found solution in %f (%d iterations) : \n", solution->time, solution->iterations);
 		solution_print(solution->solution);
-		FILE * file = fopen("solution.txt", "w");
+		char filenameSolution[512];
+		sprintf(filenameSolution, "./log/solution_%s_%d.txt", instance->origin, tabu_flagsFingerprint());
+		FILE * file = fopen(filenameSolution, "w");
 		solutionInfo_printForVerification(file, solution->solution, solution->solution->info);
 		fclose(file);
 		tabuSolution_destroy(solution);
 		instance_destroy(instance);
 	}
 	return 0;
-}
-
-void debugPrint(char * format, ...)
-{
-	if(DEBUG)
-	{
-		va_list args;
-		va_start(args, format);
-		vfprintf(stdout, format, args);
-		va_end(args);
-	}
 }
 
 void warn(char * format, ...)
@@ -75,7 +80,7 @@ void fatalError(char * format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	fprintf(stdout, "FATAL ERROR!\n |-\t");
+	fprintf(stdout, "FATAL ERROR!\n\t");
 	vfprintf(stdout, format, args);
 	va_end(args);
 	exit(EXIT_FAILURE);

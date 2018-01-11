@@ -76,13 +76,13 @@ $(function() {
 <code>#include &lt;memory.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_parser_8h_source.html">headers/Parser.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_utils_8h_source.html">headers/Utils.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_instance_8h_source.html">headers/Instance.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:af0d2197e02d6ab6ccb97f0ed458e2b5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8c.html#af0d2197e02d6ab6ccb97f0ed458e2b5f">parser_readInstanceFromFile</a> (char *filepath)</td></tr>
 <tr class="separator:af0d2197e02d6ab6ccb97f0ed458e2b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb203288c74b1138d0b047585a8e2880"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8c.html#adb203288c74b1138d0b047585a8e2880">last_strstr</a> (const char *haystack, const char *needle)</td></tr>
+<tr class="separator:adb203288c74b1138d0b047585a8e2880"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14ce322670da591f6512cc7bf8efc5ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8c.html#a14ce322670da591f6512cc7bf8efc5ce">parser_fillInstance</a> (FILE *file, <a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
 <tr class="separator:a14ce322670da591f6512cc7bf8efc5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d4d101cb70b04028c5673a439fbc13a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8c.html#a1d4d101cb70b04028c5673a439fbc13a">parser_readLine</a> (FILE *file)</td></tr>
@@ -98,6 +98,43 @@ Variables</h2></td></tr>
 <tr class="separator:a3d7911d58e17de4509ecbd0eea1a4513"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="adb203288c74b1138d0b047585a8e2880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb203288c74b1138d0b047585a8e2880">&#9670;&nbsp;</a></span>last_strstr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* last_strstr </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>haystack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>needle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>get the last appearance of a substring.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">haystack</td><td>The string to search in. </td></tr>
+    <tr><td class="paramname">needle</td><td>The substring to look for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last appearance of the needle. </dd></dl>
+
+</div>
+</div>
 <a id="a14ce322670da591f6512cc7bf8efc5ce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14ce322670da591f6512cc7bf8efc5ce">&#9670;&nbsp;</a></span>parser_fillInstance()</h2>
 
@@ -268,7 +305,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A string on the heap being the first non empty line in the file. If it couldn't read any, NULL is returned. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string on the heap being the next non empty line in the file. If it couldn't read any, NULL is returned. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The user is in charge of freeing the returned value. </dd></dl>
 
 </div>

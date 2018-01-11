@@ -14,6 +14,8 @@ typedef struct _Instance
 	unsigned int ** distancesMatrix;
 	//!List of the tasks of the instance.
 	struct _Task ** tasks;
+	//!Origin file.
+	const char * origin;
 } Instance;
 
 #include <stdio.h>

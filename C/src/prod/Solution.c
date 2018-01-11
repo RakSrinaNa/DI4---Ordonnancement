@@ -46,7 +46,7 @@ Solution * solution_copy(Solution * solution)
 	//Copy packs
 	for(unsigned int i = 0; i < solution->packCount; i++)
 		for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
-			solution_moveTaskPack(copy, solution->packList[i]->tasks[j], i);
+			solution_moveTaskPack(copy, solution->packList[i]->tasks[j], i+1);
 	debugPrint("Solution %p copied to %p\n", solution, copy);
 	return copy;
 }
@@ -125,11 +125,13 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 SolutionInfo * solution_eval(Solution * solution)
 {
 	debugPrint("Evaluation solution %p\n", solution);
-	if(CACHED_SCORE && solution->info != NULL)
+#if CACHED_SCORE
+	if(solution->info != NULL)
 		return solution->info;
-	
+#else
 	if(solution->info != NULL)
 		solutionInfo_destroy(solution, solution->info);
+#endif
 	solution->info = solutionInfo_productionOrder(solution);
 	solutionInfo_deliveryOrder(solution, solution->info);
 	
@@ -157,12 +159,11 @@ void solution_print(Solution * solution)
 		printf("Solution : NULL\n");
 }
 
-void solution_save(Solution * solution, const char * filename, double time)
+void solution_save(FILE * file, Solution * solution, double time)
 {
-	debugPrint("Saving solution %p to %s", solution, filename);
+	debugPrint("Saving solution %p", solution);
 	if(solution->info == NULL)
 		return;
-	FILE * file = fopen(filename, "w");
 	if(file != NULL)
 	{
 		fprintf(file, "%d\t%f\t{ production:[ ", solution_eval(solution)->score, time);
@@ -179,15 +180,20 @@ void solution_save(Solution * solution, const char * filename, double time)
 			fprintf(file, "]%c", (i == solution->packCount - 1) ? ' ' : ',');
 		}
 		fprintf(file, "] }\n");
-		fclose(file);
 	}
 }
 
 long solutionCompare(Solution * solution1, Solution * solution2, Bool diversification)
 {
+	if(solution1 == NULL && solution2 == NULL)
+		return 0;
+	if(solution1 == NULL)
+		return -1;
+	if(solution2 == NULL)
+		return 1;
 	if(diversification)
-		return solution_eval(solution1)->score - solution_eval(solution2)->score;
-	return ((long)solution_eval(solution2)->score) - solution_eval(solution1)->score;
+		return (long) (((long)solution_eval(solution1)->score) - solution_eval(solution2)->score);
+	return (long) (((long)solution_eval(solution2)->score) - solution_eval(solution1)->score);
 }
 
 void solution_printCSV(Solution * solution, FILE * file)
