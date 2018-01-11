@@ -415,6 +415,21 @@ searchFunctions[2] =
 	\chapter{Résultats obtenus}
 		Deux comparaisons sont intéressantes : entre notre programme et le programme en Python, et entre notre codage (indirect) et le codage direct.
 		
+		Par manque de temps, nous n'avons pas effectué de tests avec plusieurs configurations différentes. Nos paramètres étaient les suivants :
+		\begin{itemize}
+			\item Maximum de 2000 itérations
+			\item Diversification aléatoire
+			\item Liste tabou de taille 5
+			\item SWAP, EFSR et EBSR activés
+			\item 2-OPT désactivé
+			\item First Improve désactivé
+			\item Tabou logique activé
+			\item Propagation activée
+			\item Cache activé
+			\item Ordonnancement par date due
+			\item Graine 42 (pour initialiser la génération de nombres aléatoires)
+		\end{itemize}
+		
 		\section{Comparaison avec le Python} %TODO fix graphiques sol init ?
 			Le but du projet étant de traduire un programme du Python vers le C en vue d'améliorer ses performances, il est judicieux de comparer les résultats obtenus par les deux implémentations. Dû au nombre d'instances et aux temps d'exécution sur chacune d'entre elles, nous n'allons détailler que les résultats les plus parlants. Nous avons effectué des tests sur toutes les instances de petite dimension, et une instance de chaque type pour les instances plus grandes. Commençons donc par les petites instances.
 			
@@ -443,10 +458,30 @@ searchFunctions[2] =
 				\item Notre programme produit toujours une meilleure solution dès le début.
 				\item Les vitesses de convergence semblent être similaires, mais le Python s'arrête souvent avant de se stabiliser (notamment sur de grosses instances).
 				\item Plus les instances sont importantes, et plus la différence de performances est flagrante.
+				\item On peut parfois voir les effets de la diversification, où après une stabilisation un enchaînement d'améliorations fait son apparition.
 			\end{itemize}
 			
 		
-		\section{Comparaison avec l'implémentation en codage direct} %TODO -
+		\section{Comparaison avec l'implémentation en codage direct}
+			À présent, nous allons comparer deux implémentations en C : la première encodage direct, puis la nôtre en codage indirect. Concernant les options, nous garderons les mêmes que précédemment et nous prendrons la meilleure solution parmi les tests effectués par le codage direct pour chaque instance.
+			
+			Nous avons rassemblé ces données dans le tableau suivant. Une différence positive représente un meilleur résultat pour notre implémentation.
+			
+			\begin{tabularx}{\textwidth}{|c|c|c||c|c||c|c|}
+				\hline
+				Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline
+				5 & 20 & 1 & 4875 & 4449 & 426 & 9.57\\\hline
+				5 & 50 & 1 & 22811 & 21563 & 1248 & 5.79\\\hline
+				5 & 50 & 2 & 20236 & 19993 & 243 & 1.22\\\hline
+				5 & 100 & 1 & 60236 & 58230 & 2006 & 4.47\\\hline
+				5 & 150 & 1 & 52213 & 68681 & -16468 & -23.98\\\hline
+				5 & 200 & 1 & 91877 & 98200 & -6323 & -6.44\\\hline
+				10 & 20 & 1 & 12744 & 11610 & 1134 & 9.77\\\hline
+				10 & 50 & 1 & 32967 & 32496 & 471 & 1.45\\\hline
+				10 & 100 & 1 & 73617 & 70282 & 3335 & 4.75\\\hline
+				10 & 150 & 1 & 127533 & 130038 & -2505 & -1.93\\\hline
+				10 & 200 & 1 & 196561 & 204464 & -7903 & -3.87\\\hline
+			\end{tabularx}
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
@@ -477,4 +512,14 @@ searchFunctions[2] =
 		
 		\appendix
 		\chapter{\label{exemplesGraphes}Résultats sur chaque type d'instance}
+			\img{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.45}
+			\img{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.45}
+			\img{5-100-1.png}{Instance à 5 machines et 100 tâches}{0.45}
+			\img{5-150-1.png}{Instance à 5 machines et 150 tâches}{0.45}
+			\img{5-200-1.png}{Instance à 5 machines et 200 tâches}{0.45}
+			\img{10-20-1.png}{Instance à 10 machines et 20 tâches}{0.45}
+			\img{10-50-1.png}{Instance à 10 machines et 50 tâches}{0.45}
+			\img{10-100-1.png}{Instance à 10 machines et 100 tâches}{0.45}
+			\img{10-150-1.png}{Instance à 10 machines et 150 tâches}{0.45}
+			\img{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.45}
 \end{document}
