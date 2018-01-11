@@ -26,7 +26,7 @@
 #define TABU_FIRST_IMPROVE 0
 //!Prevents swapping if already swapped the inverse.
 #define TABU_LOGIC 1
-//!Minimum batch gap between swaps, EBSRs, EFSRs.
+//!Maximum batch gap between swaps, EBSRs, EFSRs.
 #define TABU_DELTA_BATCH 4
 //!Change the current solution after each method used.
 #define TABU_PROPAGATE 1
