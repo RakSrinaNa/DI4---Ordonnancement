@@ -107,8 +107,8 @@
 		\section{Codage}
 			Dans ce problème, nous pouvons différencier deux types de codage : direct et indirect.
 			\begin{itemize}
-				\item Le codage direct s'effectue en calculant l'ordre de production et l'ordre de livraison pendant la recherche de la meilleure solution ; le calcul du score se fait donc simplement.
-				\item Le codage indirect s'effectue en calculant uniquement le regroupement en batchs de livraison : les ordres de production et de livraison sont calculés en même temps que le score.
+				\item Le codage direct est représenté uniquement par une liste de batchs contenant les tâches à produire. Les tâches sont ordonnées, le calcul du score se fait donc simplement.
+				\item Le codage indirect est représenté aussi par une liste de batchs contenant les tâches à livrer. L'ordonnancement de chaque batch et le calcul de l'ordre de production sont effectués lors du calcul du score.
 			\end{itemize}
 			
 			Nous devons produire une implémentation du codage indirect.
@@ -491,7 +491,7 @@ searchFunctions[2] =
 				\captionof{table}{Comparaison entre le codage direct et indirect}
 			\end{centering}
 			
-			On constate que notre implémentation est plus performante pour de petites instances, mais cet avantage s'effondre pour des instances plus importantes.
+			On constate que notre implémentation est plus performante pour de petites instances, mais cet avantage s'effondre pour des instances plus importantes. Cela s'explique probablement par le fait que nous avons à calculer l'ordonnancement à chaque itération, contrairement au codage direct ; cela implique une forte perte de temps.
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
