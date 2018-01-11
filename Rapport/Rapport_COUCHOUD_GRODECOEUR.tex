@@ -444,7 +444,7 @@ searchFunctions[2] =
 			
 			Intéressons-nous donc aux tests sur tous les types d'instance. Afin d'avoir des résultats plus précis, nous avons mis en place un log qui répertorie chaque amélioration de la solution.
 			
-			Sur les prochains graphiques, la courbe bleue représente les résultats du C et la courbe orange ceux du Python. On n'affiche pas le nombre total d'itérations pour garder une échelle correcte (on s'arrête à la dernière amélioration). Nous préciserons le nombre d'itérations effectuées dans la description.
+			Sur les prochains graphiques, on montrera les différences de score par itération entre les deux programmes. La courbe bleue représente les résultats du C et la courbe orange ceux du Python. On n'affiche pas le nombre total d'itérations pour garder une échelle correcte (on s'arrête à la dernière amélioration). Nous préciserons le nombre d'itérations effectuées dans la description.
 			
 			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.5}{instance1}
 			
@@ -460,9 +460,19 @@ searchFunctions[2] =
 			
 			Pour l'une des plus grosses instances à notre disposition (\autoref{instance3}), on remarque que la tendance observée précédemment continue : il y a toujours un écart dès le début, et les deux programmes sont contraints par le temps, ce qui pose de très gros problèmes au Python qui ne parvient que péniblement à effectuer deux maigres itérations ; le C arrive à en effectuer 80. Les scores sont de 345199 pour le Python et 204464 pour le C.
 			
+			Les deux programmes n'ayant pas les même vitesses d'exécution, nous pouvons aussi comparer les scores par unité de temps. Pour montrer à quel point le programme C surpasse le Python, les exemples parlent d'eux-mêmes :
+			
+			\imgr{5-20-1-t.png}{Instance à 5 machines et 20 tâches}{0.5}{instance4}
+			
+			\imgr{5-50-1-t.png}{Instance à 5 machines et 50 tâches}{0.5}{instance5}
+			
+			\imgr{10-200-1-t.png}{Instance à 10 machines et 200 tâches}{0.5}{instance6}
+			
+			Même sur de grosses instances, le C atteint sa valeur finale alors que le Python n'a encore effectué qu'une poignée d'itérations. On pourrait limiter bien plus le nombre maximal d'itérations pour générer une solution plus rapidement.
+			
 			À travers ces exemples (et ceux que vous retrouverez dans \autoref{exemplesGraphes}), on peut remarquer des comportements récurrents :
 			\begin{itemize}
-				\item Notre programme produit toujours une meilleure solution dès le début.
+				\item Notre programme ne produit pas de solution initiale moins bonne que le programme Python.
 				\item Les vitesses de convergence semblent être similaires, mais le Python s'arrête souvent avant de se stabiliser (notamment sur de grosses instances).
 				\item Plus les instances sont importantes, et plus la différence de performances est flagrante.
 				\item On peut parfois voir les effets de la diversification, où après une stabilisation un enchaînement d'améliorations fait son apparition.
