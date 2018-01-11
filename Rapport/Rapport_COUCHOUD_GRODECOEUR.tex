@@ -84,7 +84,7 @@
 		
 		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable d'effectuer suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
 		\section{Cahier des charges}
-			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($(\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche telles que SWAP, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
+			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche telles que SWAP, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
 			
 			Comme entrées, nous disposons de fichiers représentant des situations (nous les appellerons "instances" par la suite), contenant les informations suivantes :
 			\begin{itemize}
@@ -302,7 +302,7 @@ searchFunctions[2] =
 				\begin{centering}
 					\begin{tabularx}{\textwidth}{|l|X|}
 						\hline
-						Nom du paramètre & Description\\\hline\hline
+						Nom du paramètre & Description\\\hline\hline\endhead
 						\textbf{DEBUG\_ACTIVATED} & Désactive totalement ou autorise les sorties de debug.\\\hline
 						\textbf{DEV\_LOG\_SCORE} & Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On trouve notamment \textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.\\\hline
 						\textbf{DEV\_LOG\_SCORE\_FULL}&  Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquents. On y trouve \textbf{logFull} qui répertorie le score de la solution courante pour chaque itération.\\\hline
@@ -475,7 +475,7 @@ searchFunctions[2] =
 			\begin{centering}
 				\begin{tabularx}{\textwidth}{|c|c|c||c|c||c|c|}
 					\hline
-					Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline
+					Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline\endhead
 					5 & 20 & 1 & 4875 & 4449 & 426 & 9.57\\\hline
 					5 & 50 & 1 & 22811 & 21563 & 1248 & 5.79\\\hline
 					5 & 50 & 2 & 20236 & 19993 & 243 & 1.22\\\hline
