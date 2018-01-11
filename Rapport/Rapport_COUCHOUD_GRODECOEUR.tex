@@ -2,7 +2,7 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 
-\usepackage{ltablex}
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{pict2e}
@@ -20,7 +20,8 @@
 \newcommand{\imgr}[4]{%
    \begin{figure}[H]
       \centering
-         \includegraphics[scale=#3,rotate=#4]{Images/#1}
+      	\label{#4}
+         \includegraphics[scale=#3]{Images/#1}
          \caption{#2}
    \end{figure}
 }
@@ -320,14 +321,14 @@ searchFunctions[2] =
 						\\\hline
 					\textbf{TABU\_RANDOM} & Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.\\\hline
 					\textbf{SEED} & Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas défini, le temps actuel sera utilisé.\\\hline
-				\end{tabularx}
+				\end{tabularx}		
 				
 				Parlons maintenant de la configuration qui peut être faite lors du démarrage du programme via des arguments de la ligne de commande. Ces derniers dépendent de la cible compilée.
 				
 				En cible production les options sont:
 				\begin{itemize}
 					\item \textbf{-{}-debug}: Pour activer les sorties de debug (si le flag est activé).
-					\item \textbf{<chemin de fichier>}: Définit l'instance à lancer. Si ce paramètre est omis, l'intance lancée sera \textbf{./Input.txt}.
+					\item \textbf{<chemin de fichier>}: Définit l'instance à lancer. Si ce paramètre est omis, l'instance lancée sera \textbf{./Input.txt}.
 				\end{itemize}
 				
 				En cible test les options sont les mêmes que la production avec en plus:
@@ -412,7 +413,39 @@ searchFunctions[2] =
 				\end{itemize}
 		
 	\chapter{Résultats obtenus}
-		\section{Comparaison avec le python} %TODO : Thomas
+		Deux comparaisons sont intéressantes : entre notre programme et le programme en Python, et entre notre codage (indirect) et le codage direct.
+		
+		\section{Comparaison avec le Python} %TODO fix graphiques sol init ?
+			Le but du projet étant de traduire un programme du Python vers le C en vue d'améliorer ses performances, il est judicieux de comparer les résultats obtenus par les deux implémentations. Dû au nombre d'instances et aux temps d'exécution sur chacune d'entre elles, nous n'allons détailler que les résultats les plus parlants. Nous avons effectué des tests sur toutes les instances de petite dimension, et une instance de chaque type pour les instances plus grandes. Commençons donc par les petites instances.
+			
+			\img{TravisCompare.png}{Comparaison par Travis}{0.575}
+			
+			Travis exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
+			
+			Intéressons-nous donc aux tests sur tous les types d'instance. Afin d'avoir des résultats plus précis, nous avons mis en place un log qui répertorie chaque amélioration de la solution.
+			
+			Sur les prochains graphiques, la courbe bleue représente les résultats du C et la courbe orange ceux du Python. On n'affiche pas le nombre total d'itérations pour garder une échelle correcte (on s'arrête à la dernière amélioration). Nous préciserons le nombre d'itérations effectuées dans la description.
+			
+			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.45}{instance1}
+			
+			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. En revanche, le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 74\ieme . De plus, le code Python termine son exécution en étant limité par le temps (25 secondes), alors que le code C est limité par le nombre d'itérations (2000). Enfin, notre programme trouve une solution avec un score de 4449, contre 4492 pour le Python.
+			
+			\imgr{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.45}{instance2}
+			
+			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contrant par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 20 itérations avec un score de 24092 ; le C, de son côté, obtient un score de 21563 après 780 itérations.
+			
+			\imgr{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.45}{instance3}
+			
+			Pour l'une des plus grosses instances à notre disposition (\autoref{instance3}), on remarque que la tendance observée précédemment continue : il y a toujours un écart dès le début, et les deux programmes sont contraints par le temps, ce qui pose de très gros problèmes au Python qui ne parvient que péniblement à effectuer deux maigres itérations ; le C arrive à en effectuer 80. Les scores sont de 345199 pour le Python et 204464 pour le C.
+			
+			À travers ces exemples (et ceux que vous retrouverez dans \autoref{exemplesGraphes}), on peut remarquer des comportements récurrents :
+			\begin{itemize}
+				\item Notre programme produit toujours une meilleure solution dès le début.
+				\item Les vitesses de convergence semblent être similaires, mais le Python s'arrête souvent avant de se stabiliser (notamment sur de grosses instances).
+				\item Plus les instances sont importantes, et plus la différence de performances est flagrante.
+			\end{itemize}
+			
+		
 		\section{Comparaison avec l'implémentation en codage direct} %TODO -
 	
 	\chapter{Autres}
@@ -441,5 +474,7 @@ searchFunctions[2] =
 				\item Vérification de la cohérence du score avec la solution fournie.
 				\item Comparaison des deux scores.
 			\end{itemize}
-			
+		
+		\appendix
+		\chapter{\label{exemplesGraphes}Résultats sur chaque type d'instance}
 \end{document}
