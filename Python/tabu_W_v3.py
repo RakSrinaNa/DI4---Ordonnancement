@@ -587,16 +587,25 @@ nb_ite = 0
 nb_ite_sans_amel = 0
 diversification = False
 
+time_end = time.clock()
+cpu = time_end - time_start
+
 scoreLog = open("./log/log_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
 scoreLogCompact = open("./log/scoreLogPythonCompact_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
 scoreLogFull = open("./log/scoreLogPythonFull_" + instanceName + "_" + str(flagsFingerprint()) + ".csv", "w")
 scoreLog.write("P_BestEver,P_BestIter\n")
-scoreLogCompact.write("P_BestIter,P_BestEver\n")
+scoreLogCompact.write("P_Iter,P_Score,P_Time\n")
 scoreLogFull.write("P_Iter,P_BestEver\n")
 scoreLogFull.write(str(0))
 scoreLogFull.write(",")
 scoreLogFull.write(str(sol_cour))
 scoreLogFull.write("\n")
+scoreLogCompact.write(str(0))
+scoreLogCompact.write(",")
+scoreLogCompact.write(str(Best_val))
+scoreLogCompact.write(",")
+scoreLogCompact.write(str(cpu))
+scoreLogCompact.write("\n")
 # BOUCLE GENERALE
 while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 	amelioration = False
@@ -736,9 +745,13 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 		print('\t', Best_val)
 		amelioration = True
 		nb_ite_sans_amel = 0
+		time_end = time.clock()
+		cpu = time_end - time_start
 		scoreLogCompact.write(str(nb_ite + 1))
 		scoreLogCompact.write(",")
 		scoreLogCompact.write(str(Best_val))
+		scoreLogCompact.write(",")
+		scoreLogCompact.write(str(cpu))
 		scoreLogCompact.write("\n")
 
 	if (diversification):
@@ -773,6 +786,8 @@ while (cpu < TIME_LIMIT) and (nb_ite <= NB_ITE_MAX):
 scoreLogCompact.write(str(nb_ite + 1))
 scoreLogCompact.write(",")
 scoreLogCompact.write(str(Best_val))
+scoreLogCompact.write(",")
+scoreLogCompact.write(str(cpu))
 scoreLogCompact.write("\n")
 scoreLog.close()
 scoreLogFull.close()

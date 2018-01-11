@@ -95,7 +95,9 @@ TabuSolution * tabu_search(Instance * instance)
 	ftime(&timeStart);
 	
 	Solution * currentSolution = tabu_solutionInit(instance);
-	printf("Initial solution:\n");
+	struct timeb timeNow;
+	ftime(&timeNow);
+	printf("Initial solution found in %fs:\n", tabu_getTimeDiff(timeStart, timeNow));
 	solution_print(currentSolution);
 #if DEV_LOG_SCORE
 #if DEV_LOG_SCORE_FULL
@@ -111,7 +113,7 @@ TabuSolution * tabu_search(Instance * instance)
 	char filenameCompact[512];
 	sprintf(filenameCompact, "./log/logScoresCCompact_%s_%d.csv", instance->origin, tabu_flagsFingerprint());
 	FILE * logScoreCompactFile = fopen(filenameCompact, "w");
-	fprintf(logScoreCompactFile, "%s,%s\n", "C_BestIter", "C_BestEver");
+	fprintf(logScoreCompactFile, "%s,%s,%s\n", "C_Iter", "C_Score", "C_Time");
 #endif
 	Solution * bestSolution = NULL;
 	Solution * bestBestSolution = solution_copy(currentSolution);
@@ -123,8 +125,6 @@ TabuSolution * tabu_search(Instance * instance)
 	
 	tabu_setConstants(instance);
 	
-	struct timeb timeNow;
-	ftime(&timeNow);
 	double timeLimit = (instance->taskCount * instance->machineCount) / 4.0;
 	double currentTime = 0;
 	
@@ -153,7 +153,10 @@ TabuSolution * tabu_search(Instance * instance)
 			NULL
 #endif
 	;
-	
+
+#if DEV_LOG_SCORE
+	fprintf(logScoreCompactFile, "%u,%u,%f\n", 0, solution_eval(currentSolution)->score, tabu_getTimeDiff(timeStart, timeNow));
+#endif
 	printf("Time limit for this instance is: %f\n", timeLimit);
 	while((currentTime = tabu_getTimeDiff(timeStart, timeNow)) < timeLimit && nbIterations < TABU_ITERATIONS)
 	{
@@ -215,7 +218,10 @@ TabuSolution * tabu_search(Instance * instance)
 				nbNoBetterIterations = 0;
 #if DEV_LOG_SCORE
 				if(solutionCompare(bestBestSolution, bestSolution, False) < 0)
-					fprintf(logScoreCompactFile, "%u,%u\n", nbIterations + 1, solution_eval(bestSolution)->score);
+				{
+					ftime(&timeNow);
+					fprintf(logScoreCompactFile, "%u,%u,%f\n", nbIterations + 1, solution_eval(bestSolution)->score, tabu_getTimeDiff(timeStart, timeNow));
+				}
 #endif
 			}
 			else
@@ -280,7 +286,7 @@ TabuSolution * tabu_search(Instance * instance)
 		solution_destroy(bestSolution);
 
 #if DEV_LOG_SCORE
-	fprintf(logScoreCompactFile, "%u,%u\n", nbIterations + 1, solution_eval(bestBestSolution)->score);
+	fprintf(logScoreCompactFile, "%u,%u,%f\n", nbIterations + 1, solution_eval(bestBestSolution)->score, tabu_getTimeDiff(timeStart, timeNow));
 #if DEV_LOG_SCORE_FULL
 	fclose(logScoreFile);
 	
