@@ -2,28 +2,30 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 
-\usepackage{tabularx}
-\usepackage{graphicx}
 \usepackage{float}
-\usepackage{pict2e}
+\usepackage{ltablex}
+\usepackage{graphicx}
 \usepackage[justification=centering]{caption}
 
 \usepackage{dirtree}
 
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+
 \newcommand{\img}[3]{%
-	\begin{figure}[H]
+	\begin{center}
 		\centering
-   		\includegraphics[scale=#3]{Images/#1}
-  	 	\caption{#2}
-	\end{figure}
+		\includegraphics[scale=#3]{Images/#1}
+		\captionof{figure}{#2}
+	\end{center}
 }
 \newcommand{\imgr}[4]{%
-   \begin{figure}[H]
-      \centering
-      	\label{#4}
-         \includegraphics[scale=#3]{Images/#1}
-         \caption{#2}
-   \end{figure}
+	\begin{center}
+		\centering
+		\includegraphics[scale=#3]{Images/#1}
+		\captionof{figure}{#2}
+		\label{#4}
+	\end{center}
 }
 \newcommand{\codec}[1]{\texttt{#1}}
 
@@ -38,10 +40,10 @@
 
 
 \resume{Résumé FR} %TODO : Clément
-\motcle{CHU, Chimiothérapie, Ordonnancement, Production, Livraison, Tabou, Swap, EBSR, EFSR}
+\motcle{CHU, Chimiothérapie, Ordonnancement, Production, Livraison, Tabou, SWAP, EBSR, EFSR}
 
 \abstract{Abstract EN} %TODO : Clément
-\keyword{Hospital, Chemotherapy, Scheduling, Production, Delivery, Tabu, Swap, EBSR, EFSR}
+\keyword{Hospital, Chemotherapy, Scheduling, Production, Delivery, Tabu, SWAP, EBSR, EFSR}
 
 \begin{document}
 	\chapter{Contexte de la réalisation}
@@ -82,7 +84,7 @@
 		
 		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable d'effectuer suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
 		\section{Cahier des charges}
-			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($(\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche telles que swap, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
+			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($(\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche telles que SWAP, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
 			
 			Comme entrées, nous disposons de fichiers représentant des situations (nous les appellerons "instances" par la suite), contenant les informations suivantes :
 			\begin{itemize}
@@ -132,7 +134,7 @@
 			
 		
 	\chapter{Modélisation du logiciel}
-		\section{Structure générale — UML}
+		\section{Structure générale — Diagramme}
 			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
 		
 			Le projet est séparé en deux principales parties: production et tests. Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
@@ -194,7 +196,7 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 				\label{methR}
 				Pour se "déplacer" de solution en solution, nous avons trois méthodes à notre disposition :
 				\begin{itemize}
-					\item \textbf{Swap} permet d'échanger deux tâches entre deux batchs distincts
+					\item \textbf{SWAP} permet d'échanger deux tâches entre deux batchs distincts
 					\item \textbf{EBSR} (Extract and Backwards Shift Reinsertion) permet d'extraire une tâche d'un batch pour l'insérer dans un autre batch en amont
 					\item \textbf{EFSR} (Extract and Forward Shift Reinsertion) permet d'extraire une tâche d'un batch pour l'insérer dans un autre batch en aval
 				\end{itemize}
@@ -207,7 +209,7 @@ son rôle au sein du projet ; les fonctions se référant à une structure préc
 					\item Le C permet de déclarer certaines fonctions comme étant \codec{inline}, ce qui --- utilisé correctement --- rend le code bien plus performant. En addition à cela, nous pouvons utiliser des directives de préprocesseur pour ne compiler que le code nécessaire et ainsi gagner en performances.
 				\end{itemize}
 				
-				Pour organiser au mieux notre projet, nous avons implémenté les différentes parties en plusieurs étapes. Tout d'abord, nous avons implémenté les instances, puis les solutions. Ensuite, nous avons commencé à réaliser l'algorithme tabou avec la méthode swap, mais nous nous sommes rendus compte que l'ajout du cache et de \codec{SolutionInfo} était nécessaire. Après cela, nous avons pu ajouter les méthodes EBSR et EFSR, pour enfin ajouter une option de diversification.
+				Pour organiser au mieux notre projet, nous avons implémenté les différentes parties en plusieurs étapes. Tout d'abord, nous avons implémenté les instances, puis les solutions. Ensuite, nous avons commencé à réaliser l'algorithme tabou avec la méthode SWAP, mais nous nous sommes rendus compte que l'ajout du cache et de \codec{SolutionInfo} était nécessaire. Après cela, nous avons pu ajouter les méthodes EBSR et EFSR, pour enfin ajouter une option de diversification.
 			
 				Nous avons pourtant rencontré certains problèmes lors de la réalisation du projet. Heureusement, nous avons pu les résoudre et trouver des solutions satisfaisantes.
 				
@@ -297,31 +299,34 @@ searchFunctions[2] =
 				
 				Commençons par ces configurations préprocesseur. Elles se trouvent dans src/prod/FLAGS.h. Un flag à 1 sera considéré comme activé, un flag à 0 ou pas de déclaration sera considéré comme désactivé.
 				
-				\begin{tabularx}{\textwidth}{|l|X|}
-					\hline
-					Nom du paramètre & Description\\\hline\hline
-					\textbf{DEBUG\_ACTIVATED} & Désactive totalement ou autorise les sorties de debug.\\\hline
-					\textbf{DEV\_LOG\_SCORE} & Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On trouve notamment \textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.\\\hline
-					\textbf{DEV\_LOG\_SCORE\_FULL}&  Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquents. On y trouve \textbf{logFull} qui répertorie le score de la solution courante pour chaque itération.\\\hline
-					\textbf{TABU\_ITERATIONS} & Nombre maximum d'itérations de l'algorithme tabou.\\\hline
-					\textbf{TABU\_DIVERSIFICATION} & Active ou désactive la diversification.\\\hline
-					\textbf{TABU\_LIST\_SIZE} & Taille de la liste tabou.\\\hline
-					\textbf{TABU\_SEARCH\_EBSR} & Active ou désactive l'utilisation d'EBSR.\\\hline
-					\textbf{TABU\_SEARCH\_EFSR} & Active ou désactive l'utilisation d'EFSR.\\\hline
-					\textbf{TABU\_SEARCH\_SWAP} & Active ou désactive l'utilisation de SWAP.\\\hline
-					\textbf{TABU\_2OPT} & Active ou non 2OPT (non implémenté).\\\hline
-					\textbf{TABU\_FIRST\_IMPROVE} & Si activé, les méthodes de diversification doivent retourner la première amélioration trouvée, sinon elles renvoient la meilleure trouvée.\\\hline
-					\textbf{TABU\_LOGIC} & Gestion logique de la liste tabou, si activé $\left( a,b\right)=\left( b,a\right)$.\\\hline
-					\textbf{TABU\_DELTA\_BATCH} & Distance maximum utilisée pour EBSR et EFSR.\\\hline
-					\textbf{TABU\_PROPAGATE} & Si activé, la solution courante est changée après chaque méthode de recherche de voisinage, sinon elle est changée par la meilleure solution de tout les retours de fonctions.\\\hline
-					\textbf{CACHED\_SCORE} & Active ou non le cache pour les solutions, décrit dans \autoref{cache}.\\\hline
-					\textbf{DELIVERY\_METHOD} & Définit la méthode d'ordonnancement pour la livraison. Deux sont disponibles comme décrit dans \autoref{deliveries}:
-						0 $\rightarrow$ Tri par date dues, 
-						1 $\rightarrow$ Tri par plus proche voisin.
-						\\\hline
-					\textbf{TABU\_RANDOM} & Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.\\\hline
-					\textbf{SEED} & Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas défini, le temps actuel sera utilisé.\\\hline
-				\end{tabularx}		
+				\begin{centering}
+					\begin{tabularx}{\textwidth}{|l|X|}
+						\hline
+						Nom du paramètre & Description\\\hline\hline
+						\textbf{DEBUG\_ACTIVATED} & Désactive totalement ou autorise les sorties de debug.\\\hline
+						\textbf{DEV\_LOG\_SCORE} & Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On trouve notamment \textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.\\\hline
+						\textbf{DEV\_LOG\_SCORE\_FULL}&  Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquents. On y trouve \textbf{logFull} qui répertorie le score de la solution courante pour chaque itération.\\\hline
+						\textbf{TABU\_ITERATIONS} & Nombre maximum d'itérations de l'algorithme tabou.\\\hline
+						\textbf{TABU\_DIVERSIFICATION} & Active ou désactive la diversification.\\\hline
+						\textbf{TABU\_LIST\_SIZE} & Taille de la liste tabou.\\\hline
+						\textbf{TABU\_SEARCH\_EBSR} & Active ou désactive l'utilisation d'EBSR.\\\hline
+						\textbf{TABU\_SEARCH\_EFSR} & Active ou désactive l'utilisation d'EFSR.\\\hline
+						\textbf{TABU\_SEARCH\_SWAP} & Active ou désactive l'utilisation de SWAP.\\\hline
+						\textbf{TABU\_2OPT} & Active ou non 2OPT (non implémenté).\\\hline
+						\textbf{TABU\_FIRST\_IMPROVE} & Si activé, les méthodes de diversification doivent retourner la première amélioration trouvée, sinon elles renvoient la meilleure trouvée.\\\hline
+						\textbf{TABU\_LOGIC} & Gestion logique de la liste tabou, si activé $\left( a,b\right)=\left( b,a\right)$.\\\hline
+						\textbf{TABU\_DELTA\_BATCH} & Distance maximum utilisée pour EBSR et EFSR.\\\hline
+						\textbf{TABU\_PROPAGATE} & Si activé, la solution courante est changée après chaque méthode de recherche de voisinage, sinon elle est changée par la meilleure solution de tout les retours de fonctions.\\\hline
+						\textbf{CACHED\_SCORE} & Active ou non le cache pour les solutions, décrit dans \autoref{cache}.\\\hline
+						\textbf{DELIVERY\_METHOD} & Définit la méthode d'ordonnancement pour la livraison. Deux sont disponibles comme décrit dans \autoref{deliveries}:
+							0 $\rightarrow$ Tri par date dues, 
+							1 $\rightarrow$ Tri par plus proche voisin.
+							\\\hline
+						\textbf{TABU\_RANDOM} & Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.\\\hline
+						\textbf{SEED} & Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas défini, le temps actuel sera utilisé.\\\hline
+					\end{tabularx}
+					\captionof{table}{FLAGS.h options}		
+				\end{centering}
 				
 				Parlons maintenant de la configuration qui peut être faite lors du démarrage du programme via des arguments de la ligne de commande. Ces derniers dépendent de la cible compilée.
 				
@@ -430,12 +435,12 @@ searchFunctions[2] =
 			\item Graine 42 (pour initialiser la génération de nombres aléatoires)
 		\end{itemize}
 		
-		\section{Comparaison avec le Python} %TODO fix graphiques ?
+		\section{Comparaison avec le Python}
 			Le but du projet étant de traduire un programme du Python vers le C en vue d'améliorer ses performances, il est judicieux de comparer les résultats obtenus par les deux implémentations. Dû au nombre d'instances et aux temps d'exécution sur chacune d'entre elles, nous n'allons détailler que les résultats les plus parlants. Nous avons effectué des tests sur toutes les instances de petite dimension, et une instance de chaque type pour les instances plus grandes. Commençons donc par les petites instances.
 			
-			\img{TravisCompare.png}{Comparaison par Travis}{0.575}
+			\imgr{TravisCompare.png}{Comparaison par Travis}{0.575}{travis1}
 			
-			Travis exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
+			Travis (\autoref{travis1}) exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
 			
 			Intéressons-nous donc aux tests sur tous les types d'instance. Afin d'avoir des résultats plus précis, nous avons mis en place un log qui répertorie chaque amélioration de la solution.
 			
@@ -466,22 +471,25 @@ searchFunctions[2] =
 			À présent, nous allons comparer deux implémentations en C : la première encodage direct, puis la nôtre en codage indirect. Concernant les options, nous garderons les mêmes que précédemment et nous prendrons la meilleure solution parmi les tests effectués par le codage direct pour chaque instance.
 			
 			Nous avons rassemblé ces données dans le tableau suivant. Une différence positive représente un meilleur résultat pour notre implémentation.
-			%TODO pas beau
-			\begin{tabularx}{\textwidth}{|c|c|c||c|c||c|c|}
-				\hline
-				Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline
-				5 & 20 & 1 & 4875 & 4449 & 426 & 9.57\\\hline
-				5 & 50 & 1 & 22811 & 21563 & 1248 & 5.79\\\hline
-				5 & 50 & 2 & 20236 & 19993 & 243 & 1.22\\\hline
-				5 & 100 & 1 & 60236 & 58230 & 2006 & 4.47\\\hline
-				5 & 150 & 1 & 52213 & 68681 & -16468 & -23.98\\\hline
-				5 & 200 & 1 & 91877 & 98200 & -6323 & -6.44\\\hline
-				10 & 20 & 1 & 12744 & 11610 & 1134 & 9.77\\\hline
-				10 & 50 & 1 & 32967 & 32496 & 471 & 1.45\\\hline
-				10 & 100 & 1 & 73617 & 70282 & 3335 & 4.75\\\hline
-				10 & 150 & 1 & 127533 & 130038 & -2505 & -1.93\\\hline
-				10 & 200 & 1 & 196561 & 204464 & -7903 & -3.87\\\hline
-			\end{tabularx}
+
+			\begin{centering}
+				\begin{tabularx}{\textwidth}{|c|c|c||c|c||c|c|}
+					\hline
+					Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline
+					5 & 20 & 1 & 4875 & 4449 & 426 & 9.57\\\hline
+					5 & 50 & 1 & 22811 & 21563 & 1248 & 5.79\\\hline
+					5 & 50 & 2 & 20236 & 19993 & 243 & 1.22\\\hline
+					5 & 100 & 1 & 60236 & 58230 & 2006 & 4.47\\\hline
+					5 & 150 & 1 & 52213 & 68681 & -16468 & -23.98\\\hline
+					5 & 200 & 1 & 91877 & 98200 & -6323 & -6.44\\\hline
+					10 & 20 & 1 & 12744 & 11610 & 1134 & 9.77\\\hline
+					10 & 50 & 1 & 32967 & 32496 & 471 & 1.45\\\hline
+					10 & 100 & 1 & 73617 & 70282 & 3335 & 4.75\\\hline
+					10 & 150 & 1 & 127533 & 130038 & -2505 & -1.93\\\hline
+					10 & 200 & 1 & 196561 & 204464 & -7903 & -3.87\\\hline
+				\end{tabularx}
+				\captionof{table}{Comparaison entre le codage directe et indirecte}
+			\end{centering}
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
@@ -499,8 +507,8 @@ searchFunctions[2] =
 			La gestion des branches sur ce dernier était très simple. Nous faisions notre développement sur une branche dev, et lorsque ce qui avait été réalisé marchait, nous le mergions dans la branche master afin d'avoir une sorte de point de sauvegarde.
 			
 			Enfin, nous avons ajouté en plus du VCS un outil d'intégration continue (CI) afin de vérifier nos tests, lancer Valgrind, et effectuer des comparaisons au Python. De cette manière nous pouvions nous concentrer plus efficacement sur le développement. Les tests ne sont pas oubliés de cette manière et le feedback sur les tests était fait de manière transparente.
-			\img{TravisAll.png}{Aperçu général des builds}{0.5}
-			\img{TravisCompare.png}{Résultats des comparaisons}{0.575}
+			\img{TravisAll.png}{Aperçu général des builds}{0.45}
+			\img{TravisCompare.png}{Résultats des comparaisons}{0.5}
 			
 			Afin de pouvoir lancer ces comparaisons, un utilitaire en Java a été créé. Ce dernier prend une liste d'instances en paramètre et effectue les actions suivantes:
 			\begin{itemize}
