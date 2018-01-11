@@ -72,21 +72,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;sys/timeb.h&gt;</code><br />
-<code>#include &lt;limits.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_tabu_8h_source.html">headers/Tabu.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_f_l_a_g_s_8h_source.html">FLAGS.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_sort_8h_source.html">headers/Sort.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7a0801aa04eee84df8f3d26b1029d46e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#a7a0801aa04eee84df8f3d26b1029d46e">tabuSolution_create</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, unsigned int iterations, long double time)</td></tr>
-<tr class="separator:a7a0801aa04eee84df8f3d26b1029d46e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475617559248b66dc3a592d213cc3569"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#a475617559248b66dc3a592d213cc3569">tabuSolution_create</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, unsigned int iterations, double time)</td></tr>
+<tr class="separator:a475617559248b66dc3a592d213cc3569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace8da34a8a7510093fb38a5bba13ee53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#ace8da34a8a7510093fb38a5bba13ee53">tabuSolution_destroy</a> (<a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *solution)</td></tr>
 <tr class="separator:ace8da34a8a7510093fb38a5bba13ee53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac94a1d608bb4b2dc8e36b1d45bad4001"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#ac94a1d608bb4b2dc8e36b1d45bad4001">tabu_solutionInit</a> (<a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
 <tr class="separator:ac94a1d608bb4b2dc8e36b1d45bad4001"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace54afc40c619117c3c942af0690a010"><td class="memItemLeft" align="right" valign="top">long double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#ace54afc40c619117c3c942af0690a010">tabu_getTimeDiff</a> (struct timeb start, struct timeb end)</td></tr>
-<tr class="separator:ace54afc40c619117c3c942af0690a010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a540e04d80706b5bd3b4e2f8463b0766a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#a540e04d80706b5bd3b4e2f8463b0766a">tabu_getTimeDiff</a> (struct timeb start, struct timeb end)</td></tr>
+<tr class="separator:a540e04d80706b5bd3b4e2f8463b0766a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8662e8c13a315455505640e4241cb69"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#ac8662e8c13a315455505640e4241cb69">tabu_flagsFingerprint</a> ()</td></tr>
 <tr class="separator:ac8662e8c13a315455505640e4241cb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06c6062ca2755bc43ec00c4781932ec0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8c.html#a06c6062ca2755bc43ec00c4781932ec0">tabu_setConstants</a> (<a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
@@ -128,14 +127,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ace54afc40c619117c3c942af0690a010"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace54afc40c619117c3c942af0690a010">&#9670;&nbsp;</a></span>tabu_getTimeDiff()</h2>
+<a id="a540e04d80706b5bd3b4e2f8463b0766a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a540e04d80706b5bd3b4e2f8463b0766a">&#9670;&nbsp;</a></span>tabu_getTimeDiff()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long double tabu_getTimeDiff </td>
+          <td class="memname">double tabu_getTimeDiff </td>
           <td>(</td>
           <td class="paramtype">struct timeb&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -388,8 +387,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a7a0801aa04eee84df8f3d26b1029d46e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0801aa04eee84df8f3d26b1029d46e">&#9670;&nbsp;</a></span>tabuSolution_create()</h2>
+<a id="a475617559248b66dc3a592d213cc3569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a475617559248b66dc3a592d213cc3569">&#9670;&nbsp;</a></span>tabuSolution_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -409,7 +408,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">long double&#160;</td>
+          <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>&#160;</td>
         </tr>
         <tr>

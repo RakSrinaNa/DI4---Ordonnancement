@@ -8,7 +8,7 @@ var searchData=
   ['tabu_5fdiversification',['TABU_DIVERSIFICATION',['../_f_l_a_g_s_8h.html#a01310678bb911fc4d6019179ee940cd6',1,'FLAGS.h']]],
   ['tabu_5ffirst_5fimprove',['TABU_FIRST_IMPROVE',['../_f_l_a_g_s_8h.html#a2d8a66f6a4a323147b8717dc11fbbf38',1,'FLAGS.h']]],
   ['tabu_5fflagsfingerprint',['tabu_flagsFingerprint',['../_tabu_8h.html#ac8662e8c13a315455505640e4241cb69',1,'tabu_flagsFingerprint():&#160;Tabu.c'],['../_tabu_8c.html#ac8662e8c13a315455505640e4241cb69',1,'tabu_flagsFingerprint():&#160;Tabu.c']]],
-  ['tabu_5fgettimediff',['tabu_getTimeDiff',['../_tabu_8h.html#ace54afc40c619117c3c942af0690a010',1,'tabu_getTimeDiff(struct timeb start, struct timeb end):&#160;Tabu.c'],['../_tabu_8c.html#ace54afc40c619117c3c942af0690a010',1,'tabu_getTimeDiff(struct timeb start, struct timeb end):&#160;Tabu.c']]],
+  ['tabu_5fgettimediff',['tabu_getTimeDiff',['../_tabu_8h.html#a540e04d80706b5bd3b4e2f8463b0766a',1,'tabu_getTimeDiff(struct timeb start, struct timeb end):&#160;Tabu.c'],['../_tabu_8c.html#a540e04d80706b5bd3b4e2f8463b0766a',1,'tabu_getTimeDiff(struct timeb start, struct timeb end):&#160;Tabu.c']]],
   ['tabu_5fiterations',['TABU_ITERATIONS',['../_f_l_a_g_s_8h.html#adfcbd43d5e94074f8dfb1f554b65e68a',1,'FLAGS.h']]],
   ['tabu_5fiterations_5fnoimprove',['TABU_ITERATIONS_NOIMPROVE',['../_tabu_8c.html#a46fccce50e913f78a7da3c27587d8afc',1,'Tabu.c']]],
   ['tabu_5flist_5fsize',['TABU_LIST_SIZE',['../_f_l_a_g_s_8h.html#a473f457afb4c5a6554dd49af376957f4',1,'FLAGS.h']]],
@@ -42,7 +42,7 @@ var searchData=
   ['tabulist_5fpop',['tabuList_pop',['../_tabu_list_8h.html#aa3aec34708a23dd65452783db9f4caa4',1,'tabuList_pop(TabuList *list):&#160;TabuList.c'],['../_tabu_list_8c.html#aa3aec34708a23dd65452783db9f4caa4',1,'tabuList_pop(TabuList *list):&#160;TabuList.c']]],
   ['tabulist_5fprint',['tabuList_print',['../_tabu_list_8h.html#aadcaaf1d3b698fa2ead6cd58bb560022',1,'tabuList_print(TabuList *list):&#160;TabuList.c'],['../_tabu_list_8c.html#aadcaaf1d3b698fa2ead6cd58bb560022',1,'tabuList_print(TabuList *list):&#160;TabuList.c']]],
   ['tabusolution',['TabuSolution',['../_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98',1,'Tabu.h']]],
-  ['tabusolution_5fcreate',['tabuSolution_create',['../_tabu_8h.html#a7a0801aa04eee84df8f3d26b1029d46e',1,'tabuSolution_create(Solution *solution, unsigned int iterations, long double time):&#160;Tabu.c'],['../_tabu_8c.html#a7a0801aa04eee84df8f3d26b1029d46e',1,'tabuSolution_create(Solution *solution, unsigned int iterations, long double time):&#160;Tabu.c']]],
+  ['tabusolution_5fcreate',['tabuSolution_create',['../_tabu_8h.html#a475617559248b66dc3a592d213cc3569',1,'tabuSolution_create(Solution *solution, unsigned int iterations, double time):&#160;Tabu.c'],['../_tabu_8c.html#a475617559248b66dc3a592d213cc3569',1,'tabuSolution_create(Solution *solution, unsigned int iterations, double time):&#160;Tabu.c']]],
   ['tabusolution_5fdestroy',['tabuSolution_destroy',['../_tabu_8h.html#ace8da34a8a7510093fb38a5bba13ee53',1,'tabuSolution_destroy(TabuSolution *solution):&#160;Tabu.c'],['../_tabu_8c.html#ace8da34a8a7510093fb38a5bba13ee53',1,'tabuSolution_destroy(TabuSolution *solution):&#160;Tabu.c']]],
   ['task',['Task',['../_task_8h.html#a0c77930ab3818a1680c59353f627fba8',1,'Task.h']]],
   ['task_2ec',['Task.c',['../_task_8c.html',1,'']]],
@@ -55,6 +55,6 @@ var searchData=
   ['task_5ft',['task_t',['../_utils_8h.html#a942583f94efa78a848d849d818d9a39a',1,'Utils.h']]],
   ['taskcount',['taskCount',['../struct___instance.html#af593bbb0545f8dc4b9ce35541a4d7456',1,'_Instance::taskCount()'],['../struct___pack.html#ad4834822abaf8e25259045c4f73483eb',1,'_Pack::taskCount()']]],
   ['tasks',['tasks',['../struct___instance.html#af4a2afb03074bee6ebe171cb9cae34c5',1,'_Instance::tasks()'],['../struct___pack.html#a2ddb62bc60d3c35652cc551f34bb0cc2',1,'_Pack::tasks()']]],
-  ['time',['time',['../struct___tabu_solution.html#aa12f6bf11a9353d11a261f7fc1a07d05',1,'_TabuSolution']]],
+  ['time',['time',['../struct___tabu_solution.html#a9876c1a98e7b874f28e86bb61c185f4d',1,'_TabuSolution']]],
   ['true',['True',['../_utils_8h.html#a39db6982619d623273fad8a383489309a6d32c34708a0a3507c4bdb89219d650b',1,'Utils.h']]]
 ];

@@ -91,17 +91,19 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a9953896af32a21c8ad820fe5667e0d98"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct___tabu_solution.html">_TabuSolution</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a></td></tr>
 <tr class="memdesc:a9953896af32a21c8ad820fe5667e0d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the solution the tabu found, with the time take and iterations.  <a href="#a9953896af32a21c8ad820fe5667e0d98">More...</a><br /></td></tr>
 <tr class="separator:a9953896af32a21c8ad820fe5667e0d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d0597a127dfa5b37233da49efe0bf3e"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a> *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a8d0597a127dfa5b37233da49efe0bf3e">searchFunction</a>) (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>)</td></tr>
+<tr class="separator:a8d0597a127dfa5b37233da49efe0bf3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7a0801aa04eee84df8f3d26b1029d46e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a7a0801aa04eee84df8f3d26b1029d46e">tabuSolution_create</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, unsigned int iterations, long double time)</td></tr>
-<tr class="separator:a7a0801aa04eee84df8f3d26b1029d46e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475617559248b66dc3a592d213cc3569"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a475617559248b66dc3a592d213cc3569">tabuSolution_create</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, unsigned int iterations, double time)</td></tr>
+<tr class="separator:a475617559248b66dc3a592d213cc3569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace8da34a8a7510093fb38a5bba13ee53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#ace8da34a8a7510093fb38a5bba13ee53">tabuSolution_destroy</a> (<a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *solution)</td></tr>
 <tr class="separator:ace8da34a8a7510093fb38a5bba13ee53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac94a1d608bb4b2dc8e36b1d45bad4001"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#ac94a1d608bb4b2dc8e36b1d45bad4001">tabu_solutionInit</a> (<a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
 <tr class="separator:ac94a1d608bb4b2dc8e36b1d45bad4001"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace54afc40c619117c3c942af0690a010"><td class="memItemLeft" align="right" valign="top">long double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#ace54afc40c619117c3c942af0690a010">tabu_getTimeDiff</a> (struct timeb start, struct timeb end)</td></tr>
-<tr class="separator:ace54afc40c619117c3c942af0690a010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a540e04d80706b5bd3b4e2f8463b0766a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a540e04d80706b5bd3b4e2f8463b0766a">tabu_getTimeDiff</a> (struct timeb start, struct timeb end)</td></tr>
+<tr class="separator:a540e04d80706b5bd3b4e2f8463b0766a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affd070f2ca8ca2b22021b4b6c61c2928"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_tabu_8h.html#a9953896af32a21c8ad820fe5667e0d98">TabuSolution</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#affd070f2ca8ca2b22021b4b6c61c2928">tabu_search</a> (<a class="el" href="_instance_8h.html#a96d0292cf37536608d2b98a8c51038c5">Instance</a> *instance)</td></tr>
 <tr class="separator:affd070f2ca8ca2b22021b4b6c61c2928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87a9ce215ca84160056e7787d861da18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_tabu_8h.html#a87a9ce215ca84160056e7787d861da18">tabu_searchSwap</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *currentSolution, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *tabuList, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a> diversification)</td></tr>
@@ -116,6 +118,20 @@ Functions</h2></td></tr>
 <tr class="separator:a47ca201597c5fe50791df125477717e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a id="a8d0597a127dfa5b37233da49efe0bf3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d0597a127dfa5b37233da49efe0bf3e">&#9670;&nbsp;</a></span>searchFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b">SearchResult</a>*(* searchFunction) (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *, <a class="el" href="_tabu_list_8h.html#a92cc213e8c2c3417492165628bf6d592">TabuList</a> *, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a9953896af32a21c8ad820fe5667e0d98"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9953896af32a21c8ad820fe5667e0d98">&#9670;&nbsp;</a></span>TabuSolution</h2>
 
@@ -151,14 +167,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ace54afc40c619117c3c942af0690a010"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace54afc40c619117c3c942af0690a010">&#9670;&nbsp;</a></span>tabu_getTimeDiff()</h2>
+<a id="a540e04d80706b5bd3b4e2f8463b0766a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a540e04d80706b5bd3b4e2f8463b0766a">&#9670;&nbsp;</a></span>tabu_getTimeDiff()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long double tabu_getTimeDiff </td>
+          <td class="memname">double tabu_getTimeDiff </td>
           <td>(</td>
           <td class="paramtype">struct timeb&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -393,8 +409,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7a0801aa04eee84df8f3d26b1029d46e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0801aa04eee84df8f3d26b1029d46e">&#9670;&nbsp;</a></span>tabuSolution_create()</h2>
+<a id="a475617559248b66dc3a592d213cc3569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a475617559248b66dc3a592d213cc3569">&#9670;&nbsp;</a></span>tabuSolution_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +430,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">long double&#160;</td>
+          <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>&#160;</td>
         </tr>
         <tr>

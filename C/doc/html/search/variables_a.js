@@ -5,5 +5,5 @@ var searchData=
   ['tabuitem',['tabuItem',['../struct___search_result.html#ae0a6c3dc185c40fae7f94a62758a4e3c',1,'_SearchResult']]],
   ['taskcount',['taskCount',['../struct___instance.html#af593bbb0545f8dc4b9ce35541a4d7456',1,'_Instance::taskCount()'],['../struct___pack.html#ad4834822abaf8e25259045c4f73483eb',1,'_Pack::taskCount()']]],
   ['tasks',['tasks',['../struct___instance.html#af4a2afb03074bee6ebe171cb9cae34c5',1,'_Instance::tasks()'],['../struct___pack.html#a2ddb62bc60d3c35652cc551f34bb0cc2',1,'_Pack::tasks()']]],
-  ['time',['time',['../struct___tabu_solution.html#aa12f6bf11a9353d11a261f7fc1a07d05',1,'_TabuSolution']]]
+  ['time',['time',['../struct___tabu_solution.html#a9876c1a98e7b874f28e86bb61c185f4d',1,'_TabuSolution']]]
 ];

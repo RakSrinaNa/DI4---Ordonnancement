@@ -1,6 +1,7 @@
 var searchData=
 [
   ['score',['score',['../struct___solution_info.html#a451adf8ceb4af2f1be2f0b1c37a2279e',1,'_SolutionInfo']]],
+  ['searchfunction',['searchFunction',['../_tabu_8h.html#a8d0597a127dfa5b37233da49efe0bf3e',1,'Tabu.h']]],
   ['searchmethod',['SearchMethod',['../_tabu_list_8h.html#a34d6ebd9ae9ff5a8d79053848d51be3a',1,'TabuList.h']]],
   ['searchmethod_5fgetname',['searchMethod_getName',['../_tabu_list_8h.html#a6d14cb58f1083081f0633677419ee751',1,'searchMethod_getName(SearchMethod method):&#160;TabuList.c'],['../_tabu_list_8c.html#a6d14cb58f1083081f0633677419ee751',1,'searchMethod_getName(SearchMethod method):&#160;TabuList.c']]],
   ['searchresult',['SearchResult',['../_search_result_8h.html#ac71189ae5faa82f8f9db3ab839acc18b',1,'SearchResult.h']]],
@@ -29,7 +30,7 @@ var searchData=
   ['solution_5fmovetaskpack',['solution_moveTaskPack',['../_solution_8h.html#a3a9fa44df2ec85140ea15147c15ae2d4',1,'solution_moveTaskPack(Solution *solution, task_t task, unsigned int pack):&#160;Solution.c'],['../_solution_8c.html#a3a9fa44df2ec85140ea15147c15ae2d4',1,'solution_moveTaskPack(Solution *solution, task_t task, unsigned int pack):&#160;Solution.c']]],
   ['solution_5fprint',['solution_print',['../_solution_8h.html#a61622272f6af4d7598b10f0e492632f5',1,'solution_print(Solution *solution):&#160;Solution.c'],['../_solution_8c.html#a61622272f6af4d7598b10f0e492632f5',1,'solution_print(Solution *solution):&#160;Solution.c']]],
   ['solution_5fprintcsv',['solution_printCSV',['../_solution_8h.html#ab37df548f99f1f1477471eaee977147e',1,'solution_printCSV(Solution *solution, FILE *file):&#160;Solution.c'],['../_solution_8c.html#ab37df548f99f1f1477471eaee977147e',1,'solution_printCSV(Solution *solution, FILE *file):&#160;Solution.c']]],
-  ['solution_5fsave',['solution_save',['../_solution_8h.html#af68454cf80a685fb77c84704f4ea264f',1,'solution_save(Solution *solution, const char *filename, double time):&#160;Solution.c'],['../_solution_8c.html#af68454cf80a685fb77c84704f4ea264f',1,'solution_save(Solution *solution, const char *filename, double time):&#160;Solution.c']]],
+  ['solution_5fsave',['solution_save',['../_solution_8h.html#adb94ca7f015cdd1c10a6e7062703751a',1,'solution_save(FILE *file, Solution *solution, double time):&#160;Solution.c'],['../_solution_8c.html#adb94ca7f015cdd1c10a6e7062703751a',1,'solution_save(FILE *file, Solution *solution, double time):&#160;Solution.c']]],
   ['solution_5fswitchtaskpack',['solution_switchTaskPack',['../_solution_8h.html#a2aed348db9dc2791d25b66382c1dda63',1,'solution_switchTaskPack(Solution *solution, task_t task1, task_t task2):&#160;Solution.c'],['../_solution_8c.html#a2aed348db9dc2791d25b66382c1dda63',1,'solution_switchTaskPack(Solution *solution, task_t task1, task_t task2):&#160;Solution.c']]],
   ['solutioncompare',['solutionCompare',['../_solution_8h.html#aea29e50217d31b3d858f9ee7a947f9ac',1,'solutionCompare(Solution *solution1, Solution *solution2, Bool diversification):&#160;Solution.c'],['../_solution_8c.html#aea29e50217d31b3d858f9ee7a947f9ac',1,'solutionCompare(Solution *solution1, Solution *solution2, Bool diversification):&#160;Solution.c']]],
   ['solutioninfo',['SolutionInfo',['../_solution_info_8h.html#af416b5e28ed7348ec3da169d4a04ba09',1,'SolutionInfo.h']]],

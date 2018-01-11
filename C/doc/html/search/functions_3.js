@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['last_5fstrstr',['last_strstr',['../_parser_8h.html#adb203288c74b1138d0b047585a8e2880',1,'last_strstr(const char *haystack, const char *needle):&#160;Parser.c'],['../_parser_8c.html#adb203288c74b1138d0b047585a8e2880',1,'last_strstr(const char *haystack, const char *needle):&#160;Parser.c']]]
+  ['main',['main',['../_main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;Main.c'],['../_main_tests_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;MainTests.c']]]
 ];

@@ -92,8 +92,8 @@ Functions</h2></td></tr>
 <tr class="separator:ac285ffd7181aa8da94ee1cef316dada9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61622272f6af4d7598b10f0e492632f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_8c.html#a61622272f6af4d7598b10f0e492632f5">solution_print</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution)</td></tr>
 <tr class="separator:a61622272f6af4d7598b10f0e492632f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af68454cf80a685fb77c84704f4ea264f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_8c.html#af68454cf80a685fb77c84704f4ea264f">solution_save</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, const char *filename, double time)</td></tr>
-<tr class="separator:af68454cf80a685fb77c84704f4ea264f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb94ca7f015cdd1c10a6e7062703751a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_8c.html#adb94ca7f015cdd1c10a6e7062703751a">solution_save</a> (FILE *file, <a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, double time)</td></tr>
+<tr class="separator:adb94ca7f015cdd1c10a6e7062703751a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea29e50217d31b3d858f9ee7a947f9ac"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_8c.html#aea29e50217d31b3d858f9ee7a947f9ac">solutionCompare</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution1, <a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution2, <a class="el" href="_utils_8h.html#a39db6982619d623273fad8a383489309">Bool</a> diversification)</td></tr>
 <tr class="separator:aea29e50217d31b3d858f9ee7a947f9ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab37df548f99f1f1477471eaee977147e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solution_8c.html#ab37df548f99f1f1477471eaee977147e">solution_printCSV</a> (<a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *solution, FILE *file)</td></tr>
@@ -348,8 +348,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af68454cf80a685fb77c84704f4ea264f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af68454cf80a685fb77c84704f4ea264f">&#9670;&nbsp;</a></span>solution_save()</h2>
+<a id="adb94ca7f015cdd1c10a6e7062703751a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb94ca7f015cdd1c10a6e7062703751a">&#9670;&nbsp;</a></span>solution_save()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -357,14 +357,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void solution_save </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
-          <td class="paramname"><em>solution</em>, </td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>filename</em>, </td>
+          <td class="paramtype"><a class="el" href="_solution_8h.html#a51eb43f14ffbf5b40a63a3e60978e141">Solution</a> *&#160;</td>
+          <td class="paramname"><em>solution</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -382,13 +382,12 @@ Functions</h2></td></tr>
 <p>Saves the solution to a file.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">solution</td><td>The solution. Not null. </td></tr>
-    <tr><td class="paramname">filename</td><td>The path of the file. </td></tr>
-    <tr><td class="paramname">time</td><td>The execution time. </td></tr>
+    <tr><td class="paramname">file</td><td>The file to write to, opened. </td></tr>
+    <tr><td class="paramname">solution</td><td>The solution to write. </td></tr>
+    <tr><td class="paramname">time</td><td>The time taken by the tabu algorithm. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Does nothing if the solution hasn't been computed. </dd></dl>
 
 </div>
 </div>
