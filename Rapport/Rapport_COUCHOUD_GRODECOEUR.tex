@@ -2,25 +2,32 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 
-\usepackage{graphicx}
 \usepackage{float}
-\usepackage{pict2e}
+\usepackage{ltablex}
+\usepackage{graphicx}
 \usepackage[justification=centering]{caption}
 
+\usepackage{dirtree}
+
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+
 \newcommand{\img}[3]{%
-	\begin{figure}[H]
+	\begin{center}
 		\centering
-   		\includegraphics[scale=#3]{Images/#1}
-  	 	\caption{#2}
-	\end{figure}
+		\includegraphics[scale=#3]{Images/#1}
+		\captionof{figure}{#2}
+	\end{center}
 }
 \newcommand{\imgr}[4]{%
-   \begin{figure}[H]
-      \centering
-         \includegraphics[scale=#3,rotate=#4]{Images/#1}
-         \caption{#2}
-   \end{figure}
+	\begin{center}
+		\centering
+		\includegraphics[scale=#3]{Images/#1}
+		\captionof{figure}{#2}
+		\label{#4}
+	\end{center}
 }
+\newcommand{\codec}[1]{\texttt{#1}}
 
 \schooldepartment{di}
 \typereport{ppgldi4}
@@ -32,80 +39,319 @@
 \academicsupervisor{Jean-Charles}{Billaut}{jean-charles.billaut@univ-tours.fr}
 
 
-%TODO
-\resume{Résumé FR}
-\motcle{Mots clé}
+\resume{Ce projet vise à traduire un algorithme Tabou pour un problème d'ordonnancement du langage Python vers du C afin d'en améliorer les performances. Le CHU Trousseau de Tours prépare des traitements de chimiothérapie uniques à chaque patient, et doit organiser au mieux la production et la livraison pour que les traitements arrivent en temps voulu.}
+\motcle{CHU, Chimiothérapie, Ordonnancement, Production, Livraison, Tabou, SWAP, EBSR, EFSR}
 
-\abstract{Abstract EN}
-\keyword{Keywords}
+\abstract{This project is about translating a Tabu algorithm for a scheduling problem from the Python language to the C language in order to improve performance. The Trousseau Hospital of Tours produces chemotherapy treatments, unique for each patient, and has to be able to organize at best production and delivery, for the treatments to be ready on time.}
+\keyword{Hospital, Chemotherapy, Scheduling, Production, Delivery, Tabu, SWAP, EBSR, EFSR}
 
 \begin{document}
-	\chapter{Contexte de la réalisation} %TODO
+	\chapter{Contexte de la réalisation}
+		Dans le cadre de notre formation à Polytech'Tours, nous avons eu l'occasion de travailler sur une application concrète grâce au projet encadré. Ce dernier vise à traduire un algorithme Tabou du langage Python vers du C.
 		
-	\chapter{Spécifications du logiciel} %TODO
-		%Etude python
+		L'unité de Biopharmacie Clinique Oncologique du CHU Trousseau de Tours prépare des traitements de chimiothérapie (médicaments anticancéreux cytotoxiques) pour des patients. Ce processus est différent pour chaque préparation mais suit les même étapes.
 		
-	\chapter{Modélisation du logiciel} %TODO : Clément
-		\section{Structure générale — UML}
-			Le projet est séparé en deux grosses parties: production et tests.
+		Le processus de production d'un traitement est le suivant:
+		\begin{itemize}
+			\item Prescription du traitement pour les patients: type de chimiothérapie, dosage, horaire, etc.
+			\item Production de la chimio:
+			\begin{itemize}
+				\item Passage sur le premier isolateur.
+				\item Passage sur le deuxième isolateur.
+				\item Passage sur le troisième isolateur.
+			\end{itemize}
+			\item Livraison
+		\end{itemize}
+		
+		Des éléments important sont à noter:
+		\begin{itemize}
+			\item Le passage sur les isolateurs doit être fait dans l'ordre.
+			\item Le temps de passage sur chaque machine est unique pour chaque patient.
+			\item Un seul véhicule est disponible pour la livraison.
+		\end{itemize}
+		
+		Les traitements étant coûteux, $\approx 400$€, il est nécessaire de pouvoir planifier ces derniers de manière efficace afin d'éviter au maximum le désaccord avec les contraintes suivantes:
+		\begin{itemize}
+			\item Le traitement ne peut pas être préparé trop en avance.
+			\item Les dosages sont propres à chaque patient.
+			\item La date d'administration est importante, il faut donc réduire au maximum les retards.
+		\end{itemize}
+		
+		L'outil à développer vise à aider à la décision pour la planification des traitements ainsi que leur livraison.
+		
+	\chapter{Spécifications du logiciel}
+		Afin de généraliser l'implémentation, nous considérons le nombre de machines (isolateurs) comme étant variable pour chaque instance. Par la suite, nous désignerons les traitements par "tâches".
+		
+		Ce projet s'appuie sur un programme déjà existant, développé dans le langage Python. Celui-ci a été réalisé de manière à amorcer une solution à ce problème, de façon simple. De ce fait, le programme n'a pas été conçu pour l'optimisation : le choix du langage implique une baisse de performances notable. On le remarque surtout lorsque le nombre de machines et de traitement augmente, passé un certain seuil l'algorithme n'est plus capable d'effectuer suffisamment d'itérations pour obtenir un résultat convenable. C'est pourquoi notre tâche est de l'implémenter dans un langage plus efficace : le C.
+		\section{Cahier des charges}
+			Le cahier des charges de ce projet est relativement simple et vise à proposer des solutions d'ordonnancement pour la production et la livraison des traitements, tout en évitant au maximum les retards. De plus, la planification doit s'effectuer dans un temps raisonnable ($\text{nombre de machines}\times \text{nombre de tâches})\div 4$). L'objectif principal est de reproduire les fonctionnalités déjà présentes dans le programme existant (algorithme Tabou s'appuyant sur des méthodes de recherche telles que SWAP, EBSR et EFSR, expliqués plus en détail dans \autoref{methR}), tout en apportant des améliorations et des fonctionnalités supplémentaires.
+			
+			Comme entrées, nous disposons de fichiers représentant des situations (nous les appellerons "instances" par la suite), contenant les informations suivantes :
+			\begin{itemize}
+				\item Nombre de machines
+				\item Nombre de tâches
+				\item Temps de production par machine et par tâche
+				\item Date limite de livraison
+				\item Distances entre les points de livraison pour chaque tâche
+			\end{itemize}
+			
+			Comme sortie, on nous demande un fichier texte contenant :
+			\begin{itemize}
+				\item Le temps de calcul de la solution
+				\item Le temps de retard total (appelé "score" par la suite)
+				\item L'ordre de production et de livraison
+			\end{itemize}
+			
+			Nous devons également être en mesure de choisir les critères de recherche de la meilleure solution (par exemple, désactiver l'EBSR ou le cache, ou modifier le seuil de diversification).
+			
+		\section{Codage}
+			Dans ce problème, nous pouvons différencier deux types de codage : direct et indirect.
+			\begin{itemize}
+				\item Le codage direct est représenté uniquement par une liste de batchs contenant les tâches à produire. Les tâches sont ordonnées, le calcul du score se fait donc simplement.
+				\item Le codage indirect est représenté aussi par une liste de batchs contenant les tâches à livrer. L'ordonnancement de chaque batch et le calcul de l'ordre de production sont effectués lors du calcul du score.
+			\end{itemize}
+			
+			Nous devons produire une implémentation du codage indirect.
+			
+			%TODO Schema des codages
+		
+		\section{Étude du code Python}
+			Python est un langage interprété. Bien qu'ayant de multiples avantages, les performances sont fortement amoindries, et cela a un fort impact sur ce genre d'applications où le volume de calcul est important. Malgré cela, sa syntaxe proche d'un algorithme en pseudo-code le rend plus facile à prendre en main.
+			
+			Cet apriori ne s'est cependant pas appliqué à notre cas, car différents élément rendent la lecture du code difficile :
+			\begin{itemize}
+				\item Les variables globales sont utilisées à outrance. De ce fait, il est plus ardu de suivre ces variables et de comprendre de quelle façon elles doivent évoluer.
+				\item La convention de nommage des variables consistant à utiliser un minimum de caractères, bien qu'acceptable lorsqu'utilisée avec parcimonie, entraîne une perte de clarté et d'efficacité (on oublie facilement et rapidement le sens d'une variable si l'on ne s'en sert pas assez régulièrement).
+			\end{itemize}
+			
+			Par conséquent, nous avons décidé de découper notre code en structures logiques et de les rendre les plus indépendantes possible. Cela permet de faciliter la lecture par des personnes extérieures au projet, et de rendre le code plus évolutif et maintenable.
+			
+			Ensuite, le code Python comporte plusieurs blocs de code fortement similaires, par exemple les appels aux fonctions de recherche. Nous détaillerons ce cas plus en détail dans \autoref{searchfunc}.
+			
+			De plus, certaines fonctions sont appelées bien plus souvent que nécessaire, ce qui impacte lourdement les performances. On remarque notamment la fonction evalue() ; nous parlerons d'une solution dans \autoref{cache}.
+			
+			Enfin, le code comporte quelques erreurs qui influencent la façon dont les étapes de recherche sont effectuées. On ne peut donc pas comparer pas à pas le code Python et le code C ; et nous devons également prêter attention à ces erreurs pour ne pas les implémenter par mégarde. Cela justifie d'autant plus l'utilisation de tests unitaire (décrits dans \autoref{unit}).
+			
+		
+	\chapter{Modélisation du logiciel}
+		\section{Structure générale — Diagramme}
+			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
+		
+			Le projet est séparé en deux principales parties: production et tests. Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
+			
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
 			
-			Chacun d'entre eux contiennent les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
-			
-			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
+			\begin{minipage}{0.99\textwidth}
+				\dirtree{%
+					.1 C.
+					.2 doc.
+					.2 log.
+					.2 src.
+					.3 prod.
+					.4 headers.
+					.3 unit.
+					.4 headers.
+					.2 unitResources	.			
+				}
+			\end{minipage}
 
-		\section{Rôles des différents éléments} %TODO : Clément
-			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou.
-			
+		\section{Rôles des différents éléments}
+			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou. Chaque fonction possède également un préfixe décrivant
+son rôle au sein du projet ; les fonctions se référant à une structure précise utilisent le nom de la structure en tant que préfixe.			
 			\subsection{Instance}
-				Une instance d'un problème à résoudre est représentée par la structure Instance. Cette dernière contient le nombre de tâches et de machines, une liste de tâches ainsi qu'une matrice des distances entre chaque tâche (pour la livraison). Les tâches sont, elles, représentées par la structure Task contenant une liste des temps de production par machine, ainsi qu'une date de livraison. On se réfère ensuite aux différentes tâches en utilisant leur indice dans la liste.
+				Une instance d'un problème à résoudre est représentée par la structure \codec{Instance}. Cette dernière contient le nombre de tâches et de machines, une liste de tâches ainsi qu'une matrice des distances entre chaque tâche (pour la livraison).
+				Les tâches sont, elles, représentées par la structure \codec{Task} contenant une liste des temps de production par machine, ainsi qu'une date de livraison. On se réfère ensuite aux différentes tâches en utilisant leur indice dans la liste.
 				
 			\subsection{Solution}
-				Chaque solution admissible à notre problème est représentée par la structure Solution. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une Solution seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure SolutionInfo : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.
+				Chaque solution admissible à notre problème est représentée par la structure \codec{Solution}. Celle-ci comporte le nombre de batchs de livraison, une liste contenant ces derniers ainsi que les informations de la solution calculée ; notons qu'une \codec{Solution} seule ne décrit que l'ordre et le contenu des batchs, et non l'ordre interne de chacun. Ceci est le rôle de la structure \codec{SolutionInfo} : elle contient l'ordre de chaque batch l'ordre de production des tâches ainsi qu'une liste des temps auxquels chaque tâche est prête à être livrée.
+				
+				Pour définir les batchs de livraison, nous utilisons la structure \codec{Pack}. Celle-ci contient uniquement une liste de tâches (sous forme d'indices dans la liste des tâches de l'instance, comme on l'a vu plus haut).
+				
+				Afin d'organiser les données de ces structures, nous avons rassemblé des fonctions d'ordonnancement pour la production et la livraison, préfixées par \codec{sequencer}.
 				
 			\subsection{Tabou}
+				L'algorithme Tabou lui-même est représenté, avec ses fonctions associées, au préfixe \codec{tabu}. Les méthodes de recherche (voir \autoref{methR}) sont listées par l'énumération \codec{SearchMethod}, et chaque résultat de recherche par chaque méthode est stocké dans un \codec{SearchResult} contenant la solution trouvée, ainsi que la méthode elle-même. Une fois l'algorithme terminé, un \codec{TabuSolution} est renvoyé, contenant la meilleure solution trouvée, le temps et le nombre d'itérations.
 				
+				Nous avons également eu à implémenter une liste Tabou, grâce à la structure \codec{TabuList}, contenant une liste de \codec{TabuItem}, ceux-ci contenant la méthode utilisée ainsi que le déplacement effectué.
+				
+				Les déplacements pour chaque méthode de recherche sont définis dans des fonctions sous le préfixe \codec{sort}.
+
 			\subsection{Autres}
-		
-	\chapter{Implémentation \& tests} %TODO : Clément
-		\section{Implémentation} %TODO : Clément
-			\subsection{Transfert du Python au C} %TODO : Clément
-			\subsection{Implémentation d'un système de cache des solutions}
-				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \textbf{eval()} était très fréquent. De plus cette fonction effectue un travail assez lourd ce qui peut facilement prendre une place importante dans le temps de calcul.
+				Pour lire les fichiers que notre programme reçoit en entrée, nous avons élaboré une structure \codec{Parser} et ses fonctions associées.
 				
-				Nous avons donc imaginé un système de cache qui garde une solution calculée (\textbf{SolutionInfo}) en mémoire. De cette manière nous évitons des temps de calculs inutiles.
+				Certaines fonctions et définitions élémentaires sont contenues dans le fichier \codec{Utils.h} : une énumération \codec{Bool}, des \codec{typedefs} pour les types les plus utilisés, des fonctions de debug, quelques macros de gestion de la mémoire...
+				
+				Bien évidemment, notre code comporte aussi un fichier \codec{Main.c} et sa fonction \codec{main}.
+
+		
+	\chapter{Implémentation \& tests}
+		\section{Implémentation}
+			La traduction d'un programme dans un langage différent implique forcément d'adapter un minimum le code et de faire certains choix. C'est aussi l'occasion de le remanier afin d'améliorer les décisions précédemment prises. Nous allons donc détailler ici le travail effectué.
+			
+			\subsection{Algorithme Tabou}
+				L'algorithme de recherche Tabou est une méthode d'optimisation utilisant une liste FIFO (dite liste tabou) des dernières solutions explorées, afin de ne pas stagner indéfiniment autour de la même solution. La taille de cette liste est fixe tout au long de l'algorithme mais peut être ajustée pour convenir le mieux possible au problème posé. Plus la liste est longue et plus l'on se souvient des précédentes solutions pour éviter de les explorer à nouveau ; cependant, la liste contenant des solutions complètes, il faut prendre en compte l'occupation mémoire, ce qui, de fait, limite sa taille.
+				
+				De plus, si l'on reste trop longtemps sans diminuer le meilleur score (comme c'est le cas si l'on se trouve dans un minimum local), on peut alors diversifier, c'est-à-dire changer complètement la solution courante pour, potentiellement, arriver à trouver une meilleure solution.
+				
+				\label{methR}
+				Pour se "déplacer" de solution en solution, nous avons trois méthodes à notre disposition :
+				\begin{itemize}
+					\item \textbf{SWAP} permet d'échanger deux tâches entre deux batchs distincts
+					\item \textbf{EBSR} (Extract and Backwards Shift Reinsertion) permet d'extraire une tâche d'un batch pour l'insérer dans un autre batch en amont
+					\item \textbf{EFSR} (Extract and Forward Shift Reinsertion) permet d'extraire une tâche d'un batch pour l'insérer dans un autre batch en aval
+				\end{itemize}
+			
+			\subsection{Transfert du Python au C}
+				Le C est un langage de bien plus bas niveau que le Python, c'est pourquoi beaucoup de fonctionnalités propres au Python doivent être recodées à la main en C :
+				\begin{itemize}
+					\item La gestion de la mémoire n'est pas automatique en C, il faut donc allouer et libérer la mémoire à la main. Heureusement, des outils comme Valgrind permettent de se rendre compte des erreurs et des fuites.
+					\item Les listes de Python n'existent pas en C. Nous avons donc programmé nous-mêmes des fonctions permettant d'utiliser des tableaux de façon dynamique.
+					\item Le C permet de déclarer certaines fonctions comme étant \codec{inline}, ce qui --- utilisé correctement --- rend le code bien plus performant. En addition à cela, nous pouvons utiliser des directives de préprocesseur pour ne compiler que le code nécessaire et ainsi gagner en performances.
+				\end{itemize}
+				
+				Pour organiser au mieux notre projet, nous avons implémenté les différentes parties en plusieurs étapes. Tout d'abord, nous avons implémenté les instances, puis les solutions. Ensuite, nous avons commencé à réaliser l'algorithme tabou avec la méthode SWAP, mais nous nous sommes rendus compte que l'ajout du cache et de \codec{SolutionInfo} était nécessaire. Après cela, nous avons pu ajouter les méthodes EBSR et EFSR, pour enfin ajouter une option de diversification.
+			
+				Nous avons pourtant rencontré certains problèmes lors de la réalisation du projet. Heureusement, nous avons pu les résoudre et trouver des solutions satisfaisantes.
+				
+				Par exemple, lors de l'implémentation de la diversification, nous nous sommes rendus compte que l'on tournait en boucle après un certain nombre d'itérations. Nous avons résolu ce problème en ajoutant une dimension aléatoire à la diversification (voir \autoref{diversificationAleatoire}).
+				
+				Ensuite, il existait une erreur subtile dans le code Python : lorsque le nombre de tâches par batch était supérieur à 3, l'ordonnancement ne s'effectuait pas. Notre implémentation fonctionnait, mais nous ne trouvions pas de résultats identiques à ceux du Python pour cette raison. Ce problème affectait aussi la solution initiale, et donc tous les déplacements effectués après.
+				
+				Nous avions aussi implémenté différemment une partie du code de l'algorithme Tabou. Bien que très similaire, le comportement était différent lorsque deux solutions avec le même score étaient comparées. Grâce à un coup de chance, le Python obtenait à la fin un meilleur résultat.
+				
+				Ces deux derniers problèmes ont été corrigés sans souci, mais leur détection a été laborieuse.
+				
+			\subsection{\label{cache}Implémentation d'un système de cache des solutions}
+				Lors de la traduction du Python au C, nous avons pu remarquer que les appels à la fonction \codec{evalue()} étaient très fréquents. De plus, cette fonction effectue un travail assez lourd, ce qui peut facilement prendre une place importante dans le temps de calcul.
+				
+				Nous avons donc imaginé un système de cache qui garde une solution calculée (\codec{SolutionInfo}) en mémoire. De cette manière nous évitons des calculs inutiles.
 				
 				\img{PythonProfilerTop.png}{Profiler exécuté sur le python}{0.3}
 				
-				Après l'implémentation du cache, et avec un test sur une petite instance, on a pu remarquer que le temps passé sur le calcul du score est le même avec ou sans cache, à savoir environ $43\%$.
-				
-				Cela est surement du au fait que les packs traités pour cette instance sont de taille $\leq 3$ donc le calcul de l'ordonnancement reste assez simple. Faire les tests sur une instance plus grande serait sûrement plus intéressant. %TODO : Test bigger instance?
+				Après l'implémentation du cache, et avec un test sur une petite instance, nous avons pu observer un gain de performances de l'ordre de 60\%. Cela nous permet en outre de sécuriser le code en appelant \codec{solution\_eval()} plutôt que de récupérer à la main le score, qui pourrait ne pas avoir encore été calculé.
 			
-			\subsection{Diversification aléatoire} %TODO : Clément
-			\subsection{Calcul différent de l'itinéraire}
-				Le calcul de l'ordre de production joue un rôle important mais l'ordre de livraison aussi. Afin de pouvoir tester différents résultats nous avons décider 2 façons de calculer l'ordre de livraison.
+			\subsection{\label{diversificationAleatoire}Diversification aléatoire}
+				Le code Python possède un mécanisme de diversification : si l'on n'améliore pas la meilleure solution pendant un certain nombre d'itérations, alors on choisit de garder le pire déplacement plutôt que le meilleur. Cette décision semble judicieuse mais a un défaut majeur : il ne s'agit que d'un déplacement, et l'on retombe très vite sur la même solution. Nous avons donc implémenté une diversification aléatoire : on échange des tâches au hasard, un nombre variable de fois (entre 3 et $3 \times \text{nombre de batchs}$). Cela permet de s'éloigner bien plus du minimum local.
 				
-				La première méthode est celui transposé depuis le Python, et consiste à livrer dans l'ordre des dates dues. On peut se dire que cette méthode est optimale. Cependant il ne faut pas oublier les temps de voyage entre les points de livraison. Par exemple si on a deux zones A et B qui sont très très loin l'une de l'autre et que les dates dues nous font livrer par alternance A et B, on va passer la plus part du temps sur la route. De manière instinctive on aurait plus tendance à livrer zone par zone.
+			\subsection{\label{deliveries}Calcul différent de l'itinéraire}
+				Le calcul de l'ordre de production joue un rôle important, mais l'ordre de livraison aussi. Afin de pouvoir tester différents résultats nous avons décider 2 façons de calculer l'ordre de livraison.
 				
-				C'est exactement ce que fait la seconde méthode. Cette fois-ci on livre les produits en allant toujours au plus proche voisin. Cette méthode n'est pas la plus optimale non plus: certes elle diminue les temps de trajet mais elle ne prends plus en compte du tout les dates dues.
+				La première méthode était déjà implémentée dans le code Python, et consiste à livrer dans l'ordre des dates dues. On peut se dire que cette méthode est optimale. Cependant il ne faut pas oublier les temps de voyage entre les points de livraison. Par exemple, si deux zones A et B sont très loin l'une de l'autre et que les dates dues nous font livrer par alternance A et B, on va passer la plupart du temps sur la route. De manière instinctive on aurait plutôt tendance à livrer zone par zone.
 				
-				Il faut donc essayer les différents algorithmes afin de savoir le quel est le plus adapté au problème courant.
+				C'est exactement ce que fait la seconde méthode. Cette fois-ci, on livre les produits en allant toujours au plus proche voisin. Cette méthode n'est pas la plus optimale non plus: certes elle diminue les temps de trajet mais elle ne prends plus en compte du tout les dates dues.
 				
-				On peut envisager de faire un algorithme qui ferai le mixe des deux: limiter les trajets tout en tenant compte des dates dues. Cependant on peut se poser la question si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au count d'un algorithme plus complexe et qui par conséquent sera moins rapide. 
+				Il faut donc essayer les différents algorithmes afin de savoir lequel est le plus adapté au problème courant.
 				
-			\subsection{Simplification de l'implémentation des méthodes de recherche}%TODO : Thomas
+				On peut envisager de faire un algorithme qui ferait le travail des deux : limiter les trajets tout en tenant compte des dates dues. Cependant on peut se demander si faire cela est vraiment rentable. En effet nous pourrons éventuellement réduire les temps de retard, mais cela sera au coût d'un algorithme plus complexe et qui par conséquent sera moins rapide.
+				
+				Cette implémentation serait rapide à intégrer au code existant. Pas besoin de fortes modifications, juste écrire le code de la fonction et l'intégrer dans une condition:
+				\begin{csource}
+else if(taskCount > 3)
+{
+	if(DELIVERY_NEAREST_NEIGHBOR)
+		sequence = sequencer_sequenceDeliveriesNearestNeighbor(instance, taskCount, tasks, initialDate);
+	else
+		sequence = sequencer_sequenceDeliveriesDueDate(instance, taskCount, tasks, initialDate);
+}
+				\end{csource}
+				
+				\subsection{\label{searchfunc}Simplification de l'implémentation des méthodes de recherche}
+				L'algorithme tabou repose sur l'utilisation de différentes méthodes pour générer un nouveau voisinage. Ces dernières ont une utilisation identique, seul leur algorithme propre change. Nous avions tout d'abord implémenté ces dernières comme dans le Python, c'est-à-dire à la suite dans la partie tabou en recopiant le code encadrant la récupération de la solution.
+				
+				Pour des raisons de lisibilité et d'évolution, nous avons choisi de changer cette manière de procéder et utilisons maintenant des pointeurs de fonction. Ces pointeurs ont un typedef associé:
+				\begin{csource}
+typedef SearchResult * (*searchFunction)(Solution *, TabuList *, Bool);
+				\end{csource}
+				
+				De cette manière il est très simple d'ajouter une nouvelle méthode de recherche à l'algorithme tabou. Il suffit de déclarer cette fonction en respectant les arguments/retour requis, puis de l'ajouter à un tableau des fonctions disponibles:
+				\begin{csource}
+int searchFunctionAvailable = 3;
+searchFunction searchFunctions[searchFunctionAvailable];
+searchFunctions[0] =
+	#if TABU_SEARCH_SWAP
+		tabu_searchSwap
+	#else
+		NULL
+	#endif
+;
+
+searchFunctions[1] =
+	#if TABU_SEARCH_EBSR
+		tabu_searchEBSR
+	#else
+		NULL
+	#endif
+;
+
+searchFunctions[2] =
+	#if TABU_SEARCH_EFSR
+		tabu_searchEFSR
+	#else
+		NULL
+	#endif
+;
+				\end{csource}
+				
+				Le résultat de la fonction sera alors automatiquement géré par le reste de l'algorithme tabou.
+			
+			\subsection{Manuel d'utilisation}
+				Nous allons dans cette partie décrire comment utiliser le logiciel. La première chose à constater est le fait qu'il est plus simple d'utiliser ce dernier depuis un IDE. En effet, la configuration se fait principalement avec des commandes préprocesseur ce qui implique une recompilation. Un autre choix serait de créer plusieurs exécutables avec différentes combinaisons de paramètres.
+				
+				Commençons par ces configurations préprocesseur. Elles se trouvent dans src/prod/FLAGS.h. Un flag à 1 sera considéré comme activé, un flag à 0 ou pas de déclaration sera considéré comme désactivé.
+				
+				\begin{centering}
+					\begin{tabularx}{\textwidth}{|l|X|}
+						\hline
+						Nom du paramètre & Description\\\hline\hline\endhead
+						\textbf{DEBUG\_ACTIVATED} & Désactive totalement ou autorise les sorties de debug.\\\hline
+						\textbf{DEV\_LOG\_SCORE} & Active ou non la création de fichiers csv donnant des informations sur les solutions trouvées. On trouve notamment \textbf{logCompact} indiquant le numéro de l'itération avec le score de la solution lorsque celle-ci devient la meilleure trouvée depuis le début.\\\hline
+						\textbf{DEV\_LOG\_SCORE\_FULL}&  Si \textbf{DEV\_LOG\_SCORE} est activé, active ou désactive la création de fichiers plus conséquents. On y trouve \textbf{logFull} qui répertorie le score de la solution courante pour chaque itération.\\\hline
+						\textbf{TABU\_ITERATIONS} & Nombre maximum d'itérations de l'algorithme tabou.\\\hline
+						\textbf{TABU\_DIVERSIFICATION} & Active ou désactive la diversification.\\\hline
+						\textbf{TABU\_LIST\_SIZE} & Taille de la liste tabou.\\\hline
+						\textbf{TABU\_SEARCH\_EBSR} & Active ou désactive l'utilisation d'EBSR.\\\hline
+						\textbf{TABU\_SEARCH\_EFSR} & Active ou désactive l'utilisation d'EFSR.\\\hline
+						\textbf{TABU\_SEARCH\_SWAP} & Active ou désactive l'utilisation de SWAP.\\\hline
+						\textbf{TABU\_2OPT} & Active ou non 2OPT (non implémenté).\\\hline
+						\textbf{TABU\_FIRST\_IMPROVE} & Si activé, les méthodes de diversification doivent retourner la première amélioration trouvée, sinon elles renvoient la meilleure trouvée.\\\hline
+						\textbf{TABU\_LOGIC} & Gestion logique de la liste tabou, si activé $\left( a,b\right)=\left( b,a\right)$.\\\hline
+						\textbf{TABU\_DELTA\_BATCH} & Distance maximum utilisée pour EBSR et EFSR.\\\hline
+						\textbf{TABU\_PROPAGATE} & Si activé, la solution courante est changée après chaque méthode de recherche de voisinage, sinon elle est changée par la meilleure solution de tout les retours de fonctions.\\\hline
+						\textbf{CACHED\_SCORE} & Active ou non le cache pour les solutions, décrit dans \autoref{cache}.\\\hline
+						\textbf{DELIVERY\_METHOD} & Définit la méthode d'ordonnancement pour la livraison. Deux sont disponibles comme décrit dans \autoref{deliveries}:
+							0 $\rightarrow$ Tri par date dues, 
+							1 $\rightarrow$ Tri par plus proche voisin.
+							\\\hline
+						\textbf{TABU\_RANDOM} & Active ou désactive la diversification aléatoire vue dans \autoref{diversificationAleatoire}.\\\hline
+						\textbf{SEED} & Graine utilisée pour la génération aléatoire. Si ce paramètre n'est pas défini, le temps actuel sera utilisé.\\\hline
+					\end{tabularx}
+					\captionof{table}{FLAGS.h options}		
+				\end{centering}
+				
+				Parlons maintenant de la configuration qui peut être faite lors du démarrage du programme via des arguments de la ligne de commande. Ces derniers dépendent de la cible compilée.
+				
+				En cible production les options sont:
+				\begin{itemize}
+					\item \textbf{-{}-debug}: Pour activer les sorties de debug (si le flag est activé).
+					\item \textbf{<chemin de fichier>}: Définit l'instance à lancer. Si ce paramètre est omis, l'instance lancée sera \textbf{./Input.txt}.
+				\end{itemize}
+				
+				En cible test les options sont les mêmes que la production avec en plus:
+				\begin{itemize}
+					\item \textbf{-{}-test}: pour lancer les tests unitaires.
+				\end{itemize}
 		
-		\section{Tests}
-			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentés ailleurs, nous nous sommes concentrés dessus.
+		\section{\label{unit}Tests}
+			Des tests unitaires ont été effectués sur l'ensemble des éléments de base du projet. En effet tester la partie algorithme Tabou est difficile puisque cela dépend du nombre d'itérations, des paramètres utilisés, etc. Sachant que la partie Tabou utilise principalement des fonctions implémentées ailleurs, nous nous sommes concentrés sur celles-ci.
 			
-			Ces derniers restent assez simplistes et ne couvrent sûrement pas tout les cas mais ils permettent d'identifier des erreurs contraignantes pour la suite de manière rapide.
+			Ces tests restent assez simplistes et ne couvrent sûrement pas tous les cas, mais ils permettent d'identifier des erreurs contraignantes pour la suite de manière rapide.
 			
-			Nous allons maintenant détailler un peu plus les tests effectués. Par la suite nous appellerons constructeur les fonctions xxx\_create(), et destructeur les fonctions xxx\_destroy().
+			Nous allons maintenant détailler un peu plus les tests effectués. Par la suite nous appellerons constructeur les fonctions \codec{xxx\_create()}, et destructeur les fonctions \codec{xxx\_destroy()}.
 			\subsection{Task}
 				\begin{itemize}
 					\item Vérification du constructeur/destructeur.
 					\item Get/Set des dates dues.
-					\item Get/Set des temps machines.
+					\item Get/Set des temps par machine.
 				\end{itemize}
 				
 			\subsection{Instance}
@@ -122,9 +368,9 @@
 			\subsection{Pack}
 				\begin{itemize}
 					\item Vérification du constructeur/destructeur.
-					\item Add/Remove/Has tâche.
-					\item Switch tâche.
-					\item Move tâche.
+					\item Add/Remove/Has sur les tâches.
+					\item Switch des tâches.
+					\item Move des tâches.
 				\end{itemize}
 				
 			\subsection{SolutionInfo}
@@ -138,9 +384,9 @@
 				\begin{itemize}
 					\item Vérification du constructeur/destructeur.
 					\item Copie.
-					\item Add/Remove/Has tâche.
-					\item Switch tâche.
-					\item Move tâche.
+					\item Add/Remove/Has sur les tâches.
+					\item Switch des tâches.
+					\item Move des tâches.
 				\end{itemize}
 				
 			\subsection{Sequencer}
@@ -172,34 +418,141 @@
 				\end{itemize}
 		
 	\chapter{Résultats obtenus}
-		\section{Comparaison avec le python} %TODO : Thomas
-		\section{Comparaison avec l'implémentation en codage direct} %TODO
+		Deux comparaisons sont intéressantes : entre notre programme et le programme en Python, et entre notre codage (indirect) et le codage direct.
+		
+		Par manque de temps, nous n'avons pas effectué de tests avec plusieurs configurations différentes. Nos paramètres étaient les suivants :
+		\begin{itemize}
+			\item Maximum de 20000 itérations
+			\item Diversification aléatoire
+			\item Liste tabou de taille 5
+			\item SWAP, EFSR et EBSR activés
+			\item 2-OPT désactivé
+			\item First Improve désactivé
+			\item Tabou logique activé
+			\item Propagation activée
+			\item Cache activé
+			\item Ordonnancement par date due
+			\item Graine 42 (pour initialiser la génération de nombres aléatoires)
+		\end{itemize}
+		
+		\section{Comparaison avec le Python}
+			Le but du projet étant de traduire un programme du Python vers le C en vue d'améliorer ses performances, il est judicieux de comparer les résultats obtenus par les deux implémentations. Dû au nombre d'instances et aux temps d'exécution sur chacune d'entre elles, nous n'allons détailler que les résultats les plus parlants. Nous avons effectué des tests sur toutes les instances de petite dimension, et une instance de chaque type pour les instances plus grandes. Commençons donc par les petites instances.
+			
+			\imgr{TravisCompare.png}{Comparaison par Travis}{0.5}{travis1}
+			
+			Travis (\autoref{travis1}) exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le programme Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
+			
+			Intéressons-nous donc aux tests sur tous les types d'instance. Afin d'avoir des résultats plus précis, nous avons mis en place un log qui répertorie chaque amélioration de la solution.
+			
+			Sur les prochains graphiques, on montrera les différences de score par itération entre les deux programmes. La courbe bleue représente les résultats du C et la courbe orange ceux du Python. On n'affiche pas le nombre total d'itérations pour garder une échelle correcte (on s'arrête à la dernière amélioration). Nous préciserons le nombre d'itérations effectuées dans la description.
+			
+			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.5}{instance1}
+			
+			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. 
+			
+			Le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 115\ieme. De plus, le code Python termine son exécution en ayant réalisé 74 itérations, alors que le code C a eu le temps d'en faire 4492. Enfin, notre programme trouve une solution avec un score de 4449, contre 4485 pour le Python.
+			
+			\imgr{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.5}{instance2}
+			
+			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contrant par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 17 itérations avec un score de 24376 ; le C, de son côté, obtient un score de 21563 après 718 itérations.
+			
+			\imgr{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.5}{instance3}
+			
+			Pour l'une des plus grosses instances à notre disposition (\autoref{instance3}), on remarque que la tendance observée précédemment continue : il y a toujours un écart dès le début, et les deux programmes sont contraints par le temps, ce qui pose de très gros problèmes au Python qui ne parvient que péniblement à effectuer deux maigres itérations ; le C arrive à en effectuer 80. Les scores sont de 345199 pour le Python et 204464 pour le C.
+			
+			Les deux programmes n'ayant pas les même vitesses d'exécution, nous pouvons aussi comparer les scores par unité de temps. Pour montrer à quel point le programme C surpasse le Python, les exemples parlent d'eux-mêmes :
+			
+			\imgr{5-20-1-t.png}{Instance à 5 machines et 20 tâches}{0.5}{instance4}
+			
+			\imgr{5-50-1-t.png}{Instance à 5 machines et 50 tâches}{0.5}{instance5}
+			
+			\imgr{10-200-1-t.png}{Instance à 10 machines et 200 tâches}{0.5}{instance6}
+			
+			Même sur de grosses instances, le C atteint sa valeur finale alors que le Python n'a encore effectué qu'une poignée d'itérations. On pourrait limiter bien plus le nombre maximal d'itérations pour générer une solution plus rapidement.
+			
+			À travers ces exemples (et ceux que vous retrouverez dans \autoref{exemplesGraphes}), on peut remarquer des comportements récurrents :
+			\begin{itemize}
+				\item Notre programme ne produit pas de solution initiale moins bonne que le programme Python.
+				\item Les vitesses de convergence semblent être similaires, mais le Python s'arrête souvent avant de se stabiliser (notamment sur de grosses instances).
+				\item Plus les instances sont importantes, et plus la différence de performances est flagrante.
+				\item On peut parfois voir les effets de la diversification, où après une stabilisation un enchaînement d'améliorations fait son apparition.
+			\end{itemize}
+			
+		
+		\section{Comparaison avec l'implémentation en codage direct}
+			À présent, nous allons comparer deux implémentations en C : la première encodage direct, puis la nôtre en codage indirect. Concernant les options, nous garderons les mêmes que précédemment et nous prendrons la meilleure solution parmi les tests effectués par le codage direct pour chaque instance.
+			
+			Nous avons rassemblé ces données dans le tableau suivant. Une différence positive représente un meilleur résultat pour notre implémentation.
+
+			\begin{centering}
+				\begin{tabularx}{\textwidth}{|c|c|c||c|c||c|c|}
+					\hline
+					Machines & Tâches & Instance & Codage direct & Codage indirect & Différence & \% Différence\\\hline\hline\endhead
+					5 & 20 & 1 & 4875 & 4449 & 426 & 9.57\\\hline
+					5 & 50 & 1 & 22811 & 21563 & 1248 & 5.79\\\hline
+					5 & 50 & 2 & 20236 & 19993 & 243 & 1.22\\\hline
+					5 & 100 & 1 & 60236 & 58230 & 2006 & 4.47\\\hline
+					5 & 150 & 1 & 52213 & 68681 & -16468 & -23.98\\\hline
+					5 & 200 & 1 & 91877 & 98200 & -6323 & -6.44\\\hline
+					10 & 20 & 1 & 12744 & 11610 & 1134 & 9.77\\\hline
+					10 & 50 & 1 & 32967 & 32496 & 471 & 1.45\\\hline
+					10 & 100 & 1 & 73617 & 70282 & 3335 & 4.75\\\hline
+					10 & 150 & 1 & 127533 & 130038 & -2505 & -1.93\\\hline
+					10 & 200 & 1 & 196561 & 204464 & -7903 & -3.87\\\hline
+				\end{tabularx}
+				\captionof{table}{Comparaison entre le codage directe et indirecte}
+			\end{centering}
+			
+			On constate que notre implémentation est plus performante pour de petites instances, mais cet avantage s'effondre pour des instances plus importantes. Cela s'explique probablement par le fait que nous avons à calculer l'ordonnancement à chaque itération, contrairement au codage direct ; cela implique une forte perte de temps.
 	
 	\chapter{Autres}
 		Ce chapitre concerne différents mécanismes qui ont pu être mis en place tout au long du projet ainsi que différentes améliorations possibles au programme.
 		
-		\section{Parallélisme} %TODO : Clément
+		\section{Parallélisation}
+			Au vu de la complexité des calculs mis en œuvre, il pourrait être très intéressant d'effectuer certains de ces calculs en parallèle : comme l'on énumère tous les déplacements possibles, on effectue un grand nombre de calculs identiques et indépendants. Par exemple, nous pourrions imaginer tester plusieurs déplacements à la fois et ne retenir que le meilleur pendant la recherche du meilleur voisin. Nous pourrions également tester plusieurs méthodes de recherche en même temps. Sur des instances de grande taille, il serait même imaginable de déléguer ces calculs à un processeur dédié (par exemple sur une carte graphique).
 		
 		\section{Fichier de configuration}
-			La mise en place d'un fichier de configuration serait une grande avancée. En effet, cela permettrai d'éviter la recompilation du projet après la modification d'un paramètre.
+			La mise en place d'un fichier de configuration serait une grande avancée. En effet, cela permettrait d'éviter la recompilation du projet après la modification d'un paramètre.
 			
-			Cependant cela nous empêcherai d'utiliser des commandes pré-processeur ce qui nous forcerai à faire un bon nombre de conditions if qui auraient toujours la même valeur tout au long de l'exécution.
+			Cependant cela nous empêcherait d'utiliser des directives de préprocesseur, ce qui nous forcerait à faire un bon nombre de conditions if qui auraient toujours la même valeur tout au long de l'exécution : cela diminuerait légèrement les performances.
 		
 		\section{Github — Travis}
-			Nous avons tout au long du projet utilisé un gestionnaire de version (VCS): Git. Ce dernier nous a permit de pouvoir travailler de manière collaborative de manière simplifiée. En effet chacun pouvait se focuser sur une partie précise du projet et ainsi paralléliser un peu le développement.
+			Nous avons tout au long du projet utilisé un gestionnaire de version (VCS): Git. Ce dernier nous a permit de pouvoir travailler de manière collaborative de manière simplifiée. En effet chacun pouvait se concentrer sur une partie précise du projet et ainsi paralléliser un peu le développement.
 			
 			La gestion des branches sur ce dernier était très simple. Nous faisions notre développement sur une branche dev, et lorsque ce qui avait été réalisé marchait, nous le mergions dans la branche master afin d'avoir une sorte de point de sauvegarde.
 			
 			Enfin, nous avons ajouté en plus du VCS un outil d'intégration continue (CI) afin de vérifier nos tests, lancer Valgrind, et effectuer des comparaisons au Python. De cette manière nous pouvions nous concentrer plus efficacement sur le développement. Les tests ne sont pas oubliés de cette manière et le feedback sur les tests était fait de manière transparente.
-			\img{TravisAll.png}{Aperçu général des builds}{0.5}
-			\img{TravisCompare.png}{Résultats des comparaisons}{0.575}
+			\img{TravisAll.png}{Aperçu général des builds}{0.35}
+			\img{TravisCompare.png}{Résultats des comparaisons}{0.5}
 			
-			Afin de pouvoir lancer ces comparaisons, un utilitaire en JAVA a été créé. Ce dernier prend une liste d'instance en paramètres et effectue les actions suivantes:
+			Afin de pouvoir lancer ces comparaisons, un utilitaire en Java a été créé. Ce dernier prend une liste d'instances en paramètre et effectue les actions suivantes:
 			\begin{itemize}
-				\item Execution des instances sur le programme en C et en Python.
+				\item Exécution des instances sur le programme en C et en Python.
 				\item Récupération des résultats.
 				\item Vérification de la cohérence du score avec la solution fournie.
 				\item Comparaison des deux scores.
 			\end{itemize}
-			
+		
+		\appendix
+		\chapter{\label{exemplesGraphes}Résultats sur chaque type d'instance}
+			\img{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.52}
+			\img{5-20-1-t.png}{Instance à 5 machines et 20 tâches}{0.52}
+			\img{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.52}
+			\img{5-50-1-t.png}{Instance à 5 machines et 20 tâches}{0.52}
+			\img{5-100-1.png}{Instance à 5 machines et 100 tâches}{0.47}
+			\img{5-100-1-t.png}{Instance à 5 machines et 100 tâches}{0.47}
+			\img{5-150-1.png}{Instance à 5 machines et 150 tâches}{0.47}
+			\img{5-150-1-t.png}{Instance à 5 machines et 150 tâches}{0.47}
+			\img{5-200-1.png}{Instance à 5 machines et 200 tâches}{0.47}
+			\img{5-200-1-t.png}{Instance à 5 machines et 200 tâches}{0.47}
+			\img{10-20-1.png}{Instance à 10 machines et 20 tâches}{0.47}
+			\img{10-20-1-t.png}{Instance à 10 machines et 20 tâches}{0.47}
+			\img{10-50-1.png}{Instance à 10 machines et 50 tâches}{0.47}
+			\img{10-50-1-t.png}{Instance à 10 machines et 50 tâches}{0.47}
+			\img{10-100-1.png}{Instance à 10 machines et 100 tâches}{0.47}
+			\img{10-100-1-t.png}{Instance à 10 machines et 100 tâches}{0.47}
+			\img{10-150-1.png}{Instance à 10 machines et 150 tâches}{0.47}
+			\img{10-150-1-t.png}{Instance à 10 machines et 150 tâches}{0.47}
+			\img{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.5}
+			\img{10-200-1-t.png}{Instance à 10 machines et 200 tâches}{0.5}
 \end{document}

@@ -2,11 +2,12 @@
 #define TABOU_FLAGS_H
 
 //!Logs the score of each iteration.
+#define DEBUG_ACTIVATED 0
 #define DEV_LOG_SCORE 1
 #define DEV_LOG_SCORE_FULL 0
 
 //!Maximum iterations for the Tabu algorithm.
-#define TABU_ITERATIONS 2000
+#define TABU_ITERATIONS 20000
 //!If no improvement was found, try a new, different solution.
 #define TABU_DIVERSIFICATION 1
 //!Maximum size of the Tabu list.
@@ -25,15 +26,15 @@
 #define TABU_FIRST_IMPROVE 0
 //!Prevents swapping if already swapped the inverse.
 #define TABU_LOGIC 1
-//!Minimum batch gap between swaps, EBSRs, EFSRs.
+//!Maximum batch gap between swaps, EBSRs, EFSRs.
 #define TABU_DELTA_BATCH 4
 //!Change the current solution after each method used.
 #define TABU_PROPAGATE 1
 
 //!Use the score cache system.
 #define CACHED_SCORE 1
-//!Sort deliveries using the nearest neighbor, else sort by lowest due date first.
-#define DELIVERY_NEAREST_NEIGHBOR 0
+//!Sort deliveries using the given method. 0 -> Due date; 1 -> Nearest neighbor.
+#define DELIVERY_METHOD 0
 //!Random diversification.
 #define TABU_RANDOM 1
 

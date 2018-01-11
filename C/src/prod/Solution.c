@@ -125,13 +125,13 @@ void solution_switchTaskPack(Solution * solution, task_t task1, task_t task2)
 SolutionInfo * solution_eval(Solution * solution)
 {
 	debugPrint("Evaluation solution %p\n", solution);
-#ifdef CACHED_SCORE
+#if CACHED_SCORE
 	if(solution->info != NULL)
 		return solution->info;
-#endif
-	
+#else
 	if(solution->info != NULL)
 		solutionInfo_destroy(solution, solution->info);
+#endif
 	solution->info = solutionInfo_productionOrder(solution);
 	solutionInfo_deliveryOrder(solution, solution->info);
 	
@@ -159,28 +159,27 @@ void solution_print(Solution * solution)
 		printf("Solution : NULL\n");
 }
 
-void solution_save(FILE * file, TabuSolution * solution)
+void solution_save(FILE * file, Solution * solution, double time)
 {
 	debugPrint("Saving solution %p", solution);
-	if(solution->solution == NULL || solution->solution->info == NULL)
+	if(solution->info == NULL)
 		return;
 	if(file != NULL)
 	{
-		fprintf(file, "%d\t%Lf\t{ production:[ ", solution_eval(solution->solution)->score, solution->time);
-		for(unsigned int i = 0; i < solution->solution->instance->taskCount; i++)
-			fprintf(file, "%d%c", solution->solution->info->productionOrder[i], (i == solution->solution->instance->taskCount - 1) ? ' ' : ',');
+		fprintf(file, "%d\t%f\t{ production:[ ", solution_eval(solution)->score, time);
+		for(unsigned int i = 0; i < solution->instance->taskCount; i++)
+			fprintf(file, "%d%c", solution->info->productionOrder[i], (i == solution->instance->taskCount - 1) ? ' ' : ',');
 		fprintf(file, "], tasks:[ ");
-		for(unsigned int i = 0; i < solution->solution->packCount; i++)
+		for(unsigned int i = 0; i < solution->packCount; i++)
 		{
 			fprintf(file, "[ ");
-			for(unsigned int j = 0; j < solution->solution->packList[i]->taskCount; j++)
+			for(unsigned int j = 0; j < solution->packList[i]->taskCount; j++)
 			{
-				fprintf(file, "%d%c", solution->solution->info->deliveries[i][j], (j == solution->solution->packList[i]->taskCount - 1) ? ' ' : ',');
+				fprintf(file, "%d%c", solution->info->deliveries[i][j], (j == solution->packList[i]->taskCount - 1) ? ' ' : ',');
 			}
-			fprintf(file, "]%c", (i == solution->solution->packCount - 1) ? ' ' : ',');
+			fprintf(file, "]%c", (i == solution->packCount - 1) ? ' ' : ',');
 		}
 		fprintf(file, "] }\n");
-		fclose(file);
 	}
 }
 
@@ -193,8 +192,8 @@ long solutionCompare(Solution * solution1, Solution * solution2, Bool diversific
 	if(solution2 == NULL)
 		return 1;
 	if(diversification)
-		return solution_eval(solution1)->score - solution_eval(solution2)->score;
-	return ((long)solution_eval(solution2)->score) - solution_eval(solution1)->score;
+		return (long) (((long)solution_eval(solution1)->score) - solution_eval(solution2)->score);
+	return (long) (((long)solution_eval(solution2)->score) - solution_eval(solution1)->score);
 }
 
 void solution_printCSV(Solution * solution, FILE * file)
