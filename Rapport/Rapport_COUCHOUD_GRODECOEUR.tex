@@ -438,7 +438,7 @@ searchFunctions[2] =
 		\section{Comparaison avec le Python}
 			Le but du projet étant de traduire un programme du Python vers le C en vue d'améliorer ses performances, il est judicieux de comparer les résultats obtenus par les deux implémentations. Dû au nombre d'instances et aux temps d'exécution sur chacune d'entre elles, nous n'allons détailler que les résultats les plus parlants. Nous avons effectué des tests sur toutes les instances de petite dimension, et une instance de chaque type pour les instances plus grandes. Commençons donc par les petites instances.
 			
-			\imgr{TravisCompare.png}{Comparaison par Travis}{0.575}{travis1}
+			\imgr{TravisCompare.png}{Comparaison par Travis}{0.5}{travis1}
 			
 			Travis (\autoref{travis1}) exécute automatiquement les tests sur toutes les instances pour 5 machines, de 20 à 50 tâches. Dans la majorité des cas, nous trouvons un meilleur score que le Python (à l'exception d'un, où le Python nous bat de 2 points, probablement grâce à un coup de chance). Cependant, ces tests ne sont pas détaillés.
 			
@@ -446,15 +446,15 @@ searchFunctions[2] =
 			
 			Sur les prochains graphiques, la courbe bleue représente les résultats du C et la courbe orange ceux du Python. On n'affiche pas le nombre total d'itérations pour garder une échelle correcte (on s'arrête à la dernière amélioration). Nous préciserons le nombre d'itérations effectuées dans la description.
 			
-			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.45}{instance1}
+			\imgr{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.5}{instance1}
 			
 			Premièrement (\autoref{instance1}), on peut remarquer que la première itération montre un écart considérable au niveau du score, mais le Python rattrape rapidement son retard (il est plus facile d'améliorer une solution médiocre que d'améliorer encore plus une bonne solution). Après quelques itérations, les deux programmes montrent des résultats similaires. En revanche, le C trouve sa meilleure solution à la 39\ieme itération, tandis que le Python trouve la sienne à la 74\ieme . De plus, le code Python termine son exécution en étant limité par le temps (25 secondes), alors que le code C est limité par le nombre d'itérations (2000). Enfin, notre programme trouve une solution avec un score de 4449, contre 4492 pour le Python.
 			
-			\imgr{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.45}{instance2}
+			\imgr{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.5}{instance2}
 			
 			Cette fois-ci (\autoref{instance2}), on remarque toujours un écart dès le début, cependant moins important que pour l'exemple précédent. En revanche, on constate déjà que le Python peine à travailler avec des instances de cette taille : il est limité par le temps avant de se stabiliser. À l'inverse, le C étant moins contrant par le temps, il arrive après une stabilisation à se diversifier pour trouver une solution encore meilleure. Le Python se termine après 20 itérations avec un score de 24092 ; le C, de son côté, obtient un score de 21563 après 780 itérations.
 			
-			\imgr{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.45}{instance3}
+			\imgr{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.5}{instance3}
 			
 			Pour l'une des plus grosses instances à notre disposition (\autoref{instance3}), on remarque que la tendance observée précédemment continue : il y a toujours un écart dès le début, et les deux programmes sont contraints par le temps, ce qui pose de très gros problèmes au Python qui ne parvient que péniblement à effectuer deux maigres itérations ; le C arrive à en effectuer 80. Les scores sont de 345199 pour le Python et 204464 pour le C.
 			
@@ -507,7 +507,7 @@ searchFunctions[2] =
 			La gestion des branches sur ce dernier était très simple. Nous faisions notre développement sur une branche dev, et lorsque ce qui avait été réalisé marchait, nous le mergions dans la branche master afin d'avoir une sorte de point de sauvegarde.
 			
 			Enfin, nous avons ajouté en plus du VCS un outil d'intégration continue (CI) afin de vérifier nos tests, lancer Valgrind, et effectuer des comparaisons au Python. De cette manière nous pouvions nous concentrer plus efficacement sur le développement. Les tests ne sont pas oubliés de cette manière et le feedback sur les tests était fait de manière transparente.
-			\img{TravisAll.png}{Aperçu général des builds}{0.45}
+			\img{TravisAll.png}{Aperçu général des builds}{0.35}
 			\img{TravisCompare.png}{Résultats des comparaisons}{0.5}
 			
 			Afin de pouvoir lancer ces comparaisons, un utilitaire en Java a été créé. Ce dernier prend une liste d'instances en paramètre et effectue les actions suivantes:
@@ -520,14 +520,14 @@ searchFunctions[2] =
 		
 		\appendix
 		\chapter{\label{exemplesGraphes}Résultats sur chaque type d'instance}
-			\img{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.45}
-			\img{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.45}
-			\img{5-100-1.png}{Instance à 5 machines et 100 tâches}{0.45}
-			\img{5-150-1.png}{Instance à 5 machines et 150 tâches}{0.45}
-			\img{5-200-1.png}{Instance à 5 machines et 200 tâches}{0.45}
-			\img{10-20-1.png}{Instance à 10 machines et 20 tâches}{0.45}
-			\img{10-50-1.png}{Instance à 10 machines et 50 tâches}{0.45}
-			\img{10-100-1.png}{Instance à 10 machines et 100 tâches}{0.45}
-			\img{10-150-1.png}{Instance à 10 machines et 150 tâches}{0.45}
-			\img{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.45}
+			\img{5-20-1.png}{Instance à 5 machines et 20 tâches}{0.52}
+			\img{5-50-1.png}{Instance à 5 machines et 50 tâches}{0.52}
+			\img{5-100-1.png}{Instance à 5 machines et 100 tâches}{0.47}
+			\img{5-150-1.png}{Instance à 5 machines et 150 tâches}{0.47}
+			\img{5-200-1.png}{Instance à 5 machines et 200 tâches}{0.47}
+			\img{10-20-1.png}{Instance à 10 machines et 20 tâches}{0.47}
+			\img{10-50-1.png}{Instance à 10 machines et 50 tâches}{0.47}
+			\img{10-100-1.png}{Instance à 10 machines et 100 tâches}{0.47}
+			\img{10-150-1.png}{Instance à 10 machines et 150 tâches}{0.47}
+			\img{10-200-1.png}{Instance à 10 machines et 200 tâches}{0.5}
 \end{document}
