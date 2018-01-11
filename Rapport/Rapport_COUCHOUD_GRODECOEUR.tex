@@ -7,6 +7,8 @@
 \usepackage{pict2e}
 \usepackage[justification=centering]{caption}
 
+\usepackage{dirtree}
+
 \newcommand{\img}[3]{%
 	\begin{figure}[H]
 		\centering
@@ -129,12 +131,25 @@
 		
 	\chapter{Modélisation du logiciel}
 		\section{Structure générale — UML}
-			Le projet est séparé en deux principales parties: production et tests.
+			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
+		
+			Le projet est séparé en deux principales parties: production et tests. Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
+			
 			Le code de production se trouve dans src/prod et le code de tests dans src/unit.
 			
-			Chacun d'entre eux contient les fichiers .c ainsi qu'un dossier headers contenant les fichiers .h.
-			
-			\img{UML.png}{Liens entre les différents fichiers/structures}{0.45}
+			\begin{minipage}{0.99\textwidth}
+				\dirtree{%
+					.1 C.
+					.2 doc.
+					.2 log.
+					.2 src.
+					.3 prod.
+					.4 headers.
+					.3 unit.
+					.4 headers.
+					.2 unitResources	.			
+				}
+			\end{minipage}
 
 		\section{Rôles des différents éléments}
 			Compte tenu de l'ampleur de ce projet, il est important de découper correctement le code en plusieurs éléments ; chacun d'eux a un rôle bien défini. On distinguera 3 catégories dans lesquelles s'inscrivent les structures de données et leurs fonctions : les instances, les solutions et le tabou. Chaque fonction possède également un préfixe décrivant
