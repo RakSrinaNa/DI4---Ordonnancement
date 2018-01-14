@@ -2,3 +2,4 @@ C/doc/**/*.* export-ignore
 C/src/prod/*.h linguist-language=C
 C/src/prod/headers/*.h linguist-language=C
 C/src/unit/headers/*.h linguist-language=C
+*.mp4 filter=lfs diff=lfs merge=lfs -text
