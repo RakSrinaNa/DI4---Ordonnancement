@@ -452,7 +452,7 @@ SearchResult * tabu_searchEFSR(Solution * currentSolution, TabuList * tabuList, 
 
 void tabu_randomize(Solution * solution)
 {
-#if TABU_SEARCH_SWAP
+	printf("Diversification !\n");
 	unsigned int nbSwaps = RRAND(3, solution->packCount * 3);
 	for(unsigned int i = 0; i < nbSwaps; i++)
 	{
@@ -460,5 +460,24 @@ void tabu_randomize(Solution * solution)
 		task_t task2 = RRAND(0, solution->instance->taskCount);
 		solution_switchTaskPack(solution, task1, task2);
 	}
-#endif
+//#if TABU_SEARCH_EBSR
+//	unsigned int nbEBSR = RRAND(3, solution->packCount * 3);
+//	for(unsigned int i = 0; i < nbEBSR; i++)
+//	{
+//		task_t task1 = RRAND(0, solution->instance->taskCount);
+//		unsigned int p = solution_getTaskPack(solution, task1);
+//		unsigned int pack = RRAND(0, p);
+//		solution_moveTaskPack(solution, task1, pack);
+//	}
+//#endif
+//#if TABU_SEARCH_EFSR
+//	unsigned int nbEFSR = RRAND(3, solution->packCount * 3);
+//	for(unsigned int i = 0; i < nbEFSR; i++)
+//	{
+//		task_t task1 = RRAND(0, solution->instance->taskCount);
+//		unsigned int p = solution_getTaskPack(solution, task1);
+//		unsigned int pack = RRAND(p, solution->packCount);
+//		solution_moveTaskPack(solution, task1, pack);
+//	}
+//#endif
 }
