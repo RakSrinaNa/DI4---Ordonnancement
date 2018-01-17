@@ -194,7 +194,7 @@ int parser_getLine(char ** linePtr, size_t * lineSize, FILE * file)
 	}
 	while(charRead != EOF) //While we didn't reach the end of the file.
 	{
-		if(writingHead > size - 1U) //If we went over the buffer size (letting space for \0), make it bigger.
+		if(writingHead > size - 2U) //If we went over the buffer size (letting space for \0), make it bigger.
 		{
 			size += 50;
 			RREALLOC(bufferPtr, char, size, "parser_getLine");
